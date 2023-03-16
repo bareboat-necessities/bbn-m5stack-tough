@@ -1,5 +1,4 @@
 #include <M5Tough.h>
-#include <M5Touch.h>
 #include <Arduino.h>
 #include <lvgl.h>
 #include <Wire.h>
@@ -18,13 +17,12 @@ M5Display *tft;
 static void ta_event_cb(lv_event_t * e);
 static lv_obj_t * kb;
 
-static void ta_event_cb(lv_event_t * e)
-{
+static void ta_event_cb(lv_event_t * e) {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t * ta = lv_event_get_target(e);
 
     if(code == LV_EVENT_CLICKED || code == LV_EVENT_FOCUSED) {
-        /*Focus on the clicked text area*/
+        /* Focus on the clicked text area */
         if(kb != NULL) lv_keyboard_set_textarea(kb, ta);
     }
     else if(code == LV_EVENT_READY) {
@@ -32,14 +30,12 @@ static void ta_event_cb(lv_event_t * e)
     }
 }
 
-static void btnPowerOff_event(lv_event_t * event)
-{
+static void btnPowerOff_event(lv_event_t * event) {
     M5.Axp.PowerOff();
 }
 
 void tft_lv_initialization() {
   M5.begin();
-
   lv_init();
 
   static lv_color_t buf1[(LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10];  // Declare a buffer for 1/10 screen siz
@@ -47,7 +43,6 @@ void tft_lv_initialization() {
 
   // Initialize `disp_buf` display buffer with the buffer(s).
   lv_disp_draw_buf_init(&draw_buf, buf1, buf2, (LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10);
-
   tft = &M5.Lcd;
 }
 
@@ -76,11 +71,9 @@ void init_disp_driver() {
   lv_disp_set_bg_color(NULL, lv_color_hex3(0x000));  // Set default background color to black
 }
 
-void my_touchpad_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
-{
+void my_touchpad_read(lv_indev_drv_t * drv, lv_indev_data_t * data) {
   TouchPoint_t pos = M5.Touch.getPressPoint();
   bool touched = ( pos.x == -1 ) ? false : true;  
-
   if (!touched) {    
     data->state = LV_INDEV_STATE_RELEASED;
   } else {
@@ -92,19 +85,16 @@ void my_touchpad_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
 
 void init_touch_driver() {
   lv_disp_drv_register(&disp_drv);
-
   lv_indev_drv_init(&indev_drv);
   indev_drv.type = LV_INDEV_TYPE_POINTER;
   indev_drv.read_cb = my_touchpad_read;
   lv_indev_t * my_indev = lv_indev_drv_register(&indev_drv);  // register
 }
 
-void setup()
-{
+void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-
   lv_obj_t * btn1 = lv_btn_create(lv_scr_act());
   lv_obj_t * label = lv_label_create(btn1);
   lv_obj_align(btn1, LV_ALIGN_CENTER, 0, 0);
@@ -113,8 +103,7 @@ void setup()
   lv_obj_add_event_cb(btn1, btnPowerOff_event, LV_EVENT_CLICKED, NULL);
 }
 
-void loop()
-{
+void loop() {
   M5.update();
   lv_task_handler();
   lv_tick_inc(1);
