@@ -37,24 +37,14 @@ static void setupMode() {
 }
 
 boolean ssidNotAvail() {
-  WiFi.disconnect();            // Turn off all wifi connections.
-  delay(100);                   // 100 ms delay.
-  int n = WiFi.scanNetworks();  // return the number of networks found.
-  for (int i = 0; i < n; ++i) {
-    if (WiFi.SSID(i).equals(wifi_ssid)) {
-      WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
-      return false;
-    }
-  }
-  WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
-  return true;
+  return WiFi.status() == WL_NO_SSID_AVAIL;
 }
 
 boolean checkConnection() {  // Check wifi connection.
   int count = 0;
   int attempts = 30;
-  while (count < attempts || ssidNotAvail()) {  // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
-    if (WiFi.status() == WL_CONNECTED) {
+  while (count < attempts && ssidNotAvail()) {  // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
+    if (WiFi.status() == WL_CONNECTED && WiFi.RSSI() != 0) {
       //M5.Lcd.print("Connected!");
       return true;
     }
@@ -227,6 +217,7 @@ void init_touch_driver() {
 boolean restoreConfig() {  // Check whether there is wifi configuration information storage, if there is 1 return, if no return 0.
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
+  WiFi.mode(WIFI_STA);
   WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
   if (wifi_ssid.length() > 0) {
     return true;
@@ -246,7 +237,8 @@ void setup() {
       settingMode = false;    // Turn off setting mode.
       lv_obj_t *labelIP = lv_label_create(lv_scr_act());
       lv_obj_set_pos(labelIP, 10, 10);
-      lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString()).c_str());
+      lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString() + "\n"
+        + " Wi-Fi Status:  " + (WiFi.status() == WL_CONNECTED && WiFi.RSSI() != 0 ? String("Up") : String("Down"))).c_str());
       return;  // Exit setup().
     }
   }
