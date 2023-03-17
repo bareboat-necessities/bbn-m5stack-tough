@@ -110,7 +110,7 @@ void lv_password_textarea(int i, lv_obj_t *cont) {
   lv_textarea_set_one_line(pwd_ta, true);
   lv_obj_set_width(pwd_ta, lv_pct(80));
   lv_obj_set_pos(pwd_ta, 3, 5);
-  lv_obj_add_event_cb(pwd_ta, ta_password_event_cb, LV_EVENT_ALL, NULL);
+  lv_obj_add_event_cb(pwd_ta, ta_password_event_cb, LV_EVENT_ALL, (void *)i);
 
   /*Create a label and position it above the text box*/
   lv_obj_t *pwd_label = lv_label_create(cont);
@@ -128,10 +128,13 @@ void lv_password_textarea(int i, lv_obj_t *cont) {
 static void ta_password_event_cb(lv_event_t *e) {
   lv_event_code_t code = lv_event_get_code(e);
   lv_obj_t *ta = lv_event_get_target(e);
+  int i = (int)lv_obj_get_index(ta);
   if (code == LV_EVENT_CLICKED || code == LV_EVENT_FOCUSED) {
     /*Focus on the clicked text area*/
     if (kb != NULL) lv_keyboard_set_textarea(kb, ta);
   } else if (code == LV_EVENT_READY) {
+    preferences.putString("WIFI_SSID", WiFi.SSID(i));
+    preferences.putString("WIFI_PASSWD", lv_textarea_get_text(ta));
     lv_msgbox(lv_textarea_get_text(ta));
   }
 }
@@ -139,10 +142,12 @@ static void ta_password_event_cb(lv_event_t *e) {
 static void event_msgbox_cb(lv_event_t *e) {
   lv_obj_t *obj = lv_event_get_current_target(e);
   lv_msgbox_close(obj);
+  delay(500);
+  ESP.restart();
 }
 
 static void lv_msgbox(const char *txt) {
-  static const char *btns[] = { "Close", "" };
+  static const char *btns[] = { "Reboot", "" };
   lv_obj_t *mbox = lv_msgbox_create(NULL, "", "Password submitted", btns, true);
   lv_obj_add_event_cb(mbox, event_msgbox_cb, LV_EVENT_VALUE_CHANGED, NULL);
   lv_obj_center(mbox);
