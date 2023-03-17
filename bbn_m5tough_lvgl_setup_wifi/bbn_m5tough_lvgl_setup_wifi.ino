@@ -238,7 +238,7 @@ void setup() {
       lv_obj_t *labelIP = lv_label_create(lv_scr_act());
       lv_obj_set_pos(labelIP, 10, 10);
       lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString() + "\n"
-        + " Wi-Fi Status:  " + (WiFi.status() == WL_CONNECTED && WiFi.RSSI() != 0 ? String("Up") : String("Down"))).c_str());
+        + " Wi-Fi Status:  " + (WiFi.status() == WL_CONNECTED && WiFi.RSSI() != 0 ? String("Connected") : String("Disconnected"))).c_str());
       return;  // Exit setup().
     }
   }
