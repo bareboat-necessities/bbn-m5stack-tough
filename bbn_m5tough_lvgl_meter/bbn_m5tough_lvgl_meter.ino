@@ -1,11 +1,11 @@
+#define LV_HOR_RES_MAX 320
+#define LV_VER_RES_MAX 240
+
 #include <M5Tough.h>
 #include <Arduino.h>
 #include <lvgl.h>
 #include <Wire.h>
 #include <SPI.h>
-
-#define LV_HOR_RES_MAX 320
-#define LV_VER_RES_MAX 240
 
 // init the tft espi
 static lv_disp_draw_buf_t draw_buf;
@@ -78,6 +78,7 @@ void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
+  lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), 1, LV_FONT_DEFAULT);
   lv_example_meter_1();
 }
 
@@ -102,7 +103,7 @@ void lv_example_meter_1(void) {
 
     lv_meter_scale_t * scale2 = lv_meter_add_scale(meter);
     lv_meter_set_scale_ticks(meter, scale2, 12, 0, 0, lv_palette_main(LV_PALETTE_GREY));               
-    lv_meter_set_scale_major_ticks(meter, scale2, 1, 3, 14, lv_color_black(), 14);    /*Every tick is major*/
+    lv_meter_set_scale_major_ticks(meter, scale2, 1, 3, 14, lv_palette_main(LV_PALETTE_GREY), 14);    /*Every tick is major*/
     lv_meter_set_scale_range(meter, scale2, -150, 180, 330, 120);
 
     lv_meter_indicator_t * indic;
