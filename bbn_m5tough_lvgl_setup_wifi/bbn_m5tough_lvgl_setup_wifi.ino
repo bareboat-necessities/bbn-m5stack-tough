@@ -36,10 +36,24 @@ static void setupMode() {
   lv_list_wifi(n);
 }
 
+boolean ssidNotAvail() {
+  WiFi.disconnect();            // Turn off all wifi connections.
+  delay(100);                   // 100 ms delay.
+  int n = WiFi.scanNetworks();  // return the number of networks found.
+  for (int i = 0; i < n; ++i) {
+    if (WiFi.SSID(i).equals(wifi_ssid)) {
+      WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
+      return false;
+    }
+  }
+  WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
+  return true;
+}
 
 boolean checkConnection() {  // Check wifi connection.
-  int count = 0;             // count.
-  while (count < 30) {       // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
+  int count = 0;
+  int attempts = 30;
+  while (count < attempts || ssidNotAvail()) {  // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
     if (WiFi.status() == WL_CONNECTED) {
       //M5.Lcd.print("Connected!");
       return true;
@@ -47,6 +61,7 @@ boolean checkConnection() {  // Check wifi connection.
     delay(350);
     //M5.Lcd.print(".");
     count++;
+    if (count >= attempts) count = 0;
   }
   return false;
 }
@@ -229,10 +244,10 @@ void setup() {
   if (restoreConfig()) {      // Check if wifi configuration information has been stored.
     if (checkConnection()) {  // Check wifi connection.
       settingMode = false;    // Turn off setting mode.
-      lv_obj_t * labelIP = lv_label_create(lv_scr_act());
+      lv_obj_t *labelIP = lv_label_create(lv_scr_act());
       lv_obj_set_pos(labelIP, 10, 10);
-      lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString()).c_str());      
-      return;                 // Exit setup().
+      lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString()).c_str());
+      return;  // Exit setup().
     }
   }
   settingMode = true;  // If there is no stored wifi configuration information, turn on the setting mode.
