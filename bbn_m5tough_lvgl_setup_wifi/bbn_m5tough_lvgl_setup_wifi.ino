@@ -229,6 +229,9 @@ void setup() {
   if (restoreConfig()) {      // Check if wifi configuration information has been stored.
     if (checkConnection()) {  // Check wifi connection.
       settingMode = false;    // Turn off setting mode.
+      lv_obj_t * labelIP = lv_label_create(lv_scr_act());
+      lv_obj_set_pos(labelIP, 10, 10);
+      lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString()).c_str());      
       return;                 // Exit setup().
     }
   }
