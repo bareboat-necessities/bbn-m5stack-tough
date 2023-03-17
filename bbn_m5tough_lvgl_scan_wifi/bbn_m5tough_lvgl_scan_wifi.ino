@@ -68,9 +68,6 @@ static void event_handler_connect_wifi_win(lv_event_t * e) {
 }
 
 static void lv_win_close_event_cb(lv_event_t * e) {
-  lv_obj_t * content = lv_obj_get_child((lv_obj_t *) lv_event_get_user_data(e), 1);
-  lv_obj_del(content);
-  lv_obj_del(lv_obj_get_child((lv_obj_t *) lv_event_get_user_data(e), 0));                                                                                                                                                                                                                                      
   lv_obj_del((lv_obj_t *) lv_event_get_user_data(e));
 }
 
@@ -89,18 +86,19 @@ void lv_password_textarea(int i, lv_obj_t * cont) {
     lv_textarea_set_text(pwd_ta, "");
     lv_textarea_set_password_mode(pwd_ta, true);
     lv_textarea_set_one_line(pwd_ta, true);
-    lv_obj_set_width(pwd_ta, lv_pct(90));
-    lv_obj_set_pos(pwd_ta, 4, 18);
+    lv_obj_set_width(pwd_ta, lv_pct(80));
+    lv_obj_set_pos(pwd_ta, 4, 6);
     lv_obj_add_event_cb(pwd_ta, ta_password_event_cb, LV_EVENT_ALL, NULL);
 
     /*Create a label and position it above the text box*/
     lv_obj_t * pwd_label = lv_label_create(cont);
-    lv_label_set_text(pwd_label, ("Password to " + WiFi.SSID(i)).substring(0, 25).c_str());
+    lv_obj_set_width(pwd_label, lv_pct(80));
+    lv_label_set_text(pwd_label, "Password:" /*("Password to " + WiFi.SSID(i)).c_str()*/);
     lv_obj_align_to(pwd_label, pwd_ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
 
     /*Create a keyboard*/
     kb = lv_keyboard_create(cont);
-    lv_obj_set_size(kb,  LV_HOR_RES, LV_VER_RES / 2);
+    lv_obj_set_size(kb, LV_HOR_RES, LV_VER_RES / 2);
 
     lv_keyboard_set_textarea(kb, pwd_ta); /*Focus it on one of the text areas to start*/
 }
