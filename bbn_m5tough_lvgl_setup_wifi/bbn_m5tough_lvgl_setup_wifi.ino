@@ -43,7 +43,7 @@ boolean ssidNotAvail() {
 boolean checkConnection() {  // Check wifi connection.
   int count = 0;
   int attempts = 30;
-  while (count < attempts && ssidNotAvail()) {  // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
+  while (count < attempts || ssidNotAvail()) {  // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
     if (WiFi.status() == WL_CONNECTED && WiFi.RSSI() != 0) {
       //M5.Lcd.print("Connected!");
       return true;
