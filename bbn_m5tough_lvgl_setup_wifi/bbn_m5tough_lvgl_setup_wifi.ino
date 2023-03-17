@@ -14,12 +14,12 @@ lv_disp_draw_buf_t draw_buf;
 lv_disp_drv_t disp_drv;   // Descriptor of a display driver
 lv_indev_drv_t indev_drv; // Descriptor of a touch driver
 
-M5Display* tft;
+M5Display *tft;
 
 // wifi config store.
 Preferences preferences;
 boolean settingMode;
-String wifi_ssid;     // Store the name of the wireless network.
+String wifi_ssid; // Store the name of the wireless network.
 String wifi_password; // Store the password of the wireless network.
 
 lv_obj_t* list_wifi;
@@ -28,9 +28,10 @@ void ta_event_cb(lv_event_t* e);
 lv_obj_t* kb;
 
 void setupMode() {
-  WiFi.mode(WIFI_STA); // Set WiFi to station mode and disconnect from an AP if it was previously connected.  
-  WiFi.disconnect();   // Turn off all wifi connections.  
+  WiFi.mode(WIFI_STA);// Set WiFi to station mode and disconnect from an AP if it was previously connected.  
+  WiFi.disconnect();  // Turn off all wifi connections.  
   delay(100); // 100 ms delay. 
+
   int n = WiFi.scanNetworks();  // return the number of networks found. 
   lv_list_wifi(n);
 }
@@ -135,15 +136,13 @@ void ta_password_event_cb(lv_event_t* e) {
   }
 }
 
-void event_msgbox_cb(lv_event_t* e)
-{
+void event_msgbox_cb(lv_event_t* e) {
   lv_obj_t* obj = lv_event_get_current_target(e);
   lv_msgbox_close(obj);
 }
 
-void lv_msgbox(const char* txt)
-{
-  const char* btns[] ={"Close", ""};
+void lv_msgbox(const char* txt) {
+  const char * btns[] = {"Close", ""};
   lv_obj_t* mbox = lv_msgbox_create(NULL, "", "Password submitted", btns, true);
   lv_obj_add_event_cb(mbox, event_msgbox_cb, LV_EVENT_VALUE_CHANGED, NULL);
   lv_obj_center(mbox);
@@ -161,7 +160,7 @@ void tft_lv_initialization() {
 }
 
 // Display flushing
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t* area, lv_color_t* color_p) {
+void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
   uint32_t h = (area->y2 - area->y1 + 1);
 
@@ -220,7 +219,7 @@ void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  preferences.begin("wifi-config2");
+  preferences.begin("wifi-config5");
   delay(10);
   if (restoreConfig()) {  // Check if wifi configuration information has been stored.  
     if (checkConnection()) {  // Check wifi connection.  
@@ -237,6 +236,6 @@ void loop() {
   lv_task_handler();  
   lv_tick_inc(1);
   if (settingMode) {
-    lv_tick_inc(1);
   }
 }
+
