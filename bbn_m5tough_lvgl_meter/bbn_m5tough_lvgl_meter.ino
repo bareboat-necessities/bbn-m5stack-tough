@@ -74,11 +74,13 @@ void init_touch_driver() {
   lv_indev_t * my_indev = lv_indev_drv_register(&indev_drv);  // register
 }
 
+static int theme = 1;
+
 void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), 1, LV_FONT_DEFAULT);
+  lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   lv_example_meter_1();
 }
 
@@ -147,8 +149,15 @@ void lv_example_meter_1(void) {
     lv_anim_start(&a);
 }
 
+
+Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
+
 void loop() {
   M5.update();
+  if (swipeDown.wasDetected()) {
+    theme = 1 - theme;
+    lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
+  }
   lv_task_handler();
   lv_tick_inc(1);
 }
