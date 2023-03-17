@@ -40,11 +40,9 @@ boolean checkConnection() { // Check wifi connection.
   int count = 0;  // count.  
   while (count < 30) {  // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
     if (WiFi.status() == WL_CONNECTED) {
-      M5.Lcd.print("Connected!");
       return true;
     }
     delay(350);
-    M5.Lcd.print(".");
     count++;
   }
   return false;
@@ -55,7 +53,7 @@ void event_handler_wifi(lv_event_t* e) {
   lv_obj_t* obj = lv_event_get_target(e);
   if (code == LV_EVENT_CLICKED) {
     int n = (int) lv_event_get_user_data(e); 
-    M5.Lcd.printf("Clicked: %d %s\n", n, lv_list_get_btn_text(list_wifi, obj));
+    //M5.Lcd.printf("Clicked: %d %s\n", n, lv_list_get_btn_text(list_wifi, obj));
     lv_connect_wifi_win(n);
   }
 }
@@ -142,7 +140,7 @@ void event_msgbox_cb(lv_event_t* e) {
 }
 
 void lv_msgbox(const char* txt) {
-  const char * btns[] = {"Close", ""};
+  const char* btns[] = {"Close", ""};
   lv_obj_t* mbox = lv_msgbox_create(NULL, "", "Password submitted", btns, true);
   lv_obj_add_event_cb(mbox, event_msgbox_cb, LV_EVENT_VALUE_CHANGED, NULL);
   lv_obj_center(mbox);
@@ -160,13 +158,13 @@ void tft_lv_initialization() {
 }
 
 // Display flushing
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
+void my_disp_flush(lv_disp_drv_t* disp, const lv_area_t* area, lv_color_t* color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
   uint32_t h = (area->y2 - area->y1 + 1);
 
   tft->startWrite();
   tft->setAddrWindow(area->x1, area->y1, w, h);
-  tft->pushColors((uint16_t *)&color_p->full, w * h, true);
+  tft->pushColors((uint16_t*) &color_p->full, w * h, true);
   tft->endWrite();
 
   lv_disp_flush_ready(disp);
@@ -201,18 +199,14 @@ void init_touch_driver() {
   lv_indev_drv_init(&indev_drv);
   indev_drv.type = LV_INDEV_TYPE_POINTER;
   indev_drv.read_cb = my_touchpad_read;
-  lv_indev_t * my_indev = lv_indev_drv_register(&indev_drv);  // register
+  lv_indev_t* my_indev = lv_indev_drv_register(&indev_drv);  // register
 }
 
 boolean restoreConfig() { // Check whether there is wifi configuration information storage, if there is 1 return, if no return 0.
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
   WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
-  if (wifi_ssid.length() > 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return wifi_ssid.length() > 0;
 }
 
 void setup() {
