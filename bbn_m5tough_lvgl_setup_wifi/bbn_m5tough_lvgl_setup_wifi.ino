@@ -77,7 +77,12 @@ void lv_list_wifi(int num) {
     //M5.Lcd.print(WiFi.SSID(i));
     //M5.Lcd.printf("(%d)",WiFi.RSSI(i));
     //M5.Lcd.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? " " : "*");
-    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, WiFi.SSID(i).c_str());
+    //if (i > 1) {
+    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String() : String("[o]")) + WiFi.SSID(i)).c_str());
+    //} else {
+    //  if (i == 0) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_ssid.c_str());
+    //  if (i == 1) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_password.c_str());
+    //}
     lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)i);
     delay(10);
   }
@@ -114,7 +119,7 @@ void lv_password_textarea(int i, lv_obj_t *cont) {
   /*Create a label and position it above the text box*/
   lv_obj_t *pwd_label = lv_label_create(cont);
   lv_obj_set_width(pwd_label, lv_pct(80));
-  lv_label_set_text(pwd_label, "Password:" /*("Password to " + WiFi.SSID(i)).c_str()*/);
+  lv_label_set_text(pwd_label, ("Password to " + WiFi.SSID(i)).c_str());
   lv_obj_align_to(pwd_label, pwd_ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
 
   /*Create a keyboard*/
@@ -127,11 +132,13 @@ void lv_password_textarea(int i, lv_obj_t *cont) {
 static void ta_password_event_cb(lv_event_t *e) {
   lv_event_code_t code = lv_event_get_code(e);
   lv_obj_t *ta = lv_event_get_target(e);
-  int i = (int)lv_obj_get_index(ta);
+  int i = (int)lv_event_get_user_data(e);
   if (code == LV_EVENT_CLICKED || code == LV_EVENT_FOCUSED) {
     /*Focus on the clicked text area*/
     if (kb != NULL) lv_keyboard_set_textarea(kb, ta);
   } else if (code == LV_EVENT_READY) {
+    preferences.remove("WIFI_SSID");
+    preferences.remove("WIFI_PASSWD");
     preferences.putString("WIFI_SSID", WiFi.SSID(i));
     preferences.putString("WIFI_PASSWD", lv_textarea_get_text(ta));
     lv_msgbox(lv_textarea_get_text(ta));
@@ -223,7 +230,7 @@ void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  preferences.begin("wifi-config");
+  preferences.begin("7wifi-config");
   delay(10);
   if (restoreConfig()) {      // Check if wifi configuration information has been stored.
     if (checkConnection()) {  // Check wifi connection.
