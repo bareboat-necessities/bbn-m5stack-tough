@@ -75,12 +75,14 @@ void setup() {
   delay(1000);
 
   String dataFeed;
-  int samples = 3;
+  int samples = 30;
   while (client.connected() && samples > 0) {
     webSocketClient.getData(dataFeed);
     if (dataFeed.length() > 0) {
-      M5.Lcd.println(dataFeed);
-      M5.Lcd.println("--");
+      String parsed = handleReceivedMessage(dataFeed);
+      if (parsed.length() > 0) {
+        M5.Lcd.println(parsed);
+      }
     }
     delay(5);
     samples--;
@@ -89,4 +91,41 @@ void setup() {
 
 void loop() {
   M5.update();
+}
+
+
+String updatedValue;
+
+String handleReceivedMessage(String message){
+  StaticJsonDocument<4096> doc;
+  DeserializationError err = deserializeJson(doc, message);
+  // Parse succeeded?
+  if (err) {
+    Serial.print(F("deserializeJson() returned "));
+    Serial.println(err.c_str());
+    return "INVALID";
+  }
+  JsonObject obj = doc.as<JsonObject>();
+
+  JsonObject updates = obj["updates"][0]["values"][0];
+  JsonObject value_obj = updates["value"];
+  const char* value = updates["value"];
+  const char* path = updates["path"];
+
+  updatedValue = String(path) + ": ";
+  if (path != NULL) {
+    if (strcmp(path, "navigation.position") == 0) {
+      float lon = value_obj["longitude"];
+      float lat = value_obj["latitude"];
+      updatedValue = updatedValue + lon + " " + lat;
+    }
+    else if (strcmp(path, "navigation.gnss.satellitesInView") == 0) {
+    } 
+    else if (strncmp(path, "notifications.security.accessRequest", strlen("notifications.security.accessRequest")) == 0) {
+    }
+    else {
+      updatedValue = updatedValue + String(value);
+    }
+  }
+  return updatedValue;
 }
