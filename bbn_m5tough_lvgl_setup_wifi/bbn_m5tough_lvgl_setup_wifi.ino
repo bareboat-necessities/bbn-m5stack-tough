@@ -201,11 +201,7 @@ boolean restoreConfig() {  // Check whether there is wifi configuration informat
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
   WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
-  if (wifi_ssid.length() > 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return wifi_ssid.length() > 0;
 }
 
 void setup() {
@@ -220,7 +216,8 @@ void setup() {
       lv_obj_t *labelIP = lv_label_create(lv_scr_act());
       lv_obj_set_pos(labelIP, 10, 10);
       lv_label_set_text(labelIP, (" Wi-Fi:  " + wifi_ssid + "\n"
-        + " Local IP:  " + WiFi.localIP().toString()).c_str());
+                                  + " Local IP:  " + WiFi.localIP().toString())
+                                   .c_str());
       return;  // Exit setup().
     }
   }
