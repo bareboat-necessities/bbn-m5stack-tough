@@ -49,7 +49,7 @@ void setup() {
     M5.Lcd.println("Connected to " + wifi_ssid);
   }
 
-  webSocketClient.path = "/signalk/v1/stream?subcribe=none";
+  webSocketClient.path = "/signalk/v1/stream?subcribe=all";
   webSocketClient.host = "192.168.1.34"; //"lysmarine";
   int port = 3000;
 
@@ -70,7 +70,7 @@ void setup() {
     return;
   }
 
-  String data = "{\"context\":\"*\",\"subscribe\":[{\"path\": \"*\"}]}";
+  String data = "{\"context\":\"*\",\"subscribe\":[{\"path\": \"*\", \"format\": \"delta\"}]}";
   webSocketClient.sendData(data);
   delay(1000);
 
@@ -82,10 +82,10 @@ void setup() {
       String parsed = handleReceivedMessage(dataFeed);
       if (parsed.length() > 0) {
         M5.Lcd.println(parsed);
+        samples--;
       }
     }
     delay(5);
-    samples--;
   }
 }
 
@@ -112,8 +112,9 @@ String handleReceivedMessage(String message){
   const char* value = updates["value"];
   const char* path = updates["path"];
 
-  updatedValue = String(path) + ": ";
+  updatedValue = "";
   if (path != NULL) {
+    updatedValue = String(path) + ": ";
     if (strcmp(path, "navigation.position") == 0) {
       float lon = value_obj["longitude"];
       float lat = value_obj["latitude"];
