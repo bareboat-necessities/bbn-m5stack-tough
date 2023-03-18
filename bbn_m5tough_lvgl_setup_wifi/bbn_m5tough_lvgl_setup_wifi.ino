@@ -140,13 +140,13 @@ void lv_password_textarea(int i, lv_obj_t *cont) {
 static void ta_password_event_cb(lv_event_t *e) {
   lv_event_code_t code = lv_event_get_code(e);
   lv_obj_t *ta = lv_event_get_target(e);
-  const char *ssid = (const char*)lv_obj_get_index(ta);
   if (code == LV_EVENT_CLICKED || code == LV_EVENT_FOCUSED) {
     /*Focus on the clicked text area*/
     if (kb != NULL) lv_keyboard_set_textarea(kb, ta);
   } else if (code == LV_EVENT_READY) {
-    const char *txt = lv_textarea_get_text(ta);
+    const char *ssid = (const char*) lv_event_get_user_data(e);
     preferences.putString("WIFI_SSID", ssid);
+    const char *txt = lv_textarea_get_text(ta);
     if (txt != NULL && txt[0] != '\0') preferences.putString("WIFI_PASSWD", txt);
     lv_msgbox(txt);
   }
