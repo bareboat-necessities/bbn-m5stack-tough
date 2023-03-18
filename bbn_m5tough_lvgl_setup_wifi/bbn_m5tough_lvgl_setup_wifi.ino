@@ -16,14 +16,11 @@ static lv_indev_drv_t indev_drv;  // Descriptor of a touch driver
 
 M5Display *tft;
 
-static int idx = 0;
-
 // wifi config store.
 Preferences preferences;
 boolean settingMode;
-
-static String wifi_ssid;      // Store the name of the wireless network.
-static String wifi_password;  // Store the password of the wireless network.
+String wifi_ssid;      // Store the name of the wireless network.
+String wifi_password;  // Store the password of the wireless network.
 
 static lv_obj_t *list_wifi;
 
@@ -39,14 +36,9 @@ static void setupMode() {
   lv_list_wifi(n);
 }
 
-inline boolean ssidNotAvail() {
-  return (WiFi.status() == WL_NO_SSID_AVAIL) && wifi_ssid != NULL && wifi_ssid.length() > 0;
-}
-
 boolean checkConnection() {  // Check wifi connection.
-  int count = 0;
-  int attempts = 30;
-  while (count < attempts || ssidNotAvail()) {  // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
+  int count = 0;             // count.
+  while (count < 30) {       // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
     if (WiFi.status() == WL_CONNECTED) {
       //M5.Lcd.print("Connected!");
       return true;
@@ -54,7 +46,6 @@ boolean checkConnection() {  // Check wifi connection.
     delay(350);
     //M5.Lcd.print(".");
     count++;
-    if (count >= attempts) count = 0;
   }
   return false;
 }
@@ -63,9 +54,9 @@ static void event_handler_wifi(lv_event_t *e) {
   lv_event_code_t code = lv_event_get_code(e);
   lv_obj_t *obj = lv_event_get_target(e);
   if (code == LV_EVENT_CLICKED) {
-    int *n = (int*)lv_event_get_user_data(e);
+    int n = (int)lv_event_get_user_data(e);
     //M5.Lcd.printf("Clicked: %d %s\n", n, lv_list_get_btn_text(list_wifi, obj));
-    lv_connect_wifi_win(*n);
+    lv_connect_wifi_win(n);
   }
 }
 
@@ -86,14 +77,8 @@ void lv_list_wifi(int num) {
     //M5.Lcd.print(WiFi.SSID(i));
     //M5.Lcd.printf("(%d)",WiFi.RSSI(i));
     //M5.Lcd.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? " " : "*");
-    if (i > 1) {
-      btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, WiFi.SSID(i).c_str());
-    } else {
-      if (i == 0) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_ssid.c_str());
-      if (i == 1) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_password.c_str());
-    }
-    idx = i;
-    lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)&idx);
+    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, WiFi.SSID(i).c_str());
+    lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)i);
     delay(10);
   }
 }
@@ -124,7 +109,7 @@ void lv_password_textarea(int i, lv_obj_t *cont) {
   lv_textarea_set_one_line(pwd_ta, true);
   lv_obj_set_width(pwd_ta, lv_pct(80));
   lv_obj_set_pos(pwd_ta, 3, 5);
-  lv_obj_add_event_cb(pwd_ta, ta_password_event_cb, LV_EVENT_ALL, (void *)WiFi.SSID(i).c_str());
+  lv_obj_add_event_cb(pwd_ta, ta_password_event_cb, LV_EVENT_ALL, (void *)i);
 
   /*Create a label and position it above the text box*/
   lv_obj_t *pwd_label = lv_label_create(cont);
@@ -142,22 +127,21 @@ void lv_password_textarea(int i, lv_obj_t *cont) {
 static void ta_password_event_cb(lv_event_t *e) {
   lv_event_code_t code = lv_event_get_code(e);
   lv_obj_t *ta = lv_event_get_target(e);
+  int i = (int)lv_obj_get_index(ta);
   if (code == LV_EVENT_CLICKED || code == LV_EVENT_FOCUSED) {
     /*Focus on the clicked text area*/
     if (kb != NULL) lv_keyboard_set_textarea(kb, ta);
   } else if (code == LV_EVENT_READY) {
-    const char *ssid = (const char*) lv_event_get_user_data(e);
-    preferences.putString("WIFI_SSID", ssid);
-    const char *txt = lv_textarea_get_text(ta);
-    if (txt != NULL && txt[0] != '\0') preferences.putString("WIFI_PASSWD", txt);
-    lv_msgbox(txt);
+    preferences.putString("WIFI_SSID", WiFi.SSID(i));
+    preferences.putString("WIFI_PASSWD", lv_textarea_get_text(ta));
+    lv_msgbox(lv_textarea_get_text(ta));
   }
 }
 
 static void event_msgbox_cb(lv_event_t *e) {
   lv_obj_t *obj = lv_event_get_current_target(e);
   lv_msgbox_close(obj);
-  delay(1                                                                                                                                                                                                                                                                                                                                                                                                                                                                       000);
+  delay(500);
   ESP.restart();
 }
 
@@ -227,13 +211,8 @@ void init_touch_driver() {
 boolean restoreConfig() {  // Check whether there is wifi configuration information storage, if there is 1 return, if no return 0.
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
-  WiFi.mode(WIFI_STA);
-  if (wifi_ssid != NULL && wifi_ssid.length() > 0) {
-    if (wifi_password == NULL || wifi_password.length() == 0) {
-      WiFi.begin(wifi_ssid.c_str());
-    } else {
-      WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
-    }
+  WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
+  if (wifi_ssid.length() > 0) {
     return true;
   } else {
     return false;
@@ -244,16 +223,14 @@ void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  preferences.begin("2wifi-config");
+  preferences.begin("wifi-config");
   delay(10);
   if (restoreConfig()) {      // Check if wifi configuration information has been stored.
     if (checkConnection()) {  // Check wifi connection.
       settingMode = false;    // Turn off setting mode.
       lv_obj_t *labelIP = lv_label_create(lv_scr_act());
       lv_obj_set_pos(labelIP, 10, 10);
-      lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString() + "\n"
-                                  + " Wi-Fi Status:  " + (WiFi.status() == WL_CONNECTED ? String("Connected") : String("Disconnected")))
-                                   .c_str());
+      lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString()).c_str());
       return;  // Exit setup().
     }
   }
