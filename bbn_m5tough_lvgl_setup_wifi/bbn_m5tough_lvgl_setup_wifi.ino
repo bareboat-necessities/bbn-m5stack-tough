@@ -78,7 +78,7 @@ void lv_list_wifi(int num) {
     //M5.Lcd.printf("(%d)",WiFi.RSSI(i));
     //M5.Lcd.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? " " : "*");
     //if (i > 1) {
-    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String() : String("[o]")) + WiFi.SSID(i)).c_str());
+    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String("[o] ") : String()) + WiFi.SSID(i)).c_str());
     //} else {
     //  if (i == 0) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_ssid.c_str());
     //  if (i == 1) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_password.c_str());
