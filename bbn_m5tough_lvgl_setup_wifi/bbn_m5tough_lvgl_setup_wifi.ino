@@ -40,11 +40,9 @@ boolean checkConnection() {  // Check wifi connection.
   int count = 0;             // count.
   while (count < 30) {       // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
     if (WiFi.status() == WL_CONNECTED) {
-      //M5.Lcd.print("Connected!");
       return true;
     }
     delay(350);
-    //M5.Lcd.print(".");
     count++;
   }
   return false;
@@ -55,7 +53,6 @@ static void event_handler_wifi(lv_event_t *e) {
   lv_obj_t *obj = lv_event_get_target(e);
   if (code == LV_EVENT_CLICKED) {
     int n = (int)lv_event_get_user_data(e);
-    //M5.Lcd.printf("Clicked: %d %s\n", n, lv_list_get_btn_text(list_wifi, obj));
     lv_connect_wifi_win(n);
   }
 }
@@ -72,17 +69,7 @@ void lv_list_wifi(int num) {
   lv_list_add_text(list_wifi, "Wi-Fi Networks");
 
   for (int i = 0; i < num; ++i) {
-    //Print SSID and RSSI for each network found.
-    //M5.Lcd.printf("%d:",i + 1);
-    //M5.Lcd.print(WiFi.SSID(i));
-    //M5.Lcd.printf("(%d)",WiFi.RSSI(i));
-    //M5.Lcd.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? " " : "*");
-    //if (i > 1) {
     btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String("[o] ") : String()) + WiFi.SSID(i)).c_str());
-    //} else {
-    //  if (i == 0) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_ssid.c_str());
-    //  if (i == 1) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_password.c_str());
-    //}
     lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)i);
     delay(10);
   }
