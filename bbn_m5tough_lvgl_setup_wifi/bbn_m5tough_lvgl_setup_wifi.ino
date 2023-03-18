@@ -16,11 +16,14 @@ static lv_indev_drv_t indev_drv;  // Descriptor of a touch driver
 
 M5Display *tft;
 
+static int idx = 0;
+
 // wifi config store.
 Preferences preferences;
 boolean settingMode;
-String wifi_ssid;      // Store the name of the wireless network.
-String wifi_password;  // Store the password of the wireless network.
+
+static String wifi_ssid;      // Store the name of the wireless network.
+static String wifi_password;  // Store the password of the wireless network.
 
 static lv_obj_t *list_wifi;
 
@@ -48,14 +51,7 @@ boolean checkConnection() {  // Check wifi connection.
       //M5.Lcd.print("Connected!");
       return true;
     }
-    delay(75);
-    lv_tick_inc(1);
-    delay(100);
-    lv_tick_inc(1);
-    delay(75);
-    lv_tick_inc(1);
-    delay(100);
-    lv_tick_inc(1);
+    delay(350);
     //M5.Lcd.print(".");
     count++;
     if (count >= attempts) count = 0;
@@ -67,9 +63,9 @@ static void event_handler_wifi(lv_event_t *e) {
   lv_event_code_t code = lv_event_get_code(e);
   lv_obj_t *obj = lv_event_get_target(e);
   if (code == LV_EVENT_CLICKED) {
-    int n = (int)lv_event_get_user_data(e);
+    int *n = (int*)lv_event_get_user_data(e);
     //M5.Lcd.printf("Clicked: %d %s\n", n, lv_list_get_btn_text(list_wifi, obj));
-    lv_connect_wifi_win(n);
+    lv_connect_wifi_win(*n);
   }
 }
 
@@ -96,7 +92,8 @@ void lv_list_wifi(int num) {
       if (i == 0) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_ssid.c_str());
       if (i == 1) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_password.c_str());
     }
-    lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)i);
+    idx = i;
+    lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)&idx);
     delay(10);
   }
 }
@@ -160,7 +157,7 @@ static void ta_password_event_cb(lv_event_t *e) {
 static void event_msgbox_cb(lv_event_t *e) {
   lv_obj_t *obj = lv_event_get_current_target(e);
   lv_msgbox_close(obj);
-  delay(1000);
+  delay(1                                                                                                                                                                                                                                                                                                                                                                                                                                                                       000);
   ESP.restart();
 }
 
@@ -247,7 +244,7 @@ void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  preferences.begin("wifi-config");
+  preferences.begin("2wifi-config");
   delay(10);
   if (restoreConfig()) {      // Check if wifi configuration information has been stored.
     if (checkConnection()) {  // Check wifi connection.
