@@ -63,7 +63,7 @@ static void event_handler_wifi(lv_event_t *e) {
 void lv_list_wifi(int num) {
   /*Create a list*/
   list_wifi = lv_list_create(lv_scr_act());
-  lv_obj_set_size(list_wifi, 280, 200);
+  lv_obj_set_size(list_wifi, 310, 200);
   lv_obj_center(list_wifi);
 
   /*Add buttons to the list*/
@@ -230,14 +230,15 @@ void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  preferences.begin("7wifi-config");
+  preferences.begin("wifi-config");
   delay(10);
   if (restoreConfig()) {      // Check if wifi configuration information has been stored.
     if (checkConnection()) {  // Check wifi connection.
       settingMode = false;    // Turn off setting mode.
       lv_obj_t *labelIP = lv_label_create(lv_scr_act());
       lv_obj_set_pos(labelIP, 10, 10);
-      lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString()).c_str());
+      lv_label_set_text(labelIP, (" Wi-Fi:  " + wifi_ssid + "\n"
+        + " Local IP:  " + WiFi.localIP().toString()).c_str());
       return;  // Exit setup().
     }
   }
