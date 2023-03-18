@@ -118,7 +118,7 @@ String handleReceivedMessage(String message){
     if (strcmp(path, "navigation.position") == 0) {
       float lon = value_obj["longitude"];
       float lat = value_obj["latitude"];
-      updatedValue = updatedValue + lon + " " + lat;
+      updatedValue = updatedValue + lat + " " + lon;
     }
     else if (strcmp(path, "navigation.gnss.satellitesInView") == 0) {
     } 
