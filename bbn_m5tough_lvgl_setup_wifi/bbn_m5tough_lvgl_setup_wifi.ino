@@ -204,10 +204,13 @@ boolean restoreConfig() {  // Check whether there is wifi configuration informat
   return wifi_ssid.length() > 0;
 }
 
+static int theme = 0;
+
 void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
+  lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   preferences.begin("wifi-config");
   delay(10);
   if (restoreConfig()) {      // Check if wifi configuration information has been stored.
@@ -225,11 +228,14 @@ void setup() {
   setupMode();
 }
 
+Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
+
 void loop() {
   M5.update();
   lv_task_handler();
   lv_tick_inc(1);
-  if (settingMode) {
-    lv_tick_inc(1);
+  if (swipeDown.wasDetected()) {
+    theme = 1 - theme;
+    lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   }
 }
