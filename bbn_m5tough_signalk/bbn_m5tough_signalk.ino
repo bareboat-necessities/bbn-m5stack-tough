@@ -18,22 +18,28 @@ void setup() {
   while (!Serial) continue;
   delay(500);
 
+  preferences.begin("wifi-config");
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
 
   int attemptsCount = 30;
-  int status = WL_IDLE_STATUS;
+  int status = WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
   while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to network, SSID: ");
     Serial.println(wifi_ssid);
-    status = WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
+    status = WiFi.status();
     // wait .5 seconds for connection:
     delay(500);
     M5.Lcd.print(".");
     attemptsCount--;
     if (attemptsCount == 0) return;
   }
+  if (status == WL_CONNECTED) {
+    M5.Lcd.println("");
+    M5.Lcd.println("Connected to " + wifi_ssid);
+  }
 }
 
 void loop() {
+  M5.update();
 }
