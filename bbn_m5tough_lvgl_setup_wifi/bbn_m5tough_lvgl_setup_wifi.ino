@@ -88,11 +88,6 @@ void lv_list_wifi(int num) {
   }
 }
 
-static void event_handler_connect_wifi_win(lv_event_t *e) {
-  lv_obj_t *obj = lv_event_get_target(e);
-  LV_LOG_USER("Button %d clicked", (int)lv_obj_get_index(obj));
-}
-
 static void lv_win_close_event_cb(lv_event_t *e) {
   lv_obj_del((lv_obj_t *)lv_event_get_user_data(e));
 }
@@ -119,7 +114,7 @@ void lv_password_textarea(int i, lv_obj_t *cont) {
   /*Create a label and position it above the text box*/
   lv_obj_t *pwd_label = lv_label_create(cont);
   lv_obj_set_width(pwd_label, lv_pct(80));
-  lv_label_set_text(pwd_label, ("Password to " + WiFi.SSID(i)).c_str());
+  lv_label_set_text(pwd_label, "Password: ");
   lv_obj_align_to(pwd_label, pwd_ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
 
   /*Create a keyboard*/
