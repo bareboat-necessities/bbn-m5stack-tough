@@ -37,14 +37,14 @@ static void setupMode() {
 }
 
 inline boolean ssidNotAvail() {
-  return WiFi.status() == WL_NO_SSID_AVAIL;
+  return (WiFi.status() == WL_NO_SSID_AVAIL) && wifi_ssid != NULL && wifi_ssid.length() > 0;
 }
 
 boolean checkConnection() {  // Check wifi connection.
   int count = 0;
   int attempts = 30;
   while (count < attempts || ssidNotAvail()) {  // If you fail to connect to wifi within 30*350ms (10.5s), return false; otherwise return true.
-    if (WiFi.status() == WL_CONNECTED && WiFi.RSSI() != 0) {
+    if (WiFi.status() == WL_CONNECTED) {
       //M5.Lcd.print("Connected!");
       return true;
     }
@@ -90,7 +90,12 @@ void lv_list_wifi(int num) {
     //M5.Lcd.print(WiFi.SSID(i));
     //M5.Lcd.printf("(%d)",WiFi.RSSI(i));
     //M5.Lcd.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? " " : "*");
-    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, WiFi.SSID(i).c_str());
+    if (i > 1) {
+      btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, WiFi.SSID(i).c_str());
+    } else {
+      if (i == 0) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_ssid.c_str());
+      if (i == 1) btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, wifi_password.c_str());
+    }
     lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)i);
     delay(10);
   }
@@ -226,12 +231,12 @@ boolean restoreConfig() {  // Check whether there is wifi configuration informat
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
   WiFi.mode(WIFI_STA);
-  if (wifi_password == NULL || wifi_password.length() == 0) {
-    WiFi.begin(wifi_ssid.c_str());
-  } else {
-    WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
-  }
-  if (wifi_ssid.length() > 0) {
+  if (wifi_ssid != NULL && wifi_ssid.length() > 0) {
+    if (wifi_password == NULL || wifi_password.length() == 0) {
+      WiFi.begin(wifi_ssid.c_str());
+    } else {
+      WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
+    }
     return true;
   } else {
     return false;
@@ -242,7 +247,7 @@ void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  preferences.begin("2wifi-config");
+  preferences.begin("wifi-config");
   delay(10);
   if (restoreConfig()) {      // Check if wifi configuration information has been stored.
     if (checkConnection()) {  // Check wifi connection.
@@ -250,7 +255,7 @@ void setup() {
       lv_obj_t *labelIP = lv_label_create(lv_scr_act());
       lv_obj_set_pos(labelIP, 10, 10);
       lv_label_set_text(labelIP, (" Local IP:  " + WiFi.localIP().toString() + "\n"
-                                  + " Wi-Fi Status:  " + (WiFi.status() == WL_CONNECTED && WiFi.RSSI() != 0 ? String("Connected") : String("Disconnected")))
+                                  + " Wi-Fi Status:  " + (WiFi.status() == WL_CONNECTED ? String("Connected") : String("Disconnected")))
                                    .c_str());
       return;  // Exit setup().
     }
