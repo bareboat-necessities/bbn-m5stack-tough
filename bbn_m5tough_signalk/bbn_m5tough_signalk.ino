@@ -69,6 +69,22 @@ void setup() {
     M5.Lcd.println("Handshake failed.");
     return;
   }
+
+  String data = "{\"context\":\"*\",\"subscribe\":[{\"path\": \"*\"}]}";
+  webSocketClient.sendData(data);
+  delay(1000);
+
+  String dataFeed;
+  int samples = 3;
+  while (client.connected() && samples > 0) {
+    webSocketClient.getData(dataFeed);
+    if (dataFeed.length() > 0) {
+      M5.Lcd.println(dataFeed);
+      M5.Lcd.println("--");
+    }
+    delay(5);
+    samples--;
+  }
 }
 
 void loop() {
