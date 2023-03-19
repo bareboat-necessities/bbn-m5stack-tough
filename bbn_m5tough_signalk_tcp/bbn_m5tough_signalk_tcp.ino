@@ -55,7 +55,7 @@ void setup() {
     client.flush();
     //delay(1000);
 
-    int samples = 15;
+    int samples = 20;
     while (client.connected() && samples > 0) {
       dataFeed = client.readStringUntil('\n');
       if (dataFeed.length() > 0) {
@@ -66,7 +66,6 @@ void setup() {
           samples--;
         }
       }
-      delay(1);
     }
   } else {
     M5.Lcd.println("Connection failed.");
@@ -98,8 +97,19 @@ String handleReceivedMessage(String message) {
   updatedValue = "";
   if (path != NULL) {
     updatedValue = String(path) + ": ";
-    JsonVariant value = updates["value"];
-    serializeJson(value, updatedValue);
+    if (updates.containsKey("value")) {
+      JsonVariant value = updates["value"];
+      if (value.is<int>()) {
+        updatedValue = updatedValue + " int: ";         
+      } else if (value.is<float>()) {
+        updatedValue = updatedValue + " float: ";         
+      } else if (value.is<const char*>()) {
+        updatedValue = updatedValue + " str: ";         
+      } else if (value.is<boolean>()) {
+        updatedValue = updatedValue + " bool: ";         
+      }            
+      serializeJson(value, updatedValue);
+    }
   }
   return updatedValue;
 }
