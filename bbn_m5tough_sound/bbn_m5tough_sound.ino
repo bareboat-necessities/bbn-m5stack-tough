@@ -87,10 +87,10 @@ void setup() {
   DisplayInit();
   M5.Lcd.setTextColor(RED);
   M5.Lcd.setCursor(10, 10);      // Set the cursor at (10,10).
-  M5.Lcd.printf("Speak Test!");  // The screen prints the formatted string and wraps it.
+  M5.Lcd.printf("Sound Test!");  // The screen prints the formatted string and wraps it.
   M5.Lcd.setTextColor(BLACK);
   M5.Lcd.setCursor(10, 26);
-  M5.Lcd.printf("Press Left Buttom Corner to hear DingDong!");
+  M5.Lcd.printf("Press Left Bottom Corner to hear DingDong!");
   SpeakInit();
   DingDong();
   delay(100);
