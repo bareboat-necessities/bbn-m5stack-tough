@@ -77,7 +77,6 @@ void loop() {
   M5.update();
 }
 
-
 String updatedValue;
 
 String handleReceivedMessage(String message) {
@@ -92,23 +91,24 @@ String handleReceivedMessage(String message) {
   JsonObject obj = doc.as<JsonObject>();
 
   JsonObject updates = obj["updates"][0]["values"][0];
-  const char* path = updates["path"].as<const char*>();
-
-  updatedValue = "";
-  if (path != NULL) {
-    updatedValue = String(path) + ": ";
-    if (updates.containsKey("value")) {
-      JsonVariant value = updates["value"];
-      if (value.is<int>()) {
-        updatedValue = updatedValue + " int: ";         
-      } else if (value.is<float>()) {
-        updatedValue = updatedValue + " float: ";         
-      } else if (value.is<const char*>()) {
-        updatedValue = updatedValue + " str: ";         
-      } else if (value.is<boolean>()) {
-        updatedValue = updatedValue + " bool: ";         
-      }            
-      serializeJson(value, updatedValue);
+  if (updates.containsKey("path")) {
+    const char* path = updates["path"].as<const char*>();
+    updatedValue = "";
+    if (path != NULL) {
+      updatedValue = String(path) + ": ";
+      if (updates.containsKey("value")) {
+        JsonVariant value = updates["value"];
+        if (value.is<int>()) {
+          updatedValue = updatedValue + " int: ";
+        } else if (value.is<float>()) {
+          updatedValue = updatedValue + " float: ";
+        } else if (value.is<const char*>()) {
+          updatedValue = updatedValue + " str: ";
+        } else if (value.is<boolean>()) {
+          updatedValue = updatedValue + " bool: ";
+        }
+        serializeJson(value, updatedValue);
+      }
     }
   }
   return updatedValue;
