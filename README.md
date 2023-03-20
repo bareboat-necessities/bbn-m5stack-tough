@@ -8,6 +8,8 @@ Mostly oriented for boating projects
 
 Related projects:
 
+https://github.com/m5stack/M5Tough
+
 https://github.com/JohnySeven/SensESPWatch
 
 https://github.com/JohnySeven/TWatchSK
