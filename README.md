@@ -12,3 +12,7 @@ https://github.com/JohnySeven/SensESPWatch
 
 https://github.com/JohnySeven/TWatchSK
 
+https://github.com/SignalK/SensESP
+
+https://github.com/norbert-walter/esp32-nmea2000
+
