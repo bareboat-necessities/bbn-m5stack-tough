@@ -78,7 +78,7 @@ void setup() {
   lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   init_disp_driver();
   init_touch_driver();
-  lv_autopilot_buttons();
+  lv_autopilot_buttons(lv_scr_act());
 }
 
 Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
@@ -121,8 +121,9 @@ static void event_cb(lv_event_t *e) {
   }
 }
 
-#define LV_SYMBOL_DOUBLE_LEFT            "\xEF\x81\x93 \xEF\x81\x93"
-#define LV_SYMBOL_DOUBLE_RIGHT           "\xEF\x81\x94 \xEF\x81\x94"
+#define LV_SYMBOL_DOUBLE_LEFT "\xEF\x81\x93 \xEF\x81\x93"
+#define LV_SYMBOL_DOUBLE_RIGHT "\xEF\x81\x94 \xEF\x81\x94"
+#define LV_SYMBOL_DEGREES "\xC2\xB0"
 
 static const char *btnm_map[] = {
   LV_SYMBOL_DOUBLE_LEFT, LV_SYMBOL_DOUBLE_RIGHT, "\n",
@@ -131,8 +132,28 @@ static const char *btnm_map[] = {
   "MODE", LV_SYMBOL_EYE_OPEN, ""
 };
 
-void lv_autopilot_buttons(void) {
-  lv_obj_t *btnm = lv_btnmatrix_create(lv_scr_act());
+void lv_autopilot_buttons(lv_obj_t * parent) {
+  lv_obj_t *led = lv_led_create(parent);
+  lv_obj_align(led, LV_ALIGN_OUT_LEFT_TOP, 20, 13);
+  lv_led_set_color(led, lv_palette_main(LV_PALETTE_RED));
+  lv_led_on(led);
+
+  int sz= 110;
+  int ym = 18;
+
+  lv_obj_t * heading = lv_label_create(parent);
+  lv_label_set_text(heading, (String("HDG:  -120") + LV_SYMBOL_DEGREES).c_str());
+  lv_obj_set_width(heading, sz);  
+  lv_obj_set_style_text_align(heading, LV_TEXT_ALIGN_LEFT, 0);
+  lv_obj_align(heading, LV_ALIGN_TOP_LEFT, 70, ym);
+
+  lv_obj_t * command = lv_label_create(parent);
+  lv_label_set_text(command, (String("CMD:  -120") + LV_SYMBOL_DEGREES).c_str());
+  lv_obj_set_width(command, 120);  
+  lv_obj_set_style_text_align(command, LV_TEXT_ALIGN_LEFT, 0);
+  lv_obj_align(command, LV_ALIGN_TOP_LEFT, 70 + sz, ym);
+
+  lv_obj_t *btnm = lv_btnmatrix_create(parent);
   lv_btnmatrix_set_map(btnm, btnm_map);
   lv_btnmatrix_set_btn_width(btnm, 6, 3);
   lv_obj_set_size(btnm, 320, 190);
