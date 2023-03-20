@@ -87,6 +87,6 @@ Possible future ehnancements:
 - Retrievable Keel Status
 - Alarm Clock / Timer / Stopwatch
 - Solar Panel/Generator (Wind/Prop/Diesel) Power Monitoring
-- Cabin, Deck, Search, Underwater lights controls
+- Cabin, Deck, Search, Underwater lights controls,Fans, Blower controls
 - Shrouds Load Forces Display from sensors
 - Hatches Status Display
