@@ -18,6 +18,8 @@ https://github.com/SignalK/SensESP
 
 https://github.com/norbert-walter/esp32-nmea2000
 
+https://github.com/hatlabs/SH-wg-firmware
+
 https://github.com/andyrbarrow/SignalKM5StackInstrument
 
 https://github.com/bareboat-necessities/my-bareboat/tree/master/m5-boat-display
