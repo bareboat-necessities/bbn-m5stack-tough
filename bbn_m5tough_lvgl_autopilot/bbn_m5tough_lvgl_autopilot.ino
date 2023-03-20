@@ -139,7 +139,7 @@ void lv_autopilot_buttons(lv_obj_t *parent) {
   lv_led_on(led);
 
   int width_l = 110;
-  int left_l = 70;
+  int left_l = 90;
   int top_l = 18;
 
   lv_obj_t *heading = lv_label_create(parent);
