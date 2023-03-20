@@ -55,6 +55,7 @@ Possible future ehnancements:
 - Engine RPM, oil temp, voltage, etc Display
 - Batteries Status, etc Display
 - Wind Display
+- Depth Display
 - Barometer with History
 - LoRa Tracker receiver and display
 - SignalK Alarms Display
