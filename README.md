@@ -81,5 +81,10 @@ Possible future ehnancements:
 - Local Sunset/Sunrise
 - Fog Alarm, Fog Signals (reminders)
 - AC/Fridge/Heater/Watermaker/Hot Water Tank monitoring
+- Fridge/AC thermostat control
 - Retrievable Keel Status
 - Alarm Clock / Timer / Stopwatch
+- Solar Panel/Generator (Wind/Prop/Diesel) Power Monitoring
+- Cabin, Deck, Search, Underwater lights controls
+- Shrouds Load Forces Display from sensors
+- Hatches Status Display
