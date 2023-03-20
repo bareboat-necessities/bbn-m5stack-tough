@@ -121,8 +121,8 @@ static void event_cb(lv_event_t *e) {
   }
 }
 
-#define LV_SYMBOL_DOUBLE_LEFT "\xEF\x81\x93 \xEF\x81\x93"
-#define LV_SYMBOL_DOUBLE_RIGHT "\xEF\x81\x94 \xEF\x81\x94"
+#define LV_SYMBOL_DOUBLE_LEFT LV_SYMBOL_LEFT " " LV_SYMBOL_LEFT
+#define LV_SYMBOL_DOUBLE_RIGHT LV_SYMBOL_RIGHT " " LV_SYMBOL_RIGHT
 #define LV_SYMBOL_DEGREES "\xC2\xB0"
 
 static const char *btnm_map[] = {
