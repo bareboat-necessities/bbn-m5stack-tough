@@ -60,7 +60,7 @@ Possible future ehnancements:
 - Barometer with History
 - LoRa Tracker receiver and display
 - SignalK Alarms Display
-- Weather Display
+- Weather Display, Air/Water temp, pressure, humidity, air quality
 - Tides and Currents Display
 - AIS Display
 - Sailboat Polar Diagram Display
