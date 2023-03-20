@@ -80,3 +80,6 @@ Possible future ehnancements:
 - Wave Height, G-Forces Display
 - Local Sunset/Sunrise
 - Fog Alarm, Fog Signals (reminders)
+- AC/Fridge/Heater/Watermaker/Hot Water Tank monitoring
+- Retrievable Keel Status
+- Alarm Clock / Timer / Stopwatch
