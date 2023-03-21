@@ -91,7 +91,7 @@ static void set_value(void *indic, int32_t v) {
 }
 
 /**
- * A simple meter
+ * A heel display (clinometer)
  */
 void lv_heel_display(lv_obj_t *parent) {
   heel_display = lv_meter_create(parent);
