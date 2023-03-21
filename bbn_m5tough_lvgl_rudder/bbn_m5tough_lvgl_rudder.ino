@@ -91,7 +91,7 @@ static void set_value(void *indic, int32_t v) {
 }
 
 /**
- * A simple meter
+ * A rudder position display
  */
 void lv_rudder_display(lv_obj_t * parent) {
   rudder_display = lv_meter_create(parent);
