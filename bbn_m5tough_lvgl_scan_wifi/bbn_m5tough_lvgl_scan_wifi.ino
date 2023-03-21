@@ -20,8 +20,8 @@ static lv_obj_t *kb;
 
 static void btnScanWifi_event(lv_event_t *event) {
   WiFi.mode(WIFI_STA);  // Set WiFi to station mode and disconnect from an AP if it was previously connected.
-  WiFi.disconnect();    //Turn off all wifi connections.
-  delay(100);           //100 ms delay.
+  WiFi.disconnect();    // Turn off all wifi connections.
+  delay(100);           // 100 ms delay.
 
   int n = WiFi.scanNetworks();  //return the number of networks found.
   lv_list_wifi(n);
@@ -42,7 +42,7 @@ static void event_handler_wifi(lv_event_t *e) {
 void lv_list_wifi(int num) {
   /*Create a list*/
   list_wifi = lv_list_create(lv_scr_act());
-  lv_obj_set_size(list_wifi, 280, 200);
+  lv_obj_set_size(list_wifi, 300, 200);
   lv_obj_center(list_wifi);
 
   /*Add buttons to the list*/
@@ -51,12 +51,7 @@ void lv_list_wifi(int num) {
   lv_list_add_text(list_wifi, "Wi-Fi Networks");
 
   for (int i = 0; i < num; ++i) {
-    //Print SSID and RSSI for each network found.
-    //M5.Lcd.printf("%d:",i + 1);
-    //M5.Lcd.print(WiFi.SSID(i));
-    //M5.Lcd.printf("(%d)",WiFi.RSSI(i));
-    //M5.Lcd.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? " " : "*");
-    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, WiFi.SSID(i).c_str());
+    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String("[o] ") : String()) + WiFi.SSID(i)).c_str());
     lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)i);
     delay(10);
   }
