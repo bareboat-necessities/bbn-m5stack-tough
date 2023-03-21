@@ -48,25 +48,29 @@ void setup() {
     M5.Lcd.print("Connected to ");
     M5.Lcd.println(host);
 
+    delay(50);
     String dataFeed = client.readStringUntil('\n');
     M5.Lcd.println(dataFeed);
     const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"*\"}]}";
     client.println(data);
     client.flush();
-    //delay(1000);
+    delay(50);
 
     int samples = 20;
     while (client.connected() && samples > 0) {
-      dataFeed = client.readStringUntil('\n');
-      if (dataFeed.length() > 0) {
-        //M5.Lcd.println(dataFeed);
-        String parsed = handleReceivedMessage(dataFeed);
-        if (parsed.length() > 0) {
-          M5.Lcd.println(parsed);
-          samples--;
+      if (client.available()) {
+        dataFeed = client.readStringUntil('\n');
+        if (dataFeed.length() > 0) {
+          //M5.Lcd.println(dataFeed);
+          String parsed = handleReceivedMessage(dataFeed);
+          if (parsed.length() > 0) {
+            M5.Lcd.println(parsed);
+            samples--;
+          }
         }
+      } else {
+        delay(1);
       }
-      delay(1);
     }
   } else {
     M5.Lcd.println("Connection failed.");
