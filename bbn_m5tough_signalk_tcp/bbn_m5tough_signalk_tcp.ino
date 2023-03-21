@@ -55,27 +55,26 @@ void setup() {
     client.println(data);
     client.flush();
     delay(50);
-
-    int samples = 20;
-    while (client.connected() && samples > 0) {
-      if (client.available()) {
-        String parsed = handleStream(client);
-        if (parsed.length() > 0) {
-          M5.Lcd.println(parsed);
-          samples--;
-        }
-      } else {
-        delay(1);
-      }
-    }
   } else {
     M5.Lcd.println("Connection failed.");
     return;
   }
 }
 
+int samples = 20;
+
 void loop() {
   M5.update();
+  if (client.connected()) {
+    while (client.available() && samples > 0) {
+      String parsed = handleStream(client);
+      if (parsed.length() > 0) {
+        M5.Lcd.println(parsed);
+        samples--;
+      }
+    }
+    delay(1);
+  }
 }
 
 String handleStream(Stream& stream) {
