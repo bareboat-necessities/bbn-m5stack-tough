@@ -84,56 +84,56 @@ void setup() {
   lv_wind_display(lv_scr_act());
 }
 
-static lv_obj_t *meter;
+static lv_obj_t *wind_display;
 
 static void set_value(void *indic, int32_t v) {
-  lv_meter_set_indicator_value(meter, (lv_meter_indicator_t *)indic, v);
+  lv_meter_set_indicator_value(wind_display, (lv_meter_indicator_t *)indic, v);
 }
 
 /**
- * A simple meter
+ * A wind display meter
  */
 void lv_wind_display(lv_obj_t *parent) {
-  meter = lv_meter_create(parent);
-  lv_obj_center(meter);
-  lv_obj_set_size(meter, 210, 210);
+  wind_display = lv_meter_create(parent);
+  lv_obj_center(wind_display);
+  lv_obj_set_size(wind_display, 210, 210);
 
   /*Add a scale first*/
-  lv_meter_scale_t *scale = lv_meter_add_scale(meter);
-  lv_meter_set_scale_ticks(meter, scale, 37, 2, 9, lv_palette_main(LV_PALETTE_GREY));
-  lv_meter_set_scale_range(meter, scale, -180, 180, 360, 90);
+  lv_meter_scale_t *scale = lv_meter_add_scale(wind_display);
+  lv_meter_set_scale_ticks(wind_display, scale, 37, 2, 9, lv_palette_main(LV_PALETTE_GREY));
+  lv_meter_set_scale_range(wind_display, scale, -180, 180, 360, 90);
 
-  lv_meter_scale_t *scale2 = lv_meter_add_scale(meter);
-  lv_meter_set_scale_ticks(meter, scale2, 12, 0, 0, lv_palette_main(LV_PALETTE_GREY));
-  lv_meter_set_scale_major_ticks(meter, scale2, 1, 3, 14, lv_palette_main(LV_PALETTE_GREY), 14); /*Every tick is major*/
-  lv_meter_set_scale_range(meter, scale2, -150, 180, 330, 120);
+  lv_meter_scale_t *scale2 = lv_meter_add_scale(wind_display);
+  lv_meter_set_scale_ticks(wind_display, scale2, 12, 0, 0, lv_palette_main(LV_PALETTE_GREY));
+  lv_meter_set_scale_major_ticks(wind_display, scale2, 1, 3, 14, lv_palette_main(LV_PALETTE_GREY), 14); /*Every tick is major*/
+  lv_meter_set_scale_range(wind_display, scale2, -150, 180, 330, 120);
 
   lv_meter_indicator_t *indic;
 
   /*Add a red arc to the start*/
-  indic = lv_meter_add_arc(meter, scale, 4, lv_palette_main(LV_PALETTE_RED), 2);
-  lv_meter_set_indicator_start_value(meter, indic, -60);
-  lv_meter_set_indicator_end_value(meter, indic, -20);
+  indic = lv_meter_add_arc(wind_display, scale, 4, lv_palette_main(LV_PALETTE_RED), 2);
+  lv_meter_set_indicator_start_value(wind_display, indic, -60);
+  lv_meter_set_indicator_end_value(wind_display, indic, -20);
 
   /*Make the tick lines red at the start of the scale*/
   indic = lv_meter_add_scale_lines(
-    meter, scale, lv_palette_main(LV_PALETTE_RED), lv_palette_main(LV_PALETTE_RED), false, 0);
-  lv_meter_set_indicator_start_value(meter, indic, -60);
-  lv_meter_set_indicator_end_value(meter, indic, -20);
+    wind_display, scale, lv_palette_main(LV_PALETTE_RED), lv_palette_main(LV_PALETTE_RED), false, 0);
+  lv_meter_set_indicator_start_value(wind_display, indic, -60);
+  lv_meter_set_indicator_end_value(wind_display, indic, -20);
 
   /*Add a green arc to the end*/
-  indic = lv_meter_add_arc(meter, scale, 4, lv_palette_main(LV_PALETTE_GREEN), 2);
-  lv_meter_set_indicator_start_value(meter, indic, 20);
-  lv_meter_set_indicator_end_value(meter, indic, 60);
+  indic = lv_meter_add_arc(wind_display, scale, 4, lv_palette_main(LV_PALETTE_GREEN), 2);
+  lv_meter_set_indicator_start_value(wind_display, indic, 20);
+  lv_meter_set_indicator_end_value(wind_display, indic, 60);
 
   /*Make the tick lines green at the end of the scale*/
   indic = lv_meter_add_scale_lines(
-    meter, scale, lv_palette_main(LV_PALETTE_GREEN), lv_palette_main(LV_PALETTE_GREEN), false, 0);
-  lv_meter_set_indicator_start_value(meter, indic, 20);
-  lv_meter_set_indicator_end_value(meter, indic, 60);
+    wind_display, scale, lv_palette_main(LV_PALETTE_GREEN), lv_palette_main(LV_PALETTE_GREEN), false, 0);
+  lv_meter_set_indicator_start_value(wind_display, indic, 20);
+  lv_meter_set_indicator_end_value(wind_display, indic, 60);
 
   /*Add a needle line indicator*/
-  indic = lv_meter_add_needle_line(meter, scale, 6, lv_palette_main(LV_PALETTE_GREY), -10);
+  indic = lv_meter_add_needle_line(wind_display, scale, 6, lv_palette_main(LV_PALETTE_GREY), -10);
 
   /*Create an animation to set the value*/
   lv_anim_t a;
