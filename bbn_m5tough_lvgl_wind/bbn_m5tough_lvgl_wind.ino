@@ -81,48 +81,70 @@ void setup() {
   init_disp_driver();
   init_touch_driver();
   lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
-  lv_heel_display(lv_scr_act());
+  lv_wind_display(lv_scr_act());
 }
 
-static lv_obj_t *heel_display;
+static lv_obj_t *meter;
 
 static void set_value(void *indic, int32_t v) {
-  lv_meter_set_indicator_value(heel_display, (lv_meter_indicator_t *)indic, v);
+  lv_meter_set_indicator_value(meter, (lv_meter_indicator_t *)indic, v);
 }
 
 /**
  * A simple meter
  */
-void lv_heel_display(lv_obj_t * parent) {
-  heel_display = lv_meter_create(parent);
-  lv_obj_align(heel_display, LV_ALIGN_CENTER, 0, -40);
-  lv_obj_set_size(heel_display, 300, 300);
-  //v_obj_set_style_arc_width(heel_display, 0, LV_PART_MAIN);
-  lv_obj_set_style_border_width(heel_display, 0, LV_PART_MAIN);
-  lv_obj_set_style_bg_opa(heel_display, LV_OPA_TRANSP, LV_PART_MAIN);
+void lv_wind_display(lv_obj_t *parent) {
+  meter = lv_meter_create(parent);
+  lv_obj_center(meter);
+  lv_obj_set_size(meter, 210, 210);
 
   /*Add a scale first*/
-  lv_meter_scale_t *scale = lv_meter_add_scale(heel_display);
-  lv_meter_set_scale_range(heel_display, scale, -45, 45, 100, 40);
-  //lv_linemeter_set_mirror(heel_display, true);
-  lv_meter_set_scale_ticks(heel_display, scale, 19, 2, 10, lv_palette_main(LV_PALETTE_GREY));
-  lv_meter_set_scale_major_ticks(heel_display, scale, 3, 3, 20, lv_palette_main(LV_PALETTE_GREY), 15);
+  lv_meter_scale_t *scale = lv_meter_add_scale(meter);
+  lv_meter_set_scale_ticks(meter, scale, 37, 2, 9, lv_palette_main(LV_PALETTE_GREY));
+  lv_meter_set_scale_range(meter, scale, -180, 180, 360, 90);
+
+  lv_meter_scale_t *scale2 = lv_meter_add_scale(meter);
+  lv_meter_set_scale_ticks(meter, scale2, 12, 0, 0, lv_palette_main(LV_PALETTE_GREY));
+  lv_meter_set_scale_major_ticks(meter, scale2, 1, 3, 14, lv_palette_main(LV_PALETTE_GREY), 14); /*Every tick is major*/
+  lv_meter_set_scale_range(meter, scale2, -150, 180, 330, 120);
 
   lv_meter_indicator_t *indic;
 
+  /*Add a red arc to the start*/
+  indic = lv_meter_add_arc(meter, scale, 4, lv_palette_main(LV_PALETTE_RED), 2);
+  lv_meter_set_indicator_start_value(meter, indic, -60);
+  lv_meter_set_indicator_end_value(meter, indic, -20);
+
+  /*Make the tick lines red at the start of the scale*/
+  indic = lv_meter_add_scale_lines(
+    meter, scale, lv_palette_main(LV_PALETTE_RED), lv_palette_main(LV_PALETTE_RED), false, 0);
+  lv_meter_set_indicator_start_value(meter, indic, -60);
+  lv_meter_set_indicator_end_value(meter, indic, -20);
+
+  /*Add a green arc to the end*/
+  indic = lv_meter_add_arc(meter, scale, 4, lv_palette_main(LV_PALETTE_GREEN), 2);
+  lv_meter_set_indicator_start_value(meter, indic, 20);
+  lv_meter_set_indicator_end_value(meter, indic, 60);
+
+  /*Make the tick lines green at the end of the scale*/
+  indic = lv_meter_add_scale_lines(
+    meter, scale, lv_palette_main(LV_PALETTE_GREEN), lv_palette_main(LV_PALETTE_GREEN), false, 0);
+  lv_meter_set_indicator_start_value(meter, indic, 20);
+  lv_meter_set_indicator_end_value(meter, indic, 60);
+
   /*Add a needle line indicator*/
-  indic = lv_meter_add_needle_line(heel_display, scale, 4, lv_palette_main(LV_PALETTE_GREY), -10);
+  indic = lv_meter_add_needle_line(meter, scale, 6, lv_palette_main(LV_PALETTE_GREY), -10);
 
   /*Create an animation to set the value*/
   lv_anim_t a;
   lv_anim_init(&a);
   lv_anim_set_exec_cb(&a, set_value);
   lv_anim_set_var(&a, indic);
-  lv_anim_set_values(&a, 5, 15);
-  lv_anim_set_time(&a, 5000);
-  lv_anim_set_repeat_delay(&a, 3000);
-  lv_anim_set_playback_time(&a, 5000);
-  lv_anim_set_playback_delay(&a, 3000);
+  lv_anim_set_values(&a, -60, -20);
+  lv_anim_set_time(&a, 2000);
+  lv_anim_set_repeat_delay(&a, 100);
+  lv_anim_set_playback_time(&a, 500);
+  lv_anim_set_playback_delay(&a, 100);
   lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
   lv_anim_start(&a);
 }
