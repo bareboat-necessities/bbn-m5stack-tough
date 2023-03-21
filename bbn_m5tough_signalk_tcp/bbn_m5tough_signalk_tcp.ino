@@ -3,12 +3,19 @@
 #include <WiFi.h>
 #include <ArduinoJson.h>
 #include <Preferences.h>
+#undef min(a, b)
+#include <ReactESP.h>
 
 Preferences preferences;
 String wifi_ssid;      // Store the name of the wireless network.
 String wifi_password;  // Store the password of the wireless network.
 
 WiFiClient client;
+
+using namespace reactesp;
+ReactESP app;
+
+int samples = 20;
 
 void setup() {
   M5.begin();
@@ -55,26 +62,26 @@ void setup() {
     client.println(data);
     client.flush();
     delay(50);
+
+    app.onAvailable(client, [samples]() {
+      String parsed = handleStream(client);
+      if (parsed.length() > 0) {
+        M5.Lcd.println(parsed);
+        samples--;
+      }
+      if (samples <= 0) {
+        client.stop();
+      }
+    });
   } else {
     M5.Lcd.println("Connection failed.");
     return;
   }
 }
 
-int samples = 20;
-
 void loop() {
   M5.update();
-  if (client.connected()) {
-    while (client.available() && samples > 0) {
-      String parsed = handleStream(client);
-      if (parsed.length() > 0) {
-        M5.Lcd.println(parsed);
-        samples--;
-      }
-    }
-    delay(1);
-  }
+  app.tick();
 }
 
 String handleStream(Stream& stream) {
