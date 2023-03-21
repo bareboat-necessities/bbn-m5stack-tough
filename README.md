@@ -113,3 +113,13 @@ https://github.com/mhaberler/SensESP-M5Stack
 - Cabin, Deck, Search, Underwater lights controls,Fans, Blower controls
 - Shrouds Load Forces Display from sensors
 - Hatches Status Display
+
+
+
+##  Interfaces:
+
+- SignalK (will start with that)
+- NMEA 0183
+- NMEA 2000
+- MQTT (for Victron and others)
+
