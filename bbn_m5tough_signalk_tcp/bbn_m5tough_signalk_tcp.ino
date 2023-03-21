@@ -59,14 +59,10 @@ void setup() {
     int samples = 20;
     while (client.connected() && samples > 0) {
       if (client.available()) {
-        dataFeed = client.readStringUntil('\n');
-        if (dataFeed.length() > 0) {
-          //M5.Lcd.println(dataFeed);
-          String parsed = handleReceivedMessage(dataFeed);
-          if (parsed.length() > 0) {
-            M5.Lcd.println(parsed);
-            samples--;
-          }
+        String parsed = handleStream(client);
+        if (parsed.length() > 0) {
+          M5.Lcd.println(parsed);
+          samples--;
         }
       } else {
         delay(1);
@@ -82,11 +78,9 @@ void loop() {
   M5.update();
 }
 
-String updatedValue;
-
-String handleReceivedMessage(String message) {
-  StaticJsonDocument<4096> doc;
-  DeserializationError err = deserializeJson(doc, message);
+String handleStream(Stream& stream) {
+  DynamicJsonDocument doc(4096);
+  DeserializationError err = deserializeJson(doc, stream);
   // Parse succeeded?
   if (err) {
     Serial.print(F("deserializeJson() returned "));
@@ -95,10 +89,10 @@ String handleReceivedMessage(String message) {
   }
   JsonObject obj = doc.as<JsonObject>();
 
+  String updatedValue = "";
   JsonObject updates = obj["updates"][0]["values"][0];
   if (updates.containsKey("path")) {
     const char* path = updates["path"].as<const char*>();
-    updatedValue = "";
     if (path != NULL) {
       updatedValue = String(path) + ": ";
       if (updates.containsKey("value")) {
