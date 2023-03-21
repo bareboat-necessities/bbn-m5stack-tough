@@ -6,6 +6,13 @@ With LVGL UI
 
 Mostly oriented for boating projects
 
+In Arduino IDE you need to install few libraries:
+
+- M5StackTough (download zip source from github and import library as zip file) https://github.com/m5stack/M5Tough
+- LVGL (install 8.x version via Arduino IDE libraries manager) https://github.com/lvgl/lvgl
+- ReactESP (install 2.x version via Arduino IDE libraries manager) https://github.com/mairas/ReactESP
+
+
 Related projects:
 
 https://github.com/m5stack/M5Tough
