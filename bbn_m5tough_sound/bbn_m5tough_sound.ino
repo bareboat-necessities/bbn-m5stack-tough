@@ -72,7 +72,7 @@ void DisplayInit(void) {       // Initialize the display.
   M5.Lcd.setTextSize(2);       // Set font size to 2.
 }
 
-void SpeakInit(void) {
+void SpeakerInit(void) {
   M5.Axp.SetSpkEnable(true);
   InitI2SSpeakOrMic(MODE_SPK);
 }
@@ -90,8 +90,10 @@ void setup() {
   M5.Lcd.printf("Sound Test!");  // The screen prints the formatted string and wraps it.
   M5.Lcd.setTextColor(BLACK);
   M5.Lcd.setCursor(10, 26);
-  M5.Lcd.printf("Press Left Bottom Corner to hear DingDong!");
-  SpeakInit();
+  M5.Lcd.printf("Press Left Bottom Corner");
+  M5.Lcd.setCursor(10, 42);
+  M5.Lcd.printf("to hear DingDong!");
+  SpeakerInit();
   DingDong();
   delay(100);
 }
