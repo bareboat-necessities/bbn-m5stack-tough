@@ -1,10 +1,15 @@
-# bbn-m5stack-tough
+# M5Stack Tough Arduino sketches
 
 M5Stack Tough Arduino sketches
 
 With LVGL UI
 
 Mostly oriented for boating projects
+
+## Register M5Stack Board in Arduino IDE
+
+
+## Required Libraries
 
 In Arduino IDE you need to install few libraries:
 
@@ -14,7 +19,7 @@ In Arduino IDE you need to install few libraries:
 - ArduinoJson (install 6.x version via Arduino IDE libraries manager) https://arduinojson.org/
 
 
-Related projects:
+## Related projects:
 
 https://github.com/m5stack/M5Tough
 
@@ -55,7 +60,7 @@ https://github.com/mhaberler/SensESP-M5Stack
 
 
 
-Possible future ehnancements:
+##  Possible future ehnancements:
 
 - PyPilot Remote Control Screen
 - Lightning Detector with Screen
