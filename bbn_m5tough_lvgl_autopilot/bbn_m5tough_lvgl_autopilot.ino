@@ -134,7 +134,7 @@ static const char *btnm_map[] = {
 
 void lv_autopilot_buttons(lv_obj_t *parent) {
   lv_obj_t *led = lv_led_create(parent);
-  lv_obj_align(led, LV_ALIGN_OUT_LEFT_TOP, 20, 13);
+  lv_obj_align(led, LV_ALIGN_OUT_LEFT_TOP, 16, 13);
   lv_led_set_color(led, lv_palette_main(LV_PALETTE_GREEN));
   lv_led_on(led);
 
