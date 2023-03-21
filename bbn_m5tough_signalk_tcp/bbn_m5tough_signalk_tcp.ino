@@ -66,6 +66,7 @@ void setup() {
           samples--;
         }
       }
+      delay(1);
     }
   } else {
     M5.Lcd.println("Connection failed.");
