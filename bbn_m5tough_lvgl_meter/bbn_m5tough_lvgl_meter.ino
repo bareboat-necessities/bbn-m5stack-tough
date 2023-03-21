@@ -9,13 +9,13 @@
 
 // init the tft espi
 static lv_disp_draw_buf_t draw_buf;
-static lv_disp_drv_t disp_drv;   // Descriptor of a display driver
-static lv_indev_drv_t indev_drv; // Descriptor of a touch driver
+static lv_disp_drv_t disp_drv;    // Descriptor of a display driver
+static lv_indev_drv_t indev_drv;  // Descriptor of a touch driver
 
 M5Display *tft;
 
-static void ta_event_cb(lv_event_t * e);
-static lv_obj_t * kb;
+static void ta_event_cb(lv_event_t *e);
+static lv_obj_t *kb;
 
 void tft_lv_initialization() {
   M5.begin();
@@ -54,13 +54,13 @@ void init_disp_driver() {
   lv_disp_set_bg_color(NULL, lv_color_hex3(0x000));  // Set default background color to black
 }
 
-void my_touchpad_read(lv_indev_drv_t * drv, lv_indev_data_t * data) {
+void my_touchpad_read(lv_indev_drv_t *drv, lv_indev_data_t *data) {
   TouchPoint_t pos = M5.Touch.getPressPoint();
-  bool touched = ( pos.x == -1 ) ? false : true;  
-  if (!touched) {    
+  bool touched = (pos.x == -1) ? false : true;
+  if (!touched) {
     data->state = LV_INDEV_STATE_RELEASED;
   } else {
-    data->state = LV_INDEV_STATE_PRESSED; 
+    data->state = LV_INDEV_STATE_PRESSED;
     data->point.x = pos.x;
     data->point.y = pos.y;
   }
@@ -71,7 +71,7 @@ void init_touch_driver() {
   lv_indev_drv_init(&indev_drv);
   indev_drv.type = LV_INDEV_TYPE_POINTER;
   indev_drv.read_cb = my_touchpad_read;
-  lv_indev_t * my_indev = lv_indev_drv_register(&indev_drv);  // register
+  lv_indev_t *my_indev = lv_indev_drv_register(&indev_drv);  // register
 }
 
 static int theme = 1;
@@ -84,71 +84,65 @@ void setup() {
   lv_example_meter_1();
 }
 
-static lv_obj_t * meter;
+static lv_obj_t *meter;
 
-static void set_value(void * indic, int32_t v) {
-    lv_meter_set_indicator_value(meter, (lv_meter_indicator_t *) indic, v);
+static void set_value(void *indic, int32_t v) {
+  lv_meter_set_indicator_value(meter, (lv_meter_indicator_t *)indic, v);
 }
 
 /**
  * A simple meter
  */
 void lv_example_meter_1(void) {
-    meter = lv_meter_create(lv_scr_act());
-    lv_obj_center(meter);
-    lv_obj_set_size(meter, 210, 210);
+  meter = lv_meter_create(lv_scr_act());
+  lv_obj_center(meter);
+  lv_obj_set_size(meter, 200, 200);
 
-    /*Add a scale first*/
-    lv_meter_scale_t * scale = lv_meter_add_scale(meter);
-    lv_meter_set_scale_ticks(meter, scale, 37, 2, 9, lv_palette_main(LV_PALETTE_GREY));
-    lv_meter_set_scale_range(meter, scale, -180, 180, 360, 90);
+  /*Add a scale first*/
+  lv_meter_scale_t *scale = lv_meter_add_scale(meter);
+  lv_meter_set_scale_ticks(meter, scale, 41, 2, 10, lv_palette_main(LV_PALETTE_GREY));
+  lv_meter_set_scale_major_ticks(meter, scale, 8, 4, 15, lv_palette_main(LV_PALETTE_GREY), 10);
 
-    lv_meter_scale_t * scale2 = lv_meter_add_scale(meter);
-    lv_meter_set_scale_ticks(meter, scale2, 12, 0, 0, lv_palette_main(LV_PALETTE_GREY));               
-    lv_meter_set_scale_major_ticks(meter, scale2, 1, 3, 14, lv_palette_main(LV_PALETTE_GREY), 14);    /*Every tick is major*/
-    lv_meter_set_scale_range(meter, scale2, -150, 180, 330, 120);
+  lv_meter_indicator_t *indic;
 
-    lv_meter_indicator_t * indic;
+  /*Add a blue arc to the start*/
+  indic = lv_meter_add_arc(meter, scale, 3, lv_palette_main(LV_PALETTE_BLUE), 0);
+  lv_meter_set_indicator_start_value(meter, indic, 0);
+  lv_meter_set_indicator_end_value(meter, indic, 20);
 
-    /*Add a red arc to the start*/
-    indic = lv_meter_add_arc(meter, scale, 4, lv_palette_main(LV_PALETTE_RED), 2);
-    lv_meter_set_indicator_start_value(meter, indic, -60);
-    lv_meter_set_indicator_end_value(meter, indic, -20);
+  /*Make the tick lines blue at the start of the scale*/
+  indic = lv_meter_add_scale_lines(
+    meter, scale, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_BLUE), false, 0);
+  lv_meter_set_indicator_start_value(meter, indic, 0);
+  lv_meter_set_indicator_end_value(meter, indic, 20);
 
-    /*Make the tick lines red at the start of the scale*/
-    indic = lv_meter_add_scale_lines(meter, scale, lv_palette_main(LV_PALETTE_RED), lv_palette_main(LV_PALETTE_RED),
-                                     false, 0);
-    lv_meter_set_indicator_start_value(meter, indic, -60);
-    lv_meter_set_indicator_end_value(meter, indic, -20);
+  /*Add a red arc to the end*/
+  indic = lv_meter_add_arc(meter, scale, 3, lv_palette_main(LV_PALETTE_RED), 0);
+  lv_meter_set_indicator_start_value(meter, indic, 80);
+  lv_meter_set_indicator_end_value(meter, indic, 100);
 
-    /*Add a green arc to the end*/
-    indic = lv_meter_add_arc(meter, scale, 4, lv_palette_main(LV_PALETTE_GREEN), 2);
-    lv_meter_set_indicator_start_value(meter, indic, 20);
-    lv_meter_set_indicator_end_value(meter, indic, 60);
+  /*Make the tick lines red at the end of the scale*/
+  indic = lv_meter_add_scale_lines(
+    meter, scale, lv_palette_main(LV_PALETTE_RED), lv_palette_main(LV_PALETTE_RED), false, 0);
+  lv_meter_set_indicator_start_value(meter, indic, 80);
+  lv_meter_set_indicator_end_value(meter, indic, 100);
 
-    /*Make the tick lines green at the end of the scale*/
-    indic = lv_meter_add_scale_lines(meter, scale, lv_palette_main(LV_PALETTE_GREEN), lv_palette_main(LV_PALETTE_GREEN), false,
-                                     0);
-    lv_meter_set_indicator_start_value(meter, indic, 20);
-    lv_meter_set_indicator_end_value(meter, indic, 60);
+  /*Add a needle line indicator*/
+  indic = lv_meter_add_needle_line(meter, scale, 4, lv_palette_main(LV_PALETTE_GREY), -10);
 
-    /*Add a needle line indicator*/
-    indic = lv_meter_add_needle_line(meter, scale, 6, lv_palette_main(LV_PALETTE_GREY), -10);
-
-    /*Create an animation to set the value*/
-    lv_anim_t a;
-    lv_anim_init(&a);
-    lv_anim_set_exec_cb(&a, set_value);
-    lv_anim_set_var(&a, indic);
-    lv_anim_set_values(&a, -60, -20);
-    lv_anim_set_time(&a, 2000);
-    lv_anim_set_repeat_delay(&a, 100);
-    lv_anim_set_playback_time(&a, 500);
-    lv_anim_set_playback_delay(&a, 100);
-    lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
-    lv_anim_start(&a);
+  /*Create an animation to set the value*/
+  lv_anim_t a;
+  lv_anim_init(&a);
+  lv_anim_set_exec_cb(&a, set_value);
+  lv_anim_set_var(&a, indic);
+  lv_anim_set_values(&a, 0, 100);
+  lv_anim_set_time(&a, 2000);
+  lv_anim_set_repeat_delay(&a, 100);
+  lv_anim_set_playback_time(&a, 500);
+  lv_anim_set_playback_delay(&a, 100);
+  lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
+  lv_anim_start(&a);
 }
-
 
 Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
 
