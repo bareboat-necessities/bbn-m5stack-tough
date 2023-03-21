@@ -9,29 +9,28 @@
 
 // init the tft espi
 static lv_disp_draw_buf_t draw_buf;
-static lv_disp_drv_t disp_drv;  // Descriptor of a display driver
-static lv_indev_drv_t indev_drv; // Descriptor of a touch driver
+static lv_disp_drv_t disp_drv;    // Descriptor of a display driver
+static lv_indev_drv_t indev_drv;  // Descriptor of a touch driver
 
 M5Display *tft;
 
-static void ta_event_cb(lv_event_t * e);
-static lv_obj_t * kb;
+static void ta_event_cb(lv_event_t *e);
+static lv_obj_t *kb;
 
-static void ta_event_cb(lv_event_t * e) {
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t * ta = lv_event_get_target(e);
+static void ta_event_cb(lv_event_t *e) {
+  lv_event_code_t code = lv_event_get_code(e);
+  lv_obj_t *ta = lv_event_get_target(e);
 
-    if(code == LV_EVENT_CLICKED || code == LV_EVENT_FOCUSED) {
-        /* Focus on the clicked text area */
-        if(kb != NULL) lv_keyboard_set_textarea(kb, ta);
-    }
-    else if(code == LV_EVENT_READY) {
-        LV_LOG_USER("Ready, current text: %s", lv_textarea_get_text(ta));
-    }
+  if (code == LV_EVENT_CLICKED || code == LV_EVENT_FOCUSED) {
+    /* Focus on the clicked text area */
+    if (kb != NULL) lv_keyboard_set_textarea(kb, ta);
+  } else if (code == LV_EVENT_READY) {
+    LV_LOG_USER("Ready, current text: %s", lv_textarea_get_text(ta));
+  }
 }
 
-static void btnPowerOff_event(lv_event_t * event) {
-    M5.Axp.PowerOff();
+static void btnPowerOff_event(lv_event_t *event) {
+  M5.Axp.PowerOff();
 }
 
 void tft_lv_initialization() {
@@ -71,13 +70,13 @@ void init_disp_driver() {
   lv_disp_set_bg_color(NULL, lv_color_hex3(0x000));  // Set default background color to black
 }
 
-void my_touchpad_read(lv_indev_drv_t * drv, lv_indev_data_t * data) {
+void my_touchpad_read(lv_indev_drv_t *drv, lv_indev_data_t *data) {
   TouchPoint_t pos = M5.Touch.getPressPoint();
-  bool touched = ( pos.x == -1 ) ? false : true;  
-  if (!touched) {    
+  bool touched = (pos.x == -1) ? false : true;
+  if (!touched) {
     data->state = LV_INDEV_STATE_RELEASED;
   } else {
-    data->state = LV_INDEV_STATE_PRESSED; 
+    data->state = LV_INDEV_STATE_PRESSED;
     data->point.x = pos.x;
     data->point.y = pos.y;
   }
@@ -88,19 +87,19 @@ void init_touch_driver() {
   lv_indev_drv_init(&indev_drv);
   indev_drv.type = LV_INDEV_TYPE_POINTER;
   indev_drv.read_cb = my_touchpad_read;
-  lv_indev_t * my_indev = lv_indev_drv_register(&indev_drv);  // register
+  lv_indev_t *my_indev = lv_indev_drv_register(&indev_drv);  // register
 }
 
 void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  lv_obj_t * btn1 = lv_btn_create(lv_scr_act());
-  lv_obj_t * label = lv_label_create(btn1);
-  lv_obj_align(btn1, LV_ALIGN_CENTER, 0, 0);
+  lv_obj_t *btn = lv_btn_create(lv_scr_act());
+  lv_obj_t *label = lv_label_create(btn);
+  lv_obj_align(btn, LV_ALIGN_CENTER, 0, 0);
   lv_label_set_text(label, "Power Off");
   lv_obj_center(label);
-  lv_obj_add_event_cb(btn1, btnPowerOff_event, LV_EVENT_CLICKED, NULL);
+  lv_obj_add_event_cb(btn, btnPowerOff_event, LV_EVENT_CLICKED, NULL);
 }
 
 void loop() {
