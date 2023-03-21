@@ -135,24 +135,30 @@ static const char *btnm_map[] = {
 void lv_autopilot_buttons(lv_obj_t *parent) {
   lv_obj_t *led = lv_led_create(parent);
   lv_obj_align(led, LV_ALIGN_OUT_LEFT_TOP, 20, 13);
-  lv_led_set_color(led, lv_palette_main(LV_PALETTE_RED));
+  lv_led_set_color(led, lv_palette_main(LV_PALETTE_GREEN));
   lv_led_on(led);
 
-  int width_l = 110;
-  int left_l = 90;
-  int top_l = 18;
+  int width_l = 128;
+  int left_l = 64;
+  int top_l = 14;
 
   lv_obj_t *heading = lv_label_create(parent);
   lv_label_set_text(heading, "HDG:  -120" LV_SYMBOL_DEGREES);
   lv_obj_set_width(heading, width_l);
   lv_obj_set_style_text_align(heading, LV_TEXT_ALIGN_LEFT, 0);
   lv_obj_align(heading, LV_ALIGN_TOP_LEFT, left_l, top_l);
+#if LV_FONT_MONTSERRAT_20
+  lv_obj_set_style_text_font(heading, &lv_font_montserrat_20, NULL);
+#endif
 
   lv_obj_t *command = lv_label_create(parent);
   lv_label_set_text(command, "CMD:  -120" LV_SYMBOL_DEGREES);
   lv_obj_set_width(command, width_l);
   lv_obj_set_style_text_align(command, LV_TEXT_ALIGN_LEFT, 0);
   lv_obj_align(command, LV_ALIGN_TOP_LEFT, left_l + width_l, top_l);
+#if LV_FONT_MONTSERRAT_20
+  lv_obj_set_style_text_font(command, &lv_font_montserrat_20, NULL);
+#endif
 
   lv_obj_t *btnm = lv_btnmatrix_create(parent);
   lv_btnmatrix_set_map(btnm, btnm_map);
