@@ -14,7 +14,7 @@ static lv_indev_drv_t indev_drv;  // Descriptor of a touch driver
 
 M5Display *tft;
 
-static int theme = 0;
+static int theme = 1;
 
 void tft_lv_initialization() {
   M5.begin();
