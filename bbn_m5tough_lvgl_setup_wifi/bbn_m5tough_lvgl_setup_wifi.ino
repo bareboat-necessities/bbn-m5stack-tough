@@ -33,7 +33,7 @@ static void setupMode() {
   delay(100);           // 100 ms delay.
 
   int n = WiFi.scanNetworks();  // return the number of networks found.
-  lv_list_wifi(n);
+  lv_list_wifi(lv_scr_act(), n);
 }
 
 boolean checkConnection() {  // Check wifi connection.
@@ -57,9 +57,9 @@ static void event_handler_wifi(lv_event_t *e) {
   }
 }
 
-void lv_list_wifi(int num) {
+void lv_list_wifi(lv_obj_t *parent, int num) {
   /*Create a list*/
-  list_wifi = lv_list_create(lv_scr_act());
+  list_wifi = lv_list_create(parent);
   lv_obj_set_size(list_wifi, 310, 200);
   lv_obj_center(list_wifi);
 
@@ -197,7 +197,7 @@ void init_touch_driver() {
   lv_indev_t *my_indev = lv_indev_drv_register(&indev_drv);  // register
 }
 
-boolean restoreConfig() {  // Check whether there is wifi configuration information storage, if there is 1 return, if no return 0.
+boolean restoreConfig() {  // Check whether there is wifi configuration information storage, if there is return 1, if no return 0.
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
   WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
@@ -218,9 +218,8 @@ void setup() {
       settingMode = false;    // Turn off setting mode.
       lv_obj_t *labelIP = lv_label_create(lv_scr_act());
       lv_obj_set_pos(labelIP, 10, 10);
-      lv_label_set_text(labelIP, (" Wi-Fi:  " + wifi_ssid + "\n"
-                                  + " Local IP:  " + WiFi.localIP().toString())
-                                   .c_str());
+      lv_label_set_text(labelIP,
+                        (" Wi-Fi:  " + wifi_ssid + "\n" + " Local IP:  " + WiFi.localIP().toString()).c_str());
       return;  // Exit setup().
     }
   }
