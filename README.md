@@ -9,7 +9,7 @@ Mostly oriented for boating projects
 In Arduino IDE you need to install few libraries:
 
 - M5StackTough (download zip source from github and import library as zip file) https://github.com/m5stack/M5Tough
-- LVGL (install 8.x version via Arduino IDE libraries manager, copy ~/Arduino/libraries/lvgl/lv_conf_template.h into ~/Arduino/libraries/lv_conf.h) https://github.com/lvgl/lvgl
+- LVGL (install 8.x version via Arduino IDE libraries manager, copy ~/Arduino/libraries/lvgl/lv_conf_template.h into ~/Arduino/libraries/lv_conf.h, replace ````#if 0```` with ````#if 1```` in lv_conf.h, enable font Moncerrat 20 in it ````#define LV_FONT_MONTSERRAT_20 1````) https://github.com/lvgl/lvgl
 - ReactESP (install 2.x version via Arduino IDE libraries manager) https://github.com/mairas/ReactESP
 
 
