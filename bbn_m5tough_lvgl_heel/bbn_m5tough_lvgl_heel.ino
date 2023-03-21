@@ -81,7 +81,7 @@ void setup() {
   init_disp_driver();
   init_touch_driver();
   lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
-  lv_example_meter_1(lv_scr_act());
+  lv_heel_display(lv_scr_act());
 }
 
 static lv_obj_t *heel_display;
@@ -93,7 +93,7 @@ static void set_value(void *indic, int32_t v) {
 /**
  * A simple meter
  */
-void lv_example_meter_1(lv_obj_t * parent) {
+void lv_heel_display(lv_obj_t *parent) {
   heel_display = lv_meter_create(parent);
   lv_obj_align(heel_display, LV_ALIGN_CENTER, 0, -40);
   lv_obj_set_size(heel_display, 300, 300);
