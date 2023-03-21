@@ -1,13 +1,13 @@
 /*
 *******************************************************************************
 * Copyright (c) 2021 by M5Stack
-*                  Equipped with M5Tough sample source code
+* Equipped with M5Tough sample source code
 *******************************************************************************
 */
 #include <M5Tough.h>
 #include <driver/i2s.h>
 
-extern const unsigned char previewR[120264];  // Referring to external data (Dingdong audio files are stored inside).
+extern const unsigned char previewR[120264];  // Referring to external data (DingDong audio files are stored inside).
 
 #define CONFIG_I2S_BCK_PIN 12
 #define CONFIG_I2S_LRCK_PIN 0
