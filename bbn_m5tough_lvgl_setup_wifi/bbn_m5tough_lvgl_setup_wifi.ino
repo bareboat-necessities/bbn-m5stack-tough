@@ -135,7 +135,7 @@ static void event_msgbox_cb(lv_event_t *e) {
 }
 
 static void lv_msgbox(const char *txt) {
-  static const char *btns[] = { "Reboot", "" };
+  static const char *btns[] PROGMEM = { "Reboot", "" };
   lv_obj_t *mbox = lv_msgbox_create(NULL, "", "Password submitted", btns, true);
   lv_obj_add_event_cb(mbox, event_msgbox_cb, LV_EVENT_VALUE_CHANGED, NULL);
   lv_obj_center(mbox);
@@ -145,10 +145,11 @@ void tft_lv_initialization() {
   M5.begin();
   lv_init();
 
-  static lv_color_t buf1[(LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10];  // Declare a buffer for 1/10 screen siz
+  static lv_color_t *buf1 = (lv_color_t*) heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
+  static lv_color_t *buf2 = (lv_color_t*) heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
 
   // Initialize `disp_buf` display buffer with the buffer(s).
-  lv_disp_draw_buf_init(&draw_buf, buf1, NULL, (LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10);
+  lv_disp_draw_buf_init(&draw_buf, buf1, buf2, (LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10);
   tft = &M5.Lcd;
 }
 
@@ -220,11 +221,25 @@ void setup() {
       lv_obj_set_pos(labelIP, 10, 10);
       lv_label_set_text(labelIP,
                         (" Wi-Fi:  " + wifi_ssid + "\n" + " Local IP:  " + WiFi.localIP().toString()).c_str());
+      lv_obj_t *btn = lv_btn_create(lv_scr_act());
+      lv_obj_t *label = lv_label_create(btn);
+      lv_obj_align(btn, LV_ALIGN_CENTER, 0, 0);
+      lv_label_set_text(label, "Reset Wi-Fi Settings");
+      lv_obj_center(label);
+      lv_obj_add_event_cb(btn, btnRestWiFiSettings_event, LV_EVENT_CLICKED, NULL);
+
       return;  // Exit setup().
     }
   }
   settingMode = true;  // If there is no stored wifi configuration information, turn on the setting mode.
   setupMode();
+}
+
+static void btnRestWiFiSettings_event(lv_event_t *event) {
+  preferences.remove("WIFI_SSID");
+  preferences.remove("WIFI_PASSWD");
+  delay(500);
+  ESP.restart();
 }
 
 Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
