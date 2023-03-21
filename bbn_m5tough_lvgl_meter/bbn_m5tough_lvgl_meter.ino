@@ -38,7 +38,7 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
   tft->setAddrWindow(area->x1, area->y1, w, h);
   tft->pushColors((uint16_t *)&color_p->full, w * h, true);
   tft->endWrite();
-
+  
   lv_disp_flush_ready(disp);
 }
 
@@ -81,7 +81,7 @@ void setup() {
   init_disp_driver();
   init_touch_driver();
   lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
-  lv_example_meter_1();
+  lv_example_meter(lv_scr_act());
 }
 
 static lv_obj_t *meter;
@@ -93,8 +93,8 @@ static void set_value(void *indic, int32_t v) {
 /**
  * A simple meter
  */
-void lv_example_meter_1(void) {
-  meter = lv_meter_create(lv_scr_act());
+void lv_example_meter(lv_obj_t *parent) {
+  meter = lv_meter_create(parent);
   lv_obj_center(meter);
   lv_obj_set_size(meter, 200, 200);
 
