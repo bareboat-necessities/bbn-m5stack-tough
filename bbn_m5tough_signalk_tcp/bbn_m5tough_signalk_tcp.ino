@@ -64,7 +64,7 @@ void setup() {
     delay(50);
 
     app.onAvailable(client, [samples]() {
-      while (client.available()) {
+      while (client.connected() && client.available()) {
         String parsed = handleStream(client);
         if (parsed.length() > 0) {
           M5.Lcd.println(parsed);
