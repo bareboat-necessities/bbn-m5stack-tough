@@ -1,6 +1,5 @@
 /**
- * @brief Example and test program for using FreeRTOS tasks.
- *
+ * @brief Example and test program for using SensESP.
  */
 
 /*
@@ -14,7 +13,7 @@
    links2004/WebSockets https://github.com/Links2004/arduinoWebSockets
    pfeerick/elapsedMillis
    https://github.com/JoaoLopesF/RemoteDebug.git
-   
+
    add 
    
    #define A0 GPIO_NUM_34
@@ -24,52 +23,21 @@
 #include <M5Tough.h>
 #undef min(a, b)
 
-namespace sensesp {
-  const uint8_t A0 = GPIO_NUM_34;
-}
-
 #include <sensesp.h>
 #include <sensesp_app.h>
-
-//#include "sensesp/controllers/system_status_controller.h"
-//#define A0 GPIO_NUM_34
-
-
-
-#include "sensesp/sensors/analog_input.h"
-
-#include "sensesp/net/discovery.h"
-#include "sensesp/net/http_server.h"
-#include "sensesp/net/networking.h"
-#include "sensesp/net/ws_client.h"
-//#include "sensesp/sensors/digital_input.h"
-#include "sensesp/signalk/signalk_delta_queue.h"
-#include "sensesp/signalk/signalk_output.h"
-#include "sensesp/signalk/signalk_value_listener.h"
-#include "sensesp/system/lambda_consumer.h"
-//#include "sensesp/system/system_status_led.h"
-#include "sensesp_minimal_app_builder.h"
-
+#include <sensesp/net/discovery.h>
+#include <sensesp/net/http_server.h>
+#include <sensesp/net/networking.h>
+#include <sensesp/net/ws_client.h>
+#include <sensesp/signalk/signalk_delta_queue.h>
+#include <sensesp/signalk/signalk_output.h>
+#include <sensesp/signalk/signalk_value_listener.h>
+#include <sensesp/system/lambda_consumer.h>
+#include <sensesp_minimal_app_builder.h>
 
 using namespace sensesp;
 
-
-const int kTestOutputPin = GPIO_NUM_18;
-// repetition interval in ms; corresponds to 1000/(2*5)=100 Hz
-const int kTestOutputInterval = 410;
-
-const uint8_t kDigitalInputPin = 15;
-
 reactesp::ReactESP app;
-
-/*
-void ToggleTestOutputPin(void *parameter) {
-  while (true) {
-    digitalWrite(kTestOutputPin, !digitalRead(kTestOutputPin));
-    delay(kTestOutputInterval);
-  }
-}
-*/
 
 // The setup function performs one-time application initialization.
 void setup() {
@@ -100,34 +68,9 @@ void setup() {
   // create the MDNS discovery object
   auto mdns_discovery_ = new MDNSDiscovery();
 
-  // create a system status controller and a led blinker
-
-  //auto *system_status_controller = new SystemStatusController();
-  //auto *system_status_led = new SystemStatusLed(LED_PIN);
-
-  //system_status_controller->connect_to(system_status_led);
-  //ws_client_->get_delta_count_producer().connect_to(system_status_led);
-
-  // create a new task for toggling the output pin
-
-  //pinMode(kTestOutputPin, OUTPUT);
-  //xTaskCreate(ToggleTestOutputPin, "toggler", 2048, NULL, 1, NULL);
-
-  // listen to the changes on the digital input pin
-
-  //auto digin = new DigitalInputChange(kDigitalInputPin, INPUT_PULLUP, CHANGE);
-
-  //digin->connect_to(new LambdaConsumer<bool>([](bool input) {
-  //  debugD("(%d ms) Digital input changed to %d", millis(), input);
-  //}));
-
-  // connect digin to the SK delta queue
-
-  //const char *sk_path = "environment.bool.pin15";
- // digin->connect_to(new SKOutputFloat(sk_path, ""));
-
+  auto *system_status_controller = new SystemStatusController();
+  
   // create a new SKListener for navigation.headingMagnetic
-
   auto hdg = new SKValueListener<float>("navigation.headingMagnetic");
   hdg->connect_to(new LambdaConsumer<float>([](float input) {
     debugD("Heading: %f", input);
