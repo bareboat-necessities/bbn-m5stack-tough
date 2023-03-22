@@ -10,12 +10,10 @@ Preferences preferences;
 String wifi_ssid;      // Store the name of the wireless network.
 String wifi_password;  // Store the password of the wireless network.
 
-WiFiClient client;
+WiFiClient skClient;
 
 using namespace reactesp;
 ReactESP app;
-
-int samples = 20;
 
 void setup() {
   M5.begin();
@@ -51,31 +49,12 @@ void setup() {
   int port = 8375;                    // SignalK TCP
 
   // Connect to the SignalK TCP server
-  if (client.connect(host, port)) {
+  if (skClient.connect(host, port)) {
     M5.Lcd.print("Connected to ");
     M5.Lcd.println(host);
 
-    delay(50);
-    String dataFeed = client.readStringUntil('\n');
-    M5.Lcd.println(dataFeed);
-    const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"*\"}]}";
-    client.println(data);
-    client.flush();
-    delay(50);
+    processSignalK();
 
-    app.onAvailable(client, [samples]() {
-      while (client.connected() && client.available()) {
-        String parsed = handleStream(client);
-        if (parsed.length() > 0) {
-          M5.Lcd.println(parsed);
-          samples--;
-        }
-        if (samples <= 0) {
-          client.stop();
-        }
-      }
-      delay(1);
-    });
   } else {
     M5.Lcd.println("Connection failed.");
     return;
@@ -85,6 +64,32 @@ void setup() {
 void loop() {
   M5.update();
   app.tick();
+}
+
+int samples = 20;
+
+void processSignalK() {
+  delay(50);
+  String dataFeed = skClient.readStringUntil('\n');
+  M5.Lcd.println(dataFeed);
+  const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"*\"}]}";
+  skClient.println(data);
+  skClient.flush();
+  delay(50);
+
+  app.onAvailable(skClient, [samples] () {
+    while (skClient.connected() && skClient.available()) {
+      String parsed = handleStream(skClient);
+      if (parsed.length() > 0) {
+        M5.Lcd.println(parsed);
+        samples--;
+      }
+      if (samples <= 0) {
+        skClient.stop();
+      }
+    }
+    delay(1);
+  });
 }
 
 String handleStream(Stream& stream) {
