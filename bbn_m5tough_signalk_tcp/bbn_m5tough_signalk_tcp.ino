@@ -53,7 +53,7 @@ void setup() {
     M5.Lcd.print("Connected to ");
     M5.Lcd.println(host);
 
-    processSignalK(skClient);
+    signalk_subscribe(skClient);
 
   } else {
     M5.Lcd.println("Connection failed.");
@@ -68,7 +68,7 @@ void loop() {
 
 int samples = 20;
 
-void processSignalK(WiFiClient& client) {
+void signalk_subscribe(WiFiClient& client) {
   delay(50);
   String dataFeed = client.readStringUntil('\n');
   M5.Lcd.println(dataFeed);
@@ -79,7 +79,7 @@ void processSignalK(WiFiClient& client) {
 
   app.onAvailable(client, [samples, &client]() {
     while (client.connected() && client.available()) {
-      String parsed = handleStream(client);
+      String parsed = signalk_parse(client);
       if (parsed.length() > 0) {
         M5.Lcd.println(parsed);
         samples--;
@@ -92,7 +92,7 @@ void processSignalK(WiFiClient& client) {
   });
 }
 
-String handleStream(Stream& stream) {
+String signalk_parse(Stream& stream) {
   DynamicJsonDocument doc(4096);
   DeserializationError err = deserializeJson(doc, stream);
   // Parse succeeded?
