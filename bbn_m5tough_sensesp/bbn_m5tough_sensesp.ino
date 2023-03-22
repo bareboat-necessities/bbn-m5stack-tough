@@ -32,6 +32,7 @@
 #include <sensesp/signalk/signalk_delta_queue.h>
 #include <sensesp/signalk/signalk_output.h>
 #include <sensesp/signalk/signalk_value_listener.h>
+#include <sensesp/system/system_status_led.h>
 #include <sensesp/system/lambda_consumer.h>
 #include <sensesp_minimal_app_builder.h>
 
@@ -41,7 +42,7 @@ reactesp::ReactESP app;
 
 // The setup function performs one-time application initialization.
 void setup() {
-   M5.begin();
+  M5.begin();
 // Some initialization boilerplate when in debug mode...
 #ifndef SERIAL_DEBUG_DISABLED
   SetupSerialDebug(115200);
@@ -55,20 +56,24 @@ void setup() {
   auto *http_server = new HTTPServer();
 
   // create the SK delta object
-  auto sk_delta_queue_ = new SKDeltaQueue();
+  auto sk_delta_queue = new SKDeltaQueue();
 
   // create the websocket client
-  auto ws_client_ = new WSClient("/system/sk", sk_delta_queue_, "", 0);
+  auto ws_client = new WSClient("/system/sk", sk_delta_queue, "", 0);
 
-  ws_client_->connect_to(new LambdaConsumer<WSConnectionState>(
+  ws_client->connect_to(new LambdaConsumer<WSConnectionState>(
     [](WSConnectionState input) {
       debugD("WSConnectionState: %d", input);
     }));
 
   // create the MDNS discovery object
-  auto mdns_discovery_ = new MDNSDiscovery();
+  auto mdns_discovery = new MDNSDiscovery();
 
   auto *system_status_controller = new SystemStatusController();
+  auto *system_status_led = new SystemStatusLed(LED_PIN);
+
+  system_status_controller->connect_to(system_status_led);
+  ws_client->get_delta_count_producer().connect_to(system_status_led);
 
   // create a new SKListener for navigation.headingMagnetic
   auto hdg = new SKValueListener<float>("navigation.headingMagnetic");
