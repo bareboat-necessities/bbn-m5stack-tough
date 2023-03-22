@@ -83,9 +83,9 @@ void signalk_subscribe(WiFiClient& client) {
       if (parsed.length() > 0) {
         M5.Lcd.println(parsed);
         samples--;
-      }
-      if (samples <= 0) {
-        client.stop();
+        if (samples <= 0) {
+          client.stop();
+        }
       }
     }
     delay(1);
