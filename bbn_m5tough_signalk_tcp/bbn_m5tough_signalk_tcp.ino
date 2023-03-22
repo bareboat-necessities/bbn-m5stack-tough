@@ -64,14 +64,17 @@ void setup() {
     delay(50);
 
     app.onAvailable(client, [samples]() {
-      String parsed = handleStream(client);
-      if (parsed.length() > 0) {
-        M5.Lcd.println(parsed);
-        samples--;
+      while (client.available()) {
+        String parsed = handleStream(client);
+        if (parsed.length() > 0) {
+          M5.Lcd.println(parsed);
+          samples--;
+        }
+        if (samples <= 0) {
+          client.stop();
+        }
       }
-      if (samples <= 0) {
-        client.stop();
-      }
+      delay(1);
     });
   } else {
     M5.Lcd.println("Connection failed.");
