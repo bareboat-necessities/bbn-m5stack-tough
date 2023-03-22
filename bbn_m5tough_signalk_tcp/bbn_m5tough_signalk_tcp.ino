@@ -53,7 +53,7 @@ void setup() {
     M5.Lcd.print("Connected to ");
     M5.Lcd.println(host);
 
-    processSignalK();
+    processSignalK(skClient);
 
   } else {
     M5.Lcd.println("Connection failed.");
@@ -68,24 +68,24 @@ void loop() {
 
 int samples = 20;
 
-void processSignalK() {
+void processSignalK(WiFiClient& client) {
   delay(50);
-  String dataFeed = skClient.readStringUntil('\n');
+  String dataFeed = client.readStringUntil('\n');
   M5.Lcd.println(dataFeed);
   const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"*\"}]}";
-  skClient.println(data);
-  skClient.flush();
+  client.println(data);
+  client.flush();
   delay(50);
 
-  app.onAvailable(skClient, [samples] () {
-    while (skClient.connected() && skClient.available()) {
-      String parsed = handleStream(skClient);
+  app.onAvailable(client, [samples, &client]() {
+    while (client.connected() && client.available()) {
+      String parsed = handleStream(client);
       if (parsed.length() > 0) {
         M5.Lcd.println(parsed);
         samples--;
       }
       if (samples <= 0) {
-        skClient.stop();
+        client.stop();
       }
     }
     delay(1);
