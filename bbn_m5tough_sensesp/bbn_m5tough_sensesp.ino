@@ -69,7 +69,7 @@ void setup() {
   auto mdns_discovery_ = new MDNSDiscovery();
 
   auto *system_status_controller = new SystemStatusController();
-  
+
   // create a new SKListener for navigation.headingMagnetic
   auto hdg = new SKValueListener<float>("navigation.headingMagnetic");
   hdg->connect_to(new LambdaConsumer<float>([](float input) {
@@ -83,6 +83,8 @@ void setup() {
 
   // Start the SensESP application running
   sensesp_app->start();
+
+  M5.Lcd.println("setup() done.");
 }
 
 // The loop function is called in an endless loop during program execution.
