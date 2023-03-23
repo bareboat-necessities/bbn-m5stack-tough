@@ -24,7 +24,7 @@ const lv_btnmatrix_ctrl_t ctrl_map[] = {
   3, 3, 3, 3
 };
 
-const char * btnm_mapplus[10][23] = {
+const char *btnm_mapplus[11][23] = {
   { "a", "b", "c", "\n",
     "d", "e", "f", "\n",
     "g", "h", "i", "\n",
@@ -55,7 +55,7 @@ const char * btnm_mapplus[10][23] = {
     LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "0", "+", "-", "\n",
     "/", "*", "=", "\n",
-    "!", "?", "#", "\n",
+    "!", "?", " ", "\n",
     LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "<", ">", "@", "\n",
     "%", "$", "(", "\n",
@@ -64,9 +64,14 @@ const char * btnm_mapplus[10][23] = {
   { "[", "]", ";", "\n",
     "\"", "'", ".", "\n",
     ",", ":", " ", "\n",
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
+  { "\\", "_", "~", "\n",
+    "|", "&", "^", "\n",
+    "`", "#", " ", "\n",
     LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" }
 };
 
+int keybd_index = 0;
 
 void tft_lv_initialization() {
   M5.begin();
@@ -132,6 +137,26 @@ void setup() {
   lv_example_keyboard(lv_scr_act());
 }
 
+static void kb_event_cb(lv_event_t *e) {
+  lv_event_code_t code = lv_event_get_code(e);
+  lv_obj_t *kb = lv_event_get_target(e);
+  if (kb != NULL) {
+    if (code == LV_EVENT_VALUE_CHANGED) {
+      uint16_t b = lv_keyboard_get_selected_btn(kb);
+      const char *txt = lv_keyboard_get_btn_text(kb, b);
+      if (txt != NULL) {
+        if (strcmp(LV_SYMBOL_RIGHT, txt) == 0) {
+          keybd_index = keybd_index + 1 >= sizeof(btnm_mapplus) / sizeof(btnm_mapplus[0]) ? 0 : keybd_index + 1;
+          lv_keyboard_set_map(kb, LV_KEYBOARD_MODE_TEXT_LOWER, btnm_mapplus[keybd_index], ctrl_map);
+        } /*else if (strcmp(LV_SYMBOL_CLOSE, txt) == 0) {
+          keybd_index = keybd_index - 1 < 0 ? 0 : keybd_index - 1;
+          lv_keyboard_set_map(kb, LV_KEYBOARD_MODE_TEXT_LOWER, btnm_mapplus[keybd_index], ctrl_map);
+        }*/
+      }
+    }
+  }
+}
+
 static void ta_event_cb(lv_event_t *e) {
   lv_event_code_t code = lv_event_get_code(e);
   lv_obj_t *ta = lv_event_get_target(e);
@@ -139,8 +164,7 @@ static void ta_event_cb(lv_event_t *e) {
   if (code == LV_EVENT_FOCUSED) {
     lv_keyboard_set_textarea(kb, ta);
     lv_obj_clear_flag(kb, LV_OBJ_FLAG_HIDDEN);
-  }
-  if (code == LV_EVENT_DEFOCUSED) {
+  } else if (code == LV_EVENT_DEFOCUSED) {
     lv_keyboard_set_textarea(kb, NULL);
     lv_obj_add_flag(kb, LV_OBJ_FLAG_HIDDEN);
   }
@@ -151,6 +175,7 @@ void lv_example_keyboard(lv_obj_t *parent) {
   kb = lv_keyboard_create(parent);
   lv_keyboard_set_map(kb, LV_KEYBOARD_MODE_TEXT_LOWER, btnm_mapplus[0], ctrl_map);
   lv_obj_set_height(kb, LV_VER_RES_MAX * 2 / 3);
+  lv_obj_add_event_cb(kb, kb_event_cb, LV_EVENT_ALL, NULL);
 
   // Create a text area. The keyboard will write here
   lv_obj_t *ta;
@@ -162,8 +187,9 @@ void lv_example_keyboard(lv_obj_t *parent) {
   lv_textarea_set_password_mode(ta, false);
   lv_textarea_set_text(ta, "");
   lv_obj_add_event_cb(ta, ta_event_cb, LV_EVENT_ALL, kb);
-  
+
   lv_keyboard_set_textarea(kb, ta);
+  lv_obj_add_state(ta, LV_STATE_FOCUSED);
 }
 
 void loop() {
