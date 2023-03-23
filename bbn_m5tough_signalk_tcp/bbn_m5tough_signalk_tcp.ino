@@ -79,9 +79,8 @@ void signalk_subscribe(WiFiClient& client) {
 
   app.onAvailable(client, [samples, &client]() {
     while (client.connected() && client.available()) {
-      String parsed = signalk_parse(client);
-      if (parsed.length() > 0) {
-        M5.Lcd.println(parsed);
+      bool found = signalk_parse(client);
+      if (found) {
         samples--;
         if (samples <= 0) {
           client.stop();
@@ -92,37 +91,57 @@ void signalk_subscribe(WiFiClient& client) {
   });
 }
 
-String signalk_parse(Stream& stream) {
+bool signalk_parse(Stream& stream) {
+  bool found = false;
   DynamicJsonDocument doc(4096);
   DeserializationError err = deserializeJson(doc, stream);
   // Parse succeeded?
   if (err) {
     Serial.print(F("deserializeJson() returned "));
     Serial.println(err.c_str());
-    return "INVALID";
+    return found;
   }
   JsonObject obj = doc.as<JsonObject>();
 
-  String updatedValue = "";
-  JsonObject updates = obj["updates"][0]["values"][0];
-  if (updates.containsKey("path")) {
-    const char* path = updates["path"].as<const char*>();
-    if (path != NULL) {
-      updatedValue = String(path) + ": ";
-      if (updates.containsKey("value")) {
-        JsonVariant value = updates["value"];
-        if (value.is<int>()) {
-          updatedValue = updatedValue + " int: ";
-        } else if (value.is<float>()) {
-          updatedValue = updatedValue + " float: ";
-        } else if (value.is<const char*>()) {
-          updatedValue = updatedValue + " str: ";
-        } else if (value.is<boolean>()) {
-          updatedValue = updatedValue + " bool: ";
+  auto update_value = [&](String& path, size_t& u_idx, size_t& v_idx, JsonVariant& value) {
+    String updatedValue = path;
+    if (value.is<float>()) {
+      updatedValue = updatedValue + " float: ";
+    } else if (value.is<int>()) {
+      updatedValue = updatedValue + " int: ";
+    } else if (value.is<const char*>()) {
+      updatedValue = updatedValue + " str: ";
+    } else if (value.is<boolean>()) {
+      updatedValue = updatedValue + " bool: ";
+    }
+    serializeJson(value, updatedValue);
+    M5.Lcd.println(updatedValue);
+  };
+
+  JsonArray updates = obj["updates"];
+  if (updates != NULL) {
+    for (size_t i_u = 0; i_u < updates.size(); i_u++) {
+      JsonObject update = updates[i_u];
+      if (update != NULL) {
+        JsonArray values = update["values"];
+        if (values != NULL) {
+          for (size_t i_v = 0; i_v < values.size(); i_v++) {
+            JsonObject valueObj = values[i_v];
+            if (valueObj != NULL) {
+              if (valueObj.containsKey("path")) {
+                String path = valueObj["path"].as<const char*>();
+                if (path != NULL) {
+                  JsonVariant value = valueObj["value"];
+                  update_value(path, i_u, i_v, value);
+                  found = true;
+                }
+              }
+            }
+          }
         }
-        serializeJson(value, updatedValue);
       }
     }
   }
-  return updatedValue;
+
+  return found;
 }
