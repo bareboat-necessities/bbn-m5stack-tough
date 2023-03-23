@@ -17,6 +17,57 @@ M5Display *tft;
 static void ta_event_cb(lv_event_t *e);
 static lv_obj_t *kb;
 
+const lv_btnmatrix_ctrl_t ctrl_map[] = {
+  4, 4, 4,
+  4, 4, 4,
+  4, 4, 4,
+  3, 3, 3, 3
+};
+
+const char * btnm_mapplus[10][23] = {
+  { "a", "b", "c", "\n",
+    "d", "e", "f", "\n",
+    "g", "h", "i", "\n",
+    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+  { "j", "k", "l", "\n",
+    "n", "m", "o", "\n",
+    "p", "q", "r", "\n",
+    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+  { "s", "t", "u", "\n",
+    "v", "w", "x", "\n",
+    "y", "z", " ", "\n",
+    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+  { "A", "B", "C", "\n",
+    "D", "E", "F", "\n",
+    "G", "H", "I", "\n",
+    LV_SYMBOL_OK, "Del", "Exit" LV_SYMBOL_RIGHT, "" },
+  { "J", "K", "L", "\n",
+    "N", "M", "O", "\n",
+    "P", "Q", "R", "\n",
+    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+  { "S", "T", "U", "\n",
+    "V", "W", "X", "\n",
+    "Y", "Z", " ", "\n",
+    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+  { "1", "2", "3", "\n",
+    "4", "5", "6", "\n",
+    "7", "8", "9", "\n",
+    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+  { "0", "+", "-", "\n",
+    "/", "*", "=", "\n",
+    "!", "?", "#", "\n",
+    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+  { "<", ">", "@", "\n",
+    "%", "$", "(", "\n",
+    ")", "{", "}", "\n",
+    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+  { "[", "]", ";", "\n",
+    "\"", "'", ".", "\n",
+    ",", ":", " ", "\n",
+    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" }
+};
+
+
 void tft_lv_initialization() {
   M5.begin();
   lv_init();
@@ -98,6 +149,7 @@ static void ta_event_cb(lv_event_t *e) {
 void lv_example_keyboard(lv_obj_t *parent) {
   // Create a keyboard to use it with all of the text areas
   kb = lv_keyboard_create(parent);
+  lv_keyboard_set_map(kb, LV_KEYBOARD_MODE_TEXT_LOWER, btnm_mapplus[0], ctrl_map);
 
   // Create a text area. The keyboard will write here
   lv_obj_t *ta;
