@@ -28,43 +28,43 @@ const char * btnm_mapplus[10][23] = {
   { "a", "b", "c", "\n",
     "d", "e", "f", "\n",
     "g", "h", "i", "\n",
-    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "j", "k", "l", "\n",
     "n", "m", "o", "\n",
     "p", "q", "r", "\n",
-    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "s", "t", "u", "\n",
     "v", "w", "x", "\n",
     "y", "z", " ", "\n",
-    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "A", "B", "C", "\n",
     "D", "E", "F", "\n",
     "G", "H", "I", "\n",
-    LV_SYMBOL_OK, "Del", "Exit" LV_SYMBOL_RIGHT, "" },
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "J", "K", "L", "\n",
     "N", "M", "O", "\n",
     "P", "Q", "R", "\n",
-    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "S", "T", "U", "\n",
     "V", "W", "X", "\n",
     "Y", "Z", " ", "\n",
-    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "1", "2", "3", "\n",
     "4", "5", "6", "\n",
     "7", "8", "9", "\n",
-    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "0", "+", "-", "\n",
     "/", "*", "=", "\n",
     "!", "?", "#", "\n",
-    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "<", ">", "@", "\n",
     "%", "$", "(", "\n",
     ")", "{", "}", "\n",
-    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" },
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" },
   { "[", "]", ";", "\n",
     "\"", "'", ".", "\n",
     ",", ":", " ", "\n",
-    LV_SYMBOL_OK, "Del", "Exit", LV_SYMBOL_RIGHT, "" }
+    LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_CLOSE, LV_SYMBOL_RIGHT, "" }
 };
 
 
@@ -150,13 +150,14 @@ void lv_example_keyboard(lv_obj_t *parent) {
   // Create a keyboard to use it with all of the text areas
   kb = lv_keyboard_create(parent);
   lv_keyboard_set_map(kb, LV_KEYBOARD_MODE_TEXT_LOWER, btnm_mapplus[0], ctrl_map);
+  lv_obj_set_height(kb, LV_VER_RES_MAX * 2 / 3);
 
   // Create a text area. The keyboard will write here
   lv_obj_t *ta;
 
   ta = lv_textarea_create(parent);
-  lv_obj_align(ta, LV_ALIGN_TOP_RIGHT, -10, 10);
-  lv_obj_set_size(ta, 140, 28);
+  lv_obj_align(ta, LV_ALIGN_TOP_LEFT, 10, 10);
+  lv_obj_set_size(ta, 240, 28);
   lv_textarea_set_one_line(ta, true);
   lv_textarea_set_password_mode(ta, false);
   lv_textarea_set_text(ta, "");
