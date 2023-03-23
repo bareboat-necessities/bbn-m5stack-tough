@@ -153,17 +153,15 @@ void lv_example_keyboard(lv_obj_t *parent) {
 
   // Create a text area. The keyboard will write here
   lv_obj_t *ta;
-  ta = lv_textarea_create(parent);
-  lv_obj_align(ta, LV_ALIGN_TOP_LEFT, 10, 10);
-  lv_obj_add_event_cb(ta, ta_event_cb, LV_EVENT_ALL, kb);
-  lv_textarea_set_placeholder_text(ta, "Hello");
-  lv_obj_set_size(ta, 140, 80);
 
   ta = lv_textarea_create(parent);
   lv_obj_align(ta, LV_ALIGN_TOP_RIGHT, -10, 10);
+  lv_obj_set_size(ta, 140, 28);
+  lv_textarea_set_one_line(ta, true);
+  lv_textarea_set_password_mode(ta, false);
+  lv_textarea_set_text(ta, "");
   lv_obj_add_event_cb(ta, ta_event_cb, LV_EVENT_ALL, kb);
-  lv_obj_set_size(ta, 140, 80);
-
+  
   lv_keyboard_set_textarea(kb, ta);
 }
 
