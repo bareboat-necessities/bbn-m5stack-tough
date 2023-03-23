@@ -33,7 +33,18 @@ static void setupMode() {
   delay(100);           // 100 ms delay.
 
   int n = WiFi.scanNetworks();  // return the number of networks found.
+
   lv_list_wifi(lv_scr_act(), n);
+  restoreConfig();  // to allow reconnect while in setup mode
+
+  WiFi.onEvent([](WiFiEvent_t event, WiFiEventInfo_t info) {
+    if (list_wifi != NULL) {
+      lv_obj_del(list_wifi);
+      list_wifi = NULL;
+    }
+    delay(2000);
+    wifi_connected();
+  }, WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_CONNECTED);
 }
 
 boolean checkConnection() {  // Check wifi connection.
@@ -145,8 +156,8 @@ void tft_lv_initialization() {
   M5.begin();
   lv_init();
 
-  static lv_color_t *buf1 = (lv_color_t*) heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
-  static lv_color_t *buf2 = (lv_color_t*) heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
+  static lv_color_t *buf1 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
+  static lv_color_t *buf2 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
 
   // Initialize `disp_buf` display buffer with the buffer(s).
   lv_disp_draw_buf_init(&draw_buf, buf1, buf2, (LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10);
@@ -201,6 +212,8 @@ void init_touch_driver() {
 boolean restoreConfig() {  // Check whether there is wifi configuration information storage, if there is return 1, if no return 0.
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
+  WiFi.setAutoConnect(true);
+  WiFi.setAutoReconnect(true);
   WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
   return wifi_ssid.length() > 0;
 }
@@ -216,18 +229,7 @@ void setup() {
   delay(10);
   if (restoreConfig()) {      // Check if wifi configuration information has been stored.
     if (checkConnection()) {  // Check wifi connection.
-      settingMode = false;    // Turn off setting mode.
-      lv_obj_t *labelIP = lv_label_create(lv_scr_act());
-      lv_obj_set_pos(labelIP, 10, 10);
-      lv_label_set_text(labelIP,
-                        (" Wi-Fi:  " + wifi_ssid + "\n" + " Local IP:  " + WiFi.localIP().toString()).c_str());
-      lv_obj_t *btn = lv_btn_create(lv_scr_act());
-      lv_obj_t *label = lv_label_create(btn);
-      lv_obj_align(btn, LV_ALIGN_CENTER, 0, 0);
-      lv_label_set_text(label, "Reset Wi-Fi Settings");
-      lv_obj_center(label);
-      lv_obj_add_event_cb(btn, btnRestWiFiSettings_event, LV_EVENT_CLICKED, NULL);
-
+      wifi_connected();
       return;  // Exit setup().
     }
   }
@@ -235,10 +237,37 @@ void setup() {
   setupMode();
 }
 
+void wifi_connected() {
+  settingMode = false;  // Turn off setting mode.
+  lv_obj_t *labelIP = lv_label_create(lv_scr_act());
+  lv_obj_set_pos(labelIP, 10, 10);
+  lv_label_set_text(labelIP,
+                    (" Wi-Fi:  " + wifi_ssid + "\n" + " Local IP:  " + WiFi.localIP().toString()).c_str());
+
+  lv_obj_t *btn_cfg = lv_btn_create(lv_scr_act());
+  lv_obj_t *label = lv_label_create(btn_cfg);
+  lv_obj_align(btn_cfg, LV_ALIGN_CENTER, 0, -25);
+  lv_label_set_text(label, "Reset Wi-Fi Settings");
+  lv_obj_center(label);
+  lv_obj_add_event_cb(btn_cfg, btnRestWiFiSettings_event, LV_EVENT_CLICKED, NULL);
+
+  lv_obj_t *btn_reboot = lv_btn_create(lv_scr_act());
+  lv_obj_t *label_reboot = lv_label_create(btn_reboot);
+  lv_obj_align(btn_reboot, LV_ALIGN_CENTER, 0, 25);
+  lv_label_set_text(label_reboot, "Reboot");
+  lv_obj_center(label_reboot);
+  lv_obj_add_event_cb(btn_reboot, btnReboot_event, LV_EVENT_CLICKED, NULL);
+}
+
 static void btnRestWiFiSettings_event(lv_event_t *event) {
   preferences.remove("WIFI_SSID");
   preferences.remove("WIFI_PASSWD");
   delay(500);
+  ESP.restart();
+}
+
+static void btnReboot_event(lv_event_t *event) {
+  delay(10);
   ESP.restart();
 }
 
