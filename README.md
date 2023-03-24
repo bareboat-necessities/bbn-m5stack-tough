@@ -73,7 +73,7 @@ https://github.com/mhaberler/SensESP-M5Stack
 ##  Possible future ehnancements:
 
 - Autopilot / PyPilot Remote Control Screen
-- Lightning Detector with Screen
+- Lightning Detector with Screen (AS3935 sensor or beter)
 - IMU (compass and attitude) to NMEA (2000 or 0183)
 - Engine RPM, oil temp, voltage, fuel burn per nautical mile, etc Display
 - Batteries Status, etc Display
