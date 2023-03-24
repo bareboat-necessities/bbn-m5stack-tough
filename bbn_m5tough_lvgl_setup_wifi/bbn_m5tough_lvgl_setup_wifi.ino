@@ -277,12 +277,10 @@ void wifi_connected() {
 static void btnRestWiFiSettings_event(lv_event_t *event) {
   preferences.remove("WIFI_SSID");
   preferences.remove("WIFI_PASSWD");
-  delay(500);
   ESP.restart();
 }
 
 static void btnReboot_event(lv_event_t *event) {
-  delay(10);
   ESP.restart();
 }
 
@@ -291,9 +289,10 @@ Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
 void loop() {
   M5.update();
   lv_task_handler();
-  lv_tick_inc(1);
   if (swipeDown.wasDetected()) {
     theme = 1 - theme;
     lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   }
+  lv_tick_inc(1);
+  delay(1);
 }
