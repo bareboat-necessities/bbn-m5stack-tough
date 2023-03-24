@@ -16,15 +16,15 @@ void flushTime() {
 }
 
 void setupTime() {
-  RTCtime.Hours = 12;  //Set the time.
-  RTCtime.Minutes = 55;
-  RTCtime.Seconds = 33;
-  M5.Rtc.SetTime(&RTCtime);  //and writes the set time to the real time clock.
+  //RTCtime.Hours = 12;  //Set the time.
+  //RTCtime.Minutes = 55;
+  //RTCtime.Seconds = 33;
+  //M5.Rtc.SetTime(&RTCtime);  //and writes the set time to the real time clock.
 
-  RTCDate.Year = 2023;  //Set the date.
-  RTCDate.Month = 3;
-  RTCDate.Date = 24;
-  M5.Rtc.SetDate(&RTCDate);
+  //RTCDate.Year = 2023;  //Set the date.
+  //RTCDate.Month = 3;
+  //RTCDate.Date = 24;
+  //M5.Rtc.SetDate(&RTCDate);
 }
 
 /* 
