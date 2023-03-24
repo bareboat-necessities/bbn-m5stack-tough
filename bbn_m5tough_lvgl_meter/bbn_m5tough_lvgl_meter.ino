@@ -14,8 +14,6 @@ static lv_indev_drv_t indev_drv;  // Descriptor of a touch driver
 
 M5Display *tft;
 
-static void ta_event_cb(lv_event_t *e);
-
 void tft_lv_initialization() {
   M5.begin();
   lv_init();
