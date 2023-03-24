@@ -112,8 +112,8 @@ void lv_clock_display(lv_obj_t *parent) {
   lv_meter_set_scale_range(clock_display, scale_hour, 1, 12, 330, 300);                                      /*[1..12] values in an almost full circle*/
 
   indic_sec = lv_meter_add_needle_line(clock_display, scale_min, 2, lv_palette_main(LV_PALETTE_GREY), -10);
-  indic_min = lv_meter_add_needle_line(clock_display, scale_min, 4, lv_palette_main(LV_PALETTE_GREY), -20);
-  indic_hour = lv_meter_add_needle_line(clock_display, scale_min, 6, lv_palette_main(LV_PALETTE_GREY), -30);
+  indic_min = lv_meter_add_needle_line(clock_display, scale_min, 4, lv_palette_main(LV_PALETTE_GREY), -17);
+  indic_hour = lv_meter_add_needle_line(clock_display, scale_min, 6, lv_palette_main(LV_PALETTE_GREY), -25);
 }
 
 Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
@@ -130,24 +130,4 @@ void loop() {
   set_value(indic_hour, RTCtime.Hours);
   set_value(indic_min, RTCtime.Minutes);
   set_value(indic_sec, RTCtime.Seconds);
-}
-
-static void tick_label_event(lv_event_t *e) {
-  lv_obj_draw_part_dsc_t *draw_part_dsc = lv_event_get_draw_part_dsc(e);
-
-  /*Be sure it's drawing meter related parts*/
-  if (draw_part_dsc->class_p != &lv_meter_class) return;
-
-  /*Be sure it's drawing the ticks*/
-  if (draw_part_dsc->type != LV_METER_DRAW_PART_TICK) return;
-
-  /*Be sure it's a major ticks*/
-  if (draw_part_dsc->id % 5) return;
-
-  /*The order of numbers on the clock is tricky: 12, 1, 2, 3...*/
-  if (draw_part_dsc->id == 0) {
-    strncpy(draw_part_dsc->text, "12", 4);
-  } else {
-    lv_snprintf(draw_part_dsc->text, 4, "%d", draw_part_dsc->id / 5);
-  }
 }
