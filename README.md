@@ -117,6 +117,7 @@ https://github.com/mhaberler/SensESP-M5Stack
 - Hatches Status Display
 - Dinghy location (via LoRa and putting data into AIS stream)
 - Ship bell sound
+- Fish detected alarm (Do not know for sure how to implement that winner feature. It's possible though)
 - Smart Discovery of available services using mDNS and other ways
 
 
