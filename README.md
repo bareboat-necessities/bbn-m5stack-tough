@@ -78,7 +78,7 @@ https://github.com/mhaberler/SensESP-M5Stack
 - Engine RPM, oil temp, voltage, fuel burn per nautical mile, etc Display
 - Batteries Status, etc Display
 - Wind Display (True/Apparent)
-- Drift and set
+- Drift and set, speed through water (knot meter)
 - Wind Rose from climatology data for current location and time Display
 - Depth Display
 - Barometer (+Temp Humidity) with History
