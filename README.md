@@ -81,7 +81,8 @@ https://github.com/mhaberler/SensESP-M5Stack
 - Drift and set
 - Wind Rose from climatology data for current location and time Display
 - Depth Display
-- Barometer with History
+- Barometer (+Temp Humidity) with History
+- Dangerous gases alarms
 - LoRa Tracker receiver and display
 - SignalK Alarms Display
 - Weather Display, Air/Water temp, pressure, humidity, air quality
