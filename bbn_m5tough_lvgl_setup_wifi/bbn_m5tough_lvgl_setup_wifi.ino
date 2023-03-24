@@ -261,15 +261,15 @@ void wifi_connected() {
 
   lv_obj_t *btn_cfg = lv_btn_create(lv_scr_act());
   lv_obj_t *label = lv_label_create(btn_cfg);
-  lv_obj_align(btn_cfg, LV_ALIGN_CENTER, 0, -25);
+  lv_obj_align(btn_cfg, LV_ALIGN_CENTER, 0, -30);
   lv_label_set_text(label, "Reset Wi-Fi Settings");
   lv_obj_center(label);
   lv_obj_add_event_cb(btn_cfg, btnRestWiFiSettings_event, LV_EVENT_CLICKED, NULL);
 
   lv_obj_t *btn_reboot = lv_btn_create(lv_scr_act());
   lv_obj_t *label_reboot = lv_label_create(btn_reboot);
-  lv_obj_align(btn_reboot, LV_ALIGN_CENTER, 0, 25);
-  lv_label_set_text(label_reboot, "Reboot");
+  lv_obj_align(btn_reboot, LV_ALIGN_CENTER, 0, 30);
+  lv_label_set_text(label_reboot, "Reboot Device");
   lv_obj_center(label_reboot);
   lv_obj_add_event_cb(btn_reboot, btnReboot_event, LV_EVENT_CLICKED, NULL);
 }
