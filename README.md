@@ -75,7 +75,7 @@ https://github.com/mhaberler/SensESP-M5Stack
 - Autopilot / PyPilot Remote Control Screen
 - Lightning Detector with Screen
 - IMU (compass and attitude) to NMEA (2000 or 0183)
-- Engine RPM, oil temp, voltage, etc Display
+- Engine RPM, oil temp, voltage, fuel burn per nautical mile, etc Display
 - Batteries Status, etc Display
 - Wind Display
 - Wind Rose from climatology data for current location and time Display
@@ -113,6 +113,7 @@ https://github.com/mhaberler/SensESP-M5Stack
 - Cabin, Deck, Search, Underwater lights controls,Fans, Blower controls
 - Shrouds Load Forces Display from sensors
 - Hatches Status Display
+- Dinghy location
 
 
 
