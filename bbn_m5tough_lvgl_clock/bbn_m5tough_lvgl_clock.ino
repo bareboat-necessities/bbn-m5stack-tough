@@ -125,7 +125,7 @@ void loop() {
     lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   }
   lv_task_handler();
-  lv_tick_inc(500);
+  lv_tick_inc(5);
   M5.Rtc.GetTime(&RTCtime);
   set_value(indic_hour, RTCtime.Hours);
   set_value(indic_min, RTCtime.Minutes);
