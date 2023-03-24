@@ -115,7 +115,8 @@ https://github.com/mhaberler/SensESP-M5Stack
 - Cabin, Deck, Search, Underwater lights controls,Fans, Blower controls
 - Shrouds Load Forces Display from sensors
 - Hatches Status Display
-- Dinghy location
+- Dinghy location (via LoRa and putting data into AIS stream)
+- Ship bell sound
 
 
 
