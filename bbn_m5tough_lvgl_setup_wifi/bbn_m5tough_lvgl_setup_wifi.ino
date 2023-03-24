@@ -69,6 +69,18 @@ static void event_handler_wifi(lv_event_t *e) {
   }
 }
 
+static inline int8_t dBm_to_percents(int8_t dBm) {
+  int quality;
+  // dBm to Quality:
+  if (dBm <= -100)
+    quality = 0;
+  else if (dBm >= -50)
+    quality = 100;
+  else
+    quality = 2 * (dBm + 100);
+  return quality;
+}
+
 void lv_list_wifi(lv_obj_t *parent, int num) {
   /*Create a list*/
   list_wifi = lv_list_create(parent);
@@ -81,7 +93,9 @@ void lv_list_wifi(lv_obj_t *parent, int num) {
   lv_list_add_text(list_wifi, "Wi-Fi Networks");
 
   for (int i = 0; i < num; ++i) {
-    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String(LV_SYMBOL_EYE_OPEN " ") : String("")) + WiFi.SSID(i)).c_str());
+    btn = lv_list_add_btn(list_wifi, (String(LV_SYMBOL_WIFI) + "  " + String(dBm_to_percents(WiFi.RSSI(i))) + "%").c_str(),
+                          (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String(LV_SYMBOL_EYE_OPEN " ") : String("")) + WiFi.SSID(i)).c_str());
+
     lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)i);
     delay(10);
   }
