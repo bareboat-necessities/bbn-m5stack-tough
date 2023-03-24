@@ -112,8 +112,8 @@ void lv_clock_display(lv_obj_t *parent) {
   lv_meter_set_scale_range(clock_display, scale_hour, 1, 12, 330, 300);                                      /*[1..12] values in an almost full circle*/
 
   indic_sec = lv_meter_add_needle_line(clock_display, scale_min, 2, lv_palette_main(LV_PALETTE_GREY), -10);
-  indic_min = lv_meter_add_needle_line(clock_display, scale_min, 5, lv_palette_main(LV_PALETTE_GREY), -25);
-  indic_hour = lv_meter_add_needle_line(clock_display, scale_min, 6, lv_palette_main(LV_PALETTE_GREY), -40);
+  indic_min = lv_meter_add_needle_line(clock_display, scale_min, 4, lv_palette_main(LV_PALETTE_GREY), -20);
+  indic_hour = lv_meter_add_needle_line(clock_display, scale_min, 6, lv_palette_main(LV_PALETTE_GREY), -42);
 }
 
 Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
