@@ -77,7 +77,8 @@ https://github.com/mhaberler/SensESP-M5Stack
 - IMU (compass and attitude) to NMEA (2000 or 0183)
 - Engine RPM, oil temp, voltage, fuel burn per nautical mile, etc Display
 - Batteries Status, etc Display
-- Wind Display
+- Wind Display (True/Apparent)
+- Drift and set
 - Wind Rose from climatology data for current location and time Display
 - Depth Display
 - Barometer with History
@@ -98,11 +99,11 @@ https://github.com/mhaberler/SensESP-M5Stack
 - Emergency steering Control by Autopilot
 - Bow Truster Remote Control
 - MOB Button
-- Compass Display
+- Compass Display (True/Magnetic), Magnetic Variation for the location
 - Clock Display
 - Music Player Controls (Spotify/Mopidy, etc)
 - Bilge Monitoring Screen
-- Wave Height, G-Forces Display
+- Wave Height, G-Forces Display based on: https://bareboat-necessities.github.io/my-bareboat/bareboat-math.html
 - Local Sunset/Sunrise
 - Fog Alarm, Fog Signals (reminders)
 - AC/Fridge/Heater/Watermaker/Hot Water Tank monitoring
