@@ -1,6 +1,6 @@
-# M5Stack Tough Arduino sketches
+# M5Stack Tough (ESP-32) Arduino sketches
 
-M5Stack Tough Arduino sketches
+M5Stack Tough (ESP-32) Arduino sketches
 
 With LVGL UI
 
