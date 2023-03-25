@@ -15,7 +15,6 @@ static lv_indev_drv_t indev_drv;  // Descriptor of a touch driver
 
 M5Display *tft;
 
-static void ta_event_cb(lv_event_t *e);
 static lv_obj_t *kb;
 
 static void btnScanWifi_event(lv_event_t *event) {
@@ -51,7 +50,7 @@ void lv_list_wifi(int num) {
   lv_list_add_text(list_wifi, "Wi-Fi Networks");
 
   for (int i = 0; i < num; ++i) {
-    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String("[o] ") : String()) + WiFi.SSID(i)).c_str());
+    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String(LV_SYMBOL_EYE_OPEN) : String()) + WiFi.SSID(i)).c_str());
     lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)i);
     delay(10);
   }
