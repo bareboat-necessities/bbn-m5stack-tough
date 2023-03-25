@@ -50,7 +50,7 @@ void lv_list_wifi(int num) {
   lv_list_add_text(list_wifi, "Wi-Fi Networks");
 
   for (int i = 0; i < num; ++i) {
-    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String(LV_SYMBOL_EYE_OPEN) : String()) + WiFi.SSID(i)).c_str());
+    btn = lv_list_add_btn(list_wifi, LV_SYMBOL_WIFI, (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String(LV_SYMBOL_EYE_OPEN "  ") : String()) + WiFi.SSID(i)).c_str());
     lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_CLICKED, (void *)i);
     delay(10);
   }
