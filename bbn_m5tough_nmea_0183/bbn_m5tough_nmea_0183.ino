@@ -39,10 +39,10 @@ TinyGPSCustom headingMag(gps, heading_mag_prefix, 1);    // Example: 347.4
 
 // Sample: $APXDR,A,0.000,D,PTCH*7B
 // Sample: $APXDR,A,0.000,D,ROLL*69
-char* custom_data_prefix = "APXDR";   
+char* custom_data_prefix = "APXDR";
 
-TinyGPSCustom customData_Value(gps, custom_data_prefix, 2);    
-TinyGPSCustom customData_Type(gps, custom_data_prefix, 4);    
+TinyGPSCustom customData_Value(gps, custom_data_prefix, 2);
+TinyGPSCustom customData_Type(gps, custom_data_prefix, 4);
 
 using namespace reactesp;
 ReactESP app;
@@ -139,57 +139,34 @@ float parse_float(const char* str) {
 }
 
 void displayGPSData() {
-
-  boolean locValid = gps.location.isValid() && gps.location.isUpdated();
-  if (locValid) {
+  if (gps.location.isUpdated()) {
     M5.Lcd.print("POS:  ");
     M5.Lcd.print(gps.location.lat());
     M5.Lcd.print(" ");
     M5.Lcd.println(gps.location.lng());
-  }
-
-  boolean altValid = gps.altitude.isValid() && gps.altitude.isUpdated();
-  if (altValid) {
+  } else if (gps.altitude.isUpdated()) {
     M5.Lcd.print("ALT:  ");
     M5.Lcd.println(gps.altitude.feet());
-  }
-
-  boolean speedValid = gps.speed.isValid() && gps.speed.isUpdated();
-  if (speedValid) {
+  } else if (gps.speed.isUpdated()) {
     M5.Lcd.print("SOG:  ");
     M5.Lcd.println(gps.speed.knots());
-  }
-
-  boolean courseValid = gps.course.isValid() && gps.course.isUpdated();
-  if (courseValid) {
+  } else if (gps.course.isUpdated()) {
     M5.Lcd.print("COG:  ");
     M5.Lcd.println(gps.course.deg());
-  }
-
-  boolean timeValid = gps.time.isValid() && gps.time.isUpdated();
-  if (timeValid) {
+  } else if (gps.time.isUpdated()) {
     M5.Lcd.print("TIME: ");
     M5.Lcd.print(gps.time.hour());
     M5.Lcd.print(":");
     M5.Lcd.print(gps.time.minute());
     M5.Lcd.print(":");
     M5.Lcd.println(gps.time.second());
-  }
-
-  boolean headingTrueValid = headingTrue.isValid() && headingTrue.isUpdated();
-  if (headingTrueValid) {
+  } else if (headingTrue.isUpdated()) {
     M5.Lcd.print("HDT:  ");
     M5.Lcd.println(headingTrue.value());
-  }
-
-  boolean headingMagValid = headingMag.isValid() && headingMag.isUpdated();
-  if (headingMagValid) {
+  } else if (headingMag.isUpdated()) {
     M5.Lcd.print("HDM:  ");
     M5.Lcd.println(headingMag.value());
-  }
-
-  boolean customValValid = customData_Value.isValid() && customData_Value.isUpdated();
-  if (customValValid && customData_Type.isValid()) {    
+  } else if (customData_Value.isUpdated() && customData_Type.isValid()) {
     M5.Lcd.print(customData_Type.value());
     M5.Lcd.print(": ");
     M5.Lcd.println(customData_Value.value());
