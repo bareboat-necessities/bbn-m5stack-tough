@@ -5,11 +5,30 @@
 #undef min(a, b)
 #include <ReactESP.h>
 
+#include "TinyGPSPlus.h"
+
 Preferences preferences;
 String wifi_ssid;      // Store the name of the wireless network.
 String wifi_password;  // Store the password of the wireless network.
 
 WiFiClient nmeaClient;
+
+TinyGPSPlus gps;
+
+// Sample: $WIMWV,27,R,00,N,A*26
+char* wind_prefix[] = {"WIMWV", "IIMWV"};
+
+int wind_prefix_index = 0;
+
+TinyGPSCustom windAngle(gps, wind_prefix[0], 1); // Example: 214.8
+TinyGPSCustom windReference(gps, wind_prefix[0], 2); // Reference: R = Relative, T = True
+TinyGPSCustom windSpeed(gps, wind_prefix[0], 3); // Example: 0.1
+TinyGPSCustom windSpeedUnit(gps, wind_prefix[0], 4); // Units: M = Meter per second, N = Knots, K = Kilometres per hour
+
+TinyGPSCustom windAngleI(gps, wind_prefix[1], 1); // Example: 214.8
+TinyGPSCustom windReferenceI(gps, wind_prefix[1], 2); // Reference: R = Relative, T = True
+TinyGPSCustom windSpeedI(gps, wind_prefix[1], 3); // Example: 0.1
+TinyGPSCustom windSpeedUnitI(gps, wind_prefix[1], 4); // Units: M = Meter per second, N = Knots, K = Kilometres per hour
 
 using namespace reactesp;
 ReactESP app;
@@ -69,9 +88,9 @@ int samples = 20;
 
 void nmea_subscribe(WiFiClient& client) {
   delay(50);
-  String dataFeed = client.readStringUntil('\n');
-  M5.Lcd.println(dataFeed);
-  delay(50);
+  //String dataFeed = client.readStringUntil('\n');
+  //M5.Lcd.println(dataFeed);
+  //delay(50);
 
   app.onAvailable(client, [samples, &client]() {
     while (client.connected() && client.available()) {
@@ -91,3 +110,31 @@ bool nmea_parse(Stream& stream) {
   return true;
 }
 
+void parse_sentence(const char* line) {
+  for (; *line != '\0'; line++) {
+    gps.encode(*line);
+  }
+}
+
+float parse_float(const char* str) {
+  return strtof(str, NULL);
+}
+
+
+#define NMEA_END_CHAR_1 '\n'
+#define NMEA_MAX_LENGTH 128
+
+uint8_t nmea_get_checksum(const char *sentence) {
+  const char *n = sentence + 1; // Plus one, skip '$'
+  uint8_t chk = 0;
+  /* While current char isn't '*' or sentence ending (newline) */
+  while ('*' != *n && NMEA_END_CHAR_1 != *n) {
+    if ('\0' == *n || n - sentence > NMEA_MAX_LENGTH) {
+      /* Sentence too long or short */
+      return 0;
+    }
+    chk ^= (uint8_t) *n;
+    n++;
+  }
+  return chk;
+}
