@@ -65,6 +65,8 @@ https://github.com/SensESP/VEDirect
 
 https://github.com/joelkoz/CommonSens/tree/main/signalk-smart-switch
 
+https://github.com/arduino-libraries
+
 https://github.com/mhaberler/SensESP-M5Stack
 
 
