@@ -142,7 +142,7 @@ void displayGPSData() {
 
   boolean locValid = gps.location.isValid() && gps.location.isUpdated();
   if (locValid) {
-    M5.Lcd.print("POS: ");
+    M5.Lcd.print("POS:  ");
     M5.Lcd.print(gps.location.lat());
     M5.Lcd.print(" ");
     M5.Lcd.println(gps.location.lng());
@@ -150,19 +150,19 @@ void displayGPSData() {
 
   boolean altValid = gps.altitude.isValid() && gps.altitude.isUpdated();
   if (altValid) {
-    M5.Lcd.print("ALT: ");
+    M5.Lcd.print("ALT:  ");
     M5.Lcd.println(gps.altitude.feet());
   }
 
   boolean speedValid = gps.speed.isValid() && gps.speed.isUpdated();
   if (speedValid) {
-    M5.Lcd.print("SOG: ");
+    M5.Lcd.print("SOG:  ");
     M5.Lcd.println(gps.speed.knots());
   }
 
   boolean courseValid = gps.course.isValid() && gps.course.isUpdated();
   if (courseValid) {
-    M5.Lcd.print("COG: ");
+    M5.Lcd.print("COG:  ");
     M5.Lcd.println(gps.course.deg());
   }
 
@@ -178,13 +178,13 @@ void displayGPSData() {
 
   boolean headingTrueValid = headingTrue.isValid() && headingTrue.isUpdated();
   if (headingTrueValid) {
-    M5.Lcd.print("HDT: ");
+    M5.Lcd.print("HDT:  ");
     M5.Lcd.println(headingTrue.value());
   }
 
   boolean headingMagValid = headingMag.isValid() && headingMag.isUpdated();
   if (headingMagValid) {
-    M5.Lcd.print("HDM: ");
+    M5.Lcd.print("HDM:  ");
     M5.Lcd.println(headingMag.value());
   }
 
