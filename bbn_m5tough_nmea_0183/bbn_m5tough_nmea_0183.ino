@@ -16,19 +16,19 @@ WiFiClient nmeaClient;
 TinyGPSPlus gps;
 
 // Sample: $WIMWV,27,R,00,N,A*26
-char* wind_prefix[] = {"WIMWV", "IIMWV"};
+char* wind_prefix[] = { "WIMWV", "IIMWV" };
 
 int wind_prefix_index = 0;
 
-TinyGPSCustom windAngle(gps, wind_prefix[0], 1); // Example: 214.8
-TinyGPSCustom windReference(gps, wind_prefix[0], 2); // Reference: R = Relative, T = True
-TinyGPSCustom windSpeed(gps, wind_prefix[0], 3); // Example: 0.1
-TinyGPSCustom windSpeedUnit(gps, wind_prefix[0], 4); // Units: M = Meter per second, N = Knots, K = Kilometres per hour
+TinyGPSCustom windAngle(gps, wind_prefix[0], 1);      // Example: 214.8
+TinyGPSCustom windReference(gps, wind_prefix[0], 2);  // Reference: R = Relative, T = True
+TinyGPSCustom windSpeed(gps, wind_prefix[0], 3);      // Example: 0.1
+TinyGPSCustom windSpeedUnit(gps, wind_prefix[0], 4);  // Units: M = Meter per second, N = Knots, K = Kilometres per hour
 
-TinyGPSCustom windAngleI(gps, wind_prefix[1], 1); // Example: 214.8
-TinyGPSCustom windReferenceI(gps, wind_prefix[1], 2); // Reference: R = Relative, T = True
-TinyGPSCustom windSpeedI(gps, wind_prefix[1], 3); // Example: 0.1
-TinyGPSCustom windSpeedUnitI(gps, wind_prefix[1], 4); // Units: M = Meter per second, N = Knots, K = Kilometres per hour
+TinyGPSCustom windAngleI(gps, wind_prefix[1], 1);      // Example: 214.8
+TinyGPSCustom windReferenceI(gps, wind_prefix[1], 2);  // Reference: R = Relative, T = True
+TinyGPSCustom windSpeedI(gps, wind_prefix[1], 3);      // Example: 0.1
+TinyGPSCustom windSpeedUnitI(gps, wind_prefix[1], 4);  // Units: M = Meter per second, N = Knots, K = Kilometres per hour
 
 using namespace reactesp;
 ReactESP app;
@@ -124,8 +124,8 @@ float parse_float(const char* str) {
 #define NMEA_END_CHAR_1 '\n'
 #define NMEA_MAX_LENGTH 128
 
-uint8_t nmea_get_checksum(const char *sentence) {
-  const char *n = sentence + 1; // Plus one, skip '$'
+uint8_t nmea_get_checksum(const char* sentence) {
+  const char* n = sentence + 1;  // Plus one, skip '$'
   uint8_t chk = 0;
   /* While current char isn't '*' or sentence ending (newline) */
   while ('*' != *n && NMEA_END_CHAR_1 != *n) {
@@ -133,7 +133,7 @@ uint8_t nmea_get_checksum(const char *sentence) {
       /* Sentence too long or short */
       return 0;
     }
-    chk ^= (uint8_t) *n;
+    chk ^= (uint8_t)*n;
     n++;
   }
   return chk;
