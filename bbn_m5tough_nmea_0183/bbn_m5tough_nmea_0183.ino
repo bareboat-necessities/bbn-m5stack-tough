@@ -30,6 +30,20 @@ TinyGPSCustom windReferenceI(gps, wind_prefix[1], 2);  // Reference: R = Relativ
 TinyGPSCustom windSpeedI(gps, wind_prefix[1], 3);      // Example: 0.1
 TinyGPSCustom windSpeedUnitI(gps, wind_prefix[1], 4);  // Units: M = Meter per second, N = Knots, K = Kilometres per hour
 
+
+char* heading_true_prefix = "IIHDT";  // Sample: $IIHDT,347.4,T*26
+char* heading_mag_prefix = "APHDM";   // Sample: $APHDM,0.000,M*33
+
+TinyGPSCustom headingTrue(gps, heading_true_prefix, 1);  // Example: 347.4
+TinyGPSCustom headingMag(gps, heading_mag_prefix, 1);    // Example: 347.4
+
+// Sample: $APXDR,A,0.000,D,PTCH*7B
+// Sample: $APXDR,A,0.000,D,ROLL*69
+char* custom_data_prefix = "APXDR";   
+
+TinyGPSCustom customData_Value(gps, custom_data_prefix, 2);    
+TinyGPSCustom customData_Type(gps, custom_data_prefix, 4);    
+
 using namespace reactesp;
 ReactESP app;
 
@@ -84,7 +98,7 @@ void loop() {
   app.tick();
 }
 
-int samples = 20;
+int samples = 25;
 
 void nmea_subscribe(WiFiClient& client) {
   delay(50);
@@ -109,9 +123,9 @@ void nmea_subscribe(WiFiClient& client) {
 }
 
 bool nmea_parse(String& line) {
-  M5.Lcd.println(line);
+  //M5.Lcd.println(line);
   parse_sentence(line.c_str());
-  return gps.charsProcessed() > 0;
+  return line.length() > 0;
 }
 
 void parse_sentence(const char* line) {
@@ -126,7 +140,7 @@ float parse_float(const char* str) {
 
 void displayGPSData() {
 
-  boolean locValid = gps.location.isValid();
+  boolean locValid = gps.location.isValid() && gps.location.isUpdated();
   if (locValid) {
     M5.Lcd.print("POS: ");
     M5.Lcd.print(gps.location.lat());
@@ -134,25 +148,25 @@ void displayGPSData() {
     M5.Lcd.println(gps.location.lng());
   }
 
-  boolean altValid = gps.altitude.isValid();
+  boolean altValid = gps.altitude.isValid() && gps.altitude.isUpdated();
   if (altValid) {
     M5.Lcd.print("ALT: ");
     M5.Lcd.println(gps.altitude.feet());
   }
 
-  boolean speedValid = gps.speed.isValid();
+  boolean speedValid = gps.speed.isValid() && gps.speed.isUpdated();
   if (speedValid) {
     M5.Lcd.print("SOG: ");
     M5.Lcd.println(gps.speed.knots());
   }
 
-  boolean courseValid = gps.course.isValid();
+  boolean courseValid = gps.course.isValid() && gps.course.isUpdated();
   if (courseValid) {
     M5.Lcd.print("COG: ");
     M5.Lcd.println(gps.course.deg());
   }
 
-  boolean timeValid = gps.time.isValid();
+  boolean timeValid = gps.time.isValid() && gps.time.isUpdated();
   if (timeValid) {
     M5.Lcd.print("TIME: ");
     M5.Lcd.print(gps.time.hour());
@@ -160,6 +174,25 @@ void displayGPSData() {
     M5.Lcd.print(gps.time.minute());
     M5.Lcd.print(":");
     M5.Lcd.println(gps.time.second());
+  }
+
+  boolean headingTrueValid = headingTrue.isValid() && headingTrue.isUpdated();
+  if (headingTrueValid) {
+    M5.Lcd.print("HDT: ");
+    M5.Lcd.println(headingTrue.value());
+  }
+
+  boolean headingMagValid = headingMag.isValid() && headingMag.isUpdated();
+  if (headingMagValid) {
+    M5.Lcd.print("HDM: ");
+    M5.Lcd.println(headingMag.value());
+  }
+
+  boolean customValValid = customData_Value.isValid() && customData_Value.isUpdated();
+  if (customValValid && customData_Type.isValid()) {    
+    M5.Lcd.print(customData_Type.value());
+    M5.Lcd.print(": ");
+    M5.Lcd.println(customData_Value.value());
   }
 }
 
