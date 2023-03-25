@@ -96,7 +96,7 @@ https://github.com/mhaberler/SensESP-M5Stack
 - Anchor Alarm Set up and Display
 - Heel (Clinometer) and Pitch
 - GPS Location, speed, heading (true/mag), VMG
-- Nav Lights and Digital Switching Control
+- Nav Lights and Digital Switching Control (ex: NMEA 2000 PGN 127501 "Binary Status Report" and PGN 127502 "Binary Switch Control")
 - Tanks levels display
 - Windlass remote control, chain counter display
 - Emergency steering Control by Autopilot
