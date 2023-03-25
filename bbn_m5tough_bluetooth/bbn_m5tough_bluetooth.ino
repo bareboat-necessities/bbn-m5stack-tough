@@ -1,66 +1,56 @@
 #include <M5Tough.h>
-#include <Arduino.h>
-
 #include <BLEDevice.h>
-#include <BLEUtils.h>
 #include <BLEServer.h>
+#include <BLEUtils.h>
 #include <BLE2902.h>
+
+BLECharacteristic *pCharacteristic;
+bool deviceConnected = false;
 
 // See the following for generating UUIDs:
 // https://www.uuidgenerator.net/
 
-#define SERVICE_UUID "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
-#define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
-
-BLEServer *pServer = NULL;
-BLECharacteristic *pCharacteristic = NULL;
-bool deviceConnected = false;
+#define SERVICE_UUID "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"  // UART service UUID
+#define CHARACTERISTIC_UUID_RX "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+#define CHARACTERISTIC_UUID_TX "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
 
 class MyServerCallbacks : public BLEServerCallbacks {
   void onConnect(BLEServer *pServer) {
-    M5.Lcd.println("connect");
+    M5.Lcd.println("onConnect");
     deviceConnected = true;
   };
-
   void onDisconnect(BLEServer *pServer) {
-    M5.Lcd.println("disconnect");
+    M5.Lcd.println("onDisconnect");
     deviceConnected = false;
   }
 };
 
 class MyCallbacks : public BLECharacteristicCallbacks {
-  void onRead(BLECharacteristic *pCharacteristic) {
-    M5.Lcd.println("read");
-    pCharacteristic->setValue("Hello World!");
-  }
-
   void onWrite(BLECharacteristic *pCharacteristic) {
-    M5.Lcd.println("write");
-    std::string value = pCharacteristic->getValue();
-    M5.Lcd.println(value.c_str());
   }
 };
 
 void setup() {
-  //Serial.begin(115200);
+  Serial.begin(115200);
+  delay(1000);
   M5.begin();
-  M5.Axp.SetSpkEnable(false);
-  M5.Lcd.println("BLE start.");
-
+  // Create the BLE Device
   BLEDevice::init("m5tough");
+  // Create the BLE Server
   BLEServer *pServer = BLEDevice::createServer();
   pServer->setCallbacks(new MyServerCallbacks());
+  // Create the BLE Service
   BLEService *pService = pServer->createService(SERVICE_UUID);
-
-  pCharacteristic = pService->createCharacteristic(
-    CHARACTERISTIC_UUID,
-    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_BROADCAST | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_INDICATE);
-  pCharacteristic->setCallbacks(new MyCallbacks());
+  // Create a BLE Characteristic
+  pCharacteristic = pService->createCharacteristic(CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_NOTIFY);
   pCharacteristic->addDescriptor(new BLE2902());
-
+  BLECharacteristic *pCharacteristic = pService->createCharacteristic(CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);
+  pCharacteristic->setCallbacks(new MyCallbacks());
+  // Start the service
   pService->start();
-  BLEAdvertising *pAdvertising = pServer->getAdvertising();
-  pAdvertising->start();
+  // Start advertising
+  pServer->getAdvertising()->start();
+  M5.Lcd.println("Waiting a client connection to notify...");
 }
 
 void loop() {
