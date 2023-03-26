@@ -84,7 +84,7 @@ void setup() {
   lv_obj_align(btn, LV_ALIGN_CENTER, 0, 0);
   lv_label_set_text(label, "Power Off");
   lv_obj_center(label);
-  lv_obj_add_event_cb(btn, btnPowerOff_event, LV_EVENT_CLICKED, NULL);
+  lv_obj_add_event_cb(btn, btnPowerOff_event, LV_EVENT_PRESSED, NULL);
 }
 
 void loop() {
