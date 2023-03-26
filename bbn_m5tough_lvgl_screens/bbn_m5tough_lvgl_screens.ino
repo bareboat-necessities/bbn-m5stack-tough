@@ -87,8 +87,8 @@ void setup() {
   init_disp_driver();
   init_touch_driver();
 
-  lv_obj_t *page1 = lv_obj_create(NULL);
-  lv_obj_t *page2 = lv_obj_create(NULL);
+  lv_obj_t *page1 = lv_obj_create(NULL);  // Creates a Screen object
+  lv_obj_t *page2 = lv_obj_create(NULL);  // Creates another Screen object
 
   pages[0] = page1;
   pages[1] = page2;
