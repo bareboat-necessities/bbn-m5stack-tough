@@ -63,7 +63,7 @@ boolean checkConnection() {  // Check wifi connection.
 static void event_handler_wifi(lv_event_t *e) {
   lv_event_code_t code = lv_event_get_code(e);
   lv_obj_t *obj = lv_event_get_target(e);
-  if (code == LV_EVENT_PRESSED) {
+  if (code == LV_EVENT_LONG_PRESSED) {
     int n = (int)lv_event_get_user_data(e);
     lv_connect_wifi_win(n);
   }
@@ -96,7 +96,7 @@ void lv_list_wifi(lv_obj_t *parent, int num) {
     btn = lv_list_add_btn(list_wifi, (String(LV_SYMBOL_WIFI) + "  " + String(dBm_to_percents(WiFi.RSSI(i))) + "%").c_str(),
                           (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String(LV_SYMBOL_EYE_OPEN " ") : String("")) + WiFi.SSID(i)).c_str());
 
-    lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_PRESSED, (void *)i);
+    lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_LONG_PRESSED, (void *)i);
     delay(10);
   }
 }
@@ -264,14 +264,14 @@ void wifi_connected() {
   lv_obj_align(btn_cfg, LV_ALIGN_CENTER, 0, -30);
   lv_label_set_text(label, "Reset Wi-Fi Settings");
   lv_obj_center(label);
-  lv_obj_add_event_cb(btn_cfg, btnRestWiFiSettings_event, LV_EVENT_PRESSED, NULL);
+  lv_obj_add_event_cb(btn_cfg, btnRestWiFiSettings_event, LV_EVENT_LONG_PRESSED, NULL);
 
   lv_obj_t *btn_reboot = lv_btn_create(lv_scr_act());
   lv_obj_t *label_reboot = lv_label_create(btn_reboot);
   lv_obj_align(btn_reboot, LV_ALIGN_CENTER, 0, 30);
   lv_label_set_text(label_reboot, "Reboot Device");
   lv_obj_center(label_reboot);
-  lv_obj_add_event_cb(btn_reboot, btnReboot_event, LV_EVENT_PRESSED, NULL);
+  lv_obj_add_event_cb(btn_reboot, btnReboot_event, LV_EVENT_LONG_PRESSED, NULL);
 }
 
 static void btnRestWiFiSettings_event(lv_event_t *event) {
