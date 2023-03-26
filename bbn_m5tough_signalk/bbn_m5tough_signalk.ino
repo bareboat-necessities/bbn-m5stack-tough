@@ -11,6 +11,8 @@
 #include <WebSocketClient.h>  // https://github.com/u0078867/Arduino-Websocket-Fast/ (rename String.h reference to string.h, remove Base64.cpp)
 #include <ArduinoJson.h>
 #include <Preferences.h>
+#undef min(a, b)
+#include <ReactESP.h>
 
 Preferences preferences;
 String wifi_ssid;      // Store the name of the wireless network.
@@ -18,6 +20,9 @@ String wifi_password;  // Store the password of the wireless network.
 
 WiFiClient client;
 WebSocketClient webSocketClient;
+
+using namespace reactesp;
+ReactESP app;
 
 void setup() {
   M5.begin();
@@ -50,7 +55,7 @@ void setup() {
   }
 
   webSocketClient.path = "/signalk/v1/stream?subcribe=all";
-  webSocketClient.host = "192.168.1.34"; //"lysmarine";
+  webSocketClient.host = "192.168.1.34";  //"lysmarine";
   int port = 3000;
 
   // Connect to the websocket server
@@ -61,7 +66,7 @@ void setup() {
     M5.Lcd.println("Connection failed.");
     return;
   }
-  
+
   // Handshake with the server
   if (webSocketClient.handshake(client)) {
     M5.Lcd.println("Handshake successful");
@@ -74,25 +79,29 @@ void setup() {
   webSocketClient.sendData(data);
   delay(1000);
 
-  String dataFeed;
-  int samples = 10;
-  while (client.connected() && samples > 0) {
-    webSocketClient.getData(dataFeed);
-    if (dataFeed.length() > 0) {
-      bool found = signalk_parse(dataFeed);
-      if (found) {
-        samples--;
-        if (samples <= 0) {
-          client.stop();
+  static String dataFeed;
+  static int samples = 12;
+
+  app.onAvailable(client, [samples, &dataFeed, &client]() {
+    while (client.connected() && client.available()) {
+      webSocketClient.getData(dataFeed);
+      if (dataFeed.length() > 0) {
+        bool found = signalk_parse(dataFeed);
+        if (found) {
+          samples--;
+          if (samples <= 0) {
+            client.stop();
+          }
         }
       }
     }
-    delay(5);
-  }
+    delay(1);
+  });
 }
 
 void loop() {
   M5.update();
+  app.tick();
 }
 
 bool signalk_parse(String& str) {
