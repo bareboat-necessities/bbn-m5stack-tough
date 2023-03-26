@@ -97,7 +97,6 @@ void lv_list_wifi(lv_obj_t *parent, int num) {
                           (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String(LV_SYMBOL_EYE_OPEN " ") : String("")) + WiFi.SSID(i)).c_str());
 
     lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_LONG_PRESSED, (void *)i);
-    delay(10);
   }
 }
 
@@ -156,7 +155,7 @@ static void ta_password_event_cb(lv_event_t *e) {
 static void event_msgbox_cb(lv_event_t *e) {
   lv_obj_t *obj = lv_event_get_current_target(e);
   lv_msgbox_close(obj);
-  delay(500);
+  delay(100);
   ESP.restart();
 }
 
@@ -294,5 +293,4 @@ void loop() {
     lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   }
   lv_tick_inc(1);
-  delay(1);
 }
