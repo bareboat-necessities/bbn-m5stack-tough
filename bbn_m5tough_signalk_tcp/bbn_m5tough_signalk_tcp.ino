@@ -113,6 +113,8 @@ bool signalk_parse(Stream& stream) {
       updatedValue = updatedValue + " str: ";
     } else if (value.is<boolean>()) {
       updatedValue = updatedValue + " bool: ";
+    } else {
+      updatedValue = updatedValue + " ";
     }
     serializeJson(value, updatedValue);
     M5.Lcd.println(updatedValue);
