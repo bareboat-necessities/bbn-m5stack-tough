@@ -75,14 +75,16 @@ void setup() {
   delay(1000);
 
   String dataFeed;
-  int samples = 30;
+  int samples = 10;
   while (client.connected() && samples > 0) {
     webSocketClient.getData(dataFeed);
     if (dataFeed.length() > 0) {
-      String parsed = handleReceivedMessage(dataFeed);
-      if (parsed.length() > 0) {
-        M5.Lcd.println(parsed);
+      bool found = signalk_parse(dataFeed);
+      if (found) {
         samples--;
+        if (samples <= 0) {
+          client.stop();
+        }
       }
     }
     delay(5);
@@ -93,40 +95,59 @@ void loop() {
   M5.update();
 }
 
-
-String updatedValue;
-
-String handleReceivedMessage(String message){
-  StaticJsonDocument<4096> doc;
-  DeserializationError err = deserializeJson(doc, message);
+bool signalk_parse(String& str) {
+  bool found = false;
+  DynamicJsonDocument doc(4096);
+  DeserializationError err = deserializeJson(doc, str);
   // Parse succeeded?
   if (err) {
     Serial.print(F("deserializeJson() returned "));
     Serial.println(err.c_str());
-    return "INVALID";
+    return found;
   }
   JsonObject obj = doc.as<JsonObject>();
 
-  JsonObject updates = obj["updates"][0]["values"][0];
-  JsonObject value_obj = updates["value"];
-  const char* value = updates["value"];
-  const char* path = updates["path"];
+  auto update_value = [&](String& path, size_t& u_idx, size_t& v_idx, JsonVariant& value) {
+    String updatedValue = path;
+    if (value.is<float>()) {
+      updatedValue = updatedValue + " float: ";
+    } else if (value.is<int>()) {
+      updatedValue = updatedValue + " int: ";
+    } else if (value.is<const char*>()) {
+      updatedValue = updatedValue + " str: ";
+    } else if (value.is<boolean>()) {
+      updatedValue = updatedValue + " bool: ";
+    } else {
+      updatedValue = updatedValue + " ";
+    }
+    serializeJson(value, updatedValue);
+    M5.Lcd.println(updatedValue);
+  };
 
-  updatedValue = "";
-  if (path != NULL) {
-    updatedValue = String(path) + ": ";
-    if (strcmp(path, "navigation.position") == 0) {
-      float lon = value_obj["longitude"];
-      float lat = value_obj["latitude"];
-      updatedValue = updatedValue + lat + " " + lon;
-    }
-    else if (strcmp(path, "navigation.gnss.satellitesInView") == 0) {
-    } 
-    else if (strncmp(path, "notifications.security.accessRequest", strlen("notifications.security.accessRequest")) == 0) {
-    }
-    else {
-      updatedValue = updatedValue + String(value);
+  JsonArray updates = obj["updates"];
+  if (updates != NULL) {
+    for (size_t i_u = 0; i_u < updates.size(); i_u++) {
+      JsonObject update = updates[i_u];
+      if (update != NULL) {
+        JsonArray values = update["values"];
+        if (values != NULL) {
+          for (size_t i_v = 0; i_v < values.size(); i_v++) {
+            JsonObject valueObj = values[i_v];
+            if (valueObj != NULL) {
+              if (valueObj.containsKey("path")) {
+                String path = valueObj["path"].as<const char*>();
+                if (path != NULL) {
+                  JsonVariant value = valueObj["value"];
+                  update_value(path, i_u, i_v, value);
+                  found = true;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
-  return updatedValue;
+
+  return found;
 }
