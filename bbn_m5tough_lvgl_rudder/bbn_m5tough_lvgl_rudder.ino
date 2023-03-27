@@ -90,13 +90,14 @@ static void set_value(void *indic, int32_t v) {
 /**
  * A rudder position display
  */
-void lv_rudder_display(lv_obj_t * parent) {
+void lv_rudder_display(lv_obj_t *parent) {
   rudder_display = lv_meter_create(parent);
   lv_obj_align(rudder_display, LV_ALIGN_CENTER, 0, -40);
   lv_obj_set_size(rudder_display, 300, 300);
   //v_obj_set_style_arc_width(rudder_display, 0, LV_PART_MAIN);
   lv_obj_set_style_border_width(rudder_display, 0, LV_PART_MAIN);
   lv_obj_set_style_bg_opa(rudder_display, LV_OPA_TRANSP, LV_PART_MAIN);
+  lv_obj_set_style_bg_color(rudder_display, lv_theme_get_color_primary(parent), LV_PART_INDICATOR);
 
   /*Add a scale first*/
   lv_meter_scale_t *scale = lv_meter_add_scale(rudder_display);
@@ -108,7 +109,7 @@ void lv_rudder_display(lv_obj_t * parent) {
   lv_meter_indicator_t *indic;
 
   /*Add a needle line indicator*/
-  indic = lv_meter_add_needle_line(rudder_display, scale, 4, lv_palette_main(LV_PALETTE_GREY), -10);
+  indic = lv_meter_add_needle_line(rudder_display, scale, 7, lv_theme_get_color_primary(parent), -10);
 
   /*Create an animation to set the value*/
   lv_anim_t a;
