@@ -113,9 +113,9 @@ void setup() {
   lv_obj_t *btn1 = lv_btn_create(page2);
   lv_obj_t *label1 = lv_label_create(btn1);
   lv_obj_align(btn1, LV_ALIGN_CENTER, 0, -30);
-  lv_label_set_text(label1, "Reboot");
+  lv_label_set_text(label1, "Reboot Device");
   lv_obj_center(label1);
-  lv_obj_add_event_cb(btn1, btnReboot_event, LV_EVENT_LONG_PRESSED, NULL);
+  lv_obj_add_event_cb(btn1, btnReboot_event, LV_EVENT_PRESSED, NULL);
   lv_obj_t *btn2 = lv_btn_create(page2);
   lv_obj_t *label2 = lv_label_create(btn2);
   lv_obj_align(btn2, LV_ALIGN_CENTER, 0, 30);
