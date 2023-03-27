@@ -94,9 +94,8 @@ void lv_heel_display(lv_obj_t *parent) {
   heel_display = lv_meter_create(parent);
   lv_obj_align(heel_display, LV_ALIGN_CENTER, 0, -40);
   lv_obj_set_size(heel_display, 300, 300);
-  //v_obj_set_style_arc_width(heel_display, 0, LV_PART_MAIN);
   lv_obj_set_style_border_width(heel_display, 0, LV_PART_MAIN);
-  lv_obj_set_style_bg_opa(heel_display, LV_OPA_TRANSP, LV_PART_MAIN);
+  lv_obj_set_style_bg_opa(heel_display, LV_OPA_TRANSP, LV_PART_MAIN); // remove background
 
   /*Add a scale first*/
   lv_meter_scale_t *scale = lv_meter_add_scale(heel_display);
@@ -105,22 +104,34 @@ void lv_heel_display(lv_obj_t *parent) {
   lv_meter_set_scale_ticks(heel_display, scale, 19, 2, 10, lv_palette_main(LV_PALETTE_GREY));
   lv_meter_set_scale_major_ticks(heel_display, scale, 3, 3, 20, lv_palette_main(LV_PALETTE_GREY), 15);
 
-  lv_meter_indicator_t *indic;
+  /*Remove the circle from the middle*/
+   lv_obj_remove_style(heel_display, NULL, LV_PART_INDICATOR);
+  lv_obj_set_style_height(heel_display, 200, LV_PART_INDICATOR); // Make needle center circle
+  lv_obj_set_style_width(heel_display, 200, LV_PART_INDICATOR);
+  lv_obj_set_style_border_width(heel_display, 0, LV_PART_INDICATOR);
+  lv_obj_set_style_border_color(heel_display, lv_obj_get_style_bg_color(parent, LV_PART_MAIN), LV_PART_INDICATOR);
+  lv_obj_set_style_bg_color(heel_display, lv_obj_get_style_bg_color(parent, LV_PART_MAIN), LV_PART_INDICATOR);
 
-  /*Add a needle line indicator*/
-  indic = lv_meter_add_needle_line(heel_display, scale, 4, lv_palette_main(LV_PALETTE_GREY), -10);
+  lv_meter_indicator_t *indic1;
+  lv_meter_indicator_t *indic2;
+
+  indic1 = lv_meter_add_needle_line(heel_display, scale, 9, lv_palette_main(LV_PALETTE_ORANGE), -10);
+  indic2 = lv_meter_add_needle_line(heel_display, scale, 13, lv_obj_get_style_bg_color(parent, LV_PART_MAIN), -80);
 
   /*Create an animation to set the value*/
   lv_anim_t a;
   lv_anim_init(&a);
   lv_anim_set_exec_cb(&a, set_value);
-  lv_anim_set_var(&a, indic);
   lv_anim_set_values(&a, 5, 15);
   lv_anim_set_time(&a, 5000);
   lv_anim_set_repeat_delay(&a, 3000);
   lv_anim_set_playback_time(&a, 5000);
   lv_anim_set_playback_delay(&a, 3000);
   lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
+
+  lv_anim_set_var(&a, indic1);
+  lv_anim_start(&a);
+  lv_anim_set_var(&a, indic2);
   lv_anim_start(&a);
 }
 
