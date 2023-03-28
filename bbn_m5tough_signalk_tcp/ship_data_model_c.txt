@@ -74,6 +74,42 @@ typedef struct _depth_t {
   age_t age;
 } depth_t;
 
+typedef struct _deg_C {
+  float deg_C;
+  age_t age;
+} deg_C;
+
+typedef struct _hPa {
+  float hPa;
+  age_t age;
+} hPa;
+
+typedef struct _percent {
+  float pct;
+  age_t age;
+} percent;
+
+typedef struct _lux {
+  float lux;
+  age_t age;
+} lux;
+
+typedef struct _litters {
+  float L;
+  age_t age;
+} litters;
+
+typedef struct _water_t {
+  struct _deg_C temperature_deg_C;
+} water_t;
+
+typedef struct _air_t {
+  struct _deg_C temperature_deg_C;
+  struct _hPa pressure;
+  struct _percent humidity_pct;
+  struct _lux illumination;
+} air_t;
+
 typedef struct _environment_t {
   env_time_t time_gps;
   env_time_t time_net;
@@ -104,11 +140,11 @@ typedef struct _autopilot_t {
   struct _ap_mode_t ap_mode;
 } autopilot_t;
 
-typedef struct _tanks_t {  
+typedef struct _tank_t {  
   litters_t volume;
   float percent_of_full;
   age_t age;
-}
+} tank_t;
 
 typedef struct _tanks_t {
   cost char*[2] freshwater_label;
