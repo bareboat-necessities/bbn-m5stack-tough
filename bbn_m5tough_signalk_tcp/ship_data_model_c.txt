@@ -1,0 +1,62 @@
+typedef struct _angle_deg_t {
+  float value;
+  age_t age;
+} angle_deg_t;
+
+typedef struct _position_t {
+  _angle_deg_t lat;
+  _angle_deg_t lon;
+} position_t;
+
+typedef struct _navigation_t {
+  struct _position_t position;
+  struct _angle_deg_t course_over_ground_true;
+  struct _angle_deg_t course_over_ground_mag;
+  struct _angle_deg_t mag_var;
+  struct _angle_deg_t heading_mag;
+  struct _angle_deg_t heading_true;
+  struct _angular_velocity_t rate_of_turn;
+  struct _m_per_sec_t speed_over_ground;
+  struct _m_per_sec_t speed_through_water;
+  struct _nav_lights_t lights;
+} navigation_t;
+
+typedef struct _electrical_t {
+  struct _ac_t ac;
+  struct _dc_t dc;
+  struct _inverters_t inverters;
+  struct _batteries_t batteries;
+  struct _chargers_t chargers;
+} electrical_t;
+
+typedef struct _steering_t {
+  struct _angle_deg_t rudder_angle;
+  struct _autopilot_t autopilot;
+} steering_t;
+
+typedef struct _autopilot_t {
+  struct _ap_state_t ap_state;
+  struct _angle_deg_t command;
+  struct _ap_command_type command_type;
+  struct _ap_mode_t ap_mode;
+} autopilot_t;
+
+typedef struct _tanks_t {
+  struct _tanks_t fresh;
+  struct _tanks_t blackwater;
+  struct _tanks_t fuel;
+  struct _tanks_t gas;
+  struct _tanks_t live_well;
+  struct _tanks_t bait_well;
+} tanks_t;
+
+typedef struct _ship_data_t {
+  struct _navigation_t navigation;
+  struct _environment_t environment;
+  struct _electrical_t electrical;
+  struct _propulsion_t propulsion;
+  struct _steering_t steering;
+  struct _tanks_t tanks;
+  struct _notification_t notification;
+} ship_data_t;
+
