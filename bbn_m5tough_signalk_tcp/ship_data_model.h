@@ -4,6 +4,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+  
 typedef enum {
   NA = -1,
   OFF = 0,
@@ -65,7 +66,6 @@ typedef struct _ap_state_t {
   ap_state_e st;
   age_t age;
 } ap_state_t;
-
 
 typedef struct _angle_deg_t {
   float deg;
@@ -381,8 +381,6 @@ typedef struct _ship_data_t {
   struct _notifications_t notification;
 } ship_data_t;
 
-  
-  
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
