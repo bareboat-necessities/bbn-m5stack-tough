@@ -5,6 +5,14 @@ typedef enum {
 } on_off_e;
 
 typedef enum {
+  SEVERITY_NA = -1,
+  ALARM = 0,
+  ALERT = 1,
+  WARN = 2,
+  EMERGENCY = 3
+} notification_severity_e;
+
+typedef enum {
   MODE_NA = -1,
   HEADING_MAG = 0,
   HEADING_TRUE = 1,
@@ -347,6 +355,16 @@ typedef struct _propulsion_t {
   struct _engine_t engines[8];
 } propulsion_t;
 
+typedef struct _notification_t {
+  notification_severity_e severity;
+  const char *message;
+  age_t age;
+} _notification_t;
+
+typedef struct _notifications_t {
+  struct _notification_t last_notification;
+} _notifications_t;
+
 typedef struct _ship_data_t {
   struct _navigation_t navigation;
   struct _environment_t environment;
@@ -354,5 +372,5 @@ typedef struct _ship_data_t {
   struct _propulsion_t propulsion;
   struct _steering_t steering;
   struct _tanks_t tanks;
-  struct _notification_t notification;
+  struct _notifications_t notification;
 } ship_data_t;
