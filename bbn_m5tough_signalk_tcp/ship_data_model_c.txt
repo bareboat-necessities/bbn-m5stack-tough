@@ -1,3 +1,9 @@
+typedef enum {
+    NA = -1,
+    OFF = 0,
+    ON = 1
+} on_off_t;
+
 typedef uint16_t age_t;
 
 typedef struct _angle_deg_t {
@@ -10,15 +16,29 @@ typedef struct _kn_t {
   age_t age;
 } kn_t;
 
+typedef tm env_time_t;
+
+typedef struct _nav_light {
+  on_off_t state;
+  age_t age;
+} nav_light;
+
 typedef struct _angular_velocity_t {
   float deg_sec;
   age_t age;
 } _angular_velocity_t;
 
 typedef struct _position_t {
-  _angle_deg_t lat;
-  _angle_deg_t lon;  
+  struct _angle_deg_t lat;
+  struct _angle_deg_t lon;  
 } position_t;
+
+typedef struct _nav_lights_t {
+  struct _nav_light anchor;
+  struct _nav_light motoring;
+  struct _nav_light stern;  
+  struct _nav_light bow_red_green;  
+} nav_lights_t;
 
 typedef struct _navigation_t {
   struct _position_t position;
@@ -47,9 +67,16 @@ typedef struct _wind_t {
   struct _angle_deg_t ground_wind_angle_mag;
 } _wind_t;
 
+typedef struct _depth_t {
+  float below_keel;
+  float below_transducer;
+  float below_surface;
+  age_t age;
+} depth_t;
+
 typedef struct _environment_t {
-  struct _env_time_t time_gps;
-  struct _env_time_t time_net;
+  env_time_t time_gps;
+  env_time_t time_net;
   struct _wind_t wind;
   struct _depth_t depth;
   struct _water_t water;
@@ -77,13 +104,25 @@ typedef struct _autopilot_t {
   struct _ap_mode_t ap_mode;
 } autopilot_t;
 
+typedef struct _tanks_t {  
+  litters_t volume;
+  float percent_of_full;
+  age_t age;
+}
+
 typedef struct _tanks_t {
-  struct _tanks_t fresh;
-  struct _tanks_t blackwater;
-  struct _tanks_t fuel;
-  struct _tanks_t gas;
-  struct _tanks_t live_well;
-  struct _tanks_t bait_well;
+  cost char*[2] freshwater_label;
+  cost char*[2] blackwater_label;
+  cost char*[2] fuel_label;
+  cost char*[2] gas_label;
+  cost char*[1] live_well_label;
+  cost char*[1] bait_well_label;
+  struct _tank_t[2] freshwater;
+  struct _tank_t[2] blackwater;
+  struct _tank_t[2] fuel;
+  struct _tank_t[2] gas;
+  struct _tank_t[1] live_well;
+  struct _tank_t[1] bait_well;
 } tanks_t;
 
 typedef struct _ship_data_t {
@@ -95,4 +134,3 @@ typedef struct _ship_data_t {
   struct _tanks_t tanks;
   struct _notification_t notification;
 } ship_data_t;
-
