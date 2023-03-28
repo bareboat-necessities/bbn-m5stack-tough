@@ -102,7 +102,7 @@ typedef struct _position_t {
 typedef struct _attitude_t {
   struct _angle_deg_t heel;
   struct _angle_deg_t pitch;
-} position_t;
+} attitude_t;
 
 typedef struct _nav_lights_t {
   struct _nav_light anchor;
