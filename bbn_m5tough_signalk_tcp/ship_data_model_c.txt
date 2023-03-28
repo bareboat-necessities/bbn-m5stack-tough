@@ -1,9 +1,8 @@
-
 typedef enum {
   NA = -1,
   OFF = 0,
   ON = 1
-} on_off_t;
+} on_off_e;
 
 typedef enum {
   MODE_NA = -1,
@@ -32,6 +31,11 @@ typedef enum {
 } ap_cmd_type_e;
 
 typedef uint16_t age_t;
+
+typedef struct on_off_t {
+  on_off_e st;
+  age_t age;
+} on_off_t;
 
 typedef struct _ap_mode_t {
   ap_mode_e mode;
@@ -117,25 +121,25 @@ typedef struct _depth_t {
   age_t age;
 } depth_t;
 
-typedef struct _deg_C {
+typedef struct _deg_C_t {
   float deg_C;
   age_t age;
-} deg_C;
+} deg_C_t;
 
-typedef struct _hPa {
+typedef struct _hPa_t {
   float hPa;
   age_t age;
-} hPa;
+} hPa_t;
 
-typedef struct _percent {
+typedef struct _percent_t {
   float pct;
   age_t age;
-} percent;
+} percent_t;
 
-typedef struct _lux {
+typedef struct _lux_t {
   float lux;
   age_t age;
-} lux;
+} lux_t;
 
 typedef struct _litters_t {
   float L;
@@ -143,14 +147,14 @@ typedef struct _litters_t {
 } litters_t;
 
 typedef struct _water_t {
-  struct _deg_C temp_deg_C;
+  struct _deg_C_t temp_deg_C;
 } water_t;
 
 typedef struct _air_t {
-  struct _deg_C temp_deg_C;
-  struct _hPa pressure;
-  struct _percent humidity_pct;
-  struct _lux illumination;
+  struct _deg_C_t temp_deg_C;
+  struct _hPa_t pressure;
+  struct _percent_t humidity_pct;
+  struct _lux_t illumination;
 } air_t;
 
 typedef struct _environment_t {
@@ -260,6 +264,29 @@ typedef struct _inverters_t {
   struct _dc_load_t total_dc_load;
 } inverters_t;
 
+typedef struct _charger_t {
+  const char *dc_out_label;
+  struct _dc_load_t dc_out;
+  struct _charger_state_t state;
+} charger_t;
+
+typedef struct _chargers_t {
+  const char *chargers_labels[8];
+  struct _charger_t by_idx[8];
+  struct _dc_load_t total_dc_out;
+} chargers_t;
+
+typedef struct _battery_t {  // bank
+  struct _voltage_V_t voltage;
+  struct _percent_t remaining_capacity_pct;
+  struct _percent_t state_of_charge_pct;
+} battery_t;
+
+typedef struct _batteries_t {
+  const char *batteries_labels[8];
+  struct _battery_t by_idx[8];
+} batteries_t;
+
 typedef struct _electrical_t {
   struct _ac_t ac;
   struct _dc_t dc;
@@ -282,7 +309,7 @@ typedef struct _steering_t {
 
 typedef struct _tank_t {
   struct _litters_t volume;
-  struct _percent percent_of_full;
+  struct _percent_t percent_of_full;
 } tank_t;
 
 typedef struct _tanks_t {
@@ -309,4 +336,3 @@ typedef struct _ship_data_t {
   struct _tanks_t tanks;
   struct _notification_t notification;
 } ship_data_t;
-
