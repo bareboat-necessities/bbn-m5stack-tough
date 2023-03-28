@@ -99,6 +99,11 @@ typedef struct _position_t {
   struct _angle_deg_t lon;
 } position_t;
 
+typedef struct _attitude_t {
+  struct _angle_deg_t heel;
+  struct _angle_deg_t pitch;
+} position_t;
+
 typedef struct _nav_lights_t {
   struct _nav_light anchor;
   struct _nav_light motoring;
@@ -108,6 +113,7 @@ typedef struct _nav_lights_t {
 
 typedef struct _navigation_t {
   struct _position_t position;
+  struct _attitude_t attitude;
   struct _angle_deg_t course_over_ground_true;
   struct _angle_deg_t course_over_ground_mag;
   struct _angle_deg_t mag_var;
