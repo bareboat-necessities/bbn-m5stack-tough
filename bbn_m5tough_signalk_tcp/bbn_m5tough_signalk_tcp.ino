@@ -63,7 +63,6 @@ void setup() {
 
   } else {
     M5.Lcd.println("Connection failed.");
-    return;
   }
 }
 
