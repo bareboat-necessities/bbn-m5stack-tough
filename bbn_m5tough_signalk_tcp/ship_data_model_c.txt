@@ -1,11 +1,23 @@
+typedef uint16_t age_t;
+
 typedef struct _angle_deg_t {
-  float value;
+  float deg;
   age_t age;
 } angle_deg_t;
 
+typedef struct _kn_t {
+  float kn;
+  age_t age;
+} kn_t;
+
+typedef struct _angular_velocity_t {
+  float deg_sec;
+  age_t age;
+} _angular_velocity_t;
+
 typedef struct _position_t {
   _angle_deg_t lat;
-  _angle_deg_t lon;
+  _angle_deg_t lon;  
 } position_t;
 
 typedef struct _navigation_t {
@@ -13,13 +25,27 @@ typedef struct _navigation_t {
   struct _angle_deg_t course_over_ground_true;
   struct _angle_deg_t course_over_ground_mag;
   struct _angle_deg_t mag_var;
+  //struct _angle_deg_t mag_dev;
   struct _angle_deg_t heading_mag;
   struct _angle_deg_t heading_true;
+  //struct _angle_deg_t heading_compass;
   struct _angular_velocity_t rate_of_turn;
-  struct _m_per_sec_t speed_over_ground;
-  struct _m_per_sec_t speed_through_water;
+  struct _kn_t speed_over_ground_kn;
+  struct _kn_t speed_through_water_kn;
   struct _nav_lights_t lights;
 } navigation_t;
+
+typedef struct _wind_t {
+  struct _kn_t apparent_wind_speed_kn;
+  struct _angle_deg_t apparent_wind_angle_true;
+  struct _angle_deg_t apparent_wind_angle_mag;
+  struct _kn_t true_wind_speed_kn;
+  struct _angle_deg_t true_wind_angle_true;
+  struct _angle_deg_t true_wind_angle_mag;
+  struct _kn_t ground_wind_speed_kn;
+  struct _angle_deg_t ground_wind_angle_true;
+  struct _angle_deg_t ground_wind_angle_mag;
+} _wind_t;
 
 typedef struct _environment_t {
   struct _env_time_t time_gps;
@@ -69,3 +95,4 @@ typedef struct _ship_data_t {
   struct _tanks_t tanks;
   struct _notification_t notification;
 } ship_data_t;
+
