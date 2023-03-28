@@ -51,8 +51,8 @@ void setup() {
     M5.Lcd.println("Connected to " + wifi_ssid);
   }
 
-  const char* host = "192.168.1.34";  //"lysmarine";
-  int port = 8375;                    // SignalK TCP
+  static const char* host = "192.168.1.34";  //"lysmarine";
+  static int port = 8375;                    // SignalK TCP
 
   // Connect to the SignalK TCP server
   if (skClient.connect(host, port)) {
@@ -60,6 +60,8 @@ void setup() {
     M5.Lcd.println(host);
 
     signalk_subscribe(skClient);
+
+    setup_reconnect(skClient, host, port);
 
   } else {
     M5.Lcd.println("Connection failed.");
@@ -70,3 +72,15 @@ void loop() {
   M5.update();
   app.tick();
 }
+
+void setup_reconnect(WiFiClient& client, const char* host, int port) {
+  app.onRepeat(5000, [&]() {
+    if (!client.connected()) {
+      if (skClient.connect(host, port, 3000)) {
+        M5.Lcd.print("Reconnected to ");
+        M5.Lcd.println(host);
+      }
+    }
+  });
+}
+
