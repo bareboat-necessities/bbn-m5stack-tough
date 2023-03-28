@@ -143,11 +143,11 @@ typedef struct _litters_t {
 } litters_t;
 
 typedef struct _water_t {
-  struct _deg_C temperature_deg_C;
+  struct _deg_C temp_deg_C;
 } water_t;
 
 typedef struct _air_t {
-  struct _deg_C temperature_deg_C;
+  struct _deg_C temp_deg_C;
   struct _hPa pressure;
   struct _percent humidity_pct;
   struct _lux illumination;
@@ -208,6 +208,58 @@ typedef struct _dc_t {
   struct _dc_load_t total_load;
 } dc_t;
 
+typedef enum {
+  INV_STATE_NA = -1,
+  INV_OFF = 0,
+  INV_LOW_POWER = 1,
+  INV_FAULT = 2,
+  INV_BULK = 3,
+  INV_ABSORPTION = 4,
+  INV_INVERTING = 9
+} inverter_state_e;
+
+typedef enum {
+  CHA_STATE_NA = -1,
+  CHA_OFF = 0,
+  CHA_LOW_POWER = 1,
+  CHA_FAULT = 2,
+  CHA_BULK = 3,
+  CHA_ABSORPTION = 4,
+  CHA_FLOAT = 5,
+  CHA_STORAGE = 6,
+  CHA_EQUALIZE = 7,
+  CHA_PASSTHROUGH = 8,
+  CHA_INVERTING = 9,
+  CHA_POWER_ASSIST = 10,
+  CHA_POWER_SUPPLY = 11,
+  CHA_BULK_PROTECTION = 252,
+} charger_state_e;
+
+typedef struct _inverter_state_t {
+  inverter_state_e st;
+  age_t age;
+} inverter_state_t;
+
+typedef struct _charger_state_t {
+  charger_state_e st;
+  age_t age;
+} charger_state_t;
+
+typedef struct _inverter_t {
+  const char *ac_line_labels[2];
+  const char *dc_line_labels[2];
+  struct _ac_load_t ac_loads[2];
+  struct _dc_load_t dc_loads[2];
+  struct _inverter_state_t state;
+} inverter_t;
+
+typedef struct _inverters_t {
+  const char *inverters_labels[1];
+  struct _inverter_t by_idx[1];
+  struct _ac_load_t total_ac_load;
+  struct _dc_load_t total_dc_load;
+} inverters_t;
+
 typedef struct _electrical_t {
   struct _ac_t ac;
   struct _dc_t dc;
@@ -236,13 +288,13 @@ typedef struct _tank_t {
 typedef struct _tanks_t {
   const char *freshwater_label[2];
   const char *blackwater_label[2];
-  const char *fuel_label[2];
+  const char *fuel_label[3];
   const char *gas_label[2];
   const char *live_well_label[1];
   const char *bait_well_label[1];
   struct _tank_t freshwater[2];
   struct _tank_t blackwater[2];
-  struct _tank_t fuel[2];
+  struct _tank_t fuel[3];
   struct _tank_t gas[2];
   struct _tank_t live_well[1];
   struct _tank_t bait_well[1];
@@ -257,3 +309,4 @@ typedef struct _ship_data_t {
   struct _tanks_t tanks;
   struct _notification_t notification;
 } ship_data_t;
+
