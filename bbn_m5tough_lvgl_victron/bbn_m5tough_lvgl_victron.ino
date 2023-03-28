@@ -182,7 +182,7 @@ void setup() {
   lv_obj_add_style(line2, &style_line, 0);
   lv_line_set_points(line2, line_pt2, 2); /*Set the points*/
 
-  static lv_point_t line_pt3[] = { { 98, 205 }, { 112, 205 } };
+  static lv_point_t line_pt3[] = { { 98, 203 }, { 112, 203 } };
   lv_obj_t *line3 = lv_line_create(parent);
   lv_obj_align(line3, LV_ALIGN_TOP_LEFT, 0, 0);
   lv_obj_add_style(line3, &style_line, 0);
