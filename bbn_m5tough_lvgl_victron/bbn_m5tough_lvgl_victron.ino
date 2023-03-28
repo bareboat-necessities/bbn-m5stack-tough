@@ -80,66 +80,89 @@ void setup() {
   init_disp_driver();
   init_touch_driver();
 
+  lv_obj_t *parent = lv_scr_act();
+
   static lv_style_t style_shadow;
   lv_style_init(&style_shadow);
+
+  /*Set a background color and a radius*/
+  lv_style_set_radius(&style_shadow, 3);
   lv_style_set_shadow_width(&style_shadow, 3);
-  lv_style_set_shadow_spread(&style_shadow, 5);
-  //lv_style_set_shadow_color(&style_shadow, lv_palette_main(LV_PALETTE_BLUE));
+  lv_style_set_pad_all(&style_shadow, 3);
+  lv_style_set_bg_opa(&style_shadow, LV_OPA_COVER);
+  lv_style_set_bg_color(&style_shadow, lv_palette_lighten(LV_PALETTE_GREY, 1));
+
+  /*Add border to the bottom+right*/
+  lv_style_set_border_color(&style_shadow, lv_palette_main(LV_PALETTE_BLUE));
+  lv_style_set_border_width(&style_shadow, 1);
+  lv_style_set_border_opa(&style_shadow, LV_OPA_50);
+  lv_style_set_border_side(&style_shadow, LV_BORDER_SIDE_BOTTOM | LV_BORDER_SIDE_RIGHT);
 
   lv_obj_t *shore;
-  shore = lv_obj_create(lv_scr_act());
+  shore = lv_obj_create(parent);
   lv_obj_add_style(shore, &style_shadow, 0);
-  lv_obj_set_size(shore, 80, 80);
-  lv_obj_align(shore, LV_ALIGN_TOP_LEFT, 10, 10);
+  lv_obj_set_size(shore, 94, 110);
+  lv_obj_align(shore, LV_ALIGN_TOP_LEFT, 5, 5);
   lv_obj_set_style_bg_color(shore, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
 
   lv_obj_t *shore_label = lv_label_create(shore);
-  lv_label_set_text(shore_label, "Shore\nPower\n1205 W");
-  lv_obj_align(shore_label, LV_ALIGN_CENTER, 0, 0);
+  lv_label_set_text(shore_label, "Shore\n1205 W");
+  lv_obj_align(shore_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
-  lv_obj_t *absorbtion;
-  absorbtion = lv_obj_create(lv_scr_act());
-  lv_obj_add_style(absorbtion, &style_shadow, 0);
-  lv_obj_set_size(absorbtion, 80, 80);
-  lv_obj_align(absorbtion, LV_ALIGN_TOP_MID, 0, 20);
-  lv_obj_set_style_bg_color(absorbtion, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
+  lv_obj_t *inverters;
+  inverters = lv_obj_create(parent);
+  lv_obj_add_style(inverters, &style_shadow, 0);
+  lv_obj_set_size(inverters, 94, 80);
+  lv_obj_align(inverters, LV_ALIGN_TOP_MID, 0, 20);
+  lv_obj_set_style_bg_color(inverters, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
 
-  lv_obj_t *abs_label = lv_label_create(absorbtion);
-  lv_label_set_text(abs_label, "Absorb");
-  lv_obj_align(abs_label, LV_ALIGN_CENTER, 0, 0);
+  lv_obj_t *inv_label = lv_label_create(inverters);
+  lv_label_set_text(inv_label, "Inv");
+  lv_obj_align(inv_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
   lv_obj_t *ac;
-  ac = lv_obj_create(lv_scr_act());
+  ac = lv_obj_create(parent);
   lv_obj_add_style(ac, &style_shadow, 0);
-  lv_obj_set_size(ac, 80, 80);
-  lv_obj_align(ac, LV_ALIGN_TOP_RIGHT, -10, 10);
+  lv_obj_set_size(ac, 94, 110);
+  lv_obj_align(ac, LV_ALIGN_TOP_RIGHT, -5, 5);
   lv_obj_set_style_bg_color(ac, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
 
   lv_obj_t *ac_label = lv_label_create(ac);
-  lv_label_set_text(ac_label, "AC\nLoad\n340W");
-  lv_obj_align(ac_label, LV_ALIGN_CENTER, 0, 0);
+  lv_label_set_text(ac_label, "AC Load\n340W");
+  lv_obj_align(ac_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
   lv_obj_t *dc;
-  dc = lv_obj_create(lv_scr_act());
+  dc = lv_obj_create(parent);
   lv_obj_add_style(dc, &style_shadow, 0);
-  lv_obj_set_size(dc, 80, 80);
-  lv_obj_align(dc, LV_ALIGN_BOTTOM_LEFT, 10, -10);
+  lv_obj_set_size(dc, 94, 110);
+  lv_obj_align(dc, LV_ALIGN_BOTTOM_LEFT, 5, -5);
   lv_obj_set_style_bg_color(dc, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
 
   lv_obj_t *dc_label = lv_label_create(dc);
-  lv_label_set_text(dc_label, "Batt\nBanks\n87%");
-  lv_obj_align(dc_label, LV_ALIGN_CENTER, 0, 0);
+  lv_label_set_text(dc_label, "Batt\n87%");
+  lv_obj_align(dc_label, LV_ALIGN_TOP_LEFT, 0, 0);
+
+  lv_obj_t *dc_ld;
+  dc_ld = lv_obj_create(parent);
+  lv_obj_add_style(dc_ld, &style_shadow, 0);
+  lv_obj_set_size(dc_ld, 94, 60);
+  lv_obj_align(dc_ld, LV_ALIGN_BOTTOM_MID, 0, -5);
+  lv_obj_set_style_bg_color(dc_ld, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
+
+  lv_obj_t *dc_ld_label = lv_label_create(dc_ld);
+  lv_label_set_text(dc_ld_label, "DC Load\n150 W");
+  lv_obj_align(dc_ld_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
   lv_obj_t *pv;
-  pv = lv_obj_create(lv_scr_act());
+  pv = lv_obj_create(parent);
   lv_obj_add_style(pv, &style_shadow, 0);
-  lv_obj_set_size(pv, 80, 80);
-  lv_obj_align(pv, LV_ALIGN_BOTTOM_RIGHT, -10, -10);
+  lv_obj_set_size(pv, 94, 110);
+  lv_obj_align(pv, LV_ALIGN_BOTTOM_RIGHT, -5, -5);
   lv_obj_set_style_bg_color(pv, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN);
 
   lv_obj_t *pv_label = lv_label_create(pv);
-  lv_label_set_text(pv_label, "PV\nCharge\n247 W");
-  lv_obj_align(pv_label, LV_ALIGN_CENTER, 0, 0);
+  lv_label_set_text(pv_label, "PV\n247 W");
+  lv_obj_align(pv_label, LV_ALIGN_TOP_LEFT, 0, 0);
 }
 
 void loop() {
