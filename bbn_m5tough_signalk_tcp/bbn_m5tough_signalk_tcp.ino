@@ -34,6 +34,9 @@ void setup() {
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
 
+  WiFi.setAutoConnect(true);
+  WiFi.setAutoReconnect(true);
+
   int attemptsCount = 30;
   int status = WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
   while (status != WL_CONNECTED) {
@@ -55,14 +58,11 @@ void setup() {
   static int port = 8375;                    // SignalK TCP
 
   // Connect to the SignalK TCP server
+  setup_reconnect(skClient, host, port);
   if (skClient.connect(host, port)) {
     M5.Lcd.print("Connected to ");
     M5.Lcd.println(host);
-
     signalk_subscribe(skClient);
-
-    setup_reconnect(skClient, host, port);
-
   } else {
     M5.Lcd.println("Connection failed.");
   }
@@ -71,16 +71,19 @@ void setup() {
 void loop() {
   M5.update();
   app.tick();
+  delay(5);
 }
 
 void setup_reconnect(WiFiClient& client, const char* host, int port) {
-  app.onRepeat(5000, [&]() {
+  app.onRepeat(5000, [&client, host, port]() {
+    //M5.Lcd.print("?");
     if (!client.connected()) {
-      if (skClient.connect(host, port, 3000)) {
+      M5.Lcd.print("*");
+      if (client.connect(host, port)) {
         M5.Lcd.print("Reconnected to ");
         M5.Lcd.println(host);
+        signalk_greet(client);
       }
     }
   });
 }
-
