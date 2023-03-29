@@ -187,9 +187,11 @@ void loop() {
   lv_task_handler();
   app.tick();
 
-  lv_label_set_text(rate_of_turn_label, (String("ROT (" LV_SYMBOL_DEGREES "/min): ")
-                                         + String(shipDataModel.navigation.rate_of_turn.deg_min))
-                                          .c_str());
+  lv_label_set_text(rate_of_turn_label,
+                    (String("ROT (" LV_SYMBOL_DEGREES "/min): ") + (fresh(shipDataModel.navigation.rate_of_turn.age) ? String(shipDataModel.navigation.rate_of_turn.deg_min) : "n/a")).c_str());
   lv_tick_inc(1);
 }
 
+bool fresh(unsigned long age) {
+  return millis() - age < 5000;
+}
