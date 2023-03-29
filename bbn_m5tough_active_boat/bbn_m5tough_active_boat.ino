@@ -19,6 +19,7 @@ void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
+  init_theme();
 
   lv_obj_t *btn = lv_btn_create(lv_scr_act());
   lv_obj_t *label = lv_label_create(btn);
