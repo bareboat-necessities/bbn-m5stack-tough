@@ -11,15 +11,11 @@ extern "C" {
   }
 
   typedef struct _lv_updatable_screen_t {
-    lv_obj_t* screen; 
-    lv_update_screen_data_cb_t update_cb = noop_update_cb; // Default NoOp callback
+    lv_obj_t* screen;
+    lv_update_screen_data_cb_t update_cb = noop_update_cb;  // Default NoOp callback
   } lv_updatable_screen_t;
 
-  int page = 0;
-
-  typedef lv_updatable_screen_t screens_arr_t[];
-
-  // triggers callback function set in update_cb 
+  // triggers callback function set in update_cb
   void update_screen(lv_updatable_screen_t& screen) {
     (*screen.update_cb)();
   }
