@@ -76,7 +76,7 @@ void setup() {
   M5.Lcd.printf("FlashChipSize: %d bytes\n", ESP.getFlashChipSize());
   M5.Lcd.printf("MaxAllocHeap: %d bytes\n", ESP.getMaxAllocHeap());
   M5.Lcd.printf("MaxAllocPsram: %d bytes\n", ESP.getMaxAllocPsram());
-  M5.Lcd.printf("ChipCores: %d bytes\n", ESP.getChipCores());
+  M5.Lcd.printf("ChipCores: %d\n", ESP.getChipCores());
 }
 
 void loop() {
