@@ -177,10 +177,22 @@ void lv_rudder_display(lv_obj_t *parent) {
 }
 
 Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
+Gesture swipeUp("swipe up", 80, DIR_UP, 40);
+
+Gesture swipeLeft("swipe left", 80, DIR_LEFT, 40);
+Gesture swipeRight("swipe right", 80, DIR_RIGHT, 40);
+
+bool swipe_horiz_detected() {
+  return swipeRight.wasDetected() || swipeLeft.wasDetected();
+}
+
+bool swipe_vert_detected() {
+  return swipeDown.wasDetected() || swipeUp.wasDetected();
+}
 
 void loop() {
   M5.update();
-  if (swipeDown.wasDetected()) {
+  if (swipe_vert_detected()) {
     theme = 1 - theme;
     lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   }
