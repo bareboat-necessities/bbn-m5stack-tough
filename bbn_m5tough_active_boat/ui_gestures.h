@@ -16,7 +16,7 @@ extern "C" {
   }
 
   bool swipe_left_detected() {
-    return swipeRight.wasDetected();
+    return swipeLeft.wasDetected();
   }
 
   bool swipe_right_detected() {
