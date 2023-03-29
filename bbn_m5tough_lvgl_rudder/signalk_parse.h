@@ -23,7 +23,7 @@ extern "C" {
           updatedValue = updatedValue + " float: ";
           if (path == "navigation.rateOfTurn") {
             shipDataModel.navigation.rate_of_turn.deg_min = 60 * value.as<float>() * 180 / PI;
-            // TODO: set age
+            shipDataModel.navigation.rate_of_turn.age = millis();
           }
         } else if (value.is<int>()) {
           updatedValue = updatedValue + " int: ";
@@ -67,7 +67,6 @@ extern "C" {
     }
     return found;
   }
-
 
 #ifdef __cplusplus
 } /*extern "C"*/
