@@ -107,7 +107,7 @@ void nmea_subscribe(WiFiClient& client) {
   //delay(50);
 
   app.onAvailable(client, [samples, &client]() {
-    while (client.connected() && client.available() > 0) {
+    while (client.available() > 64 && client.connected()) {
       String dataLine = client.readStringUntil('\n');
       bool found = nmea_parse(dataLine);
       if (found) {
