@@ -9,7 +9,7 @@ extern "C" {
 
   static lv_obj_t *wind_display;
 
-  static void set_value(void *indic, int32_t v) {
+  static void set_wind_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(wind_display, (lv_meter_indicator_t *)indic, v);
   }
 
@@ -61,7 +61,7 @@ extern "C" {
     /*Create an animation to set the value*/
     lv_anim_t a;
     lv_anim_init(&a);
-    lv_anim_set_exec_cb(&a, set_value);
+    lv_anim_set_exec_cb(&a, set_wind_value);
     lv_anim_set_var(&a, indic);
     lv_anim_set_values(&a, -60, -20);
     lv_anim_set_time(&a, 2000);
