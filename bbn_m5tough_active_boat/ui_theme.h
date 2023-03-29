@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-  int theme = 0;
+  int theme = 1;
 
   void toggle_ui_theme() {
     theme = 1 - theme;
