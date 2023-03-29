@@ -82,6 +82,7 @@ void setup() {
 }
 
 static lv_obj_t *rudder_display;
+static lv_meter_indicator_t *indic_rudder;
 
 static void set_value(void *indic, int32_t v) {
   lv_meter_set_indicator_value(rudder_display, (lv_meter_indicator_t *)indic, v);
@@ -106,12 +107,11 @@ void lv_rudder_display(lv_obj_t *parent) {
   lv_meter_set_scale_ticks(rudder_display, scale, 19, 2, 10, lv_palette_main(LV_PALETTE_GREY));
   lv_meter_set_scale_major_ticks(rudder_display, scale, 3, 3, 20, lv_palette_main(LV_PALETTE_GREY), 15);
 
-  lv_meter_indicator_t *indic;
-
   /*Add a needle line indicator*/
-  indic = lv_meter_add_needle_line(rudder_display, scale, 7, lv_theme_get_color_primary(parent), -10);
+  indic_rudder = lv_meter_add_needle_line(rudder_display, scale, 7, lv_theme_get_color_primary(parent), -10);
 
   /*Create an animation to set the value*/
+  /*
   lv_anim_t a;
   lv_anim_init(&a);
   lv_anim_set_exec_cb(&a, set_value);
@@ -122,7 +122,7 @@ void lv_rudder_display(lv_obj_t *parent) {
   lv_anim_set_playback_time(&a, 5000);
   lv_anim_set_playback_delay(&a, 3000);
   lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
-  lv_anim_start(&a);
+  lv_anim_start(&a)*/
 }
 
 Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
@@ -135,4 +135,5 @@ void loop() {
   }
   lv_task_handler();
   lv_tick_inc(1);
+  set_value(indic_rudder, 20);
 }
