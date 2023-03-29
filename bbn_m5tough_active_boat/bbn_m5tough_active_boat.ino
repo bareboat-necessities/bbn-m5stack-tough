@@ -16,7 +16,12 @@
 #include "ui_reboot.h"
 #include "ui_about.h"
 
+#include "ship_data_model.h"
+
+#include "ui_power_victron.h"
+
 lv_updatable_screen_t* screens[] = {
+  &victronScreen,
   &clockScreen,
   &rebootScreen,
   &aboutScreen,
@@ -43,11 +48,12 @@ void setup() {
   init_touch_driver();
   init_theme();
 
+  init_victronScreen();    
+  lv_scr_load(screens[page]->screen);
+
   init_clockScreen();    
   init_rebootScreen();    
-  init_aboutScreen();    
-
-  lv_scr_load(screens[page]->screen);
+  init_aboutScreen();
 }
 
 void loop() {
