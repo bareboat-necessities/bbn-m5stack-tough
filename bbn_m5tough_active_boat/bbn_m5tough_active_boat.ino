@@ -55,9 +55,15 @@ void loop() {
   lv_task_handler();
   lv_tick_inc(1);
 
-  if (swipe_vert_detected()) toggle_ui_theme();
-  if (swipe_right_detected()) next_page();
-  if (swipe_left_detected()) prev_page();
-
+  if (swipe_vert_detected()) {
+    toggle_ui_theme();
+  }
+  else if (swipe_right_detected()) {
+    next_page();
+  }
+  else if (swipe_left_detected()) {
+    prev_page();
+  }
+  
   update_screen(*screens[page]);
 }
