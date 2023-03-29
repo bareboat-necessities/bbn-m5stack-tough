@@ -45,7 +45,7 @@ typedef enum {
   FOLLOW_ROUTE = 1
 } ap_cmd_type_e;
 
-typedef uint16_t age_t;
+typedef unsigned long age_t;
 
 typedef struct on_off_t {
   on_off_e st;
