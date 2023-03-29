@@ -11,12 +11,16 @@ extern "C" {
   Gesture swipeLeft("swipe left", 80, DIR_LEFT, 40);
   Gesture swipeRight("swipe right", 80, DIR_RIGHT, 40);
 
-  bool swipe_horiz_detected() {
-    return swipeRight.wasDetected() || swipeLeft.wasDetected();
-  }
-
   bool swipe_vert_detected() {
     return swipeDown.wasDetected() || swipeUp.wasDetected();
+  }
+
+  bool swipe_left_detected() {
+    return swipeRight.wasDetected();
+  }
+
+  bool swipe_right_detected() {
+    return swipeRight.wasDetected();
   }
 
 #ifdef __cplusplus
