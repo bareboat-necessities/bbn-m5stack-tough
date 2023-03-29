@@ -22,7 +22,7 @@ extern "C" {
         if (value.is<float>()) {
           updatedValue = updatedValue + " float: ";
           if (path == "navigation.rateOfTurn") {
-            shipDataModel.navigation.rate_of_turn.deg_sec = value.as<float>() * 180 / PI;
+            shipDataModel.navigation.rate_of_turn.deg_min = 60 * value.as<float>() * 180 / PI;
             // TODO: set age
           }
         } else if (value.is<int>()) {
