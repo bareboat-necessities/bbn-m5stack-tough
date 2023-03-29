@@ -171,7 +171,7 @@ void lv_rudder_display(lv_obj_t *parent) {
 
   rate_of_turn_label = lv_label_create(parent);
   lv_label_set_text(rate_of_turn_label, (String("ROT (" LV_SYMBOL_DEGREES "/min): ")
-                                         + String(60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec))
+                                         + String(shipDataModel.navigation.rate_of_turn.deg_sec))
                                           .c_str());
   lv_obj_align(rate_of_turn_label, LV_ALIGN_TOP_LEFT, 5, 5);
 }
@@ -188,7 +188,7 @@ void loop() {
   app.tick();
 
   lv_label_set_text(rate_of_turn_label, (String("ROT (" LV_SYMBOL_DEGREES "/min): ")
-                                         + String(60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec))
+                                         + String(shipDataModel.navigation.rate_of_turn.deg_sec))
                                           .c_str());
   lv_tick_inc(1);
 }
