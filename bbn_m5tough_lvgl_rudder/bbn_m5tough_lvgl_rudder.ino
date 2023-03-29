@@ -99,7 +99,7 @@ void setup() {
   lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   lv_rudder_display(lv_scr_act());
 
-    preferences.begin("wifi-config");
+  preferences.begin("wifi-config");
   wifi_ssid = preferences.getString("WIFI_SSID");
   wifi_password = preferences.getString("WIFI_PASSWD");
 
@@ -123,7 +123,7 @@ void setup() {
     M5.Lcd.println("Connected to " + wifi_ssid);
   }
 
-  static const char* host = "192.168.1.34";  //"lysmarine";
+  static const char *host = "192.168.1.34";  //"lysmarine";
   static int port = 8375;                    // SignalK TCP
 
   // Connect to the SignalK TCP server
@@ -137,8 +137,11 @@ void setup() {
   }
 }
 
+#define LV_SYMBOL_DEGREES "\xC2\xB0"
+
 static lv_obj_t *rudder_display;
 static lv_meter_indicator_t *indic_rudder;
+static lv_obj_t *rate_of_turn_label;
 
 static void set_value(void *indic, int32_t v) {
   lv_meter_set_indicator_value(rudder_display, (lv_meter_indicator_t *)indic, v);
@@ -165,6 +168,12 @@ void lv_rudder_display(lv_obj_t *parent) {
 
   /*Add a needle line indicator*/
   indic_rudder = lv_meter_add_needle_line(rudder_display, scale, 7, lv_theme_get_color_primary(parent), -10);
+
+  rate_of_turn_label = lv_label_create(parent);
+  lv_label_set_text(rate_of_turn_label, (String("ROT (" LV_SYMBOL_DEGREES "/min): ")
+                                         + String(60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec))
+                                          .c_str());
+  lv_obj_align(rate_of_turn_label, LV_ALIGN_TOP_LEFT, 5, 5);
 }
 
 Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
@@ -177,6 +186,13 @@ void loop() {
   }
   lv_task_handler();
   app.tick();
+<<<<<<< Updated upstream
   set_value(indic_rudder, 60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec); // TODO set it properly
+=======
+  lv_label_set_text(rate_of_turn_label, (String("ROT (" LV_SYMBOL_DEGREES "/min): ")
+                                         + String(60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec))
+                                          .c_str());
+>>>>>>> Stashed changes
   lv_tick_inc(1);
 }
+
