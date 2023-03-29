@@ -11,7 +11,7 @@ extern "C" {
   }
 
   typedef struct _lv_updatable_screen_t {
-    lv_obj_t* screen = lv_obj_create(NULL); 
+    lv_obj_t* screen; 
     lv_update_screen_data_cb_t update_cb = noop_update_cb; // Default NoOp callback
   } lv_updatable_screen_t;
 
