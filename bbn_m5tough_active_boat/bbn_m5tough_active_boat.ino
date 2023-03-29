@@ -28,11 +28,30 @@ void init_powerOffScreen() {
   lv_obj_add_event_cb(btn, btnPowerOff_event, LV_EVENT_PRESSED, NULL);
 }
 
+lv_updatable_screen_t noOpScreen;
+
+void init_noOpScreen() {
+  noOpScreen.screen = lv_obj_create(NULL); // Creates a Screen object
+  lv_obj_t *btn = lv_btn_create(noOpScreen.screen);
+  lv_obj_t *label = lv_label_create(btn);
+  lv_obj_align(btn, LV_ALIGN_CENTER, 0, 0);
+  lv_label_set_text(label, "NoOp");
+  lv_obj_center(label);
+}
+
 lv_updatable_screen_t* screens[] = {
-  &powerOffScreen
+  &powerOffScreen,
+  &noOpScreen
 };
 
 int page = 0;
+int pages_count = 2; //sizeof(screens) / sizeof(screens[0]);
+
+void next_page() {
+  page++;
+  if (page >= pages_count) page = 0;
+  lv_scr_load(screens[page]->screen);
+}
 
 void setup() {
   tft_lv_initialization();
@@ -41,6 +60,7 @@ void setup() {
   init_theme();
 
   init_powerOffScreen();    
+  init_noOpScreen();    
 
   lv_scr_load(screens[page]->screen);
 }
@@ -51,7 +71,7 @@ void loop() {
   lv_tick_inc(1);
 
   if (swipe_vert_detected()) toggle_ui_theme();
-  //if (swipe_horiz_detected()) next_screen();
+  if (swipe_horiz_detected()) next_page();
 
   update_screen(powerOffScreen);
 }
