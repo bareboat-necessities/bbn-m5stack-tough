@@ -186,13 +186,10 @@ void loop() {
   }
   lv_task_handler();
   app.tick();
-<<<<<<< Updated upstream
-  set_value(indic_rudder, 60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec); // TODO set it properly
-=======
+
   lv_label_set_text(rate_of_turn_label, (String("ROT (" LV_SYMBOL_DEGREES "/min): ")
                                          + String(60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec))
                                           .c_str());
->>>>>>> Stashed changes
   lv_tick_inc(1);
 }
 
