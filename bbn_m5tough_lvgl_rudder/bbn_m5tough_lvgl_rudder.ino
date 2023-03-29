@@ -4,8 +4,26 @@
 #include <M5Tough.h>
 #include <Arduino.h>
 #include <lvgl.h>
-#include <Wire.h>
-#include <SPI.h>
+#include <WiFi.h>
+#include <ArduinoJson.h>
+#include <Preferences.h>
+#undef min(a, b)
+#include <ReactESP.h>
+
+#include "ship_data_model.h"
+
+ship_data_t ShipDataModel;
+
+Preferences preferences;
+String wifi_ssid;      // Store the name of the wireless network.
+String wifi_password;  // Store the password of the wireless network.
+
+WiFiClient skClient;
+
+using namespace reactesp;
+ReactESP app;
+
+#include "net_signalk_tcp.h"
 
 // init the tft espi
 static lv_disp_draw_buf_t draw_buf;
@@ -18,8 +36,8 @@ void tft_lv_initialization() {
   M5.begin();
   lv_init();
 
-  static lv_color_t buf1[(LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10];  // Declare a buffer for 1/10 screen siz
-  static lv_color_t buf2[(LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10];  // second buffer is optionnal
+  static lv_color_t *buf1 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
+  static lv_color_t *buf2 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
 
   // Initialize `disp_buf` display buffer with the buffer(s).
   lv_disp_draw_buf_init(&draw_buf, buf1, buf2, (LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10);
@@ -79,6 +97,43 @@ void setup() {
   init_touch_driver();
   lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   lv_rudder_display(lv_scr_act());
+
+    preferences.begin("wifi-config");
+  wifi_ssid = preferences.getString("WIFI_SSID");
+  wifi_password = preferences.getString("WIFI_PASSWD");
+
+  WiFi.setAutoConnect(true);
+  WiFi.setAutoReconnect(true);
+
+  int attemptsCount = 30;
+  int status = WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
+  while (status != WL_CONNECTED) {
+    Serial.print("Attempting to connect to network, SSID: ");
+    Serial.println(wifi_ssid);
+    status = WiFi.status();
+    // wait .5 seconds for connection:
+    delay(500);
+    M5.Lcd.print(".");
+    attemptsCount--;
+    if (attemptsCount == 0) return;
+  }
+  if (status == WL_CONNECTED) {
+    M5.Lcd.println("");
+    M5.Lcd.println("Connected to " + wifi_ssid);
+  }
+
+  static const char* host = "192.168.1.34";  //"lysmarine";
+  static int port = 8375;                    // SignalK TCP
+
+  // Connect to the SignalK TCP server
+  setup_reconnect(skClient, host, port);
+  if (skClient.connect(host, port)) {
+    M5.Lcd.print("Connected to ");
+    M5.Lcd.println(host);
+    signalk_subscribe(skClient);
+  } else {
+    M5.Lcd.println("Connection failed.");
+  }
 }
 
 static lv_obj_t *rudder_display;
@@ -135,5 +190,6 @@ void loop() {
   }
   lv_task_handler();
   lv_tick_inc(1);
+  app.tick();
   set_value(indic_rudder, 20);
 }
