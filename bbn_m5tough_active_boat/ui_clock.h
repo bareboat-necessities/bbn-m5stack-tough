@@ -7,6 +7,14 @@ extern "C" {
 
   lv_updatable_screen_t clockScreen;
 
+  static lv_obj_t *clock_display;
+
+  lv_meter_indicator_t *indic_sec;
+  lv_meter_indicator_t *indic_min;
+  lv_meter_indicator_t *indic_hour;
+
+  RTC_TimeTypeDef RTCtime;
+
   /**
    * A clock display 
    */
@@ -32,9 +40,21 @@ extern "C" {
     indic_hour = lv_meter_add_needle_line(clock_display, scale, 7, lv_palette_main(LV_PALETTE_RED), -42);
   }
 
+  static void set_clock_value(void *indic, int32_t v) {
+    lv_meter_set_indicator_value(clock_display, (lv_meter_indicator_t *)indic, v);
+  }
+
+  static void clock_update_cb() {
+    M5.Rtc.GetTime(&RTCtime);
+    set_clock_value(indic_hour, RTCtime.Hours);
+    set_clock_value(indic_min, RTCtime.Minutes);
+    set_clock_value(indic_sec, RTCtime.Seconds);
+  }
+
   void init_clockScreen() {
     clockScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
     lv_clock_display(clockScreen.screen);
+    clockScreen.update_cb = clock_update_cb;
   }
 
 #ifdef __cplusplus
