@@ -20,11 +20,13 @@
 
 #include "ui_wind.h"
 #include "ui_heel.h"
+#include "ui_autopilot.h"
 #include "ui_power_victron.h"
 
 lv_updatable_screen_t* screens[] = {
   &windScreen,
   &heelScreen,
+  &autopilotScreen,
   &victronScreen,
   &clockScreen,
   &rebootScreen,
@@ -55,6 +57,7 @@ void setup() {
   init_windScreen();    
   lv_scr_load(screens[page]->screen);
   init_heelScreen();    
+  init_autopilotScreen();    
   init_victronScreen();    
   init_clockScreen();    
   init_rebootScreen();    
