@@ -17,7 +17,7 @@ extern "C" {
 
   int page = 0;
 
-  typedef lv_updatable_screen_t screens_arr[];
+  typedef lv_updatable_screen_t screens_arr_t[];
 
   // triggers callback function set in update_cb 
   void update_screen(lv_updatable_screen_t& screen) {
