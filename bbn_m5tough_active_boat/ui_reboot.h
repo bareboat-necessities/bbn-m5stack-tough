@@ -16,7 +16,7 @@ extern "C" {
   }
 
   void init_rebootScreen() {
-    clockScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
+    rebootScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
     lv_obj_t *btn1 = lv_btn_create(rebootScreen.screen);
     lv_obj_t *label1 = lv_label_create(btn1);
     lv_obj_align(btn1, LV_ALIGN_CENTER, 0, -30);
