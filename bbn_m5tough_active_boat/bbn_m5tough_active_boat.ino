@@ -13,10 +13,11 @@
 #include "ui_screens.h"
 #include "m5_rtc.h"
 #include "ui_clock.h"
-
+#include "ui_reboot.h"
 
 lv_updatable_screen_t* screens[] = {
-  &clockScreen
+  &clockScreen,
+  &rebootScreen
 };
 
 int page = 0;
@@ -35,6 +36,7 @@ void setup() {
   init_theme();
 
   init_clockScreen();    
+  init_rebootScreen();    
 
   lv_scr_load(screens[page]->screen);
 }
