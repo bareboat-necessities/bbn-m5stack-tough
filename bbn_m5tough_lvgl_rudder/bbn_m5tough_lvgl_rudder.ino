@@ -177,6 +177,6 @@ void loop() {
   }
   lv_task_handler();
   app.tick();
-  set_value(indic_rudder, 100 * shipDataModel.navigation.rate_of_turn.deg_sec); // TODO set it properly
+  set_value(indic_rudder, 60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec); // TODO set it properly
   lv_tick_inc(1);
 }
