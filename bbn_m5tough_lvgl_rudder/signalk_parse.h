@@ -11,8 +11,8 @@ extern "C" {
     DeserializationError err = deserializeJson(doc, stream);
     // Parse succeeded?
     if (err) {
-      M5.Lcd.println(F("deserializeJson() returned "));
-      M5.Lcd.println(err.c_str());
+      //M5.Lcd.println(F("deserializeJson() returned "));
+      //M5.Lcd.println(err.c_str());
       return false;
     }
     JsonObject obj = doc.as<JsonObject>();
