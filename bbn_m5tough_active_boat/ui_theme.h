@@ -7,9 +7,13 @@ extern "C" {
 
   int theme = 1;
 
+  void init_theme() {
+    lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
+  }
+
   void toggle_ui_theme() {
     theme = 1 - theme;
-    lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
+    init_theme();
   }
 
 #ifdef __cplusplus
