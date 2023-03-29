@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+  lv_updatable_screen_t clockScreen;
+
   /**
    * A clock display 
    */
@@ -28,6 +30,11 @@ extern "C" {
     indic_sec = lv_meter_add_needle_line(clock_display, scale, 2, lv_palette_main(LV_PALETTE_GREY), -10);
     indic_min = lv_meter_add_needle_line(clock_display, scale, 4, lv_palette_main(LV_PALETTE_GREEN), -20);
     indic_hour = lv_meter_add_needle_line(clock_display, scale, 7, lv_palette_main(LV_PALETTE_RED), -42);
+  }
+
+  void init_clockScreen() {
+    clockScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
+    lv_clock_display(clockScreen.screen);
   }
 
 #ifdef __cplusplus
