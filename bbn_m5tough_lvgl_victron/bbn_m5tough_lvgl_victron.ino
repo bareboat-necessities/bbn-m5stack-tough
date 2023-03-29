@@ -1,30 +1,11 @@
-#define LV_HOR_RES_MAX 320
-#define LV_VER_RES_MAX 240
-
 #include <M5Tough.h>
 #include <Arduino.h>
 #include <lvgl.h>
-#include <WiFi.h>
-#include <ArduinoJson.h>
-#include <Preferences.h>
-#undef min(a, b)
-#include <ReactESP.h>
+#include <Wire.h>
+#include <SPI.h>
 
-#include "ship_data_model.h"
-
-static ship_data_t shipDataModel;
-
-Preferences preferences;
-String wifi_ssid;      // Store the name of the wireless network.
-String wifi_password;  // Store the password of the wireless network.
-
-WiFiClient skClient;
-
-using namespace reactesp;
-ReactESP app;
-
-#include "signalk_parse.h"
-#include "net_signalk_tcp.h"
+#define LV_HOR_RES_MAX 320
+#define LV_VER_RES_MAX 240
 
 // init the tft espi
 static lv_disp_draw_buf_t draw_buf;
@@ -33,12 +14,16 @@ static lv_indev_drv_t indev_drv;  // Descriptor of a touch driver
 
 M5Display *tft;
 
+static void btnPowerOff_event(lv_event_t *event) {
+  M5.Axp.PowerOff();
+}
+
 void tft_lv_initialization() {
   M5.begin();
   lv_init();
 
-  static lv_color_t *buf1 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
-  static lv_color_t *buf2 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 10, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
+  static lv_color_t buf1[(LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10];  // Declare a buffer for 1/10 screen siz
+  static lv_color_t buf2[(LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10];  // second buffer is optionnal
 
   // Initialize `disp_buf` display buffer with the buffer(s).
   lv_disp_draw_buf_init(&draw_buf, buf1, buf2, (LV_HOR_RES_MAX * LV_VER_RES_MAX) / 10);
@@ -90,104 +75,134 @@ void init_touch_driver() {
   lv_indev_t *my_indev = lv_indev_drv_register(&indev_drv);  // register
 }
 
-static int theme = 1;
-
 void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
-  lv_rudder_display(lv_scr_act());
 
-  preferences.begin("wifi-config");
-  wifi_ssid = preferences.getString("WIFI_SSID");
-  wifi_password = preferences.getString("WIFI_PASSWD");
+  lv_obj_t *parent = lv_scr_act();
 
-  WiFi.setAutoConnect(true);
-  WiFi.setAutoReconnect(true);
+  static lv_style_t style_shadow;
+  lv_style_init(&style_shadow);
 
-  int attemptsCount = 30;
-  int status = WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
-  while (status != WL_CONNECTED) {
-    Serial.print("Attempting to connect to network, SSID: ");
-    Serial.println(wifi_ssid);
-    status = WiFi.status();
-    // wait .5 seconds for connection:
-    delay(500);
-    M5.Lcd.print(".");
-    attemptsCount--;
-    if (attemptsCount == 0) return;
-  }
-  if (status == WL_CONNECTED) {
-    M5.Lcd.println("");
-    M5.Lcd.println("Connected to " + wifi_ssid);
-  }
+  /*Set a background color and a radius*/
+  lv_style_set_radius(&style_shadow, 3);
+  lv_style_set_shadow_width(&style_shadow, 3);
+  lv_style_set_pad_all(&style_shadow, 7);
+  lv_style_set_bg_opa(&style_shadow, LV_OPA_COVER);
+  lv_style_set_bg_color(&style_shadow, lv_palette_lighten(LV_PALETTE_GREY, 1));
 
-  static const char *host = "192.168.1.34";  //"lysmarine";
-  static int port = 8375;                    // SignalK TCP
+  /*Add border to the bottom+right*/
+  lv_style_set_border_color(&style_shadow, lv_palette_main(LV_PALETTE_BLUE));
+  lv_style_set_border_width(&style_shadow, 1);
+  lv_style_set_border_opa(&style_shadow, LV_OPA_50);
+  lv_style_set_border_side(&style_shadow, LV_BORDER_SIDE_BOTTOM | LV_BORDER_SIDE_RIGHT);
 
-  // Connect to the SignalK TCP server
-  setup_reconnect(skClient, host, port);
-  if (skClient.connect(host, port)) {
-    M5.Lcd.print("Connected to ");
-    M5.Lcd.println(host);
-    signalk_subscribe(skClient);
-  } else {
-    M5.Lcd.println("Connection failed.");
-  }
+  lv_obj_t *shore;
+  shore = lv_obj_create(parent);
+  lv_obj_add_style(shore, &style_shadow, 0);
+  lv_obj_set_size(shore, 94, 110);
+  lv_obj_align(shore, LV_ALIGN_TOP_LEFT, 5, 5);
+  lv_obj_set_style_bg_color(shore, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
+
+  lv_obj_t *shore_label = lv_label_create(shore);
+  lv_label_set_text(shore_label, "Shore\n1205 W");
+  lv_obj_align(shore_label, LV_ALIGN_TOP_LEFT, 0, 0);
+
+  lv_obj_t *inverters;
+  inverters = lv_obj_create(parent);
+  lv_obj_add_style(inverters, &style_shadow, 0);
+  lv_obj_set_size(inverters, 94, 80);
+  lv_obj_align(inverters, LV_ALIGN_TOP_MID, 0, 20);
+  lv_obj_set_style_bg_color(inverters, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
+
+  lv_obj_t *inv_label = lv_label_create(inverters);
+  lv_label_set_text(inv_label, "Inverters");
+  lv_obj_align(inv_label, LV_ALIGN_TOP_LEFT, 0, 0);
+
+  lv_obj_t *ac;
+  ac = lv_obj_create(parent);
+  lv_obj_add_style(ac, &style_shadow, 0);
+  lv_obj_set_size(ac, 94, 110);
+  lv_obj_align(ac, LV_ALIGN_TOP_RIGHT, -5, 5);
+  lv_obj_set_style_bg_color(ac, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
+
+  lv_obj_t *ac_label = lv_label_create(ac);
+  lv_label_set_text(ac_label, "AC Load\n340W");
+  lv_obj_align(ac_label, LV_ALIGN_TOP_LEFT, 0, 0);
+
+  lv_obj_t *dc;
+  dc = lv_obj_create(parent);
+  lv_obj_add_style(dc, &style_shadow, 0);
+  lv_obj_set_size(dc, 94, 110);
+  lv_obj_align(dc, LV_ALIGN_BOTTOM_LEFT, 5, -5);
+  lv_obj_set_style_bg_color(dc, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
+
+  lv_obj_t *dc_label = lv_label_create(dc);
+  lv_label_set_text(dc_label, "Batteries\n87%");
+  lv_obj_align(dc_label, LV_ALIGN_TOP_LEFT, 0, 0);
+
+  lv_obj_t *dc_ld;
+  dc_ld = lv_obj_create(parent);
+  lv_obj_add_style(dc_ld, &style_shadow, 0);
+  lv_obj_set_size(dc_ld, 94, 60);
+  lv_obj_align(dc_ld, LV_ALIGN_BOTTOM_MID, 0, -5);
+  lv_obj_set_style_bg_color(dc_ld, lv_palette_main(LV_PALETTE_TEAL), LV_PART_MAIN);
+
+  lv_obj_t *dc_ld_label = lv_label_create(dc_ld);
+  lv_label_set_text(dc_ld_label, "DC Load\n150 W");
+  lv_obj_align(dc_ld_label, LV_ALIGN_TOP_LEFT, 0, 0);
+
+  lv_obj_t *pv;
+  pv = lv_obj_create(parent);
+  lv_obj_add_style(pv, &style_shadow, 0);
+  lv_obj_set_size(pv, 94, 110);
+  lv_obj_align(pv, LV_ALIGN_BOTTOM_RIGHT, -5, -5);
+  lv_obj_set_style_bg_color(pv, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN);
+
+  lv_obj_t *pv_label = lv_label_create(pv);
+  lv_label_set_text(pv_label, "PV\n247 W");
+  lv_obj_align(pv_label, LV_ALIGN_TOP_LEFT, 0, 0);
+
+  static lv_style_t style_line;
+  lv_style_init(&style_line);
+  lv_style_set_line_width(&style_line, 8);
+  lv_style_set_line_color(&style_line, lv_palette_main(LV_PALETTE_BLUE));
+  lv_style_set_line_rounded(&style_line, true);
+
+  static lv_point_t line_pt1[] = { { 98, 60 }, { 112, 60 } };
+  lv_obj_t *line1 = lv_line_create(parent);
+  lv_obj_align(line1, LV_ALIGN_TOP_LEFT, 0, 0);
+  lv_obj_add_style(line1, &style_line, 0);
+  lv_line_set_points(line1, line_pt1, 2); /*Set the points*/
+
+  static lv_point_t line_pt2[] = { { 208, 60 }, { 222, 60 } };
+  lv_obj_t *line2 = lv_line_create(parent);
+  lv_obj_align(line2, LV_ALIGN_TOP_LEFT, 0, 0);
+  lv_obj_add_style(line2, &style_line, 0);
+  lv_line_set_points(line2, line_pt2, 2); /*Set the points*/
+
+  static lv_point_t line_pt3[] = { { 98, 203 }, { 112, 203 } };
+  lv_obj_t *line3 = lv_line_create(parent);
+  lv_obj_align(line3, LV_ALIGN_TOP_LEFT, 0, 0);
+  lv_obj_add_style(line3, &style_line, 0);
+  lv_line_set_points(line3, line_pt3, 2); /*Set the points*/
+
+  static lv_point_t line_pt4[] = { { 98, 150 }, { 222, 150 } };
+  lv_obj_t *line4 = lv_line_create(parent);
+  lv_obj_align(line4, LV_ALIGN_TOP_LEFT, 0, 0);
+  lv_obj_add_style(line4, &style_line, 0);
+  lv_line_set_points(line4, line_pt4, 2); /*Set the points*/
+
+  static lv_point_t line_pt5[] = { { 160, 102 }, { 160, 150 } };
+  lv_obj_t *line5 = lv_line_create(parent);
+  lv_obj_align(line5, LV_ALIGN_TOP_LEFT, 0, 0);
+  lv_obj_add_style(line5, &style_line, 0);
+  lv_line_set_points(line5, line_pt5, 2); /*Set the points*/
 }
-
-#define LV_SYMBOL_DEGREES "\xC2\xB0"
-
-static lv_obj_t *rudder_display;
-static lv_meter_indicator_t *indic_rudder;
-static lv_obj_t *rate_of_turn_label;
-
-static void set_value(void *indic, int32_t v) {
-  lv_meter_set_indicator_value(rudder_display, (lv_meter_indicator_t *)indic, v);
-}
-
-/**
- * A rudder position display
- */
-void lv_rudder_display(lv_obj_t *parent) {
-  rudder_display = lv_meter_create(parent);
-  lv_obj_align(rudder_display, LV_ALIGN_CENTER, 0, -40);
-  lv_obj_set_size(rudder_display, 300, 300);
-  //v_obj_set_style_arc_width(rudder_display, 0, LV_PART_MAIN);
-  lv_obj_set_style_border_width(rudder_display, 0, LV_PART_MAIN);
-  lv_obj_set_style_bg_opa(rudder_display, LV_OPA_TRANSP, LV_PART_MAIN);
-  lv_obj_set_style_bg_color(rudder_display, lv_theme_get_color_primary(parent), LV_PART_INDICATOR);
-
-  /*Add a scale first*/
-  lv_meter_scale_t *scale = lv_meter_add_scale(rudder_display);
-  lv_meter_set_scale_range(rudder_display, scale, -45, 45, 100, 40);
-  //lv_linemeter_set_mirror(rudder_display, true);
-  lv_meter_set_scale_ticks(rudder_display, scale, 19, 2, 10, lv_palette_main(LV_PALETTE_GREY));
-  lv_meter_set_scale_major_ticks(rudder_display, scale, 3, 3, 20, lv_palette_main(LV_PALETTE_GREY), 15);
-
-  /*Add a needle line indicator*/
-  indic_rudder = lv_meter_add_needle_line(rudder_display, scale, 7, lv_theme_get_color_primary(parent), -10);
-
-  rate_of_turn_label = lv_label_create(parent);
-  lv_label_set_text(rate_of_turn_label, (String("ROT (" LV_SYMBOL_DEGREES "/min): ")
-                                         + String(60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec))
-                                          .c_str());
-  lv_obj_align(rate_of_turn_label, LV_ALIGN_TOP_LEFT, 5, 5);
-}
-
-Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
 
 void loop() {
   M5.update();
-  if (swipeDown.wasDetected()) {
-    theme = 1 - theme;
-    lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
-  }
   lv_task_handler();
-  app.tick();
-  lv_label_set_text(rate_of_turn_label, (String("ROT (" LV_SYMBOL_DEGREES "/min): ")
-                                         + String(60 /* per min */ * shipDataModel.navigation.rate_of_turn.deg_sec))
-                                          .c_str());
   lv_tick_inc(1);
 }
