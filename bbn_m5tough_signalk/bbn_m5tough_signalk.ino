@@ -83,7 +83,7 @@ void setup() {
   static int samples = 12;
 
   app.onAvailable(client, [samples, &dataFeed, &client]() {
-    while (client.connected() && client.available()) {
+    while (client.connected() && client.available() > 0) {
       webSocketClient.getData(dataFeed);
       if (dataFeed.length() > 0) {
         bool found = signalk_parse(dataFeed);
@@ -92,6 +92,7 @@ void setup() {
           if (samples <= 0) {
             client.stop();
           }
+          break;
         }
       }
     }
