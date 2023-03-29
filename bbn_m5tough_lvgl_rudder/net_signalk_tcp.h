@@ -7,8 +7,9 @@ extern "C" {
 
   void signalk_greet(WiFiClient& client) {
     String dataFeed = client.readStringUntil('\n');
-    M5.Lcd.println(dataFeed);
-    const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"*\"}]}";
+    //M5.Lcd.println(dataFeed);
+    // esp32 can't handle all volume. request only what is needed for the current screen
+    const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"navigation.rateOfTurn\"}]}";
     client.println(data);
     client.flush();
   }
@@ -17,10 +18,10 @@ extern "C" {
     app.onRepeat(5000, [&client, host, port]() {
       //M5.Lcd.print("?");
       if (!client.connected()) {
-        M5.Lcd.print("*");
+        //M5.Lcd.print("*");
         if (client.connect(host, port)) {
-          M5.Lcd.print("Reconnected to ");
-          M5.Lcd.println(host);
+          //M5.Lcd.print("Reconnected to ");
+          //M5.Lcd.println(host);
           signalk_greet(client);
         }
       }
