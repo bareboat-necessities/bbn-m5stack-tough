@@ -19,10 +19,12 @@
 #include "ship_data_model.h"
 
 #include "ui_wind.h"
+#include "ui_heel.h"
 #include "ui_power_victron.h"
 
 lv_updatable_screen_t* screens[] = {
   &windScreen,
+  &heelScreen,
   &victronScreen,
   &clockScreen,
   &rebootScreen,
@@ -52,6 +54,7 @@ void setup() {
 
   init_windScreen();    
   lv_scr_load(screens[page]->screen);
+  init_heelScreen();    
   init_victronScreen();    
   init_clockScreen();    
   init_rebootScreen();    
