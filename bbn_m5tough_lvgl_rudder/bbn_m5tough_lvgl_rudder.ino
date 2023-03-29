@@ -12,7 +12,7 @@
 
 #include "ship_data_model.h"
 
-ship_data_t ShipDataModel;
+static ship_data_t shipDataModel;
 
 Preferences preferences;
 String wifi_ssid;      // Store the name of the wireless network.
@@ -23,6 +23,7 @@ WiFiClient skClient;
 using namespace reactesp;
 ReactESP app;
 
+#include "signalk_parse.h"
 #include "net_signalk_tcp.h"
 
 // init the tft espi
@@ -164,20 +165,6 @@ void lv_rudder_display(lv_obj_t *parent) {
 
   /*Add a needle line indicator*/
   indic_rudder = lv_meter_add_needle_line(rudder_display, scale, 7, lv_theme_get_color_primary(parent), -10);
-
-  /*Create an animation to set the value*/
-  /*
-  lv_anim_t a;
-  lv_anim_init(&a);
-  lv_anim_set_exec_cb(&a, set_value);
-  lv_anim_set_var(&a, indic);
-  lv_anim_set_values(&a, 5, 15);
-  lv_anim_set_time(&a, 5000);
-  lv_anim_set_repeat_delay(&a, 3000);
-  lv_anim_set_playback_time(&a, 5000);
-  lv_anim_set_playback_delay(&a, 3000);
-  lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
-  lv_anim_start(&a)*/
 }
 
 Gesture swipeDown("swipe down", 80, DIR_DOWN, 40);
@@ -189,7 +176,7 @@ void loop() {
     lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
   }
   lv_task_handler();
-  lv_tick_inc(1);
   app.tick();
-  set_value(indic_rudder, 20);
+  set_value(indic_rudder, 100 * shipDataModel.navigation.rate_of_turn.deg_sec); // TODO set it properly
+  lv_tick_inc(1);
 }
