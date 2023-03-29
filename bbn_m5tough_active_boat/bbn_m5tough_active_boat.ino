@@ -8,6 +8,8 @@
 #include <SPI.h>
 
 #include "ui_init.h"
+#include "ui_gestures.h"
+#include "ui_theme.h"
 
 static void btnPowerOff_event(lv_event_t *event) {
   M5.Axp.PowerOff();
@@ -17,7 +19,7 @@ void setup() {
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
-  
+
   lv_obj_t *btn = lv_btn_create(lv_scr_act());
   lv_obj_t *label = lv_label_create(btn);
   lv_obj_align(btn, LV_ALIGN_CENTER, 0, 0);
@@ -30,4 +32,6 @@ void loop() {
   M5.update();
   lv_task_handler();
   lv_tick_inc(1);
+
+  if (swipe_vert_detected()) toggle_ui_theme();
 }
