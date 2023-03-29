@@ -33,7 +33,7 @@ extern "C" {
     signalk_greet(client);
 
     app.onAvailable(client, [&client]() {
-      while (client.available() > 128 && client.connected()) {
+      while (client.available() > 128 /* Very important for performance and responsiveness */ && client.connected()) {
         bool found = signalk_parse(client);
         if (found) {
           break;
