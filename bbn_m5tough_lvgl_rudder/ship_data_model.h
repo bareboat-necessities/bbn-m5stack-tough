@@ -90,7 +90,7 @@ typedef struct _nav_light {
 } nav_light;
 
 typedef struct _angular_velocity_t {
-  float deg_sec;
+  float deg_min;
   age_t age;
 } _angular_velocity_t;
 
