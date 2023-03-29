@@ -49,5 +49,5 @@ void loop() {
   if (swipe_vert_detected()) toggle_ui_theme();
   if (swipe_horiz_detected()) next_page();
 
-  update_screen(clockScreen);
+  update_screen(*screens[page]);
 }
