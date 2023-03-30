@@ -37,6 +37,10 @@ extern "C" {
     /*Add a needle line indicator*/
     indic_rudder = lv_meter_add_needle_line(rudder_display, scale, 7, lv_theme_get_color_primary(parent), -10);
 
+    lv_obj_t *main_label = lv_label_create(parent);
+    lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -60);
+    lv_label_set_text(main_label, "RUDDER");
+
     rate_of_turn_label = lv_label_create(parent);
     lv_obj_align(rate_of_turn_label, LV_ALIGN_TOP_LEFT, 5, 5);
   }
@@ -46,6 +50,8 @@ extern "C" {
                       (String("ROT (" LV_SYMBOL_DEGREES "/min): ")
                        + (fresh(shipDataModel.navigation.rate_of_turn.age) ? String(shipDataModel.navigation.rate_of_turn.deg_min) : String("n/a")))
                         .c_str());
+
+    set_rudder_value(indic_rudder, fresh(shipDataModel.steering.rudder_angle.age) ? shipDataModel.steering.rudder_angle.deg : 0);
   }
 
   void init_rudderScreen() {
