@@ -8,6 +8,8 @@ extern "C" {
   lv_updatable_screen_t rudderScreen;
 
   static lv_obj_t *rudder_display;
+  static lv_meter_indicator_t *indic_rudder;
+  static lv_obj_t *rate_of_turn_label;
 
   static void set_rudder_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(rudder_display, (lv_meter_indicator_t *)indic, v);
