@@ -31,6 +31,8 @@ using namespace reactesp;
 ReactESP app;
 
 #include "ship_data_model.h"
+#include "ship_data_util.h"
+
 static ship_data_t shipDataModel;
 
 #include "signalk_parse.h"
