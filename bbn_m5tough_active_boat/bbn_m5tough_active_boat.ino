@@ -75,12 +75,12 @@ void setup() {
   settingUpWiFi([&page, &screens](){
     init_windScreen();
     lv_scr_load(screens[page]->screen);
-    init_heelScreen();
-    init_autopilotScreen();
-    init_victronScreen();
-    init_clockScreen();
-    init_rebootScreen();
     init_aboutScreen();
+    init_rebootScreen();
+    init_clockScreen();
+    init_victronScreen();
+    init_autopilotScreen();
+    init_heelScreen();
   });
 }
 
