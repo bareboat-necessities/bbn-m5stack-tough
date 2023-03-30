@@ -33,12 +33,12 @@ Preferences preferences;
 
 lv_updatable_screen_t* screens[] = {
   &windScreen,
-  &heelScreen,
-  &autopilotScreen,
-  &victronScreen,
-  &clockScreen,
-  &rebootScreen,
   &aboutScreen,
+  &rebootScreen,
+  &clockScreen,
+  &victronScreen,
+  &autopilotScreen,
+  &heelScreen,
 };
 
 int page = 0;
@@ -74,13 +74,13 @@ void setup() {
 
   settingUpWiFi([&page, &screens](){
     init_windScreen();
-    lv_scr_load(screens[page]->screen);
     init_aboutScreen();
     init_rebootScreen();
     init_clockScreen();
     init_victronScreen();
     init_autopilotScreen();
     init_heelScreen();
+    lv_scr_load(screens[page]->screen);
   });
 }
 
