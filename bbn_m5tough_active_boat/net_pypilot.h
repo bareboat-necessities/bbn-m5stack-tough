@@ -51,6 +51,7 @@ extern "C" {
   ap.heading_command=220
   ap.enabled=true
   ap.enabled=false
+  watch={"ap.heading":0.5}
 
 
   */
