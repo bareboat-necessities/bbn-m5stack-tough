@@ -147,13 +147,14 @@ extern "C" {
     lv_list_wifi(lv_scr_act(), n);
     restoreConfig();  // to allow reconnect while in setup mode
 
-    WiFi.onEvent([&on_connected](WiFiEvent_t event, WiFiEventInfo_t info) {
+    WiFi.onEvent([&](WiFiEvent_t event, WiFiEventInfo_t info) {
       if (list_wifi != NULL) {
         lv_obj_del(list_wifi);
         list_wifi = NULL;
       }
       delay(2000);
-      wifi_connected(on_connected);
+      //wifi_connected(on_connected);
+      ESP.restart(); // can just restart for clean attempt 
     }, WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_CONNECTED);
   }
 
