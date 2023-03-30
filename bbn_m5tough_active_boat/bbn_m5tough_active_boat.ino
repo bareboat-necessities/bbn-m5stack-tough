@@ -15,7 +15,6 @@
 #include "ui_screens.h"
 #include "m5_rtc.h"
 #include "ui_clock.h"
-#include "ui_reboot.h"
 #include "ui_about.h"
 
 // config store.
@@ -23,6 +22,7 @@ Preferences preferences;
 
 #include "ui_keyboard.h"
 #include "ui_settings_wifi.h"
+#include "ui_reboot.h"
 
 #include "ship_data_model.h"
 
@@ -74,7 +74,7 @@ void setup() {
 
   settingUpWiFi();
 
-  if (!setupMode) {
+  if (!settingMode) {
     init_windScreen();
     lv_scr_load(screens[page]->screen);
     init_heelScreen();
@@ -91,9 +91,8 @@ void loop() {
   lv_task_handler();
   lv_tick_inc(1);
 
-  handle_swipe();
-
-  if (!setupMode) {
+  if (!settingMode) {
+    handle_swipe();
     update_screen(*screens[page]);
   }
 }
