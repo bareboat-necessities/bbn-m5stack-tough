@@ -12,6 +12,7 @@ extern "C" {
   void init_aboutScreen() {
     aboutScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
     lv_obj_t *img = lv_img_create(aboutScreen.screen);
+    lv_obj_set_style_bg_color(lv_scr_act(), lv_color_white(), LV_PART_MAIN);
     lv_img_set_src(img, &bareboat_necessities_logo);
     lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
   }
