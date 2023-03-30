@@ -7,10 +7,6 @@ extern "C" {
 
   lv_updatable_screen_t autopilotScreen;
 
-#define LV_SYMBOL_DOUBLE_LEFT LV_SYMBOL_LEFT " " LV_SYMBOL_LEFT
-#define LV_SYMBOL_DOUBLE_RIGHT LV_SYMBOL_RIGHT " " LV_SYMBOL_RIGHT
-#define LV_SYMBOL_DEGREES "\xC2\xB0"
-
   static const char *btnm_map[] = {
     LV_SYMBOL_DOUBLE_LEFT, LV_SYMBOL_DOUBLE_RIGHT, "\n",
     LV_SYMBOL_LEFT, LV_SYMBOL_RIGHT, "\n",
