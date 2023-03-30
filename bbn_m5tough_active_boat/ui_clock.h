@@ -56,7 +56,7 @@ extern "C" {
   static void clock_update_cb() {
     M5.Rtc.GetDate(&RTCdate);
     M5.Rtc.GetTime(&RTCtime);
-    set_clock_value(indic_hour, RTCtime.Hours);
+    set_clock_value(indic_hour, (RTCtime.Hours % 12) * 60 / 12);
     set_clock_value(indic_min, RTCtime.Minutes);
     set_clock_value(indic_sec, RTCtime.Seconds);
 
