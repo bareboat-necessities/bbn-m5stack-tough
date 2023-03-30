@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-
   /*
    
   Uses Socket.IO over websockets
@@ -54,8 +53,39 @@ extern "C" {
   watch={"ap.heading":0.5}
   watch={"ap.mode":true}
 
-
   */
+
+  void pypilot_greet(WiFiClient& client) {
+    const char* data1 = "watch={\"ap.heading\":0.5}";
+    client.println(data1);
+    const char* data2 = "watch={\"ap.mode\":true}";
+    client.println(data2);
+    client.flush();
+  }
+
+  void setup_reconnect(WiFiClient& client, const char* host, int port) {
+    app.onRepeat(5000, [&client, host, port]() {
+      if (!client.connected()) {
+        if (client.connect(host, port)) {
+          pypilot_greet(client);
+        }
+      }
+    });
+  }
+
+  void pypilot_subscribe(WiFiClient& client) {
+
+    pypilot_greet(client);
+
+    app.onAvailable(client, [&client]() {
+      while (client.available() > 8 /* Very important for performance and responsiveness */ && client.connected()) {
+        bool found = pypilot_parse(client);
+        if (found) {
+          break;
+        }
+      }
+    });
+  }
 
 #ifdef __cplusplus
 } /*extern "C"*/
