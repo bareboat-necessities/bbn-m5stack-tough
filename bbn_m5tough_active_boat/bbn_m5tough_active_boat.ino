@@ -59,11 +59,9 @@ void prev_page() {
 void handle_swipe() {
   if (swipe_vert_detected()) {
     toggle_ui_theme();
-  }
-  else if (swipe_right_detected()) {
+  } else if (swipe_right_detected()) {
     next_page();
-  }
-  else if (swipe_left_detected()) {
+  } else if (swipe_left_detected()) {
     prev_page();
   }
 }
@@ -76,14 +74,16 @@ void setup() {
 
   settingUpWiFi();
 
-  init_windScreen();    
-  lv_scr_load(screens[page]->screen);
-  init_heelScreen();    
-  init_autopilotScreen();    
-  init_victronScreen();    
-  init_clockScreen();    
-  init_rebootScreen();    
-  init_aboutScreen();
+  if (!setupMode) {
+    init_windScreen();
+    lv_scr_load(screens[page]->screen);
+    init_heelScreen();
+    init_autopilotScreen();
+    init_victronScreen();
+    init_clockScreen();
+    init_rebootScreen();
+    init_aboutScreen();
+  }
 }
 
 void loop() {
@@ -92,6 +92,6 @@ void loop() {
   lv_tick_inc(1);
 
   handle_swipe();
-  
+
   update_screen(*screens[page]);
 }
