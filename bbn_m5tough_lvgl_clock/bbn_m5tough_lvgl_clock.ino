@@ -100,8 +100,8 @@ void setup() {
   init_touch_driver();
   lv_theme_default_init(NULL, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), theme, LV_FONT_DEFAULT);
 
-  lv_obj_t *page1 = lv_obj_create(NULL); // Creates a Screen object
-  lv_obj_t *page2 = lv_obj_create(NULL); // Creates another Screen object
+  lv_obj_t *page1 = lv_obj_create(NULL);  // Creates a Screen object
+  lv_obj_t *page2 = lv_obj_create(NULL);  // Creates another Screen object
 
   pages[0] = page1;
   pages[1] = page2;
@@ -159,7 +159,7 @@ void loop() {
     lv_scr_load(pages[page]);
   }
   M5.Rtc.GetTime(&RTCtime);
-  set_value(indic_hour, RTCtime.Hours);
+  set_clock_value(indic_hour, ((RTCtime.Hours % 12) * 60 + RTCtime.Minutes) / 12);
   set_value(indic_min, RTCtime.Minutes);
   set_value(indic_sec, RTCtime.Seconds);
   lv_tick_inc(5);
