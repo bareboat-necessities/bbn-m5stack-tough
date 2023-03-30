@@ -6,6 +6,8 @@
 #include <lvgl.h>
 #include <Wire.h>
 #include <SPI.h>
+#include <WiFi.h>
+#include <Preferences.h>
 
 #include "ui_init.h"
 #include "ui_gestures.h"
@@ -15,6 +17,12 @@
 #include "ui_clock.h"
 #include "ui_reboot.h"
 #include "ui_about.h"
+
+// config store.
+Preferences preferences;
+
+#include "ui_keyboard.h"
+#include "ui_settings_wifi.h"
 
 #include "ship_data_model.h"
 
@@ -65,6 +73,8 @@ void setup() {
   init_disp_driver();
   init_touch_driver();
   init_theme();
+
+  settingUpWiFi();
 
   init_windScreen();    
   lv_scr_load(screens[page]->screen);
