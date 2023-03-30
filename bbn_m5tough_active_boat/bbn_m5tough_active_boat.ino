@@ -93,5 +93,7 @@ void loop() {
 
   handle_swipe();
 
-  update_screen(*screens[page]);
+  if (!setupMode) {
+    update_screen(*screens[page]);
+  }
 }
