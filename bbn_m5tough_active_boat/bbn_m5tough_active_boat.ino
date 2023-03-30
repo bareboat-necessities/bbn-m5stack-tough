@@ -3,6 +3,7 @@
 
 #include <M5Tough.h>
 #include <Arduino.h>
+#include <time.h>
 #include <lvgl.h>
 #include <Wire.h>
 #include <SPI.h>
@@ -12,11 +13,12 @@
 #undef min(a, b)
 #include <ReactESP.h>
 
+#include "m5_rtc.h"
+#include "net_ntp_time.h"
 #include "ui_init.h"
 #include "ui_gestures.h"
 #include "ui_theme.h"
 #include "ui_screens.h"
-#include "m5_rtc.h"
 #include "ui_clock.h"
 #include "ui_about.h"
 
@@ -89,6 +91,7 @@ void setup() {
   init_theme();
 
   settingUpWiFi([&page, &screens]() {
+    init_dateTime();
     init_windScreen();
     init_aboutScreen();
     init_rebootScreen();
