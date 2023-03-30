@@ -25,12 +25,12 @@ extern "C" {
     lv_obj_center(clock_display);
 
     labelDate = lv_label_create(parent);
-    lv_obj_set_pos(labelDate, 10, 20);
-    lv_obj_align(labelDate, LV_ALIGN_TOP_LEFT, 10, 20);
+    lv_obj_set_pos(labelDate, 10, 10);
+    lv_obj_align(labelDate, LV_ALIGN_TOP_LEFT, 10, 10);
 
     labelTime = lv_label_create(parent);
-    lv_obj_set_pos(labelTime, 260, 20);
-    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 260, 20);
+    lv_obj_set_pos(labelTime, 254, 10);
+    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 254, 10);
 
     /*Create a scale for the minutes*/
     /*61 ticks in a 360 degrees range (the last and the first line overlaps)*/
