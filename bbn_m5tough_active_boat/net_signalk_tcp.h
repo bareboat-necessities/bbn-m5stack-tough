@@ -7,8 +7,7 @@ extern "C" {
 
   void signalk_greet(WiFiClient& client) {
     String dataFeed = client.readStringUntil('\n');
-    //M5.Lcd.println(dataFeed);
-    // esp32 can't handle all volume. request only what is needed for the current screen ???
+    // request only what is needed for the current screen ???
     // const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"navigation.rateOfTurn\"}]}";
     const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"*\"}]}";
     client.println(data);
