@@ -16,9 +16,6 @@ extern "C" {
   lv_obj_t *labelDate;
   lv_obj_t *labelTime;
 
-  RTC_TimeTypeDef RTCtime;
-  RTC_DateTypeDef RTCdate;
-
   /**
    * A clock display 
    */
