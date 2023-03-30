@@ -26,30 +26,8 @@ extern "C" {
     ESP.restart();
   }
 
-  static void btnReboot_ev(lv_event_t *event) {
-    ESP.restart();
-  }
-
   void wifi_connected() {
     settingMode = false;  // Turn off setting mode.
-    lv_obj_t *labelIP = lv_label_create(lv_scr_act());
-    lv_obj_set_pos(labelIP, 10, 10);
-    lv_label_set_text(labelIP,
-                      (" Wi-Fi:  " + wifi_ssid + "\n" + " Local IP:  " + WiFi.localIP().toString()).c_str());
-
-    lv_obj_t *btn_cfg = lv_btn_create(lv_scr_act());
-    lv_obj_t *label = lv_label_create(btn_cfg);
-    lv_obj_align(btn_cfg, LV_ALIGN_CENTER, 0, -30);
-    lv_label_set_text(label, "Reset Wi-Fi Settings");
-    lv_obj_center(label);
-    lv_obj_add_event_cb(btn_cfg, btnResetWiFiSettings_event, LV_EVENT_LONG_PRESSED, NULL);
-
-    lv_obj_t *btn_reboot = lv_btn_create(lv_scr_act());
-    lv_obj_t *label_reboot = lv_label_create(btn_reboot);
-    lv_obj_align(btn_reboot, LV_ALIGN_CENTER, 0, 30);
-    lv_label_set_text(label_reboot, "Reboot Device");
-    lv_obj_center(label_reboot);
-    lv_obj_add_event_cb(btn_reboot, btnReboot_ev, LV_EVENT_LONG_PRESSED, NULL);
   }
 
   static inline int8_t dBm_to_percents(int8_t dBm) {
@@ -175,8 +153,7 @@ extern "C" {
       }
       delay(2000);
       wifi_connected();
-    },
-                 WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_CONNECTED);
+    }, WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_CONNECTED);
   }
 
   boolean checkConnection() {  // Check wifi connection.
