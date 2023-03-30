@@ -39,6 +39,7 @@ static ship_data_t shipDataModel;
 #include "ui_wind.h"
 #include "ui_heel.h"
 #include "ui_autopilot.h"
+#include "ui_rudder.h"
 #include "ui_power_victron.h"
 
 lv_updatable_screen_t* screens[] = {
@@ -49,6 +50,7 @@ lv_updatable_screen_t* screens[] = {
   &victronScreen,
   &autopilotScreen,
   &heelScreen,
+  &rudderScreen,
 };
 
 int page = 0;
@@ -92,6 +94,7 @@ void setup() {
     init_victronScreen();
     init_autopilotScreen();
     init_heelScreen();
+    init_rudderScreen();
     lv_scr_load(screens[page]->screen);
 
     // TODO: autodisconer and read from preferences
