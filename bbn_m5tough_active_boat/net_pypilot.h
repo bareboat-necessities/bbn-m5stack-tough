@@ -63,7 +63,7 @@ extern "C" {
     client.flush();
   }
 
-  void setup_reconnect(WiFiClient& client, const char* host, int port) {
+  void setup_pypilot_reconnect(WiFiClient& client, const char* host, int port) {
     app.onRepeat(5000, [&client, host, port]() {
       if (!client.connected()) {
         if (client.connect(host, port)) {
