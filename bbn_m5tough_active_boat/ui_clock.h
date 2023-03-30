@@ -59,10 +59,15 @@ extern "C" {
     set_clock_value(indic_hour, RTCtime.Hours);
     set_clock_value(indic_min, RTCtime.Minutes);
     set_clock_value(indic_sec, RTCtime.Seconds);
-    lv_label_set_text(labelDate,
-                      (String() + (100 + RTCdate.Year) + "-" + (1 + RTCdate.Month) + "-" + RTCdate.Date).c_str());
-    lv_label_set_text(labelTime,
-                      (String() + RTCtime.Hours + ":" + RTCtime.Minutes + ":" + RTCtime.Seconds).c_str());
+
+    char bufferDate[11];
+    char bufferTime[9];
+
+    sprintf(bufferDate, "%04d-%02d-%02d", 100 + RTCdate.Year, 1 + RTCdate.Month, RTCdate.Date);
+    sprintf(bufferTime, "%02d:%02d:%02d", RTCtime.Hours, RTCtime.Minutes, RTCtime.Seconds);
+
+    lv_label_set_text(labelDate, bufferDate);
+    lv_label_set_text(labelTime, bufferTime);
   }
 
   void init_clockScreen() {
