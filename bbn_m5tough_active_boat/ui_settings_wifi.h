@@ -26,8 +26,9 @@ extern "C" {
     ESP.restart();
   }
 
-  void wifi_connected() {
+  void wifi_connected(void (*on_connected)()) {
     settingMode = false;  // Turn off setting mode.
+    (*on_connected)();
   }
 
   static inline int8_t dBm_to_percents(int8_t dBm) {
@@ -136,7 +137,7 @@ extern "C" {
     }
   }
 
-  static void setupMode() {
+  static void setupMode(void (*on_connected)()) {
     WiFi.mode(WIFI_STA);  // Set WiFi to station mode and disconnect from an AP if it was previously connected.
     WiFi.disconnect();    // Turn off all wifi connections.
     delay(100);           // 100 ms delay.
@@ -146,13 +147,13 @@ extern "C" {
     lv_list_wifi(lv_scr_act(), n);
     restoreConfig();  // to allow reconnect while in setup mode
 
-    WiFi.onEvent([](WiFiEvent_t event, WiFiEventInfo_t info) {
+    WiFi.onEvent([&on_connected](WiFiEvent_t event, WiFiEventInfo_t info) {
       if (list_wifi != NULL) {
         lv_obj_del(list_wifi);
         list_wifi = NULL;
       }
       delay(2000);
-      wifi_connected();
+      wifi_connected(on_connected);
     }, WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_CONNECTED);
   }
 
@@ -168,17 +169,17 @@ extern "C" {
     return false;
   }
 
-  void settingUpWiFi() {
+  void settingUpWiFi(void (*on_connected)()) {
     preferences.begin("wifi-config");
     delay(10);
     if (restoreConfig()) {      // Check if wifi configuration information has been stored.
       if (checkConnection()) {  // Check wifi connection.
-        wifi_connected();
+        wifi_connected(on_connected);
         return;
       }
     }
     settingMode = true;  // If there is no stored wifi configuration information, turn on the setting mode.
-    setupMode();
+    setupMode(on_connected);
   }
 
 #ifdef __cplusplus
