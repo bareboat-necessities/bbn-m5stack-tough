@@ -72,9 +72,7 @@ void setup() {
   init_touch_driver();
   init_theme();
 
-  settingUpWiFi();
-
-  if (!settingMode) {
+  settingUpWiFi([&page, &screens](){
     init_windScreen();
     lv_scr_load(screens[page]->screen);
     init_heelScreen();
@@ -83,7 +81,7 @@ void setup() {
     init_clockScreen();
     init_rebootScreen();
     init_aboutScreen();
-  }
+  });
 }
 
 void loop() {
