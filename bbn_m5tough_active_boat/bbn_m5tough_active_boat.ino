@@ -48,6 +48,18 @@ void prev_page() {
   lv_scr_load(screens[page]->screen);
 }
 
+void handle_swipe() {
+  if (swipe_vert_detected()) {
+    toggle_ui_theme();
+  }
+  else if (swipe_right_detected()) {
+    next_page();
+  }
+  else if (swipe_left_detected()) {
+    prev_page();
+  }
+}
+
 void setup() {
   tft_lv_initialization();
   init_disp_driver();
@@ -69,15 +81,7 @@ void loop() {
   lv_task_handler();
   lv_tick_inc(1);
 
-  if (swipe_vert_detected()) {
-    toggle_ui_theme();
-  }
-  else if (swipe_right_detected()) {
-    next_page();
-  }
-  else if (swipe_left_detected()) {
-    prev_page();
-  }
+  handle_swipe();
   
   update_screen(*screens[page]);
 }
