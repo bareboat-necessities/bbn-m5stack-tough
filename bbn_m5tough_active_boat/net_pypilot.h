@@ -81,7 +81,7 @@ extern "C" {
       while (client.available() > 8 /* Very important for performance and responsiveness */ && client.connected()) {
         bool found = pypilot_parse(client);
         if (found) {
-          break;
+          break; /* Very important for performance and responsiveness */
         }
       }
     });
