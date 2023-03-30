@@ -60,7 +60,7 @@ extern "C" {
     set_clock_value(indic_min, RTCtime.Minutes);
     set_clock_value(indic_sec, RTCtime.Seconds);
     lv_label_set_text(labelDate,
-                      (String() + RTCdate.Year + "-" + RTCdate.Month + "-" + RTCdate.Date).c_str());
+                      (String() + (100 + RTCdate.Year) + "-" + (1 + RTCdate.Month) + "-" + RTCdate.Date).c_str());
     lv_label_set_text(labelTime,
                       (String() + RTCtime.Hours + ":" + RTCtime.Minutes + ":" + RTCtime.Seconds).c_str());
   }
