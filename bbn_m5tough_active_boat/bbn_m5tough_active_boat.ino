@@ -8,6 +8,7 @@
 #include <SPI.h>
 #include <WiFi.h>
 #include <Preferences.h>
+#include <ArduinoJson.h>
 #undef min(a, b)
 #include <ReactESP.h>
 
@@ -32,6 +33,8 @@ ReactESP app;
 #include "signalk_parse.h"
 #include "net_signalk_tcp.h"
 #include "ship_data_model.h"
+
+static ship_data_t shipDataModel;
 
 #include "ui_wind.h"
 #include "ui_heel.h"
@@ -94,6 +97,7 @@ void setup() {
 void loop() {
   M5.update();
   lv_task_handler();
+  app.tick();
   lv_tick_inc(1);
 
   if (!settingMode) {
