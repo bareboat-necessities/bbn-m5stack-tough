@@ -32,8 +32,8 @@ extern "C" {
     lv_obj_align(labelDate, LV_ALIGN_TOP_LEFT, 10, 20);
 
     labelTime = lv_label_create(parent);
-    lv_obj_set_pos(labelTime, 240, 20);
-    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 240, 20);
+    lv_obj_set_pos(labelTime, 260, 20);
+    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 280, 20);
 
     /*Create a scale for the minutes*/
     /*61 ticks in a 360 degrees range (the last and the first line overlaps)*/
@@ -57,8 +57,8 @@ extern "C" {
   }
 
   static void clock_update_cb() {
-    M5.Rtc.GetTime(&RTCtime);
     M5.Rtc.GetDate(&RTCdate);
+    M5.Rtc.GetTime(&RTCtime);
     set_clock_value(indic_hour, RTCtime.Hours);
     set_clock_value(indic_min, RTCtime.Minutes);
     set_clock_value(indic_sec, RTCtime.Seconds);
