@@ -8,6 +8,8 @@
 #include <SPI.h>
 #include <WiFi.h>
 #include <Preferences.h>
+#undef min(a, b)
+#include <ReactESP.h>
 
 #include "ui_init.h"
 #include "ui_gestures.h"
@@ -24,6 +26,11 @@ Preferences preferences;
 #include "ui_settings_wifi.h"
 #include "ui_reboot.h"
 
+using namespace reactesp;
+ReactESP app;
+
+#include "signalk_parse.h"
+#include "net_signalk_tcp.h"
 #include "ship_data_model.h"
 
 #include "ui_wind.h"
