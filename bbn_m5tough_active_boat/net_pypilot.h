@@ -52,6 +52,7 @@ extern "C" {
   ap.enabled=true
   ap.enabled=false
   watch={"ap.heading":0.5}
+  watch={"ap.mode":true}
 
 
   */
