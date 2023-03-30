@@ -33,7 +33,7 @@ extern "C" {
 
     labelTime = lv_label_create(parent);
     lv_obj_set_pos(labelTime, 260, 20);
-    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 280, 20);
+    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 260, 20);
 
     /*Create a scale for the minutes*/
     /*61 ticks in a 360 degrees range (the last and the first line overlaps)*/
