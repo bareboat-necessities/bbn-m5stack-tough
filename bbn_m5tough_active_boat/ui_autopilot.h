@@ -54,13 +54,13 @@ extern "C" {
 
   static void autopilot_update_cb() {
     if (shipDataModel.steering.autopilot.ap_state.st == ap_state_e::STANDBY
-        && fresh(shipDataModel.steering.autopilot.ap_state.age)) {
+        && fresh(shipDataModel.steering.autopilot.ap_state.age, TWO_MINUTES)) {
       lv_led_set_color(autopilot_led, lv_palette_main(LV_PALETTE_RED));
     } else if (shipDataModel.steering.autopilot.ap_state.st == ap_state_e::ENGAGED
-               && fresh(shipDataModel.steering.autopilot.ap_state.age)) {
+               && fresh(shipDataModel.steering.autopilot.ap_state.age, TWO_MINUTES)) {
       lv_led_set_color(autopilot_led, lv_palette_main(LV_PALETTE_GREEN));
     }
-    if (!fresh(shipDataModel.steering.autopilot.ap_state.age)) {
+    if (!fresh(shipDataModel.steering.autopilot.ap_state.age, TWO_MINUTES)) {
       lv_led_set_color(autopilot_led, lv_palette_main(LV_PALETTE_GREY));
     }
   }
