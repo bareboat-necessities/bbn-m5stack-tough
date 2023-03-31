@@ -11,6 +11,7 @@
 #include <WiFi.h>
 #include <ESPmDNS.h>
 #include <mdns.h>
+#include <MQTT.h>  // https://github.com/256dpi/arduino-mqtt
 #include <Preferences.h>
 #include <ArduinoJson.h>
 #undef min(a, b)
