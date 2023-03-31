@@ -57,29 +57,36 @@ extern "C" {
       M5.Lcd.print(gps.location.lat());
       M5.Lcd.print(" ");
       M5.Lcd.println(gps.location.lng());
-    } else if (gps.altitude.isUpdated()) {
+    }
+    if (gps.altitude.isUpdated()) {
       M5.Lcd.print("ALT:  ");
       M5.Lcd.println(gps.altitude.feet());
-    } else if (gps.speed.isUpdated()) {
+    }
+    if (gps.speed.isUpdated()) {
       M5.Lcd.print("SOG:  ");
       M5.Lcd.println(gps.speed.knots());
-    } else if (gps.course.isUpdated()) {
+    }
+    if (gps.course.isUpdated()) {
       M5.Lcd.print("COG:  ");
       M5.Lcd.println(gps.course.deg());
-    } else if (gps.time.isUpdated()) {
+    }
+    if (gps.time.isUpdated()) {
       M5.Lcd.print("TIME: ");
       M5.Lcd.print(gps.time.hour());
       M5.Lcd.print(":");
       M5.Lcd.print(gps.time.minute());
       M5.Lcd.print(":");
       M5.Lcd.println(gps.time.second());
-    } else if (headingTrue.isUpdated()) {
+    }
+    if (headingTrue.isUpdated()) {
       M5.Lcd.print("HDT:  ");
       M5.Lcd.println(headingTrue.value());
-    } else if (headingMag.isUpdated()) {
+    }
+    if (headingMag.isUpdated()) {
       M5.Lcd.print("HDM:  ");
       M5.Lcd.println(headingMag.value());
-    } else if (customData_Value.isUpdated() && customData_Type.isValid()) {
+    }
+    if (customData_Value.isUpdated() && customData_Type.isValid()) {
       M5.Lcd.print(customData_Type.value());
       M5.Lcd.print(": ");
       M5.Lcd.println(customData_Value.value());
@@ -107,7 +114,49 @@ extern "C" {
   bool nmea0183_parse(WiFiClient& client) {
     bool found = false;
     String dataLine = client.readStringUntil('\n');
-    return nmea_parse(dataLine);
+    found = nmea_parse(dataLine);
+    // displayGPSData();
+
+    if (customData_Value.isUpdated() && customData_Type.isValid()) {
+      if (strcmp("PTCH", customData_Type.value()) == 0 || strcmp("PITCH", customData_Type.value()) == 0) {
+        shipDataModel.navigation.attitude.pitch.deg = parse_float(customData_Value.value());
+        shipDataModel.navigation.attitude.pitch.age = millis();
+      } else if (strcmp("ROLL", customData_Type.value()) == 0) {
+        shipDataModel.navigation.attitude.heel.deg = parse_float(customData_Value.value());
+        shipDataModel.navigation.attitude.heel.age = millis();
+      }
+    }
+    if (gps.location.isUpdated()) {
+      shipDataModel.navigation.position.lat.deg = gps.location.lat();
+      shipDataModel.navigation.position.lon.deg = gps.location.lng();
+      shipDataModel.navigation.position.lat.age = millis();
+      shipDataModel.navigation.position.lon.age = millis();
+    }
+    if (gps.altitude.isUpdated()) {
+      //M5.Lcd.print("ALT:  ");
+      //M5.Lcd.println(gps.altitude.feet());
+    }
+    if (gps.speed.isUpdated()) {
+      shipDataModel.navigation.speed_over_ground_kn.kn = gps.speed.knots();
+      shipDataModel.navigation.speed_over_ground_kn.age = millis();
+    }
+    if (gps.course.isUpdated()) {
+      shipDataModel.navigation.course_over_ground_true.deg = gps.course.deg();
+      shipDataModel.navigation.course_over_ground_true.age = millis();
+    }
+    if (gps.time.isUpdated()) {
+      //shipDataModel.environment.time_gps.t = gps_time_to_tm(gps.date, gps.time);
+      shipDataModel.environment.time_gps.age = millis();
+    }
+    if (headingTrue.isUpdated() && headingTrue.isValid()) {
+      shipDataModel.navigation.heading_true.deg = parse_float(headingTrue.value());
+      shipDataModel.navigation.heading_true.age = millis();
+    }
+    if (headingMag.isUpdated()) {
+      shipDataModel.navigation.heading_mag.deg = parse_float(headingMag.value());
+      shipDataModel.navigation.heading_mag.age = millis();
+    }
+    return found;
   }
 
 #ifdef __cplusplus
