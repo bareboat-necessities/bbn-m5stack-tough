@@ -83,7 +83,7 @@ extern "C" {
     }
   }
 
-  static void ta_event_cb(lv_event_t *e) {
+  static void ta_keyboard_event_cb(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t *ta = lv_event_get_target(e);
     lv_obj_t *kb = (lv_obj_t *)lv_event_get_user_data(e);
@@ -110,7 +110,7 @@ extern "C" {
     lv_textarea_set_one_line(ta, true);
     lv_textarea_set_password_mode(ta, false);
     lv_textarea_set_text(ta, "");
-    lv_obj_add_event_cb(ta, ta_event_cb, LV_EVENT_ALL, kb);
+    lv_obj_add_event_cb(ta, ta_keyboard_event_cb, LV_EVENT_ALL, kb);
 
     lv_keyboard_set_textarea(kb, ta);
     lv_obj_add_state(ta, LV_STATE_FOCUSED);
