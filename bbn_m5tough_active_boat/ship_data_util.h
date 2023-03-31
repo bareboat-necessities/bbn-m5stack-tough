@@ -5,8 +5,10 @@
 extern "C" {
 #endif
 
-  bool fresh(unsigned long age) {
-    return millis() - age < 5000;
+  #define TWO_MINUTES 120000
+
+  bool fresh(unsigned long age, unsigned long limit = 5000) {
+    return millis() - age < limit;
   }
 
 #ifdef __cplusplus
