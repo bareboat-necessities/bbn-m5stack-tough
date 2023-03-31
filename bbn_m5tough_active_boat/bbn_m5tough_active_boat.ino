@@ -7,6 +7,7 @@
 #include <lvgl.h>
 #include <Wire.h>
 #include <SPI.h>
+#include <driver/i2s.h>
 #include <WiFi.h>
 #include <Preferences.h>
 #include <ArduinoJson.h>
@@ -14,6 +15,7 @@
 #include <ReactESP.h>
 
 #include "m5_rtc.h"
+#include "m5_sound.h"
 #include "net_ntp_time.h"
 #include "ui_init.h"
 #include "ui_gestures.h"
@@ -133,6 +135,9 @@ void setup() {
       M5.Lcd.println("Connection failed.");
     }
   });
+
+  SpeakerInit();
+  DingDong();
 }
 
 void loop() {
