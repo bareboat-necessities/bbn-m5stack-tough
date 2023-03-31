@@ -114,7 +114,7 @@ void setup() {
     // Connect to the SignalK TCP server
     setup_reconnect(skClient, host, port);
     if (skClient.connect(host, port)) {
-      M5.Lcd.print("Connected to ");
+      M5.Lcd.print("Connected to signalK ");
       M5.Lcd.println(host);
       signalk_subscribe(skClient);
     } else {
@@ -128,7 +128,7 @@ void setup() {
     // Connect to the PyPilot TCP server
     setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
     if (pypClient.connect(pyp_host, pyp_port)) {
-      M5.Lcd.print("Connected to ");
+      M5.Lcd.print("Connected to pypilot ");
       M5.Lcd.println(pyp_host);
       pypilot_subscribe(pypClient);
     } else {
