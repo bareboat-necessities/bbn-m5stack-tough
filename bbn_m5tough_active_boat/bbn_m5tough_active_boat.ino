@@ -21,6 +21,7 @@
 #include "m5_sound.h"
 #include "net_ntp_time.h"
 #include "net_mdns.h"
+#include "net_mqtt.h"
 #include "ui_init.h"
 #include "ui_gestures.h"
 #include "ui_theme.h"
@@ -94,6 +95,8 @@ void handle_swipe() {
 
 WiFiClient skClient;
 WiFiClient pypClient;
+MQTTClient mqttClient;
+
 
 void setup() {
   tft_lv_initialization();
@@ -151,6 +154,7 @@ void loop() {
   lv_task_handler();
   app.tick();
   lv_tick_inc(1);
+  mqttClient.loop();
 
   if (!settingMode) {
     handle_swipe();
