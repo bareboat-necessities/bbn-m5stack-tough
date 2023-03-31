@@ -46,6 +46,8 @@ ReactESP app;
 
 static ship_data_t shipDataModel;
 
+#include "nmea0183_parse.h"
+#include "net_nmea0183_tcp.h"
 #include "signalk_parse.h"
 #include "net_signalk_tcp.h"
 #include "pypilot_parse.h"
