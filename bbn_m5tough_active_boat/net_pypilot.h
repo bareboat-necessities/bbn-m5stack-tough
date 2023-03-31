@@ -58,8 +58,12 @@ extern "C" {
   void pypilot_greet(WiFiClient& client) {
     const char* data1 = "watch={\"ap.heading\":0.5}";
     client.println(data1);
-    const char* data2 = "watch={\"ap.mode\":true}";
+    const char* data2 = "watch={\"ap.heading_command\":true}";
     client.println(data2);
+    const char* data3 = "watch={\"ap.enabled\":true}";
+    client.println(data3);
+    const char* data4 = "watch={\"ap.mode\":true}";
+    client.println(data4);
     client.flush();
   }
 
