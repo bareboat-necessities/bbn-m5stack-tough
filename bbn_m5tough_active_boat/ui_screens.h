@@ -18,6 +18,7 @@ extern "C" {
   // triggers callback function set in update_cb
   void update_screen(lv_updatable_screen_t& screen) {
     (*screen.update_cb)();
+    delay(5); // all UI tasks need give more time to network tasks
   }
 
 #ifdef __cplusplus
