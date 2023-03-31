@@ -23,6 +23,8 @@
 #include "ui_screens.h"
 #include "ui_clock.h"
 #include "ui_about.h"
+#include "ui_brightness.h"
+#include "ui_mem_cpu_net_stat.h"
 
 // config store.
 Preferences preferences;
