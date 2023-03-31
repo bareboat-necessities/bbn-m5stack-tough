@@ -82,7 +82,12 @@ typedef struct _RPM_t {
   age_t age;
 } RPM_t;
 
-typedef tm env_time_t;
+typedef tm time_tm_t;
+
+typedef struct _env_time_t {
+  time_tm_t t;
+  age_t age;
+} env_time_t;
 
 typedef struct _nav_light {
   on_off_t state;
@@ -183,8 +188,8 @@ typedef struct _air_t {
 } air_t;
 
 typedef struct _environment_t {
-  env_time_t time_gps;
-  env_time_t time_net;
+  struct _env_time_t time_gps;
+  struct _env_time_t time_net;
   struct _wind_t wind;
   struct _depth_t depth;
   struct _water_t water;
