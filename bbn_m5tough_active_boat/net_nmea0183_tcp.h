@@ -17,7 +17,7 @@ extern "C" {
   void nmea0183_subscribe(WiFiClient& client) {
 
     app.onAvailable(client, [&client]() {
-      while (client.available() > 64 /* Very important for performance and responsiveness */ && client.connected()) {
+      while (client.available() > 128 /* Very important for performance and responsiveness */ && client.connected()) {
         bool found = nmea0183_parse(client);
         if (found) {
           break; /* Very important for performance and responsiveness */
