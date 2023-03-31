@@ -1,131 +1,94 @@
-#define LV_HOR_RES_MAX 320
-#define LV_VER_RES_MAX 240
+#ifndef NET_PYPILOT_H
+#define NET_PYPILOT_H
 
-#include <M5Tough.h>
-#include <Arduino.h>
-#include <time.h>
-#include <lvgl.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <WiFi.h>
-#include <Preferences.h>
-#include <ArduinoJson.h>
-#undef min(a, b)
-#include <ReactESP.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#include "m5_rtc.h"
-#include "net_ntp_time.h"
-#include "ui_init.h"
-#include "ui_gestures.h"
-#include "ui_theme.h"
-#include "ui_screens.h"
-#include "ui_clock.h"
-#include "ui_about.h"
+  /*
+   
+  Uses Socket.IO over websockets
+  
+  #include <Arduino.h>
+  #include <M5Tough.h>
+  #include <WiFi.h>
+  #include <WiFiClientSecure.h>
+  #include <ArduinoJson.h>
+  #include <WebSocketsClient.h>
+  #include <SocketIOclient.h>
 
-// config store.
-Preferences preferences;
+  ws://lysmarine:8080/socket.io/?EIO=4&transport=websocket&sid=Umq_p3uti3tZNSv2AAAG
 
-#include "ui_keyboard.h"
-#include "ui_settings_wifi.h"
-#include "ui_reboot.h"
+  Requests:
+  
+  2probe
+  5
+  42["pypilot","watch={\"ap.heading\":0.5}"]
+  42["pypilot","watch={\"ap.heading_command\":0.5}"]
+  42["pypilot","watch={\"ap.mode\":true}"]
+  42["pypilot","watch={\"ap.enabled\":true}"]
+  42["ping"]
+  42["pypilot","ap.heading_command=198.337"]
+  42["pypilot","ap.mode=\"gps\""]
+  42["pypilot","ap.mode=\"true\""]
+  42["pypilot","ap.mode=\"true wind\""]
+  42["pypilot","ap.mode=\"wind\""]
+  42["pypilot","{\"ap.mode\":\"compass\",\"ap.heading_command\":164.3069}"]
 
-using namespace reactesp;
-ReactESP app;
+  Responses:
 
-#include "ship_data_model.h"
-#include "ship_data_util.h"
+  3probe
+  42["pypilot","{\"ap.heading\":164.479}"]
+  42["pong"]
+  42["pypilot","{\"ap.heading_command\":198.337,\"ap.heading\":164.615}"]
+  42["pypilot","{\"ap.mode\":\"compass\"}"]
 
-static ship_data_t shipDataModel;
+  TCP client on port 23322:
 
-#include "signalk_parse.h"
-#include "net_signalk_tcp.h"
+  Just one line commands like this:
 
-#include "ui_wind.h"
-#include "ui_heel.h"
-#include "ui_autopilot.h"
-#include "ui_rudder.h"
-#include "ui_power_victron.h"
+  ap.heading_command=220
+  ap.enabled=true
+  ap.enabled=false
+  watch={"ap.heading":0.5}
+  watch={"ap.mode":true}
 
-lv_updatable_screen_t* screens[] = {
-  &windScreen,
-  &aboutScreen,
-  &rebootScreen,
-  &clockScreen,
-  &victronScreen,
-  &autopilotScreen,
-  &heelScreen,
-  &rudderScreen,
-};
+  */
 
-int page = 0;
-int pages_count = sizeof(screens) / sizeof(screens[0]);
-
-void next_page() {
-  page++;
-  if (page >= pages_count) page = 0;
-  lv_scr_load(screens[page]->screen);
-}
-
-void prev_page() {
-  page--;
-  if (page < 0) page = pages_count - 1;
-  lv_scr_load(screens[page]->screen);
-}
-
-void handle_swipe() {
-  if (swipe_vert_detected()) {
-    toggle_ui_theme();
-  } else if (swipe_right_detected()) {
-    next_page();
-  } else if (swipe_left_detected()) {
-    prev_page();
+  void pypilot_greet(WiFiClient& client) {
+    const char* data1 = "watch={\"ap.heading\":0.5}";
+    client.println(data1);
+    const char* data2 = "watch={\"ap.mode\":true}";
+    client.println(data2);
+    client.flush();
   }
-}
 
-WiFiClient skClient;
-
-void setup() {
-  tft_lv_initialization();
-  init_disp_driver();
-  init_touch_driver();
-  init_theme();
-
-  settingUpWiFi([&page, &screens]() {
-    init_dateTime();
-    init_windScreen();
-    init_aboutScreen();
-    init_rebootScreen();
-    init_clockScreen();
-    init_victronScreen();
-    init_autopilotScreen();
-    init_heelScreen();
-    init_rudderScreen();
-    lv_scr_load(screens[page]->screen);
-
-    // TODO: autodisconer and read from preferences
-    static const char* host = "192.168.1.34";  //"lysmarine";
-    static int port = 8375;                    // SignalK TCP
-
-    // Connect to the SignalK TCP server
-    setup_reconnect(skClient, host, port);
-    if (skClient.connect(host, port)) {
-      M5.Lcd.print("Connected to ");
-      M5.Lcd.println(host);
-      signalk_subscribe(skClient);
-    } else {
-      M5.Lcd.println("Connection failed.");
-    }
-  });
-}
-
-void loop() {
-  M5.update();
-  lv_task_handler();
-  app.tick();
-  lv_tick_inc(1);
-
-  if (!settingMode) {
-    handle_swipe();
-    update_screen(*screens[page]);
+  void setup_pypilot_reconnect(WiFiClient& client, const char* host, int port) {
+    app.onRepeat(5000, [&client, host, port]() {
+      if (!client.connected()) {
+        if (client.connect(host, port)) {
+          pypilot_greet(client);
+        }
+      }
+    });
   }
-}
+
+  void pypilot_subscribe(WiFiClient& client) {
+
+    pypilot_greet(client);
+
+    app.onAvailable(client, [&client]() {
+      while (client.available() > 8 /* Very important for performance and responsiveness */ && client.connected()) {
+        bool found = pypilot_parse(client);
+        if (found) {
+          break; /* Very important for performance and responsiveness */
+        }
+      }
+    });
+  }
+
+#ifdef __cplusplus
+} /*extern "C"*/
+#endif
+
+#endif
