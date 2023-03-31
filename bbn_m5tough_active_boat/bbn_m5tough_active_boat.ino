@@ -1,7 +1,7 @@
 #define LV_HOR_RES_MAX 320
 #define LV_VER_RES_MAX 240
 
-#include <M5Tough.h>
+#include <M5Tough.h> // https://github.com/m5stack/M5Tough
 #include <Arduino.h>
 #include <time.h>
 #include <lvgl.h>
