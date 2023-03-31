@@ -15,11 +15,11 @@ extern "C" {
     if (dataFeed.length() > 0) {
       if (dataFeed.startsWith("ap.heading=")) {
 
-      } else if (dataFeed.startsWith("ap.heading_command=") {
+      } else if (dataFeed.startsWith("ap.heading_command=")) {
 
-      } else if (dataFeed.startsWith("ap.enabled=\"") {
+      } else if (dataFeed.startsWith("ap.enabled=")) {
 
-      } else if (dataFeed.startsWith("ap.mode=\"") {
+      } else if (dataFeed.startsWith("ap.mode=\"")) {
 
       }
       return found;
