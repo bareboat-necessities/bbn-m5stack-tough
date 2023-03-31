@@ -7,6 +7,8 @@ extern "C" {
 
   lv_updatable_screen_t autopilotScreen;
 
+  static lv_obj_t *autopilot_led;
+
   static const char *btnm_map[] = {
     LV_SYMBOL_DOUBLE_LEFT, LV_SYMBOL_DOUBLE_RIGHT, "\n",
     LV_SYMBOL_LEFT, LV_SYMBOL_RIGHT, "\n",
@@ -15,10 +17,10 @@ extern "C" {
   };
 
   void lv_autopilot_buttons(lv_obj_t *parent) {
-    lv_obj_t *led = lv_led_create(parent);
-    lv_obj_align(led, LV_ALIGN_OUT_LEFT_TOP, 16, 13);
-    lv_led_set_color(led, lv_palette_main(LV_PALETTE_GREEN));
-    lv_led_on(led);
+    autopilot_led = lv_led_create(parent);
+    lv_obj_align(autopilot_led, LV_ALIGN_OUT_LEFT_TOP, 16, 13);
+    lv_led_set_color(autopilot_led, lv_palette_main(LV_PALETTE_GREY));
+    lv_led_on(autopilot_led);
 
     int width_l = 128;
     int left_l = 64;
@@ -51,7 +53,16 @@ extern "C" {
   }
 
   static void autopilot_update_cb() {
-    // TODO:
+    if (shipDataModel.steering.autopilot.ap_state.st == ap_state_e::STANDBY
+        && fresh(shipDataModel.steering.autopilot.ap_state.age)) {
+      lv_led_set_color(autopilot_led, lv_palette_main(LV_PALETTE_RED));
+    } else if (shipDataModel.steering.autopilot.ap_state.st == ap_state_e::ENGAGED
+               && fresh(shipDataModel.steering.autopilot.ap_state.age)) {
+      lv_led_set_color(autopilot_led, lv_palette_main(LV_PALETTE_GREEN));
+    }
+    if (!fresh(shipDataModel.steering.autopilot.ap_state.age)) {
+      lv_led_set_color(autopilot_led, lv_palette_main(LV_PALETTE_GREY));
+    }
   }
 
   void init_autopilotScreen() {
