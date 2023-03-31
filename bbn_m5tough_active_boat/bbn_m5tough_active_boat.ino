@@ -154,7 +154,7 @@ void loop() {
   lv_task_handler();
   app.tick();
   lv_tick_inc(1);
-  mqttClient.loop();
+  //mqttClient.loop();
 
   if (!settingMode) {
     handle_swipe();
