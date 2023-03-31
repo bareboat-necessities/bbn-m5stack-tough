@@ -5,6 +5,23 @@
 extern "C" {
 #endif
 
+  void discoverBasics() {
+    browseService("http", "tcp");
+    delay(100);
+    browseService("nmea-0183", "tcp");
+    delay(100);
+    browseService("signalk-http", "tcp");
+    delay(100);
+    browseService("signalk-tcp", "tcp");
+    delay(100);
+    browseService("signalk-ws", "tcp");
+    delay(100);
+    browseService("pypilot", "tcp");
+    delay(100);
+    browseService("mopidy-http", "tcp");
+    delay(100);
+  }
+
   void browseServiceMDS(const char* service, const char* proto) {
     M5.Lcd.printf("Scan _%s._%s.local. ... ", service, proto);
     int n = MDNS.queryService(service, proto);
