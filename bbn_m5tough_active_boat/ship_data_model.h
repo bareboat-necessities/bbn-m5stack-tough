@@ -36,7 +36,7 @@ typedef enum {
 typedef enum {
   STATE_NA = -1,
   STANDBY = 0,
-  ENGADED = 1
+  ENGAGED = 1
 } ap_state_e;
 
 typedef enum {
