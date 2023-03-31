@@ -1,7 +1,7 @@
 #define LV_HOR_RES_MAX 320
 #define LV_VER_RES_MAX 240
 
-#include <M5Tough.h> // https://github.com/m5stack/M5Tough
+#include <M5Tough.h>  // https://github.com/m5stack/M5Tough
 #include <Arduino.h>
 #include <time.h>
 #include <lvgl.h>
@@ -15,7 +15,7 @@
 #include <Preferences.h>
 #include <ArduinoJson.h>
 #undef min(a, b)
-#include <ReactESP.h> // https://github.com/mairas/ReactESP
+#include <ReactESP.h>  // https://github.com/mairas/ReactESP
 
 #include "m5_rtc.h"
 #include "m5_sound.h"
@@ -95,10 +95,10 @@ void handle_swipe() {
   }
 }
 
+WiFiClient nmea0183Client;
 WiFiClient skClient;
 WiFiClient pypClient;
 MQTTClient mqttClient;
-
 
 void setup() {
   tft_lv_initialization();
@@ -142,6 +142,20 @@ void setup() {
       M5.Lcd.print("Connected to pypilot ");
       M5.Lcd.println(pyp_host);
       pypilot_subscribe(pypClient);
+    } else {
+      M5.Lcd.println("Connection failed.");
+    }
+
+    // TODO: auto-discover and read from preferences
+    static const char* nmea0183_host = "192.168.1.34";  //"lysmarine";
+    static int nmea0183_port = 10110;                   // NMEA0183 TCP
+
+    // Connect to the NMEA 0183 TCP server
+    setup_nmea0183_reconnect(nmea0183Client, nmea0183_host, nmea0183_port);
+    if (nmea0183Client.connect(nmea0183_host, nmea0183_port)) {
+      M5.Lcd.print("Connected to nmea0183 TCP");
+      M5.Lcd.println(nmea0183_host);
+      nmea0183_subscribe(nmea0183Client);
     } else {
       M5.Lcd.println("Connection failed.");
     }
