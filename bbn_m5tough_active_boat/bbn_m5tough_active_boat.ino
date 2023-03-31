@@ -85,6 +85,7 @@ void handle_swipe() {
 }
 
 WiFiClient skClient;
+WiFiClient pypClient;
 
 void setup() {
   tft_lv_initialization();
@@ -104,7 +105,7 @@ void setup() {
     init_rudderScreen();
     lv_scr_load(screens[page]->screen);
 
-    // TODO: autodisconer and read from preferences
+    // TODO: auto-discover and read from preferences
     static const char* host = "192.168.1.34";  //"lysmarine";
     static int port = 8375;                    // SignalK TCP
 
@@ -114,6 +115,20 @@ void setup() {
       M5.Lcd.print("Connected to ");
       M5.Lcd.println(host);
       signalk_subscribe(skClient);
+    } else {
+      M5.Lcd.println("Connection failed.");
+    }
+
+    // TODO: auto-discover and read from preferences
+    static const char* pyp_host = "192.168.1.34";  //"lysmarine";
+    static int pyp_port = 23322;                   // Pypilot TCP
+
+    // Connect to the PyPilot TCP server
+    setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
+    if (pypClient.connect(pyp_host, pyp_port)) {
+      M5.Lcd.print("Connected to ");
+      M5.Lcd.println(pyp_host);
+      pypilot_subscribe(pypClient);
     } else {
       M5.Lcd.println("Connection failed.");
     }
