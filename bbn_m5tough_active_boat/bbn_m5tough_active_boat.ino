@@ -9,6 +9,8 @@
 #include <SPI.h>
 #include <driver/i2s.h>
 #include <WiFi.h>
+#include <ESPmDNS.h>
+#include <mdns.h>
 #include <Preferences.h>
 #include <ArduinoJson.h>
 #undef min(a, b)
@@ -17,6 +19,7 @@
 #include "m5_rtc.h"
 #include "m5_sound.h"
 #include "net_ntp_time.h"
+#include "net_mdns.h"
 #include "ui_init.h"
 #include "ui_gestures.h"
 #include "ui_theme.h"
