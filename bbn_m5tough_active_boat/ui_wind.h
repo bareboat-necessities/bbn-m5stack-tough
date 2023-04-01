@@ -8,6 +8,8 @@ extern "C" {
   lv_updatable_screen_t windScreen;
 
   static lv_obj_t *wind_display;
+  static lv_meter_indicator_t *indic_wind;
+  static lv_obj_t *wind_label;
 
   static void set_wind_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(wind_display, (lv_meter_indicator_t *)indic, v);
@@ -18,7 +20,7 @@ extern "C" {
  */
   void lv_wind_display(lv_obj_t *parent) {
     wind_display = lv_meter_create(parent);
-    lv_obj_center(wind_display);
+    lv_obj_align(wind_display, LV_ALIGN_CENTER, 0, 6);
     lv_obj_set_size(wind_display, 210, 210);
 
     /*Add a scale first*/
@@ -31,49 +33,45 @@ extern "C" {
     lv_meter_set_scale_major_ticks(wind_display, scale2, 1, 3, 14, lv_palette_main(LV_PALETTE_GREY), 14); /*Every tick is major*/
     lv_meter_set_scale_range(wind_display, scale2, -150, 180, 330, 120);
 
-    lv_meter_indicator_t *indic;
-
     /*Add a red arc to the start*/
-    indic = lv_meter_add_arc(wind_display, scale, 4, lv_palette_main(LV_PALETTE_RED), 2);
-    lv_meter_set_indicator_start_value(wind_display, indic, -60);
-    lv_meter_set_indicator_end_value(wind_display, indic, -20);
+    indic_wind = lv_meter_add_arc(wind_display, scale, 4, lv_palette_main(LV_PALETTE_RED), 2);
+    lv_meter_set_indicator_start_value(wind_display, indic_wind, -60);
+    lv_meter_set_indicator_end_value(wind_display, indic_wind, -20);
 
     /*Make the tick lines red at the start of the scale*/
-    indic = lv_meter_add_scale_lines(
+    indic_wind = lv_meter_add_scale_lines(
       wind_display, scale, lv_palette_main(LV_PALETTE_RED), lv_palette_main(LV_PALETTE_RED), false, 0);
-    lv_meter_set_indicator_start_value(wind_display, indic, -60);
-    lv_meter_set_indicator_end_value(wind_display, indic, -20);
+    lv_meter_set_indicator_start_value(wind_display, indic_wind, -60);
+    lv_meter_set_indicator_end_value(wind_display, indic_wind, -20);
 
     /*Add a green arc to the end*/
-    indic = lv_meter_add_arc(wind_display, scale, 4, lv_palette_main(LV_PALETTE_GREEN), 2);
-    lv_meter_set_indicator_start_value(wind_display, indic, 20);
-    lv_meter_set_indicator_end_value(wind_display, indic, 60);
+    indic_wind = lv_meter_add_arc(wind_display, scale, 4, lv_palette_main(LV_PALETTE_GREEN), 2);
+    lv_meter_set_indicator_start_value(wind_display, indic_wind, 20);
+    lv_meter_set_indicator_end_value(wind_display, indic_wind, 60);
 
     /*Make the tick lines green at the end of the scale*/
-    indic = lv_meter_add_scale_lines(
+    indic_wind = lv_meter_add_scale_lines(
       wind_display, scale, lv_palette_main(LV_PALETTE_GREEN), lv_palette_main(LV_PALETTE_GREEN), false, 0);
-    lv_meter_set_indicator_start_value(wind_display, indic, 20);
-    lv_meter_set_indicator_end_value(wind_display, indic, 60);
+    lv_meter_set_indicator_start_value(wind_display, indic_wind, 20);
+    lv_meter_set_indicator_end_value(wind_display, indic_wind, 60);
 
     /*Add a needle line indicator*/
-    indic = lv_meter_add_needle_line(wind_display, scale, 6, lv_palette_main(LV_PALETTE_GREY), -10);
+    indic_wind = lv_meter_add_needle_line(wind_display, scale, 6, lv_palette_main(LV_PALETTE_GREY), -10);
 
-    /*Create an animation to set the value*/
-    lv_anim_t a;
-    lv_anim_init(&a);
-    lv_anim_set_exec_cb(&a, set_wind_value);
-    lv_anim_set_var(&a, indic);
-    lv_anim_set_values(&a, -60, -20);
-    lv_anim_set_time(&a, 2000);
-    lv_anim_set_repeat_delay(&a, 100);
-    lv_anim_set_playback_time(&a, 500);
-    lv_anim_set_playback_delay(&a, 100);
-    lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
-    lv_anim_start(&a);
+    wind_label = lv_label_create(parent);
+    lv_obj_align(wind_label, LV_ALIGN_TOP_LEFT, 7, 5);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(wind_label, &lv_font_montserrat_20, NULL);
+#endif
   }
 
   static void wind_update_cb() {
-    // TODO:
+    lv_label_set_text(wind_label,
+                      (String("AWS:   ")
+                       + (fresh(shipDataModel.environment.wind.apparent_wind_speed_kn.age) ? String(shipDataModel.environment.wind.apparent_wind_speed_kn.kn) + "\n(kt)" : String("--\n(kt)")))
+                        .c_str());
+
+    set_wind_value(indic_wind, fresh(shipDataModel.environment.wind.apparent_wind_angle.age) ? shipDataModel.environment.wind.apparent_wind_angle.deg : 0);
   }
 
   void init_windScreen() {
