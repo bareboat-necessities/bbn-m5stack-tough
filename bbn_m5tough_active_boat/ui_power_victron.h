@@ -35,7 +35,7 @@ extern "C" {
     lv_obj_set_style_bg_color(shore, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
 
     lv_obj_t *shore_label = lv_label_create(shore);
-    lv_label_set_text(shore_label, "Shore\n1205 W");
+    lv_label_set_text(shore_label, "Shore\nn/a W");
     lv_obj_align(shore_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     lv_obj_t *inverters;
@@ -57,7 +57,7 @@ extern "C" {
     lv_obj_set_style_bg_color(ac, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
 
     lv_obj_t *ac_label = lv_label_create(ac);
-    lv_label_set_text(ac_label, "AC Load\n340W");
+    lv_label_set_text(ac_label, "AC Load\nn/a W");
     lv_obj_align(ac_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     lv_obj_t *dc;
@@ -68,7 +68,7 @@ extern "C" {
     lv_obj_set_style_bg_color(dc, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
 
     lv_obj_t *dc_label = lv_label_create(dc);
-    lv_label_set_text(dc_label, "Batteries\n87%");
+    lv_label_set_text(dc_label, "Batteries\n--%");
     lv_obj_align(dc_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     lv_obj_t *dc_ld;
@@ -79,7 +79,7 @@ extern "C" {
     lv_obj_set_style_bg_color(dc_ld, lv_palette_main(LV_PALETTE_TEAL), LV_PART_MAIN);
 
     lv_obj_t *dc_ld_label = lv_label_create(dc_ld);
-    lv_label_set_text(dc_ld_label, "DC Load\n150 W");
+    lv_label_set_text(dc_ld_label, "DC Load\nn/a W");
     lv_obj_align(dc_ld_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     lv_obj_t *pv;
@@ -90,7 +90,7 @@ extern "C" {
     lv_obj_set_style_bg_color(pv, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN);
 
     lv_obj_t *pv_label = lv_label_create(pv);
-    lv_label_set_text(pv_label, "PV\n247 W");
+    lv_label_set_text(pv_label, "PV\nn/a W");
     lv_obj_align(pv_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     static lv_style_t style_line;
