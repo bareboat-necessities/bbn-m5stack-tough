@@ -26,11 +26,11 @@ extern "C" {
 
     labelDate = lv_label_create(parent);
     lv_obj_set_pos(labelDate, 10, 10);
-    lv_obj_align(labelDate, LV_ALIGN_TOP_LEFT, 10, 10);
+    lv_obj_align(labelDate, LV_ALIGN_TOP_LEFT, 6, 6);
 
     labelTime = lv_label_create(parent);
-    lv_obj_set_pos(labelTime, 254, 10);
-    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 254, 10);
+    lv_obj_set_pos(labelTime, 250, 10);
+    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 254, 6);
 
     /*Create a scale for the minutes*/
     /*61 ticks in a 360 degrees range (the last and the first line overlaps)*/
