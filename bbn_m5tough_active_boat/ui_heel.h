@@ -38,6 +38,9 @@ extern "C" {
 
     pitch_label = lv_label_create(parent);
     lv_obj_align(pitch_label, LV_ALIGN_TOP_LEFT, 5, 5);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(pitch_label, &lv_font_montserrat_20, NULL);
+#endif
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -60);
@@ -46,7 +49,7 @@ extern "C" {
 
   static void heel_update_cb() {
     lv_label_set_text(pitch_label,
-                      (String("PITCH: ")
+                      (String("PITCH:   ")
                        + (fresh(shipDataModel.navigation.attitude.pitch.age) ? String(shipDataModel.navigation.attitude.pitch.deg) + String(LV_SYMBOL_DEGREES) : String("n/a")))
                         .c_str());
 
