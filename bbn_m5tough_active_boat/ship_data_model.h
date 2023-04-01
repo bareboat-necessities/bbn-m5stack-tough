@@ -26,7 +26,7 @@ typedef enum {
   APP_WIND = 2,
   APP_WIND_MAG = 3,
   APP_WIND_TRUE = 4,
-  TRUE_WIND = 5;
+  TRUE_WIND = 5,
   TRUE_WIND_MAG = 6,
   TRUE_WIND_TRUE = 7,
   GROUND_WIND_MAG = 8,
