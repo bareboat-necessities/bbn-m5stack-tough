@@ -14,9 +14,9 @@ extern "C" {
     // ap.mode="compass"
     if (dataFeed.length() > 0) {
       if (dataFeed.startsWith("ap.heading=")) {
-        shipDataModel.navigation.heading_mag.deg =
+        shipDataModel.steering.autopilot.heading.deg =
           strtof(dataFeed.substring(strlen("ap.heading="), dataFeed.length()).c_str(), NULL);
-        shipDataModel.navigation.heading_mag.age = millis();
+        shipDataModel.steering.autopilot.heading.age = millis();
       } else if (dataFeed.startsWith("ap.heading_command=")) {
         shipDataModel.steering.autopilot.command.deg =
           strtof(dataFeed.substring(strlen("ap.heading_command="), dataFeed.length()).c_str(), NULL);
@@ -28,7 +28,18 @@ extern "C" {
         shipDataModel.steering.autopilot.ap_state.st = ap_state_e::STANDBY;
         shipDataModel.steering.autopilot.ap_state.age = millis();
       } else if (dataFeed.startsWith("ap.mode=\"")) {
-        // TODO:
+        String mode = dataFeed.substring(strlen("ap.mode=\""), dataFeed.length() - 1);
+        shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::MODE_NA;
+        shipDataModel.steering.autopilot.ap_mode.age = millis();
+        if (mode == "gps") {
+          shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::COG_TRUE;
+        } else if (mode == "wind") {
+          shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::APP_WIND;
+        } else if (mode == "true" /*compass*/) {
+          shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::HEADING_MAG;
+        } else if (mode == "true wind") {
+          shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::TRUE_WIND;
+        }
       }
       return found;
     }
