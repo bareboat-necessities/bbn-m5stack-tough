@@ -133,6 +133,7 @@ extern "C" {
       shipDataModel.navigation.position.lon.age = millis();
     }
     if (gps.altitude.isUpdated()) {
+      // TODO:
       //M5.Lcd.print("ALT:  ");
       //M5.Lcd.println(gps.altitude.feet());
     }
@@ -155,6 +156,26 @@ extern "C" {
     if (headingMag.isUpdated()) {
       shipDataModel.navigation.heading_mag.deg = parse_float(headingMag.value());
       shipDataModel.navigation.heading_mag.age = millis();
+    }
+    if (windAngle.isUpdated() && windReference.isUpdated()) {
+      if (strcmp("R", windReference.value()) == 0) {
+        shipDataModel.environment.wind.apparent_wind_angle.deg = parse_float(windAngle.value());
+        shipDataModel.environment.wind.apparent_wind_angle.age = millis();
+      }
+      if (strcmp("T", windReference.value()) == 0) {
+        shipDataModel.environment.wind.true_wind_angle.deg = parse_float(windAngle.value());
+        shipDataModel.environment.wind.true_wind_angle.age = millis();
+      }
+    }
+    if (windAngleI.isUpdated() && windReferenceI.isUpdated()) {
+      if (strcmp("R", windReferenceI.value()) == 0) {
+        shipDataModel.environment.wind.apparent_wind_angle.deg = parse_float(windAngleI.value());
+        shipDataModel.environment.wind.apparent_wind_angle.age = millis();
+      }
+      if (strcmp("T", windReferenceI.value()) == 0) {
+        shipDataModel.environment.wind.true_wind_angle.deg = parse_float(windAngleI.value());
+        shipDataModel.environment.wind.true_wind_angle.age = millis();
+      }
     }
     return found;
   }
