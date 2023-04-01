@@ -329,6 +329,7 @@ typedef struct _electrical_t {
 
 typedef struct _autopilot_t {
   struct _ap_state_t ap_state;
+  struct _angle_deg_t heading;
   struct _angle_deg_t command;
   struct _ap_cmd_type_t command_type;
   struct _ap_mode_t ap_mode;
