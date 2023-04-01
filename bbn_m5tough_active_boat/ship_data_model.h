@@ -23,7 +23,7 @@ typedef enum {
   MODE_NA = -1,
   HEADING_MAG = 0,
   HEADING_TRUE = 1,
-  APP_WIND = 2;
+  APP_WIND = 2,
   APP_WIND_MAG = 3,
   APP_WIND_TRUE = 4,
   TRUE_WIND = 5;
@@ -32,7 +32,7 @@ typedef enum {
   GROUND_WIND_MAG = 8,
   GROUND_WIND_TRUE = 9,
   COG_MAG = 10,
-  COG_TRUE = 11
+  COG_TRUE = 11,
 } ap_mode_e;
 
 typedef enum {
