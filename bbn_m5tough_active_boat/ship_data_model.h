@@ -136,9 +136,11 @@ typedef struct _navigation_t {
 
 typedef struct _wind_t {
   struct _kn_t apparent_wind_speed_kn;
+  struct _angle_deg_t apparent_wind_angle;
   struct _angle_deg_t apparent_wind_angle_true;
   struct _angle_deg_t apparent_wind_angle_mag;
   struct _kn_t true_wind_speed_kn;
+  struct _angle_deg_t true_wind_angle;
   struct _angle_deg_t true_wind_angle_true;
   struct _angle_deg_t true_wind_angle_mag;
   struct _kn_t ground_wind_speed_kn;
