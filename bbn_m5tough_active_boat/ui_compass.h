@@ -22,7 +22,8 @@ extern "C" {
   }
 
   static void compass_update_cb() {
-    lv_img_set_angle(compass_img, 450);
+    int16_t h_deg = fresh(shipDataModel.navigation.heading_mag.age) ? shipDataModel.navigation.heading_mag.deg : 0;
+    lv_img_set_angle(compass_img, h_deg * 10);
   }
 
   void init_compassScreen() {
