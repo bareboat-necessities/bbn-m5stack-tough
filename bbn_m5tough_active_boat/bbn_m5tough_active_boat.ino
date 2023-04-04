@@ -54,6 +54,7 @@ static ship_data_t shipDataModel;
 #include "pypilot_parse.h"
 #include "net_pypilot.h"
 
+#include "ui_compass.h"
 #include "ui_wind.h"
 #include "ui_heel.h"
 #include "ui_autopilot.h"
@@ -68,6 +69,7 @@ lv_updatable_screen_t* screens[] = {
   &victronScreen,
   &autopilotScreen,
   &heelScreen,
+  &compassScreen,
   &rudderScreen,
 };
 
@@ -116,6 +118,7 @@ void setup() {
     init_victronScreen();
     init_autopilotScreen();
     init_heelScreen();
+    init_compassScreen();
     init_rudderScreen();
     lv_scr_load(screens[page]->screen);
 
