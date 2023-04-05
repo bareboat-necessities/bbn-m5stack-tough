@@ -95,11 +95,11 @@ extern "C" {
     lv_obj_set_style_text_font(compass_l, &lv_font_montserrat_20, NULL);
 #endif
 
-      lv_meter_set_scale_range(compass_display, scale_compass, 0, 72, 360, 270);
-      lv_meter_set_scale_range(compass_display, scale_compass_maj, 1, 12, 330, 300);
-      lv_obj_set_style_transform_angle(labelScont, 180 * 10, 0);
-      lv_obj_set_style_transform_angle(labelEcont, 90 * 10, 0);
-      lv_obj_set_style_transform_angle(labelWcont, 270 * 10, 0);
+    lv_meter_set_scale_range(compass_display, scale_compass, 0, 72, 360, 270);
+    lv_meter_set_scale_range(compass_display, scale_compass_maj, 1, 12, 330, 300);
+    lv_obj_set_style_transform_angle(labelScont, 180 * 10, 0);
+    lv_obj_set_style_transform_angle(labelEcont, 90 * 10, 0);
+    lv_obj_set_style_transform_angle(labelWcont, 270 * 10, 0);
   }
 
   static int16_t last_heading = 0;
