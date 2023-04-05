@@ -7,19 +7,82 @@ extern "C" {
 
   lv_updatable_screen_t compassScreen;
 
-  static lv_obj_t *compass_img;
+  static lv_obj_t *compass_display;
   static lv_obj_t *compass_l;
 
-  LV_IMG_DECLARE(ui_img_compass_png);
+  static lv_obj_t *labelScont;
+  static lv_obj_t *labelNcont;
+  static lv_obj_t *labelEcont;
+  static lv_obj_t *labelWcont;
+
+  static lv_meter_scale_t *scale_compass;
+  static lv_meter_scale_t *scale_compass_maj;
 
   /**
-   * A compass display (clinometer)
+   * A compass display
    */
   void lv_compass_display(lv_obj_t *parent) {
-    lv_obj_set_style_bg_color(parent, lv_color_black(), LV_PART_MAIN);
-    compass_img = lv_img_create(parent);
-    lv_img_set_src(compass_img, &ui_img_compass_png);
-    lv_obj_align(compass_img, LV_ALIGN_CENTER, 0, 0);
+    compass_display = lv_meter_create(parent);
+
+    lv_obj_remove_style(compass_display, NULL, LV_PART_MAIN);
+    lv_obj_remove_style(compass_display, NULL, LV_PART_INDICATOR);
+
+    lv_obj_set_size(compass_display, 190, 190);
+    lv_obj_center(compass_display);
+
+    scale_compass = lv_meter_add_scale(compass_display);
+    lv_meter_set_scale_ticks(compass_display, scale_compass, 181, 1, 12, lv_palette_main(LV_PALETTE_GREY));
+
+    scale_compass_maj = lv_meter_add_scale(compass_display);
+    lv_meter_set_scale_ticks(compass_display, scale_compass_maj, 12, 2, 15, lv_palette_main(LV_PALETTE_GREY)); /*12 ticks*/
+
+    labelNcont = lv_obj_create(parent);
+    lv_obj_set_size(labelNcont, 50, 50);
+    lv_obj_set_style_pad_all(labelNcont, 2, LV_PART_MAIN);
+    lv_obj_align(labelNcont, LV_ALIGN_CENTER, 0, -48);
+
+    lv_obj_t *labelN = lv_label_create(labelNcont);
+    lv_label_set_text(labelN, "N");
+    lv_obj_align(labelN, LV_ALIGN_CENTER, 0, 0);
+
+    lv_obj_set_style_transform_pivot_x(labelNcont, 50 / 2, 0);
+    lv_obj_set_style_transform_pivot_y(labelNcont, 50 / 2 + 48, 0);
+
+    labelScont = lv_obj_create(parent);
+    lv_obj_set_size(labelScont, 50, 50);
+    lv_obj_set_style_pad_all(labelScont, 2, LV_PART_MAIN);
+    lv_obj_align(labelScont, LV_ALIGN_CENTER, 0, -48);
+
+    lv_obj_t *labelS = lv_label_create(labelScont);
+    lv_label_set_text(labelS, "S");
+    lv_obj_align(labelS, LV_ALIGN_CENTER, 0, 0);
+
+    lv_obj_set_style_transform_pivot_x(labelScont, 50 / 2, 0);
+    lv_obj_set_style_transform_pivot_y(labelScont, 50 / 2 + 48, 0);
+
+    labelEcont = lv_obj_create(parent);
+    lv_obj_set_size(labelEcont, 50, 50);
+    lv_obj_set_style_pad_all(labelEcont, 2, LV_PART_MAIN);
+    lv_obj_align(labelEcont, LV_ALIGN_CENTER, 0, -48);
+
+    lv_obj_t *labelE = lv_label_create(labelEcont);
+    lv_label_set_text(labelE, "E");
+    lv_obj_align(labelE, LV_ALIGN_CENTER, 0, 0);
+
+    lv_obj_set_style_transform_pivot_x(labelEcont, 50 / 2, 0);
+    lv_obj_set_style_transform_pivot_y(labelEcont, 50 / 2 + 48, 0);
+
+    labelWcont = lv_obj_create(parent);
+    lv_obj_set_size(labelWcont, 50, 50);
+    lv_obj_set_style_pad_all(labelWcont, 2, LV_PART_MAIN);
+    lv_obj_align(labelWcont, LV_ALIGN_CENTER, 0, -48);
+
+    lv_obj_t *labelW = lv_label_create(labelWcont);
+    lv_label_set_text(labelW, "W");
+    lv_obj_align(labelW, LV_ALIGN_CENTER, 0, 0);
+
+    lv_obj_set_style_transform_pivot_x(labelWcont, 50 / 2, 0);
+    lv_obj_set_style_transform_pivot_y(labelWcont, 50 / 2 + 48, 0);
 
     lv_obj_t *compass_mark_l = lv_label_create(parent);
     lv_label_set_text(compass_mark_l, LV_SYMBOL_DOWN);
@@ -37,8 +100,15 @@ extern "C" {
 
   static void compass_update_cb() {
     int16_t h_deg = fresh(shipDataModel.navigation.heading_mag.age) ? shipDataModel.navigation.heading_mag.deg : 0;
-    lv_img_set_angle(compass_img, h_deg * 10);
-    lv_label_set_text(compass_l, 
+    int rot = h_deg;
+    lv_meter_set_scale_range(compass_display, scale_compass, 0, 180, 360, 270 + rot);
+    lv_meter_set_scale_range(compass_display, scale_compass_maj, 1, 12, 330, 300 + rot);
+    lv_obj_set_style_transform_angle(labelNcont, rot * 10, 0);
+    lv_obj_set_style_transform_angle(labelScont, (180 + rot) * 10, 0);
+    lv_obj_set_style_transform_angle(labelEcont, (90 + rot) * 10, 0);
+    lv_obj_set_style_transform_angle(labelWcont, (270 + rot) * 10, 0);
+
+    lv_label_set_text(compass_l,
                       (fresh(shipDataModel.navigation.heading_mag.age) ? String(shipDataModel.navigation.heading_mag.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
   }
 
