@@ -1,3 +1,4 @@
+#include "misc/lv_color.h"
 #ifndef UI_COMPASS_H
 #define UI_COMPASS_H
 
@@ -38,7 +39,7 @@ extern "C" {
 
     labelNcont = lv_obj_create(parent);
     lv_obj_set_size(labelNcont, 50, 50);
-    lv_obj_set_style_pad_all(labelNcont, 2, LV_PART_MAIN);
+    lv_obj_set_style_bg_color(labelNcont, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
     lv_obj_align(labelNcont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelN = lv_label_create(labelNcont);
@@ -50,7 +51,7 @@ extern "C" {
 
     labelScont = lv_obj_create(parent);
     lv_obj_set_size(labelScont, 50, 50);
-    lv_obj_set_style_pad_all(labelScont, 2, LV_PART_MAIN);
+    lv_obj_set_style_bg_color(labelScont, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
     lv_obj_align(labelScont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelS = lv_label_create(labelScont);
@@ -62,7 +63,6 @@ extern "C" {
 
     labelEcont = lv_obj_create(parent);
     lv_obj_set_size(labelEcont, 50, 50);
-    lv_obj_set_style_pad_all(labelEcont, 2, LV_PART_MAIN);
     lv_obj_align(labelEcont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelE = lv_label_create(labelEcont);
@@ -74,7 +74,6 @@ extern "C" {
 
     labelWcont = lv_obj_create(parent);
     lv_obj_set_size(labelWcont, 50, 50);
-    lv_obj_set_style_pad_all(labelWcont, 2, LV_PART_MAIN);
     lv_obj_align(labelWcont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelW = lv_label_create(labelWcont);
