@@ -1,4 +1,3 @@
-#include "misc/lv_color.h"
 #ifndef UI_COMPASS_H
 #define UI_COMPASS_H
 
@@ -32,7 +31,7 @@ extern "C" {
     lv_obj_center(compass_display);
 
     scale_compass = lv_meter_add_scale(compass_display);
-    lv_meter_set_scale_ticks(compass_display, scale_compass, 181, 1, 12, lv_palette_main(LV_PALETTE_GREY));
+    lv_meter_set_scale_ticks(compass_display, scale_compass, 73, 1, 12, lv_palette_main(LV_PALETTE_GREY));
 
     scale_compass_maj = lv_meter_add_scale(compass_display);
     lv_meter_set_scale_ticks(compass_display, scale_compass_maj, 12, 2, 15, lv_palette_main(LV_PALETTE_GREY)); /*12 ticks*/
@@ -97,18 +96,22 @@ extern "C" {
 #endif
   }
 
+  static int16_t last_heading = 0;
+
   static void compass_update_cb() {
     int16_t h_deg = fresh(shipDataModel.navigation.heading_mag.age) ? shipDataModel.navigation.heading_mag.deg : 0;
-    int rot = h_deg;
-    lv_meter_set_scale_range(compass_display, scale_compass, 0, 180, 360, 270 + rot);
-    lv_meter_set_scale_range(compass_display, scale_compass_maj, 1, 12, 330, 300 + rot);
-    lv_obj_set_style_transform_angle(labelNcont, rot * 10, 0);
-    lv_obj_set_style_transform_angle(labelScont, (180 + rot) * 10, 0);
-    lv_obj_set_style_transform_angle(labelEcont, (90 + rot) * 10, 0);
-    lv_obj_set_style_transform_angle(labelWcont, (270 + rot) * 10, 0);
+    if (last_heading != h_deg) {
+      int rot = h_deg;
+      lv_meter_set_scale_range(compass_display, scale_compass, 0, 72, 360, 270 + rot);
+      lv_meter_set_scale_range(compass_display, scale_compass_maj, 1, 12, 330, 300 + rot);
+      lv_obj_set_style_transform_angle(labelNcont, rot * 10, 0);
+      lv_obj_set_style_transform_angle(labelScont, (180 + rot) * 10, 0);
+      lv_obj_set_style_transform_angle(labelEcont, (90 + rot) * 10, 0);
+      lv_obj_set_style_transform_angle(labelWcont, (270 + rot) * 10, 0);
 
-    lv_label_set_text(compass_l,
-                      (fresh(shipDataModel.navigation.heading_mag.age) ? String(shipDataModel.navigation.heading_mag.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
+      lv_label_set_text(compass_l,
+                        (fresh(shipDataModel.navigation.heading_mag.age) ? String(shipDataModel.navigation.heading_mag.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
+    }
   }
 
   void init_compassScreen() {
