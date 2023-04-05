@@ -69,6 +69,12 @@ https://github.com/arduino-libraries
 
 https://github.com/mhaberler/SensESP-M5Stack
 
+https://github.com/wellenvogel/esp32-nmea2000
+
+https://github.com/AK-Homberger/NMEA2000WifiGateway-with-ESP32
+
+
+
 
 
 
