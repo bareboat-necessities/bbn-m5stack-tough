@@ -73,6 +73,14 @@ https://github.com/wellenvogel/esp32-nmea2000
 
 https://github.com/AK-Homberger/NMEA2000WifiGateway-with-ESP32
 
+https://github.com/AK-Homberger/NMEA2000-SignalK-Gateway
+
+https://github.com/AK-Homberger/NMEA2000-AIS-Gateway
+
+https://github.com/AK-Homberger/ESP32-Evo-Remote-Pilot-NMEA2000
+
+https://github.com/AK-Homberger/NMEA2000-TempPressure
+
 
 
 
