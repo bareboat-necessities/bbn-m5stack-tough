@@ -181,6 +181,8 @@ void setup() {
   DingDong();
 }
 
+unsigned long last_ui_upd = 0;
+
 void loop() {
   M5.update();
   lv_task_handler();
@@ -190,6 +192,9 @@ void loop() {
 
   if (!settingMode) {
     handle_swipe();
-    update_screen(*screens[page]);
+    if (millis() - last_ui_upd > 200) { // throttle expensive UI updates
+      update_screen(*screens[page]);
+      last_ui_upd = millis();
+    }
   }
 }
