@@ -15,12 +15,16 @@ extern "C" {
   }
 
   /**
- * A simple meter
- */
+   * A engine display
+   */
   void lv_engine_display(lv_obj_t *parent) {
     engine_rpm_meter = lv_meter_create(parent);
     lv_obj_center(engine_rpm_meter);
     lv_obj_set_size(engine_rpm_meter, 200, 200);
+
+    lv_obj_t *main_label = lv_label_create(parent);
+    lv_obj_align(main_label, LV_ALIGN_CENTER, 0, 50);
+    lv_label_set_text(main_label, "RPM\nx100");
 
     /*Add a scale first*/
     lv_meter_scale_t *scale = lv_meter_add_scale(engine_rpm_meter);
@@ -55,7 +59,7 @@ extern "C" {
   }
 
   static void engine_update_cb() {
-    set_engine_rpm_value(engine_rpm_indic, 20); // TODO:
+    set_engine_rpm_value(engine_rpm_indic, 20);  // TODO:
   }
 
   void init_engineScreen() {
