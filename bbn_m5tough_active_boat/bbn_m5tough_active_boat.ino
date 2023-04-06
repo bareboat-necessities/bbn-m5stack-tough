@@ -57,6 +57,9 @@ static ship_data_t shipDataModel;
 #include "ui_compass.h"
 #include "ui_wind.h"
 #include "ui_engine.h"
+#include "ui_gps.h"
+#include "ui_speed.h"
+#include "ui_depth.h"
 #include "ui_heel.h"
 #include "ui_autopilot.h"
 #include "ui_rudder.h"
@@ -73,6 +76,9 @@ lv_updatable_screen_t* screens[] = {
   &compassScreen,
   &rudderScreen,
   &engineScreen,
+  &gpsScreen,
+  &speedScreen,
+  &depthScreen,
 };
 
 int page = 0;
@@ -115,6 +121,9 @@ void setup() {
     init_dateTime();
     init_windScreen();
     init_engineScreen();
+    init_gpsScreen();
+    init_speedScreen();
+    init_depthScreen();
     init_aboutScreen();
     init_rebootScreen();
     init_clockScreen();
