@@ -10,6 +10,7 @@ extern "C" {
   static lv_obj_t *dbt_label;
   static lv_obj_t *dbk_label;
   static lv_obj_t *dbs_label;
+  static lv_obj_t *depth_gradient_label;
 
   /**
    * A depth display 
@@ -40,6 +41,13 @@ extern "C" {
     lv_obj_set_style_text_font(dbs_label, &lv_font_montserrat_20, NULL);
 #endif
     lv_label_set_text(dbs_label, "DBS (ft):     --");
+
+    depth_gradient_label = lv_label_create(parent);
+    lv_obj_align(depth_gradient_label, LV_ALIGN_TOP_LEFT, 10, 160);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(depth_gradient_label, &lv_font_montserrat_20, NULL);
+#endif
+    lv_label_set_text(depth_gradient_label, "GRADIENT:     --");
   }
 
   static void depth_update_cb() {
