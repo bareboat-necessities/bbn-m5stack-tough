@@ -18,8 +18,8 @@ extern "C" {
   void lv_depth_display(lv_obj_t *parent) {
 
     lv_obj_t *main_label = lv_label_create(parent);
-    lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -110);
-    lv_label_set_text(main_label, "DEPTH");
+    lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
+    lv_label_set_text(main_label, "DEPTH  " LV_SYMBOL_DOWNLOAD);
 
     dbt_label = lv_label_create(parent);
     lv_obj_align(dbt_label, LV_ALIGN_TOP_LEFT, 10, 40);
