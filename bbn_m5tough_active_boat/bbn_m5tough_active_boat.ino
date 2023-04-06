@@ -56,6 +56,7 @@ static ship_data_t shipDataModel;
 
 #include "ui_compass.h"
 #include "ui_wind.h"
+#include "ui_engine.h"
 #include "ui_heel.h"
 #include "ui_autopilot.h"
 #include "ui_rudder.h"
@@ -71,6 +72,7 @@ lv_updatable_screen_t* screens[] = {
   &heelScreen,
   &compassScreen,
   &rudderScreen,
+  &engineScreen,
 };
 
 int page = 0;
@@ -112,6 +114,7 @@ void setup() {
   settingUpWiFi([&page, &screens]() {
     init_dateTime();
     init_windScreen();
+    init_engineScreen();
     init_aboutScreen();
     init_rebootScreen();
     init_clockScreen();
