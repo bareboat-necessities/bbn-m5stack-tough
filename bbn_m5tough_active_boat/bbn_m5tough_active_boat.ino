@@ -192,7 +192,7 @@ void loop() {
 
   if (!settingMode) {
     handle_swipe();
-    if (millis() - last_ui_upd > 200) { // throttle expensive UI updates
+    if (millis() - last_ui_upd > 250) { // throttle expensive UI updates
       update_screen(*screens[page]);
       last_ui_upd = millis();
     }
