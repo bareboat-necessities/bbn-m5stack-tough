@@ -26,21 +26,21 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(sog_label, &lv_font_montserrat_20, NULL);
 #endif
-    lv_label_set_text(sog_label, "SOG (kn):                       --");
+    lv_label_set_text(sog_label, "SOG (kt):                       --");
 
     sog_avg_label = lv_label_create(parent);
     lv_obj_align(sog_avg_label, LV_ALIGN_TOP_LEFT, 10, 80);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(sog_avg_label, &lv_font_montserrat_20, NULL);
 #endif
-    lv_label_set_text(sog_avg_label, "SOG AVG (kn):             --");
+    lv_label_set_text(sog_avg_label, "SOG AVG (kt):             --");
 
     spd_label = lv_label_create(parent);
     lv_obj_align(spd_label, LV_ALIGN_TOP_LEFT, 10, 120);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(spd_label, &lv_font_montserrat_20, NULL);
 #endif
-    lv_label_set_text(spd_label, "SPD (kn):                       --");
+    lv_label_set_text(spd_label, "SPD (kt):                       --");
 
     g_force_label = lv_label_create(parent);
     lv_obj_align(g_force_label, LV_ALIGN_TOP_LEFT, 10, 160);
