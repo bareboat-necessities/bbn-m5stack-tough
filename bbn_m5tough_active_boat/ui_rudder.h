@@ -46,12 +46,13 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(rate_of_turn_label, &lv_font_montserrat_20, NULL);
 #endif
+    lv_label_set_text(rate_of_turn_label, "ROT (" LV_SYMBOL_DEGREES "/min):   --");
   }
 
   static void rudder_update_cb() {
     lv_label_set_text(rate_of_turn_label,
                       (String("ROT (" LV_SYMBOL_DEGREES "/min):   ")
-                       + (fresh(shipDataModel.navigation.rate_of_turn.age) ? String(shipDataModel.navigation.rate_of_turn.deg_min) : String("n/a")))
+                       + (fresh(shipDataModel.navigation.rate_of_turn.age) ? String(shipDataModel.navigation.rate_of_turn.deg_min) : String("--")))
                         .c_str());
 
     set_rudder_value(indic_rudder, fresh(shipDataModel.steering.rudder_angle.age) ? shipDataModel.steering.rudder_angle.deg : 0);
