@@ -9,6 +9,7 @@ extern "C" {
 
   static lv_obj_t *compass_display;
   static lv_obj_t *compass_l;
+  static lv_obj_t *compass_mag_var_l;
 
   static lv_obj_t *labelScont;
   static lv_obj_t *labelNcont;
@@ -88,8 +89,6 @@ extern "C" {
 
     compass_l = lv_label_create(parent);
     lv_label_set_text(compass_l, "--" LV_SYMBOL_DEGREES);
-    //lv_obj_set_width(compass_l, width_l);
-    //lv_obj_set_style_text_align(compass_l, LV_TEXT_ALIGN_LEFT, 0);
     lv_obj_align(compass_l, LV_ALIGN_CENTER, 0, 0);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(compass_l, &lv_font_montserrat_20, NULL);
@@ -100,6 +99,13 @@ extern "C" {
     lv_obj_set_style_transform_angle(labelScont, 180 * 10, 0);
     lv_obj_set_style_transform_angle(labelEcont, 90 * 10, 0);
     lv_obj_set_style_transform_angle(labelWcont, 270 * 10, 0);
+
+    compass_mag_var_l = lv_label_create(parent);
+    lv_label_set_text(compass_mag_var_l, "Mag Var:\n--" LV_SYMBOL_DEGREES);
+    lv_obj_align(compass_mag_var_l, LV_ALIGN_TOP_LEFT, 0, 194);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(compass_mag_var_l, &lv_font_montserrat_20, NULL);
+#endif
   }
 
   static int16_t last_heading = 0;
@@ -119,6 +125,8 @@ extern "C" {
 
         lv_label_set_text(compass_l,
                           (fresh(shipDataModel.navigation.heading_mag.age) ? String(shipDataModel.navigation.heading_mag.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
+        lv_label_set_text(compass_mag_var_l, 
+                          (fresh(shipDataModel.navigation.mag_var.age) ? String("Mag Var:\n") + String(shipDataModel.navigation.mag_var.deg, 1) + LV_SYMBOL_DEGREES : "--").c_str());
       }
       last_compass_upd = millis();
     }
