@@ -17,6 +17,7 @@
 #undef min(a, b)
 #include <ReactESP.h>  // https://github.com/mairas/ReactESP
 
+#include "keepalive.h"
 #include "m5_rtc.h"
 #include "m5_sound.h"
 #include "net_ntp_time.h"
@@ -148,6 +149,7 @@ void setup() {
     static int port = 8375;                    // SignalK TCP
 
     // Connect to the SignalK TCP server
+    setKeepAlive(skClient);
     setup_reconnect(skClient, host, port);
     if (skClient.connect(host, port)) {
       M5.Lcd.print("Connected to signalK ");
@@ -162,6 +164,7 @@ void setup() {
     static int pyp_port = 23322;                   // Pypilot TCP
 
     // Connect to the PyPilot TCP server
+    setKeepAlive(pypClient);
     setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
     if (pypClient.connect(pyp_host, pyp_port)) {
       M5.Lcd.print("Connected to pypilot ");
@@ -176,6 +179,7 @@ void setup() {
     static int nmea0183_port = 10110;                   // NMEA0183 TCP
 
     // Connect to the NMEA 0183 TCP server
+    setKeepAlive(nmea0183Client);
     setup_nmea0183_reconnect(nmea0183Client, nmea0183_host, nmea0183_port);
     if (nmea0183Client.connect(nmea0183_host, nmea0183_port)) {
       M5.Lcd.print("Connected to nmea0183 TCP");
