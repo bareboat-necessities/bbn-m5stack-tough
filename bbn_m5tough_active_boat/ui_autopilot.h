@@ -18,6 +18,19 @@ extern "C" {
     "MODE", LV_SYMBOL_EYE_OPEN, ""
   };
 
+  static void autopilot_event_cb(lv_obj_t *obj, lv_event_t event) {
+    if (event == LV_EVENT_VALUE_CHANGED) {
+      const char *txt = lv_btnmatrix_get_active_btn_text(obj);
+      if (txt != null) {
+        if (strcmp("AUTO", txt) == 0) {
+
+        } else if (strcmp("STANDBY", txt) == 0) {
+
+        }
+      }
+    }
+  }
+
   void lv_autopilot_buttons(lv_obj_t *parent) {
     autopilot_led = lv_led_create(parent);
     lv_obj_align(autopilot_led, LV_ALIGN_OUT_LEFT_TOP, 8, 13);
@@ -50,7 +63,7 @@ extern "C" {
     lv_btnmatrix_set_map(btnm, autopilot_btnm_map);
     lv_btnmatrix_set_btn_width(btnm, 6, 3);
     lv_obj_set_size(btnm, 320, 190);
-    //lv_obj_add_event_cb(btnm, event_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(btnm, autopilot_event_cb, LV_EVENT_ALL, NULL);
     lv_obj_align(btnm, LV_ALIGN_CENTER, 0, 25);
   }
 
