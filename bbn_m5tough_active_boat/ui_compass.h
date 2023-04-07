@@ -110,7 +110,7 @@ extern "C" {
 
     compass_mag_var_l = lv_label_create(parent);
     lv_label_set_text(compass_mag_var_l, "Var:\n--" LV_SYMBOL_DEGREES);
-    lv_obj_align(compass_mag_var_l, LV_ALIGN_BOTTOM_LEFT, 2, 2);
+    lv_obj_align(compass_mag_var_l, LV_ALIGN_BOTTOM_LEFT, 2, -2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(compass_mag_var_l, &lv_font_montserrat_20, NULL);
 #endif
