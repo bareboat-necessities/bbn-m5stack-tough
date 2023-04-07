@@ -123,7 +123,7 @@ extern "C" {
     if (millis() - last_compass_upd > 500) { // reduce expensive rotations
       int16_t h_deg = fresh(shipDataModel.navigation.heading_mag.age) ? shipDataModel.navigation.heading_mag.deg : 0;
       if (last_heading != h_deg) {
-        int rot = h_deg;
+        int rot = 360 - h_deg;
         lv_meter_set_scale_range(compass_display, scale_compass, 0, 72, 360, 270 + rot);
         lv_meter_set_scale_range(compass_display, scale_compass_maj, 1, 12, 330, 300 + rot);
         lv_obj_set_style_transform_angle(labelNcont, rot * 10, 0);
