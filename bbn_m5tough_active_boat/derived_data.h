@@ -22,6 +22,15 @@ extern "C" {
       shipDataModel.navigation.mag_var.deg = mag_var_deg;
       shipDataModel.navigation.mag_var.age = millis();
     }
+
+    // derive leeway
+    if (fresh(shipDataModel.navigation.speed_through_water.age)
+        && fresh(shipDataModel.navigation.attitude.heel.age)) {
+      int k_factor = 12;  // TODO:
+      shipDataModel.navigation.leeway.deg = leeway_deg(shipDataModel.navigation.attitude.heel.deg,
+                                                       shipDataModel.navigation.speed_through_water.kn, k_factor);
+      shipDataModel.navigation.leeway.age = millis();
+    }
   }
 
 #ifdef __cplusplus
