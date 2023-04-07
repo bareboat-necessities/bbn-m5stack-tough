@@ -81,6 +81,13 @@ extern "C" {
     }
   }
 
+  void pypilot_send_command(WiFiClient& client, float heading) {
+    if (client.connected()) {
+      client.println(String("ap.heading_command=") + String(heading, 1));
+      client.flush();
+    }
+  }
+
   void setup_pypilot_reconnect(WiFiClient& client, const char* host, int port) {
     app.onRepeat(5000, [&client, host, port]() {
       if (!client.connected()) {
