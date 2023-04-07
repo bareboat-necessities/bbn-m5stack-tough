@@ -10,6 +10,8 @@ extern "C" {
   static lv_obj_t *wind_display;
   static lv_meter_indicator_t *indic_wind;
   static lv_obj_t *wind_label;
+  static lv_obj_t *gws_label;
+  static lv_obj_t *gwat_label;
 
   static void set_wind_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(wind_display, (lv_meter_indicator_t *)indic, v);
@@ -59,16 +61,41 @@ extern "C" {
     indic_wind = lv_meter_add_needle_line(wind_display, scale, 6, lv_palette_main(LV_PALETTE_GREY), -10);
 
     wind_label = lv_label_create(parent);
-    lv_obj_align(wind_label, LV_ALIGN_TOP_LEFT, 7, 5);
+    lv_obj_align(wind_label, LV_ALIGN_TOP_LEFT, 5, 3);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(wind_label, &lv_font_montserrat_20, NULL);
 #endif
+    lv_label_set_text(wind_label, "AWS:\n--");
+
+    gws_label = lv_label_create(parent);
+    lv_obj_align(gws_label, LV_ALIGN_BOTTOM_LEFT, 5, -3);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(gws_label, &lv_font_montserrat_20, NULL);
+#endif
+    lv_label_set_text(gws_label, "GWS:\n-- kt");
+
+    gwat_label = lv_label_create(parent);
+    lv_obj_align(gwat_label, LV_ALIGN_BOTTOM_RIGHT, -5, -3);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(gwat_label, &lv_font_montserrat_20, NULL);
+#endif
+    lv_label_set_text(gwat_label, "GWAT:\n--" LV_SYMBOL_DEGREES);
   }
 
   static void wind_update_cb() {
     lv_label_set_text(wind_label,
                       (String("AWS:   ")
-                       + (fresh(shipDataModel.environment.wind.apparent_wind_speed.age) ? String(shipDataModel.environment.wind.apparent_wind_speed.kn) + "\n(kt)" : String("--\n(kt)")))
+                       + (fresh(shipDataModel.environment.wind.apparent_wind_speed.age) ? String(shipDataModel.environment.wind.apparent_wind_speed.kn, 1) + "\n(kt)" : String("--\n(kt)")))
+                        .c_str());
+
+    lv_label_set_text(gws_label,
+                      (String("GWS:\n")
+                       + (fresh(shipDataModel.environment.wind.ground_wind_speed.age) ? String(shipDataModel.environment.wind.ground_wind_speed.kn, 1) + " kt" : String("-- kt")))
+                        .c_str());
+
+    lv_label_set_text(gwat_label,
+                      (String("GWAT:\n")
+                       + (fresh(shipDataModel.environment.wind.ground_wind_angle_true.age) ? String(shipDataModel.environment.wind.ground_wind_angle_true.deg, 0) + LV_SYMBOL_DEGREES : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
 
     set_wind_value(indic_wind, fresh(shipDataModel.environment.wind.apparent_wind_angle.age) ? shipDataModel.environment.wind.apparent_wind_angle.deg : 0);
