@@ -20,7 +20,7 @@ extern "C" {
   // stw_kn - speed through water (aka LOG or SPD) in knots
   static float leeway_deg(float heel_deg, float stw_kn, int k_factor = 12) {
     float leeway_deg = k_factor * heel_deg / (stw_kn * stw_kn);
-    retun leeway_deg;
+    return leeway_deg;
   }
 
 #ifdef __cplusplus
