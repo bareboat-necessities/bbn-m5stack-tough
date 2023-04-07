@@ -29,6 +29,14 @@ extern "C" {
           pypilot_send_engage(pypClient);
         } else if (strcmp("STANDBY", txt) == 0) {
           pypilot_send_disengage(pypClient);
+        } else if (strcmp(LV_SYMBOL_DOUBLE_LEFT, txt) == 0) {
+          pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg - 10.0);
+        } else if (strcmp(LV_SYMBOL_LEFT, txt) == 0) {
+          pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg - 2.0);
+        } else if (strcmp(LV_SYMBOL_DOUBLE_RIGHT, txt) == 0) {
+          pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg + 10.0);
+        } else if (strcmp(LV_SYMBOL_RIGHT, txt) == 0) {
+          pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg + 2.0);
         }
       }
     }
