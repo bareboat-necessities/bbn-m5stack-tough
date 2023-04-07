@@ -119,7 +119,7 @@ extern "C" {
 
     result.tm_mday = d.day();
     result.tm_mon = d.month() - 1;
-    result.tm_year = 100 + (d.year() % 100);
+    result.tm_year = d.year() - 1900;
     return result;
   }
 
@@ -158,8 +158,11 @@ extern "C" {
       shipDataModel.navigation.course_over_ground_true.age = millis();
     }
     if (gps.time.isUpdated()) {
-      shipDataModel.environment.time_gps.t = gps_time_to_tm(gps.date, gps.time);
+      tm new_time = gps_time_to_tm(gps.date, gps.time);
+      //if (difftime(mktime(&new_time), mktime(&(shipDataModel.environment.time_gps.t))) > 0) {
+      shipDataModel.environment.time_gps.t = new_time;
       shipDataModel.environment.time_gps.age = millis();
+      //}
     }
     if (headingTrue.isUpdated() && headingTrue.isValid()) {
       shipDataModel.navigation.heading_true.deg = parse_float(headingTrue.value());
