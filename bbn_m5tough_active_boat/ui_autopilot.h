@@ -11,7 +11,7 @@ extern "C" {
   static lv_obj_t *heading_l;
   static lv_obj_t *command_l;
 
-  static const char *btnm_map[] = {
+  static const char *autopilot_btnm_map[] = {
     LV_SYMBOL_DOUBLE_LEFT, LV_SYMBOL_DOUBLE_RIGHT, "\n",
     LV_SYMBOL_LEFT, LV_SYMBOL_RIGHT, "\n",
     "STANDBY", "AUTO", "\n",
@@ -47,7 +47,7 @@ extern "C" {
 #endif
 
     lv_obj_t *btnm = lv_btnmatrix_create(parent);
-    lv_btnmatrix_set_map(btnm, btnm_map);
+    lv_btnmatrix_set_map(btnm, autopilot_btnm_map);
     lv_btnmatrix_set_btn_width(btnm, 6, 3);
     lv_obj_set_size(btnm, 320, 190);
     //lv_obj_add_event_cb(btnm, event_cb, LV_EVENT_ALL, NULL);
