@@ -27,6 +27,7 @@
 #include "ui_theme.h"
 #include "ui_screens.h"
 #include "ui_clock.h"
+#include "ui_player_control.h"
 #include "ui_about.h"
 #include "ui_brightness.h"
 #include "ui_mem_cpu_net_stat.h"
@@ -75,6 +76,7 @@ lv_updatable_screen_t* screens[] = {
   &aboutScreen,
   &rebootScreen,
   &clockScreen,
+  &playerScreen,
   &victronScreen,
   &autopilotScreen,
   &heelScreen,
@@ -133,6 +135,7 @@ void setup() {
     init_aboutScreen();
     init_rebootScreen();
     init_clockScreen();
+    init_playerScreen();
     init_victronScreen();
     init_autopilotScreen();
     init_heelScreen();
