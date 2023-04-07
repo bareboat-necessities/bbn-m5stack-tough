@@ -18,7 +18,7 @@ extern "C" {
   // k_factor - leeway correlation constant (is boat and boat load specific constant), typically from 9 to 16 (9 for super racer)
   // heel_deg - heel angle in degrees
   // stw_kn - speed through water (aka LOG or SPD) in knots
-  static float leeway(float heel_deg, float stw_kn, int k_factor = 12) {
+  static float leeway_deg(float heel_deg, float stw_kn, int k_factor = 12) {
     float leeway_deg = k_factor * heel_deg / (stw_kn * stw_kn);
     retun leeway_deg;
   }
