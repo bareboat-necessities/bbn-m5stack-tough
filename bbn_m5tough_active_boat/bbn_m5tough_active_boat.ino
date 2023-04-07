@@ -46,6 +46,7 @@ ReactESP app;
 
 static ship_data_t shipDataModel;
 
+#include "WMM_Tinier.h"
 #include "TinyGPSPlus.h"
 #include "nmea0183_parse.h"
 #include "net_nmea0183_tcp.h"
@@ -53,6 +54,8 @@ static ship_data_t shipDataModel;
 #include "net_signalk_tcp.h"
 #include "pypilot_parse.h"
 #include "net_pypilot.h"
+
+WMM_Tinier myDeclination;
 
 #include "ui_compass.h"
 #include "ui_wind.h"
@@ -112,6 +115,7 @@ WiFiClient pypClient;
 MQTTClient mqttClient;
 
 void setup() {
+  myDeclination.begin();
   tft_lv_initialization();
   init_disp_driver();
   init_touch_driver();
