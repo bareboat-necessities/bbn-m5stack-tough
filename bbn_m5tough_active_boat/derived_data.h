@@ -50,8 +50,8 @@ extern "C" {
       }
       float ground_wind_angle_deg = ground_wind_angle_rad * 180.0 / PI;
       float ground_wind_angle_true_deg = ground_wind_angle_deg + shipDataModel.navigation.heading_true.deg;
-      if (ground_wind_angle_true_deg > 180.0) {
-        ground_wind_angle_true_deg = ground_wind_angle_true_deg - 360.0;
+      if (ground_wind_angle_true_deg < 0.0) {
+        ground_wind_angle_true_deg = 360 + ground_wind_angle_true_deg;
       }
       shipDataModel.environment.wind.ground_wind_speed.kn = ground_wind_speed;
       shipDataModel.environment.wind.ground_wind_speed.age = millis();
