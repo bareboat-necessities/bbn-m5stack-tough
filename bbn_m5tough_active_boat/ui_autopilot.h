@@ -18,7 +18,6 @@ extern "C" {
     "MODE", LV_SYMBOL_EYE_OPEN, ""
   };
 
-
   static void autopilot_event_cb(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t *obj = lv_event_get_target(e);
@@ -27,9 +26,9 @@ extern "C" {
       const char *txt = lv_btnmatrix_get_btn_text(obj, id);
       if (txt != NULL) {
         if (strcmp("AUTO", txt) == 0) {
-
+          pypilot_send_engage(pypClient);
         } else if (strcmp("STANDBY", txt) == 0) {
-
+          pypilot_send_disengage(pypClient);
         }
       }
     }
