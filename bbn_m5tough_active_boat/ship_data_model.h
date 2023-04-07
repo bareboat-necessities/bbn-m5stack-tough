@@ -127,6 +127,7 @@ typedef struct _navigation_t {
   //struct _angle_deg_t mag_dev;
   struct _angle_deg_t heading_mag;
   struct _angle_deg_t heading_true;
+  struct _angle_deg_t leeway;
   //struct _angle_deg_t heading_compass;
   struct _angular_velocity_t rate_of_turn;
   struct _kn_t speed_over_ground_kn;
