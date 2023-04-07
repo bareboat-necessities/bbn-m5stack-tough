@@ -59,6 +59,11 @@ extern "C" {
       shipDataModel.environment.wind.ground_wind_angle_true.age = millis();
     }
 
+    if (fresh(shipDataModel.environment.wind.ground_wind_angle_true.age)) {
+      shipDataModel.environment.wind.ground_wind_angle_mag.age = shipDataModel.environment.wind.ground_wind_angle_true.deg - shipDataModel.navigation.mag_var.deg;
+      shipDataModel.environment.wind.ground_wind_angle_mag.age = millis();
+    }
+
     // derive leeway
     if (fresh(shipDataModel.navigation.speed_through_water.age)
         && fresh(shipDataModel.navigation.attitude.heel.age)) {
