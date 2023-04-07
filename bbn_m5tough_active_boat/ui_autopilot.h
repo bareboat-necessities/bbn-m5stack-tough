@@ -18,9 +18,13 @@ extern "C" {
     "MODE", LV_SYMBOL_EYE_OPEN, ""
   };
 
-  static void autopilot_event_cb(lv_obj_t *obj, lv_event_t event) {
-    if (event == LV_EVENT_VALUE_CHANGED) {
-      const char *txt = lv_btnmatrix_get_active_btn_text(obj);
+
+  static void autopilot_event_cb(lv_event_t *e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t *obj = lv_event_get_target(e);
+    if (code == LV_EVENT_VALUE_CHANGED) {
+      uint32_t id = lv_btnmatrix_get_selected_btn(obj);
+      const char *txt = lv_btnmatrix_get_btn_text(obj, id);
       if (txt != null) {
         if (strcmp("AUTO", txt) == 0) {
 
