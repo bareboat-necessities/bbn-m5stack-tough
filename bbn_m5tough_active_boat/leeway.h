@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
   static float leeway_angle(float hdt, float cogt) {
-    return abs(hdt - cogt);
+    return fabs(hdt - cogt);
   }
  
   // Empirical formula for leeway.
