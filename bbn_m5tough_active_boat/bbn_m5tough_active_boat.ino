@@ -47,6 +47,9 @@ ReactESP app;
 static ship_data_t shipDataModel;
 
 #include "WMM_Tinier.h"
+
+WMM_Tinier myDeclination;
+
 #include "derived_data.h"
 #include "TinyGPSPlus.h"
 #include "nmea0183_parse.h"
@@ -55,8 +58,6 @@ static ship_data_t shipDataModel;
 #include "net_signalk_tcp.h"
 #include "pypilot_parse.h"
 #include "net_pypilot.h"
-
-WMM_Tinier myDeclination;
 
 #include "ui_compass.h"
 #include "ui_wind.h"
