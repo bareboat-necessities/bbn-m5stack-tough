@@ -67,6 +67,20 @@ extern "C" {
     client.flush();
   }
 
+  void pypilot_send_engage(WiFiClient& client) {
+    if (client.connected()) {
+      client.println("ap.enabled=true");
+      client.flush();
+    }
+  }
+
+  void pypilot_send_disengage(WiFiClient& client) {
+    if (client.connected()) {
+      client.println("ap.enabled=false");
+      client.flush();
+    }
+  }
+
   void setup_pypilot_reconnect(WiFiClient& client, const char* host, int port) {
     app.onRepeat(5000, [&client, host, port]() {
       if (!client.connected()) {
