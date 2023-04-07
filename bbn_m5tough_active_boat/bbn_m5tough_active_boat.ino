@@ -47,6 +47,7 @@ ReactESP app;
 static ship_data_t shipDataModel;
 
 #include "WMM_Tinier.h"
+#include "derived_data.h"
 #include "TinyGPSPlus.h"
 #include "nmea0183_parse.h"
 #include "net_nmea0183_tcp.h"
@@ -196,7 +197,8 @@ void loop() {
 
   if (!settingMode) {
     handle_swipe();
-    if (millis() - last_ui_upd > 250) { // throttle expensive UI updates
+    if (millis() - last_ui_upd > 250) { // throttle expensive UI updates, and calculations
+      derive_data();
       update_screen(*screens[page]);
       last_ui_upd = millis();
     }
