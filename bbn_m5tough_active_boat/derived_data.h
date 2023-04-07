@@ -23,6 +23,15 @@ extern "C" {
       shipDataModel.navigation.mag_var.age = millis();
     }
 
+    if (fresh(shipDataModel.navigation.course_over_ground_true.age)) {
+      shipDataModel.navigation.course_over_ground_mag.deg = shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.mag_var.deg;
+      shipDataModel.navigation.course_over_ground_mag.age = millis();
+    }
+    if (fresh(shipDataModel.navigation.heading_mag.age)) {
+      shipDataModel.navigation.heading_true.deg = shipDataModel.navigation.heading_mag.deg + shipDataModel.navigation.mag_var.deg;
+      shipDataModel.navigation.heading_true.age = millis();
+    }
+
     // derive leeway
     if (fresh(shipDataModel.navigation.speed_through_water.age)
         && fresh(shipDataModel.navigation.attitude.heel.age)) {
