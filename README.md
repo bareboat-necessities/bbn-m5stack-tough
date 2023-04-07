@@ -138,6 +138,7 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - Smart Discovery of available services using mDNS and other ways
 - Weather forecast using location adjusted Zambretti algorithm, based on pressure and wind history, date time, and location.
 - Calculate mileage as integral of avg SOG
+- Predict open sea state based on tables from https://en.wikipedia.org/wiki/Wind_wave#Formation
 
 
 
