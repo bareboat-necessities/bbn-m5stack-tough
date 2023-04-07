@@ -137,6 +137,7 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - Fish detected alarm (Do not know for sure how to implement that winner feature. It's possible though)
 - Smart Discovery of available services using mDNS and other ways
 - Weather forecast using location adjusted Zambretti algorithm, based on pressure and wind history, date time, and location.
+- Calculate mileage as integral of avg SOG
 
 
 
