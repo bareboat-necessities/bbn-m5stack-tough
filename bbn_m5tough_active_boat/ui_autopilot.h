@@ -25,7 +25,7 @@ extern "C" {
     if (code == LV_EVENT_VALUE_CHANGED) {
       uint32_t id = lv_btnmatrix_get_selected_btn(obj);
       const char *txt = lv_btnmatrix_get_btn_text(obj, id);
-      if (txt != null) {
+      if (txt != NULL) {
         if (strcmp("AUTO", txt) == 0) {
 
         } else if (strcmp("STANDBY", txt) == 0) {
