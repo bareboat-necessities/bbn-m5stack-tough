@@ -5,6 +5,8 @@
  Also look at https://github.com/SignalK/signalk-derived-data
 */
 
+#include "leeway.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
