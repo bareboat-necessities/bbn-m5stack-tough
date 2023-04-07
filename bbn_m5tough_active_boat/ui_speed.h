@@ -10,6 +10,7 @@ extern "C" {
   static lv_obj_t *sog_label;
   static lv_obj_t *sog_avg_label;
   static lv_obj_t *spd_label;
+  static lv_obj_t *leeway_label;
   static lv_obj_t *g_force_label;
 
   /**
@@ -42,8 +43,15 @@ extern "C" {
 #endif
     lv_label_set_text(spd_label, "SPD (kt):                       --");
 
+    leeway_label = lv_label_create(parent);
+    lv_obj_align(leeway_label, LV_ALIGN_TOP_LEFT, 10, 160);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(leeway_label, &lv_font_montserrat_20, NULL);
+#endif
+    lv_label_set_text(leeway_label, "Leeway (est):              --");
+
     g_force_label = lv_label_create(parent);
-    lv_obj_align(g_force_label, LV_ALIGN_TOP_LEFT, 10, 160);
+    lv_obj_align(g_force_label, LV_ALIGN_TOP_LEFT, 10, 200);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(g_force_label, &lv_font_montserrat_20, NULL);
 #endif
@@ -51,6 +59,18 @@ extern "C" {
   }
 
   static void speed_update_cb() {
+    lv_label_set_text(sog_label,
+                      ("SOG (kt):                       "
+                       + (fresh(shipDataModel.navigation.speed_over_ground.age) ? String(shipDataModel.navigation.speed_over_ground.kn, 1) : String("--")))
+                        .c_str());
+    lv_label_set_text(spd_label,
+                      ("SPD (kt):                       "
+                       + (fresh(shipDataModel.navigation.speed_through_water.age) ? String(shipDataModel.navigation.speed_through_water.kn, 1) : String("--")))
+                        .c_str());
+    lv_label_set_text(leeway_label,
+                      ("Leeway (est):              "
+                       + (fresh(shipDataModel.navigation.leeway.age) ? String(shipDataModel.navigation.leeway.deg, 1) : String("--")))
+                        .c_str());
   }
 
   void init_speedScreen() {
