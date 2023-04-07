@@ -130,21 +130,21 @@ typedef struct _navigation_t {
   struct _angle_deg_t leeway;
   //struct _angle_deg_t heading_compass;
   struct _angular_velocity_t rate_of_turn;
-  struct _kn_t speed_over_ground_kn;
-  struct _kn_t speed_through_water_kn;
+  struct _kn_t speed_over_ground;
+  struct _kn_t speed_through_water;
   struct _nav_lights_t lights;
 } navigation_t;
 
 typedef struct _wind_t {
-  struct _kn_t apparent_wind_speed_kn;
+  struct _kn_t apparent_wind_speed;
   struct _angle_deg_t apparent_wind_angle;
   struct _angle_deg_t apparent_wind_angle_true;
   struct _angle_deg_t apparent_wind_angle_mag;
-  struct _kn_t true_wind_speed_kn;
+  struct _kn_t true_wind_speed;
   struct _angle_deg_t true_wind_angle;
   struct _angle_deg_t true_wind_angle_true;
   struct _angle_deg_t true_wind_angle_mag;
-  struct _kn_t ground_wind_speed_kn;
+  struct _kn_t ground_wind_speed;
   struct _angle_deg_t ground_wind_angle_true;
   struct _angle_deg_t ground_wind_angle_mag;
 } _wind_t;
