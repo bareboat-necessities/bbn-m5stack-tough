@@ -68,7 +68,7 @@ extern "C" {
   static void wind_update_cb() {
     lv_label_set_text(wind_label,
                       (String("AWS:   ")
-                       + (fresh(shipDataModel.environment.wind.apparent_wind_speed_kn.age) ? String(shipDataModel.environment.wind.apparent_wind_speed_kn.kn) + "\n(kt)" : String("--\n(kt)")))
+                       + (fresh(shipDataModel.environment.wind.apparent_wind_speed.age) ? String(shipDataModel.environment.wind.apparent_wind_speed.kn) + "\n(kt)" : String("--\n(kt)")))
                         .c_str());
 
     set_wind_value(indic_wind, fresh(shipDataModel.environment.wind.apparent_wind_angle.age) ? shipDataModel.environment.wind.apparent_wind_angle.deg : 0);
