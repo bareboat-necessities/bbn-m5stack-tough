@@ -3,14 +3,14 @@
 
 #include <stdint.h>
 
-#define WMM_EPOCH		2020.0f
+#define WMM_EPOCH 2020.0f
 
 typedef struct
 {
-	float gnm;
-	float hnm;
-	float dgnm;
-	float dhnm;
+  float gnm;
+  float hnm;
+  float dgnm;
+  float dhnm;
 } wmm_cof_record_t;
 
 /**
