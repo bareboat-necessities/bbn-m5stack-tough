@@ -138,8 +138,8 @@ extern "C" {
       //M5.Lcd.println(gps.altitude.feet());
     }
     if (gps.speed.isUpdated()) {
-      shipDataModel.navigation.speed_over_ground_kn.kn = gps.speed.knots();
-      shipDataModel.navigation.speed_over_ground_kn.age = millis();
+      shipDataModel.navigation.speed_over_ground.kn = gps.speed.knots();
+      shipDataModel.navigation.speed_over_ground.age = millis();
     }
     if (gps.course.isUpdated()) {
       shipDataModel.navigation.course_over_ground_true.deg = gps.course.deg();
@@ -179,60 +179,60 @@ extern "C" {
       if (windSpeed.isUpdated() && windSpeedUnit.isUpdated()) {
         if (strcmp("R", windReference.value()) == 0) {
           if (strcmp("N", windSpeedUnit.value()) == 0) {
-            shipDataModel.environment.wind.apparent_wind_speed_kn.kn = parse_float(windSpeed.value());
-            shipDataModel.environment.wind.apparent_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.apparent_wind_speed.kn = parse_float(windSpeed.value());
+            shipDataModel.environment.wind.apparent_wind_speed.age = millis();
           }
           if (strcmp("M", windSpeedUnit.value()) == 0) {
-            shipDataModel.environment.wind.apparent_wind_speed_kn.kn = parse_float(windSpeed.value()) / _GPS_MPS_PER_KNOT;
-            shipDataModel.environment.wind.apparent_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.apparent_wind_speed.kn = parse_float(windSpeed.value()) / _GPS_MPS_PER_KNOT;
+            shipDataModel.environment.wind.apparent_wind_speed.age = millis();
           }
           if (strcmp("K", windSpeedUnit.value()) == 0) {
-            shipDataModel.environment.wind.apparent_wind_speed_kn.kn = parse_float(windSpeed.value()) / _GPS_KMPH_PER_KNOT;
-            shipDataModel.environment.wind.apparent_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.apparent_wind_speed.kn = parse_float(windSpeed.value()) / _GPS_KMPH_PER_KNOT;
+            shipDataModel.environment.wind.apparent_wind_speed.age = millis();
           }
         }
         if (strcmp("T", windReference.value()) == 0) {
           if (strcmp("N", windSpeedUnit.value()) == 0) {
-            shipDataModel.environment.wind.true_wind_speed_kn.kn = parse_float(windSpeed.value());
-            shipDataModel.environment.wind.true_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.true_wind_speed.kn = parse_float(windSpeed.value());
+            shipDataModel.environment.wind.true_wind_speed.age = millis();
           }
           if (strcmp("M", windSpeedUnit.value()) == 0) {
-            shipDataModel.environment.wind.true_wind_speed_kn.kn = parse_float(windSpeed.value()) / _GPS_MPS_PER_KNOT;
-            shipDataModel.environment.wind.true_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.true_wind_speed.kn = parse_float(windSpeed.value()) / _GPS_MPS_PER_KNOT;
+            shipDataModel.environment.wind.true_wind_speed.age = millis();
           }
           if (strcmp("K", windSpeedUnit.value()) == 0) {
-            shipDataModel.environment.wind.true_wind_speed_kn.kn = parse_float(windSpeed.value()) / _GPS_KMPH_PER_KNOT;
-            shipDataModel.environment.wind.true_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.true_wind_speed.kn = parse_float(windSpeed.value()) / _GPS_KMPH_PER_KNOT;
+            shipDataModel.environment.wind.true_wind_speed.age = millis();
           }
         }
       }
       if (windSpeedI.isUpdated() && windSpeedUnitI.isUpdated()) {
         if (strcmp("R", windReferenceI.value()) == 0) {
           if (strcmp("N", windSpeedUnitI.value()) == 0) {
-            shipDataModel.environment.wind.apparent_wind_speed_kn.kn = parse_float(windSpeedI.value());
-            shipDataModel.environment.wind.apparent_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.apparent_wind_speed.kn = parse_float(windSpeedI.value());
+            shipDataModel.environment.wind.apparent_wind_speed.age = millis();
           }
           if (strcmp("M", windSpeedUnitI.value()) == 0) {
-            shipDataModel.environment.wind.apparent_wind_speed_kn.kn = parse_float(windSpeedI.value()) / _GPS_MPS_PER_KNOT;
-            shipDataModel.environment.wind.apparent_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.apparent_wind_speed.kn = parse_float(windSpeedI.value()) / _GPS_MPS_PER_KNOT;
+            shipDataModel.environment.wind.apparent_wind_speed.age = millis();
           }
           if (strcmp("K", windSpeedUnitI.value()) == 0) {
-            shipDataModel.environment.wind.apparent_wind_speed_kn.kn = parse_float(windSpeedI.value()) / _GPS_KMPH_PER_KNOT;
-            shipDataModel.environment.wind.apparent_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.apparent_wind_speed.kn = parse_float(windSpeedI.value()) / _GPS_KMPH_PER_KNOT;
+            shipDataModel.environment.wind.apparent_wind_speed.age = millis();
           }
         }
         if (strcmp("T", windReferenceI.value()) == 0) {
           if (strcmp("N", windSpeedUnitI.value()) == 0) {
-            shipDataModel.environment.wind.true_wind_speed_kn.kn = parse_float(windSpeedI.value());
-            shipDataModel.environment.wind.true_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.true_wind_speed.kn = parse_float(windSpeedI.value());
+            shipDataModel.environment.wind.true_wind_speed.age = millis();
           }
           if (strcmp("M", windSpeedUnitI.value()) == 0) {
-            shipDataModel.environment.wind.true_wind_speed_kn.kn = parse_float(windSpeedI.value()) / _GPS_MPS_PER_KNOT;
-            shipDataModel.environment.wind.true_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.true_wind_speed.kn = parse_float(windSpeedI.value()) / _GPS_MPS_PER_KNOT;
+            shipDataModel.environment.wind.true_wind_speed.age = millis();
           }
           if (strcmp("K", windSpeedUnitI.value()) == 0) {
-            shipDataModel.environment.wind.true_wind_speed_kn.kn = parse_float(windSpeedI.value()) / _GPS_KMPH_PER_KNOT;
-            shipDataModel.environment.wind.true_wind_speed_kn.age = millis();
+            shipDataModel.environment.wind.true_wind_speed.kn = parse_float(windSpeedI.value()) / _GPS_KMPH_PER_KNOT;
+            shipDataModel.environment.wind.true_wind_speed.age = millis();
           }
         }
       }
