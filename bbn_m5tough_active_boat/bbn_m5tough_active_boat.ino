@@ -61,6 +61,11 @@ WMM_Tinier myDeclination;
 #include "pypilot_parse.h"
 #include "net_pypilot.h"
 
+WiFiClient nmea0183Client;
+WiFiClient skClient;
+WiFiClient pypClient;
+MQTTClient mqttClient;
+
 #include "ui_compass.h"
 #include "ui_wind.h"
 #include "ui_engine.h"
@@ -113,11 +118,6 @@ void handle_swipe() {
     prev_page();
   }
 }
-
-WiFiClient nmea0183Client;
-WiFiClient skClient;
-WiFiClient pypClient;
-MQTTClient mqttClient;
 
 void setup() {
   myDeclination.begin();
