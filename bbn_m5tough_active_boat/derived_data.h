@@ -1,6 +1,10 @@
 #ifndef DERIVED_DATA_H
 #define DERIVED_DATA_H
 
+/*
+ Also look at https://github.com/SignalK/signalk-derived-data
+*/
+
 #ifdef __cplusplus
 extern "C" {
 #endif
