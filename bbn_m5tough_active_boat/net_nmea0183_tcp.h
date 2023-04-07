@@ -8,6 +8,7 @@ extern "C" {
   void setup_nmea0183_reconnect(WiFiClient& client, const char* host, int port) {
     app.onRepeat(5000, [&client, host, port]() {
       if (!client.connected()) {
+        setKeepAlive(client);
         if (client.connect(host, port)) {
         }
       }
