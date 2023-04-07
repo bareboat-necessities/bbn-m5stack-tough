@@ -111,6 +111,18 @@ extern "C" {
     return chk;
   }
 
+  tm gps_time_to_tm(TinyGPSDate& d, TinyGPSTime& t) {
+    tm result;
+    result.tm_sec = t.second();
+    result.tm_min = t.minute();
+    result.tm_hour = t.hour();
+
+    result.tm_mday = d.day();
+    result.tm_mon = d.month() - 1;
+    result.tm_year = 100 + (d.year() % 100);
+    return result;
+  }
+
   bool nmea0183_parse(WiFiClient& client) {
     bool found = false;
     String dataLine = client.readStringUntil('\n');
@@ -146,7 +158,7 @@ extern "C" {
       shipDataModel.navigation.course_over_ground_true.age = millis();
     }
     if (gps.time.isUpdated()) {
-      //shipDataModel.environment.time_gps.t = gps_time_to_tm(gps.date, gps.time);
+      shipDataModel.environment.time_gps.t = gps_time_to_tm(gps.date, gps.time);
       shipDataModel.environment.time_gps.age = millis();
     }
     if (headingTrue.isUpdated() && headingTrue.isValid()) {
@@ -245,4 +257,3 @@ extern "C" {
 #endif
 
 #endif
-
