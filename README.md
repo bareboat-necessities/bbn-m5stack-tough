@@ -139,6 +139,8 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - Weather forecast using location adjusted Zambretti algorithm, based on pressure and wind history, date time, and location.
 - Calculate mileage as integral of avg SOG
 - Predict open sea state based on tables from https://en.wikipedia.org/wiki/Wind_wave#Formation
+- Calculate dew point, air dencity. Detect fog conditions from pressure/temp/humidity
+- Calculate times of Local Sunset/Sunrise
 
 
 
