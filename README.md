@@ -8,15 +8,15 @@ Mostly oriented for boating projects
 
 ## Register M5Stack Board in Arduino IDE
 
-. Add this URL
+1. Add this URL
 https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 as additional in Arduino IDE board manager settings
 
-. Install esp32 (by Espressif) board via Board Manager
+2. Install esp32 (by Espressif) board via Board Manager
 
-. Pick 'M5Stack-Core2' as your board in IDE
+3. Pick 'M5Stack-Core2' as your board in IDE
 
-. Set port (Something line /dev/ttyACM1 or so, you will find out by ````ls -ltr /dev/tty*```` after connecting your M5Tough device to USB)
+4. Set port (Something line /dev/ttyACM1 or so, you will find out by ````ls -ltr /dev/tty*```` after connecting your M5Tough device to USB)
 
 
 ## Required Libraries
