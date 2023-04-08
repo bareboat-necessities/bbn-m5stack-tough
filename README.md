@@ -146,12 +146,12 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 
 ##  Interfaces:
 
-- SignalK (will start with that)
+- SignalK (partially :heavy_check_mark:)
 - NMEA 0183 (partially :heavy_check_mark:)
 - NMEA 2000
-- PyPilot (almost :heavy_check_mark:)
+- PyPilot (:heavy_check_mark:)
 - MPD
 - NTP (:heavy_check_mark:)
 - MQTT (for Victron and others)
-- mDNS
+- mDNS (partially :heavy_check_mark:)
 
