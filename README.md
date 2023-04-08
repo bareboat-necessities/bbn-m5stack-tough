@@ -97,7 +97,7 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - Wind Display (True/Apparent)
 - Drift and set, speed through water (knot meter)
 - Wind Rose from climatology data for current location and time Display
-- Depth Display
+- Depth Display :heavy_check_mark:
 - Barometer (+Temp Humidity) with History
 - Dangerous gases alarms
 - LoRa Tracker receiver and display
@@ -107,9 +107,9 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - AIS Display
 - Sailboat Polar Diagram Display
 - Victron Data Display
-- Rudder Position, Rate of Turn Display
+- Rudder Position, Rate of Turn Display :heavy_check_mark:
 - Anchor Alarm Set up and Display
-- Heel (Clinometer) and Pitch
+- Heel (Clinometer) and Pitch :heavy_check_mark:
 - GPS Location, speed, heading (true/mag), VMG
 - Nav Lights and Digital Switching Control (ex: NMEA 2000 PGN 127501 "Binary Status Report" and PGN 127502 "Binary Switch Control")
 - Tanks levels display
@@ -117,8 +117,8 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - Emergency steering Control by Autopilot
 - Bow Truster Remote Control
 - MOB Button
-- Compass Display (True/Magnetic), Magnetic Variation for the location
-- Clock Display
+- Compass Display (True/Magnetic), Magnetic Variation for the location :heavy_check_mark:
+- Clock Display :heavy_check_mark:
 - Music Player Controls (Spotify/Mopidy, etc)
 - Bilge Monitoring Screen
 - Wave Height, G-Forces Display based on: https://bareboat-necessities.github.io/my-bareboat/bareboat-math.html
@@ -147,10 +147,10 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 ##  Interfaces:
 
 - SignalK (will start with that)
-- NMEA 0183
+- NMEA 0183 (partially :heavy_check_mark:)
 - NMEA 2000
-- PyPilot
+- PyPilot (almost :heavy_check_mark:)
 - MPD
-- NTP
+- NTP (:heavy_check_mark:)
 - MQTT (for Victron and others)
 
