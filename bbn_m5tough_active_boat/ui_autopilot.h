@@ -32,8 +32,8 @@ extern "C" {
 
   void lv_autopilot_list_modes(lv_obj_t *parent) {
     autopilot_list_modes = lv_list_create(parent);
-    lv_obj_set_size(autopilot_list_modes, 180, 160);
-    lv_obj_center(autopilot_list_modes);
+    lv_obj_set_size(autopilot_list_modes, 220, 160);
+    lv_obj_align(autopilot_list_modes, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 
     lv_obj_t *btn;
     btn = lv_list_add_btn(autopilot_list_modes, NULL, "Compass");
@@ -49,7 +49,7 @@ extern "C" {
   static void autopilot_event_cb(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t *obj = lv_event_get_target(e);
-    if (code == LV_EVENT_VALUE_CHANGED) {
+    if (code == LV_EVENT_LONG_PRESSED) {
       uint32_t id = lv_btnmatrix_get_selected_btn(obj);
       const char *txt = lv_btnmatrix_get_btn_text(obj, id);
       if (txt != NULL) {
@@ -105,7 +105,7 @@ extern "C" {
     lv_btnmatrix_set_map(autopilot_btnm, autopilot_btnm_map);
     lv_btnmatrix_set_btn_width(autopilot_btnm, 6, 3);
     lv_obj_set_size(autopilot_btnm, 320, 190);
-    lv_obj_add_event_cb(autopilot_btnm, autopilot_event_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(autopilot_btnm, autopilot_event_cb, LV_EVENT_LONG_PRESSED, NULL);
     lv_obj_align(autopilot_btnm, LV_ALIGN_CENTER, 0, 25);
 
     lv_autopilot_list_modes(parent);
