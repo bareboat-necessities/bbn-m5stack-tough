@@ -1,6 +1,9 @@
 #ifndef NET_MDNS_H
 #define NET_MDNS_H
 
+//   from command line you can discover services:
+//   avahi-browse -ar
+
 #ifdef __cplusplus
 extern "C" {
 #endif
