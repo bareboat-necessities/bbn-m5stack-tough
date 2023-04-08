@@ -11,6 +11,7 @@ extern "C" {
   static lv_obj_t *heading_l;
   static lv_obj_t *command_l;
   static lv_obj_t *autopilot_btnm;
+  static lv_obj_t *autopilot_list_modes;
 
 #define AP_MODE_COMPASS "MODE (Compass)"
 #define AP_MODE_GPS "MODE (GPS)"
@@ -23,6 +24,31 @@ extern "C" {
     "STANDBY", "AUTO", "\n",
     AP_MODE_COMPASS, LV_SYMBOL_EYE_OPEN, ""
   };
+
+  static void event_handler_ap_mode(lv_event_t *e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t *obj = lv_event_get_target(e);
+    if (code == LV_EVENT_CLICKED) {
+      const char *mode = (const char *)lv_event_get_user_data(e);
+      lv_obj_add_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
+    }
+  }
+
+  void lv_autopilot_list_modes(lv_obj_t *parent) {
+    autopilot_list_modes = lv_list_create(parent);
+    lv_obj_set_size(autopilot_list_modes, 180, 160);
+    lv_obj_center(autopilot_list_modes);
+
+    lv_obj_t *btn;
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, "Compass");
+    lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_COMPASS);
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, "GPS");
+    lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_GPS);
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, "Wind");
+    lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_WIND);
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, "True Wind");
+    lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_WIND_TRUE);
+  }
 
   static void autopilot_event_cb(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
@@ -43,6 +69,9 @@ extern "C" {
           pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg + 10.0);
         } else if (strcmp(LV_SYMBOL_RIGHT, txt) == 0) {
           pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg + 2.0);
+        } else if (strcmp(LV_SYMBOL_EYE_OPEN, txt) == 0) {
+        } else {
+          lv_obj_clear_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
         }
       }
     }
@@ -82,6 +111,9 @@ extern "C" {
     lv_obj_set_size(autopilot_btnm, 320, 190);
     lv_obj_add_event_cb(autopilot_btnm, autopilot_event_cb, LV_EVENT_ALL, NULL);
     lv_obj_align(autopilot_btnm, LV_ALIGN_CENTER, 0, 25);
+
+    lv_autopilot_list_modes(parent);
+    lv_obj_add_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
   }
 
 #define LONG_EXPIRE_TO 172800000
