@@ -8,7 +8,32 @@
 extern "C" {
 #endif
 
-  void browseServiceMDS(const char* service, const char* proto) {
+#define SK_TCP_HOST_PREF "signalk_tcp.host"
+#define SK_TCP_PORT_PREF "signalk_tcp.port"
+
+#define PYP_TCP_HOST_PREF "pypilot_tcp.host"
+#define PYP_TCP_PORT_PREF "pypilot_tcp.port"
+
+#define NMEA0183_TCP_HOST_PREF "nmea0183_tcp.host"
+#define NMEA0183_TCP_PORT_PREF "nmea0183_tcp.port"
+
+  void discover_n_config() {
+    preferences.begin("clients-config");
+
+    String signalk_tcp_host = preferences.getString(SK_TCP_HOST_PREF);
+    int signalk_tcp_port = preferences.getInt(SK_TCP_PORT_PREF);
+    if (signalk_tcp_host.length() <= 0 || signalk_tcp_port <= 0) {
+      int n = MDNS.queryService("signalk-tcp", "tcp");
+      if (n > 0) {
+        if (n == 1) {
+          preferences.putString(SK_TCP_HOST_PREF, MDNS.IP(0).toString());
+          preferences.putString(SK_TCP_PORT_PREF, String(MDNS.port(0)));
+        }
+      }
+    }
+  }
+
+  void browseServiceMDNS(const char* service, const char* proto) {
     M5.Lcd.printf("Scan _%s._%s.local. ... ", service, proto);
     int n = MDNS.queryService(service, proto);
     if (n == 0) {
@@ -35,21 +60,21 @@ extern "C" {
   }
 
   void discoverBasics() {
-    browseServiceMDS("http", "tcp");
+    browseServiceMDNS("http", "tcp");
     delay(100);
-    browseServiceMDS("nmea-0183", "tcp");
+    browseServiceMDNS("nmea-0183", "tcp");
     delay(100);
-    browseServiceMDS("signalk-http", "tcp");
+    browseServiceMDNS("signalk-http", "tcp");
     delay(100);
-    browseServiceMDS("signalk-tcp", "tcp");
+    browseServiceMDNS("signalk-tcp", "tcp");
     delay(100);
-    browseServiceMDS("signalk-ws", "tcp");
+    browseServiceMDNS("signalk-ws", "tcp");
     delay(100);
-    browseServiceMDS("pypilot", "tcp");
+    browseServiceMDNS("pypilot", "tcp");
     delay(100);
-    browseService("mpd", "tcp");
+    browseServiceMDNS("mpd", "tcp");
     delay(100);
-    browseServiceMDS("mopidy-http", "tcp");
+    browseServiceMDNS("mopidy-http", "tcp");
     delay(100);
   }
 
