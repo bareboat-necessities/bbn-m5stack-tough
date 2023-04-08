@@ -30,7 +30,7 @@ extern "C" {
     MDNS.end();
   }
 
-  void discover_n_config() {
+  bool discover_n_config() {
     bool saved = false;
 
     String signalk_tcp_host = preferences.getString(SK_TCP_HOST_PREF);
@@ -131,9 +131,7 @@ extern "C" {
         }
       }
     }
-//    if (saved) {
-//      ESP.restart();
-//    }
+    return saved;
   }
 
   void browseServiceMDNS(const char* service, const char* proto) {
