@@ -113,7 +113,7 @@ extern "C" {
         autopilot_btnm_map[9] = AP_MODE_WIND_TRUE;
       }
       lv_btnmatrix_set_map(autopilot_btnm, autopilot_btnm_map);
-      lv_event_send(NULL, LV_EVENT_REFRESH, NULL);
+      lv_event_send(autopilot_btnm, LV_EVENT_REFRESH, NULL);
     }
   }
 
