@@ -31,6 +31,30 @@ extern "C" {
         }
       }
     }
+
+    String nmea0183_tcp_host = preferences.getString(NMEA0183_TCP_HOST_PREF);
+    int nmea0183_tcp_port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
+    if (nmea0183_tcp_host.length() <= 0 || nmea0183_tcp_port <= 0) {
+      int n = MDNS.queryService("nmea0183-tcp", "tcp");
+      if (n > 0) {
+        if (n == 1) {
+          preferences.putString(NMEA0183_TCP_HOST_PREF, MDNS.IP(0).toString());
+          preferences.putString(NMEA0183_TCP_PORT_PREF, String(MDNS.port(0)));
+        }
+      }
+    }
+
+    String pypilot_tcp_host = preferences.getString(PYP_TCP_HOST_PREF);
+    int pypilot_tcp_port = preferences.getInt(PYP_TCP_PORT_PREF);
+    if (pypilot_tcp_host.length() <= 0 || pypilot_tcp_port <= 0) {
+      int n = MDNS.queryService("pypilot-tcp", "tcp");
+      if (n > 0) {
+        if (n == 1) {
+          preferences.putString(PYP_TCP_HOST_PREF, MDNS.IP(0).toString());
+          preferences.putString(PYP_TCP_PORT_PREF, String(MDNS.port(0)));
+        }
+      }
+    }
   }
 
   void browseServiceMDNS(const char* service, const char* proto) {
