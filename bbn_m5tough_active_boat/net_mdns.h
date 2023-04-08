@@ -17,6 +17,9 @@ extern "C" {
 #define NMEA0183_TCP_HOST_PREF "nmea0183_tcp.host"
 #define NMEA0183_TCP_PORT_PREF "nmea0183_tcp.port"
 
+#define MPD_TCP_HOST_PREF "mpd_tcp.host"
+#define MPD_TCP_PORT_PREF "mpd_tcp.port"
+
   void discover_n_config() {
     preferences.begin("clients-config");
 
@@ -35,7 +38,7 @@ extern "C" {
     String nmea0183_tcp_host = preferences.getString(NMEA0183_TCP_HOST_PREF);
     int nmea0183_tcp_port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
     if (nmea0183_tcp_host.length() <= 0 || nmea0183_tcp_port <= 0) {
-      int n = MDNS.queryService("nmea0183-tcp", "tcp");
+      int n = MDNS.queryService("nmea-0183", "tcp");
       if (n > 0) {
         if (n == 1) {
           preferences.putString(NMEA0183_TCP_HOST_PREF, MDNS.IP(0).toString());
@@ -47,11 +50,23 @@ extern "C" {
     String pypilot_tcp_host = preferences.getString(PYP_TCP_HOST_PREF);
     int pypilot_tcp_port = preferences.getInt(PYP_TCP_PORT_PREF);
     if (pypilot_tcp_host.length() <= 0 || pypilot_tcp_port <= 0) {
-      int n = MDNS.queryService("pypilot-tcp", "tcp");
+      int n = MDNS.queryService("pypilot", "tcp");
       if (n > 0) {
         if (n == 1) {
           preferences.putString(PYP_TCP_HOST_PREF, MDNS.IP(0).toString());
           preferences.putString(PYP_TCP_PORT_PREF, String(MDNS.port(0)));
+        }
+      }
+    }
+
+    String mpd_tcp_host = preferences.getString(MPD_TCP_HOST_PREF);
+    int mpd_tcp_port = preferences.getInt(MPD_TCP_PORT_PREF);
+    if (mpd_tcp_host.length() <= 0 || mpd_tcp_port <= 0) {
+      int n = MDNS.queryService("mpd", "tcp");
+      if (n > 0) {
+        if (n == 1) {
+          preferences.putString(MPD_TCP_HOST_PREF, MDNS.IP(0).toString());
+          preferences.putString(MPD_TCP_PORT_PREF, String(MDNS.port(0)));
         }
       }
     }
