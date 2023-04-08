@@ -39,6 +39,18 @@ extern "C" {
     });
   }
 
+  void signalk_begin(WiFiClient& skClient, const char* host, int port) {
+    setKeepAlive(skClient);
+    setup_signalk_reconnect(skClient, host, port);
+    if (skClient.connect(host, port)) {
+      M5.Lcd.print("Connected to signalK ");
+      M5.Lcd.println(host);
+      signalk_subscribe(skClient);
+    } else {
+      M5.Lcd.println("Connection failed.");
+    }
+  }
+
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
