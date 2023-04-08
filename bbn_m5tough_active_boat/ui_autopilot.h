@@ -13,11 +13,6 @@ extern "C" {
   static lv_obj_t *autopilot_btnm;
   static lv_obj_t *autopilot_list_modes;
 
-#define AP_MODE_COMPASS "MODE (Compass)"
-#define AP_MODE_GPS "MODE (GPS)"
-#define AP_MODE_WIND "MODE (Wind)"
-#define AP_MODE_WIND_TRUE "MODE (True Wind)"
-
   static const char *autopilot_btnm_map[] = {
     LV_SYMBOL_DOUBLE_LEFT, LV_SYMBOL_DOUBLE_RIGHT, "\n",
     LV_SYMBOL_LEFT, LV_SYMBOL_RIGHT, "\n",
@@ -30,6 +25,7 @@ extern "C" {
     lv_obj_t *obj = lv_event_get_target(e);
     if (code == LV_EVENT_CLICKED) {
       const char *mode = (const char *)lv_event_get_user_data(e);
+      pypilot_send_mode(pypClient, mode);
       lv_obj_add_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
     }
   }
