@@ -145,20 +145,30 @@ void setup() {
     init_rudderScreen();
     lv_scr_load(screens[page]->screen);
 
-    // TODO: auto-discover and read from preferences
-    static const char* host = "192.168.1.34";  //"lysmarine";
-    static int port = 8375;                    // SignalK TCP
-    signalk_begin(skClient, host, port);       // Connect to the SignalK TCP server
+    mdns_begin();
+    discover_n_config();  // Discover services via mDNS
+    mdns_end();
 
-    // TODO: auto-discover and read from preferences
-    static const char* pyp_host = "192.168.1.34";  //"lysmarine";
-    static int pyp_port = 23322;                   // Pypilot TCP
-    pypilot_begin(pypClient, pyp_host, pyp_port);  // Connect to the PyPilot TCP server
+    String signalk_tcp_host = preferences.getString(SK_TCP_HOST_PREF);
+    int signalk_tcp_port = preferences.getInt(SK_TCP_PORT_PREF);
+    M5.Lcd.println(signalk_tcp_host);
+    if (signalk_tcp_host.length() > 0 && signalk_tcp_port > 0) {
+      signalk_begin(skClient, signalk_tcp_host.c_str(), signalk_tcp_port);  // Connect to the SignalK TCP server
+    }
 
-    // TODO: auto-discover and read from preferences
-    static const char* nmea0183_host = "192.168.1.34";                 //"lysmarine";
-    static int nmea0183_port = 10110;                                  // NMEA0183 TCP
-    nmea0183_tcp_begin(nmea0183Client, nmea0183_host, nmea0183_port);  // Connect to the NMEA 0183 TCP server
+    String pypilot_tcp_host = preferences.getString(PYP_TCP_HOST_PREF);
+    int pypilot_tcp_port = preferences.getInt(PYP_TCP_PORT_PREF);
+    M5.Lcd.println(pypilot_tcp_host);
+    if (pypilot_tcp_host.length() > 0 && pypilot_tcp_port > 0) {
+      pypilot_begin(pypClient, pypilot_tcp_host.c_str(), pypilot_tcp_port);  // Connect to the PyPilot TCP server
+    }
+
+    String nmea0183_tcp_host = preferences.getString(NMEA0183_TCP_HOST_PREF);
+    int nmea0183_tcp_port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
+    M5.Lcd.println(nmea0183_tcp_host);
+    if (nmea0183_tcp_host.length() > 0 && nmea0183_tcp_port > 0) {
+      nmea0183_tcp_begin(nmea0183Client, nmea0183_tcp_host.c_str(), nmea0183_tcp_port);  // Connect to the NMEA 0183 TCP server
+    }
   });
 
   SpeakerInit();
