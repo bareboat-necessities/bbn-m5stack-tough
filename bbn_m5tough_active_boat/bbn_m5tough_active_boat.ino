@@ -119,6 +119,42 @@ void handle_swipe() {
   }
 }
 
+void signalk_begin(WiFiClient& skClient, const char* host, int port) {
+  setKeepAlive(skClient);
+  setup_signalk_reconnect(skClient, host, port);
+  if (skClient.connect(host, port)) {
+    M5.Lcd.print("Connected to signalK ");
+    M5.Lcd.println(host);
+    signalk_subscribe(skClient);
+  } else {
+    M5.Lcd.println("Connection failed.");
+  }
+}
+
+void pypilot_begin(WiFiClient& pypClient, const char* pyp_host, int pyp_port) {
+  setKeepAlive(pypClient);
+  setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
+  if (pypClient.connect(pyp_host, pyp_port)) {
+    M5.Lcd.print("Connected to pypilot ");
+    M5.Lcd.println(pyp_host);
+    pypilot_subscribe(pypClient);
+  } else {
+    M5.Lcd.println("Connection failed.");
+  }
+}
+
+void nmea0183_tcp_begin(WiFiClient& nmea0183Client, const char* nmea0183_host, int nmea0183_port) {
+  setKeepAlive(nmea0183Client);
+  setup_nmea0183_reconnect(nmea0183Client, nmea0183_host, nmea0183_port);
+  if (nmea0183Client.connect(nmea0183_host, nmea0183_port)) {
+    M5.Lcd.print("Connected to nmea0183 TCP");
+    M5.Lcd.println(nmea0183_host);
+    nmea0183_subscribe(nmea0183Client);
+  } else {
+    M5.Lcd.println("Connection failed.");
+  }
+}
+
 void setup() {
   myDeclination.begin();
   tft_lv_initialization();
@@ -147,47 +183,17 @@ void setup() {
     // TODO: auto-discover and read from preferences
     static const char* host = "192.168.1.34";  //"lysmarine";
     static int port = 8375;                    // SignalK TCP
-
-    // Connect to the SignalK TCP server
-    setKeepAlive(skClient);
-    setup_signalk_reconnect(skClient, host, port);
-    if (skClient.connect(host, port)) {
-      M5.Lcd.print("Connected to signalK ");
-      M5.Lcd.println(host);
-      signalk_subscribe(skClient);
-    } else {
-      M5.Lcd.println("Connection failed.");
-    }
+    signalk_begin(skClient, host, port);       // Connect to the SignalK TCP server
 
     // TODO: auto-discover and read from preferences
     static const char* pyp_host = "192.168.1.34";  //"lysmarine";
     static int pyp_port = 23322;                   // Pypilot TCP
-
-    // Connect to the PyPilot TCP server
-    setKeepAlive(pypClient);
-    setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
-    if (pypClient.connect(pyp_host, pyp_port)) {
-      M5.Lcd.print("Connected to pypilot ");
-      M5.Lcd.println(pyp_host);
-      pypilot_subscribe(pypClient);
-    } else {
-      M5.Lcd.println("Connection failed.");
-    }
+    pypilot_begin(pypClient, pyp_host, pyp_port);  // Connect to the PyPilot TCP server
 
     // TODO: auto-discover and read from preferences
-    static const char* nmea0183_host = "192.168.1.34";  //"lysmarine";
-    static int nmea0183_port = 10110;                   // NMEA0183 TCP
-
-    // Connect to the NMEA 0183 TCP server
-    setKeepAlive(nmea0183Client);
-    setup_nmea0183_reconnect(nmea0183Client, nmea0183_host, nmea0183_port);
-    if (nmea0183Client.connect(nmea0183_host, nmea0183_port)) {
-      M5.Lcd.print("Connected to nmea0183 TCP");
-      M5.Lcd.println(nmea0183_host);
-      nmea0183_subscribe(nmea0183Client);
-    } else {
-      M5.Lcd.println("Connection failed.");
-    }
+    static const char* nmea0183_host = "192.168.1.34";                 //"lysmarine";
+    static int nmea0183_port = 10110;                                  // NMEA0183 TCP
+    nmea0183_tcp_begin(nmea0183Client, nmea0183_host, nmea0183_port);  // Connect to the NMEA 0183 TCP server
   });
 
   SpeakerInit();
@@ -205,7 +211,7 @@ void loop() {
 
   if (!settingMode) {
     handle_swipe();
-    if (millis() - last_ui_upd > 250) { // throttle expensive UI updates, and calculations
+    if (millis() - last_ui_upd > 250) {  // throttle expensive UI updates, and calculations
       derive_data();
       update_screen(*screens[page]);
       last_ui_upd = millis();
