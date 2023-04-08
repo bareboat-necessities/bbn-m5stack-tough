@@ -27,6 +27,18 @@ extern "C" {
     });
   }
 
+  void nmea0183_tcp_begin(WiFiClient& nmea0183Client, const char* nmea0183_host, int nmea0183_port) {
+    setKeepAlive(nmea0183Client);
+    setup_nmea0183_reconnect(nmea0183Client, nmea0183_host, nmea0183_port);
+    if (nmea0183Client.connect(nmea0183_host, nmea0183_port)) {
+      M5.Lcd.print("Connected to nmea0183 TCP");
+      M5.Lcd.println(nmea0183_host);
+      nmea0183_subscribe(nmea0183Client);
+    } else {
+      M5.Lcd.println("Connection failed.");
+    }
+  }
+
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
