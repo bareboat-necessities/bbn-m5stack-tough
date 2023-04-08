@@ -153,4 +153,5 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - MPD
 - NTP (:heavy_check_mark:)
 - MQTT (for Victron and others)
+- mDNS
 
