@@ -30,7 +30,7 @@ extern "C" {
       if (n > 0) {
         if (n == 1) {
           preferences.putString(SK_TCP_HOST_PREF, MDNS.IP(0).toString());
-          preferences.putString(SK_TCP_PORT_PREF, String(MDNS.port(0)));
+          preferences.putInt(SK_TCP_PORT_PREF, MDNS.port(0));
         }
       }
     }
@@ -42,7 +42,22 @@ extern "C" {
       if (n > 0) {
         if (n == 1) {
           preferences.putString(NMEA0183_TCP_HOST_PREF, MDNS.IP(0).toString());
-          preferences.putString(NMEA0183_TCP_PORT_PREF, String(MDNS.port(0)));
+          preferences.putInt(NMEA0183_TCP_PORT_PREF, MDNS.port(0));
+        }
+      } else {
+        const char* found10110 = NULL;
+        for (int i = 0; i < n; i++) {
+          if (MDNS.port(i) == 10110) {
+            found10110 = MDNS.IP(i).toString().c_str();
+          }
+          break;
+        }
+        if (found10110 != NULL) {
+          preferences.putString(NMEA0183_TCP_HOST_PREF, found10110);
+          preferences.putInt(NMEA0183_TCP_PORT_PREF, 10110);
+        } else {
+          preferences.putString(NMEA0183_TCP_HOST_PREF, MDNS.IP(0).toString());
+          preferences.putInt(NMEA0183_TCP_PORT_PREF, MDNS.port(0));
         }
       }
     }
