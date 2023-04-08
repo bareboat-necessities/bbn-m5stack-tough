@@ -145,9 +145,7 @@ void setup() {
     init_rudderScreen();
     lv_scr_load(screens[page]->screen);
 
-    mdns_begin();
     discover_n_config();  // Discover services via mDNS
-    mdns_end();
 
     String signalk_tcp_host = preferences.getString(SK_TCP_HOST_PREF);
     int signalk_tcp_port = preferences.getInt(SK_TCP_PORT_PREF);
