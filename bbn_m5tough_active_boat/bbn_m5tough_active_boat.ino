@@ -13,6 +13,10 @@
 #include <mdns.h>
 #include <MQTT.h>  // https://github.com/256dpi/arduino-mqtt
 #include <Preferences.h>
+
+// config store.
+Preferences preferences;
+
 #include <ArduinoJson.h>
 #undef min(a, b)
 #include <ReactESP.h>  // https://github.com/mairas/ReactESP
@@ -32,9 +36,6 @@
 #include "ui_about.h"
 #include "ui_brightness.h"
 #include "ui_mem_cpu_net_stat.h"
-
-// config store.
-Preferences preferences;
 
 #include "ui_keyboard.h"
 #include "ui_settings_wifi.h"
