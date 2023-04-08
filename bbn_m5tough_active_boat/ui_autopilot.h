@@ -10,12 +10,18 @@ extern "C" {
   static lv_obj_t *autopilot_led;
   static lv_obj_t *heading_l;
   static lv_obj_t *command_l;
+  static lv_obj_t *autopilot_btnm;
+
+#define AP_MODE_COMPASS "MODE (Compass)"
+#define AP_MODE_GPS "MODE (GPS)"
+#define AP_MODE_WIND "MODE (Wind)"
+#define AP_MODE_WIND_TRUE "MODE (True Wind)"
 
   static const char *autopilot_btnm_map[] = {
     LV_SYMBOL_DOUBLE_LEFT, LV_SYMBOL_DOUBLE_RIGHT, "\n",
     LV_SYMBOL_LEFT, LV_SYMBOL_RIGHT, "\n",
     "STANDBY", "AUTO", "\n",
-    "MODE", LV_SYMBOL_EYE_OPEN, ""
+    AP_MODE_COMPASS, LV_SYMBOL_EYE_OPEN, ""
   };
 
   static void autopilot_event_cb(lv_event_t *e) {
@@ -70,12 +76,12 @@ extern "C" {
     lv_obj_set_style_text_font(command_l, &lv_font_montserrat_20, NULL);
 #endif
 
-    lv_obj_t *btnm = lv_btnmatrix_create(parent);
-    lv_btnmatrix_set_map(btnm, autopilot_btnm_map);
-    lv_btnmatrix_set_btn_width(btnm, 6, 3);
-    lv_obj_set_size(btnm, 320, 190);
-    lv_obj_add_event_cb(btnm, autopilot_event_cb, LV_EVENT_ALL, NULL);
-    lv_obj_align(btnm, LV_ALIGN_CENTER, 0, 25);
+    autopilot_btnm = lv_btnmatrix_create(parent);
+    lv_btnmatrix_set_map(autopilot_btnm, autopilot_btnm_map);
+    lv_btnmatrix_set_btn_width(autopilot_btnm, 6, 3);
+    lv_obj_set_size(autopilot_btnm, 320, 190);
+    lv_obj_add_event_cb(autopilot_btnm, autopilot_event_cb, LV_EVENT_ALL, NULL);
+    lv_obj_align(autopilot_btnm, LV_ALIGN_CENTER, 0, 25);
   }
 
 #define LONG_EXPIRE_TO 172800000
@@ -95,6 +101,20 @@ extern "C" {
                       ("HDG:  " + (fresh(shipDataModel.steering.autopilot.heading.age) ? String(shipDataModel.steering.autopilot.heading.deg, 0) + LV_SYMBOL_DEGREES : "n/a")).c_str());
     lv_label_set_text(command_l,
                       ("CMD:  " + (fresh(shipDataModel.steering.autopilot.command.age, LONG_EXPIRE_TO) ? String(shipDataModel.steering.autopilot.command.deg, 0) + LV_SYMBOL_DEGREES : "n/a")).c_str());
+
+    if (fresh(shipDataModel.steering.autopilot.ap_mode.age, LONG_EXPIRE_TO)) {
+      if (shipDataModel.steering.autopilot.ap_mode.mode == ap_mode_e::COG_TRUE) {
+        autopilot_btnm_map[9] = AP_MODE_GPS;
+      } else if (shipDataModel.steering.autopilot.ap_mode.mode == ap_mode_e::APP_WIND) {
+        autopilot_btnm_map[9] = AP_MODE_WIND;
+      } else if (shipDataModel.steering.autopilot.ap_mode.mode == ap_mode_e::HEADING_MAG) {
+        autopilot_btnm_map[9] = AP_MODE_COMPASS;
+      } else if (shipDataModel.steering.autopilot.ap_mode.mode == ap_mode_e::TRUE_WIND) {
+        autopilot_btnm_map[9] = AP_MODE_WIND_TRUE;
+      }
+      lv_btnmatrix_set_map(autopilot_btnm, autopilot_btnm_map);
+      lv_event_send(NULL, LV_EVENT_REFRESH, NULL);
+    }
   }
 
   void init_autopilotScreen() {
