@@ -35,7 +35,7 @@ extern "C" {
           shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::COG_TRUE;
         } else if (mode == "wind") {
           shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::APP_WIND;
-        } else if (mode == "true" /*compass*/) {
+        } else if (mode == "compass") {
           shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::HEADING_MAG;
         } else if (mode == "true wind") {
           shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::TRUE_WIND;
