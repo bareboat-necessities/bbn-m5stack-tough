@@ -9,9 +9,9 @@ extern "C" {
 
   void setKeepAlive(WiFiClient& wclient) {
     int flags = 1;
-    wclient.setSocketOption(SO_KEEPALIVE, (char *)&flags, sizeof(flags));
+    wclient.setSocketOption(SOL_SOCKET, SO_KEEPALIVE, (char *)&flags, sizeof(flags));
     flags = 10;
-    wclient.setSocketOption(TCP_KEEPIDLE, (char *)&flags, sizeof(flags));
+    wclient.setSocketOption(IPPROTO_TCP, TCP_KEEPIDLE, (char *)&flags, sizeof(flags));
   }
   
 #ifdef __cplusplus
