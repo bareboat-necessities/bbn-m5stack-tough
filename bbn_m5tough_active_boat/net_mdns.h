@@ -60,14 +60,14 @@ extern "C" {
           M5.Lcd.print(":");
           M5.Lcd.printf("%d - nmea0183\n", MDNS.port(0));
         } else {
-          const char* found10110 = NULL;
+          String found10110;
           for (int i = 0; i < n; ++i) {
             if (MDNS.port(i) == 10110) {
-              found10110 = MDNS.IP(i).toString().c_str();
+              found10110 = MDNS.IP(i).toString();
             }
             break;
           }
-          if (found10110 != NULL) {
+          if (found10110 != NULL && found10110.length() > 0) {
             preferences.putString(NMEA0183_TCP_HOST_PREF, found10110);
             preferences.putInt(NMEA0183_TCP_PORT_PREF, 10110);
             M5.Lcd.print(found10110);
