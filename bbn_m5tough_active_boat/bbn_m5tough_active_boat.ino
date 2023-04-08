@@ -150,7 +150,7 @@ void setup() {
 
     // Connect to the SignalK TCP server
     setKeepAlive(skClient);
-    setup_reconnect(skClient, host, port);
+    setup_signalk_reconnect(skClient, host, port);
     if (skClient.connect(host, port)) {
       M5.Lcd.print("Connected to signalK ");
       M5.Lcd.println(host);
