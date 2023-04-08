@@ -149,5 +149,8 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - SignalK (will start with that)
 - NMEA 0183
 - NMEA 2000
+- PyPilot
+- MPD
+- NTP
 - MQTT (for Victron and others)
 
