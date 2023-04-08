@@ -20,14 +20,26 @@ extern "C" {
 #define MPD_TCP_HOST_PREF "mpd_host"
 #define MPD_TCP_PORT_PREF "mpd_port"
 
+  static bool mdns_up = false;
+
   void mdns_begin() {
     if (!MDNS.begin("ESP32_Browser")) {
       M5.Lcd.println("Error setting up MDNS responder!");
+    } else {
+      mdns_up = true;
     }
   }
 
   void mdns_end() {
     MDNS.end();
+    mdns_up = false;
+  }
+
+  int mdns_query_svc(const char* service, const char* proto) {
+    if (!mdns_up) {
+      mdns_begin();
+    }
+    return MDNS.queryService(service, proto);
   }
 
   bool discover_n_config() {
@@ -36,7 +48,7 @@ extern "C" {
     String signalk_tcp_host = preferences.getString(SK_TCP_HOST_PREF);
     int signalk_tcp_port = preferences.getInt(SK_TCP_PORT_PREF);
     if (signalk_tcp_host.length() <= 0 || signalk_tcp_host == "0.0.0.0" || signalk_tcp_port <= 0) {
-      int n = MDNS.queryService("signalk-tcp", "tcp");
+      int n = mdns_query_svc("signalk-tcp", "tcp");
       if (n > 0) {
         if (n == 1) {
           preferences.remove("SK_TCP_HOST_PREF");
@@ -54,7 +66,7 @@ extern "C" {
     String nmea0183_tcp_host = preferences.getString(NMEA0183_TCP_HOST_PREF);
     int nmea0183_tcp_port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
     if (nmea0183_tcp_host.length() <= 0 || nmea0183_tcp_host == "0.0.0.0" || nmea0183_tcp_port <= 0) {
-      int n = MDNS.queryService("nmea-0183", "tcp");
+      int n = mdns_query_svc("nmea-0183", "tcp");
       if (n > 0) {
         if (n == 1) {
           preferences.remove("NMEA0183_TCP_HOST_PREF");
@@ -99,7 +111,7 @@ extern "C" {
     String pypilot_tcp_host = preferences.getString(PYP_TCP_HOST_PREF);
     int pypilot_tcp_port = preferences.getInt(PYP_TCP_PORT_PREF);
     if (pypilot_tcp_host.length() <= 0 || pypilot_tcp_host == "0.0.0.0" || pypilot_tcp_port <= 0) {
-      int n = MDNS.queryService("pypilot", "tcp");
+      int n = mdns_query_svc("pypilot", "tcp");
       if (n > 0) {
         if (n == 1) {
           preferences.remove("PYP_TCP_HOST_PREF");
@@ -117,7 +129,7 @@ extern "C" {
     String mpd_tcp_host = preferences.getString(MPD_TCP_HOST_PREF);
     int mpd_tcp_port = preferences.getInt(MPD_TCP_PORT_PREF);
     if (mpd_tcp_host.length() <= 0 || mpd_tcp_host == "0.0.0.0" || mpd_tcp_port <= 0) {
-      int n = MDNS.queryService("mpd", "tcp");
+      int n = mdns_query_svc("mpd", "tcp");
       if (n > 0) {
         if (n == 1) {
           preferences.remove("MPD_TCP_HOST_PREF");
@@ -131,12 +143,15 @@ extern "C" {
         }
       }
     }
+    if (mdns_up) {
+      mdns_end();
+    }
     return saved;
   }
 
   void browseServiceMDNS(const char* service, const char* proto) {
     M5.Lcd.printf("Scan _%s._%s.local. ... ", service, proto);
-    int n = MDNS.queryService(service, proto);
+    int n = mdns_query_svc(service, proto);
     if (n == 0) {
       M5.Lcd.println("no found");
     } else {
