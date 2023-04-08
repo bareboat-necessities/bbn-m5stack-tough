@@ -47,6 +47,8 @@ extern "C" {
     delay(100);
     browseServiceMDS("pypilot", "tcp");
     delay(100);
+    browseService("mpd", "tcp");
+    delay(100);
     browseServiceMDS("mopidy-http", "tcp");
     delay(100);
   }
