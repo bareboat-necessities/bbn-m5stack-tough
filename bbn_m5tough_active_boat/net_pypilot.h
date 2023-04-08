@@ -55,6 +55,11 @@ extern "C" {
 
   */
 
+#define AP_MODE_COMPASS "MODE (Compass)"
+#define AP_MODE_GPS "MODE (GPS)"
+#define AP_MODE_WIND "MODE (Wind)"
+#define AP_MODE_WIND_TRUE "MODE (True Wind)"
+
   void pypilot_greet(WiFiClient& client) {
     const char* data1 = "watch={\"ap.heading\":0.5}";
     client.println(data1);
@@ -84,6 +89,21 @@ extern "C" {
   void pypilot_send_command(WiFiClient& client, float heading) {
     if (client.connected()) {
       client.println(String("ap.heading_command=") + String(heading, 1));
+      client.flush();
+    }
+  }
+
+  void pypilot_send_mode(WiFiClient& client, const char* mode) {
+    if (client.connected()) {
+      if (strcmp(AP_MODE_GPS, mode) == 0) {
+        client.println("ap.mode=\"gps\"");
+      } else if (strcmp(AP_MODE_WIND, mode) == 0) {
+        client.println("ap.mode=\"wind\"");
+      } else if (strcmp(AP_MODE_WIND_TRUE, mode) == 0) {
+        client.println("ap.mode=\"true wind\"");
+      } else {
+        client.println("ap.mode=\"compass\"");
+      }
       client.flush();
     }
   }
