@@ -31,7 +31,7 @@ extern "C" {
   }
 
   void discover_n_config() {
-    preferences.begin("clients-config");
+    preferences.begin("clients_config", false);
 
     String signalk_tcp_host = preferences.getString(SK_TCP_HOST_PREF);
     int signalk_tcp_port = preferences.getInt(SK_TCP_PORT_PREF);
@@ -91,7 +91,7 @@ extern "C" {
       if (n > 0) {
         if (n == 1) {
           preferences.putString(PYP_TCP_HOST_PREF, MDNS.IP(0).toString());
-          preferences.putString(PYP_TCP_PORT_PREF, String(MDNS.port(0)));
+          preferences.putInt(PYP_TCP_PORT_PREF, MDNS.port(0));
           M5.Lcd.print(MDNS.IP(0).toString());
           M5.Lcd.print(":");
           M5.Lcd.printf("%d - pypilot\n", MDNS.port(0));
@@ -106,14 +106,13 @@ extern "C" {
       if (n > 0) {
         if (n == 1) {
           preferences.putString(MPD_TCP_HOST_PREF, MDNS.IP(0).toString());
-          preferences.putString(MPD_TCP_PORT_PREF, String(MDNS.port(0)));
+          preferences.putInt(MPD_TCP_PORT_PREF, MDNS.port(0));
           M5.Lcd.print(MDNS.IP(0).toString());
           M5.Lcd.print(":");
           M5.Lcd.printf("%d - mpd\n", MDNS.port(0));
         }
       }
     }
-
     preferences.end();
   }
 
