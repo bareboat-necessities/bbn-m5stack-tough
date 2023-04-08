@@ -18,7 +18,7 @@ extern "C" {
     app.onRepeat(5000, [&client, host, port]() {
       if (!client.connected()) {
         setKeepAlive(client);
-        if (client.connect(host, port)) {
+        if (client.connect(host, port, 3000)) {
           signalk_greet(client);
         }
       }
