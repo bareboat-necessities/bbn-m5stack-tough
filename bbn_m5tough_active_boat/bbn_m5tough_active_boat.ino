@@ -35,7 +35,6 @@ Preferences preferences;
 #include "ui_player_control.h"
 #include "ui_about.h"
 #include "ui_brightness.h"
-#include "ui_mem_cpu_net_stat.h"
 
 #include "ui_keyboard.h"
 #include "ui_settings_wifi.h"
@@ -67,6 +66,7 @@ WiFiClient skClient;
 WiFiClient pypClient;
 MQTTClient mqttClient;
 
+#include "ui_mem_cpu_net_stat.h"
 #include "ui_compass.h"
 #include "ui_wind.h"
 #include "ui_engine.h"
