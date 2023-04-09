@@ -81,6 +81,7 @@ MQTTClient mqttClient;
 lv_updatable_screen_t* screens[] = {
   &windScreen,
   &aboutScreen,
+  &devStatusScreen,
   &rebootScreen,
   &clockScreen,
   &playerScreen,
@@ -143,6 +144,7 @@ void setup() {
     init_heelScreen();
     init_compassScreen();
     init_rudderScreen();
+    init_devStatusScreen();
     lv_scr_load(screens[page]->screen);
 
     discover_n_config();  // Discover services via mDNS
