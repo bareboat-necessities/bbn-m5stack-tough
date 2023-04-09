@@ -78,7 +78,7 @@ extern "C" {
                        + (fresh(shipDataModel.environment.time_gps.age) ? time_format(shipDataModel.environment.time_gps.t) : String("--")))
                         .c_str());
     lv_label_set_text(gps_lat_label,
-                      (String("LAT:                    ")
+                      (String("LAT:                     ")
                        + (fresh(shipDataModel.navigation.position.lat.age) ? lat_print(shipDataModel.navigation.position.lat.deg) : String("--")))
                         .c_str());
     lv_label_set_text(gps_lon_label,
@@ -86,7 +86,7 @@ extern "C" {
                        + (fresh(shipDataModel.navigation.position.lon.age) ? lon_print(shipDataModel.navigation.position.lon.deg) : String("--")))
                         .c_str());
     lv_label_set_text(gps_cogt_label,
-                      (String("COGT:                 ")
+                      (String("COGT:                  ")
                        + (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 1) + String(LV_SYMBOL_DEGREES) : String("--")))
                         .c_str());
     lv_label_set_text(gps_cogm_label,
