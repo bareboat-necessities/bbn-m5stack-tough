@@ -74,11 +74,11 @@ extern "C" {
 
   static void gps_update_cb() {
     lv_label_set_text(gps_time_label,
-                      (String("GPS Time:         ")
+                      (String("GPS Time:          ")
                        + (fresh(shipDataModel.environment.time_gps.age) ? time_format(shipDataModel.environment.time_gps.t) : String("--")))
                         .c_str());
     lv_label_set_text(gps_lat_label,
-                      (String("LAT:                     ")
+                      (String("LAT:                      ")
                        + (fresh(shipDataModel.navigation.position.lat.age) ? lat_print(shipDataModel.navigation.position.lat.deg) : String("--")))
                         .c_str());
     lv_label_set_text(gps_lon_label,
