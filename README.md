@@ -142,6 +142,8 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - Calculate dew point, air dencity. Detect fog conditions from pressure/temp/humidity
 - Calculate times of Local Sunset/Sunrise
 - Long wave time signals decoding DCF77, HBG, ALS162, WWVB
+- BMS displays ex: https://github.com/wholybee/esp32-smartBMSdisplay
+- TimeZone from location 
 
 
 
