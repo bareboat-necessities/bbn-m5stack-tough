@@ -141,6 +141,7 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 - Predict open sea state based on tables from https://en.wikipedia.org/wiki/Wind_wave#Formation
 - Calculate dew point, air dencity. Detect fog conditions from pressure/temp/humidity
 - Calculate times of Local Sunset/Sunrise
+- Long wave time signals decoding DCF77, HBG, ALS162, WWVB
 
 
 
