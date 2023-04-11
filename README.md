@@ -82,6 +82,8 @@ https://github.com/AK-Homberger/ESP32-Evo-Remote-Pilot-NMEA2000
 
 https://github.com/AK-Homberger/NMEA2000-TempPressure
 
+https://github.com/wholybee/esp32-smartBMSdisplay
+
 
 
 
