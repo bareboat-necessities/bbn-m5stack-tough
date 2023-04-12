@@ -84,7 +84,7 @@ extern "C" {
     lv_textarea_set_text(pwd_ta, "");
     //lv_textarea_set_password_mode(pwd_ta, true);
     lv_textarea_set_one_line(pwd_ta, true);
-    lv_obj_set_width(pwd_ta, 240);
+    lv_obj_set_width(pwd_ta, 230);
     lv_obj_align(pwd_ta, LV_ALIGN_TOP_LEFT, 10, 10);
     lv_obj_add_event_cb(pwd_ta, ta_password_event_cb, LV_EVENT_ALL, (void *)i);
 
@@ -95,7 +95,7 @@ extern "C" {
 
     /*Create a keyboard*/
     kb = lv_keyboard2(cont);
-    lv_obj_set_size(kb, LV_HOR_RES - 10, (LV_VER_RES / 2) + 5);
+    lv_obj_set_size(kb, LV_HOR_RES - 40, (LV_VER_RES / 2) + 5);
 
     lv_keyboard_set_textarea(kb, pwd_ta); /*Focus it on one of the text areas to start*/
     lv_obj_add_state(pwd_ta, LV_STATE_FOCUSED);
