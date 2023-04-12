@@ -74,9 +74,11 @@ extern "C" {
           if (strcmp(LV_SYMBOL_RIGHT, txt) == 0) {
             keybd_index = keybd_index + 1 >= sizeof(btnm_mapplus) / sizeof(btnm_mapplus[0]) ? 0 : keybd_index + 1;
             lv_keyboard_set_map(kb, LV_KEYBOARD_MODE_TEXT_LOWER, btnm_mapplus[keybd_index], ctrl_map);
+            lv_event_stop_processing(e);
           } else if (strcmp(LV_SYMBOL_LEFT, txt) == 0) {
             keybd_index = keybd_index - 1 < 0 ? sizeof(btnm_mapplus) / sizeof(btnm_mapplus[0]) - 1 : keybd_index - 1;
             lv_keyboard_set_map(kb, LV_KEYBOARD_MODE_TEXT_LOWER, btnm_mapplus[keybd_index], ctrl_map);
+            lv_event_stop_processing(e);
           }
         }
       }
@@ -102,7 +104,9 @@ extern "C" {
     lv_keyboard_set_map(kb, LV_KEYBOARD_MODE_TEXT_LOWER, btnm_mapplus[0], ctrl_map);
     lv_obj_set_height(kb, (LV_VER_RES / 2) + 5);
     lv_obj_set_width(kb, LV_HOR_RES_MAX - 4);
+    lv_obj_remove_event_cb(kb, lv_keyboard_def_event_cb);
     lv_obj_add_event_cb(kb, kb_event_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(kb, lv_keyboard_def_event_cb, LV_EVENT_VALUE_CHANGED, NULL);
     return kb;
   }
 
