@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
   #define TWO_MINUTES 120000
+  #define LONG_EXPIRE_TO 172800000
 
   bool fresh(unsigned long age, unsigned long limit = 5000) {
     return millis() - age < limit;
