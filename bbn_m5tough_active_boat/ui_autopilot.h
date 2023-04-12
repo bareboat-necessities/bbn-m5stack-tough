@@ -112,8 +112,6 @@ extern "C" {
     lv_obj_add_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
   }
 
-#define LONG_EXPIRE_TO 172800000
-
   static void autopilot_update_cb() {
     if (shipDataModel.steering.autopilot.ap_state.st == ap_state_e::STANDBY
         && fresh(shipDataModel.steering.autopilot.ap_state.age, LONG_EXPIRE_TO)) {
