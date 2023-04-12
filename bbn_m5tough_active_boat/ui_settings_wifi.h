@@ -84,21 +84,21 @@ extern "C" {
     lv_textarea_set_text(pwd_ta, "");
     //lv_textarea_set_password_mode(pwd_ta, true);
     lv_textarea_set_one_line(pwd_ta, true);
-    lv_obj_set_width(pwd_ta, lv_pct(60));
-    lv_obj_set_pos(pwd_ta, 16, 5);
+    lv_obj_set_width(pwd_ta, 240);
+    lv_obj_align(pwd_ta, LV_ALIGN_TOP_LEFT, 10, 10);
     lv_obj_add_event_cb(pwd_ta, ta_password_event_cb, LV_EVENT_ALL, (void *)i);
 
     /*Create a label and position it above the text box*/
     lv_obj_t *pwd_label = lv_label_create(cont);
-    lv_obj_set_width(pwd_label, lv_pct(60));
     lv_label_set_text(pwd_label, "Password: ");
     lv_obj_align_to(pwd_label, pwd_ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
 
     /*Create a keyboard*/
-    kb = lv_keyboard_create(cont);
-    lv_obj_set_size(kb, LV_HOR_RES, (LV_VER_RES / 2) + 5);
+    kb = lv_keyboard2(cont);
+    lv_obj_set_size(kb, LV_HOR_RES - 10, (LV_VER_RES / 2) + 5);
 
     lv_keyboard_set_textarea(kb, pwd_ta); /*Focus it on one of the text areas to start*/
+    lv_obj_add_state(pwd_ta, LV_STATE_FOCUSED);
   }
 
   void lv_connect_wifi_win(int i) {
