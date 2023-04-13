@@ -84,6 +84,8 @@ https://github.com/AK-Homberger/NMEA2000-TempPressure
 
 https://github.com/wholybee/esp32-smartBMSdisplay
 
+https://github.com/ChrisLizon/VictronSOCLCD
+
 
 
 
@@ -146,8 +148,6 @@ https://github.com/wholybee/esp32-smartBMSdisplay
 - Long wave time signals decoding DCF77, HBG, ALS162, WWVB
 - BMS displays ex: https://github.com/wholybee/esp32-smartBMSdisplay
 - TimeZone from location 
-
-
 
 ##  Interfaces:
 
