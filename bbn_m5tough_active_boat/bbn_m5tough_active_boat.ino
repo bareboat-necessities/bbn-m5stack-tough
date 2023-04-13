@@ -76,6 +76,7 @@ MQTTClient mqttClient;
 #include "ui_heel.h"
 #include "ui_autopilot.h"
 #include "ui_rudder.h"
+#include "ui_tanks.h"
 #include "ui_power_victron.h"
 
 lv_updatable_screen_t* screens[] = {
@@ -86,6 +87,7 @@ lv_updatable_screen_t* screens[] = {
   &clockScreen,
   &playerScreen,
   &victronScreen,
+  &tanksScreen,
   &autopilotScreen,
   &heelScreen,
   &compassScreen,
@@ -140,6 +142,7 @@ void setup() {
     init_clockScreen();
     init_playerScreen();
     init_victronScreen();
+    init_tanksScreen();
     init_autopilotScreen();
     init_heelScreen();
     init_compassScreen();
