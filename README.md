@@ -86,7 +86,7 @@ https://github.com/wholybee/esp32-smartBMSdisplay
 
 https://github.com/ChrisLizon/VictronSOCLCD
 
-
+https://github.com/RalfJL/VE.Direct2MQTT
 
 
 
