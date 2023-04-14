@@ -20,6 +20,9 @@ extern "C" {
 #define MPD_TCP_HOST_PREF "mpd_host"
 #define MPD_TCP_PORT_PREF "mpd_port"
 
+#define VENUS_MQTT_HOST_PREF "ve_mqtt_host"
+#define VENUS_MQTT_PORT_PREF "ve_mqtt_port"
+
   static bool mdns_up = false;
 
   void mdns_begin() {
