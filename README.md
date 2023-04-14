@@ -88,7 +88,7 @@ https://github.com/ChrisLizon/VictronSOCLCD
 
 https://github.com/RalfJL/VE.Direct2MQTT
 
-
+https://github.com/humppafreak/SensESP-PeetBrosWind
 
 
 ##  Possible future ehnancements:
