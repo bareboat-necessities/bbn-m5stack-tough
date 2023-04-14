@@ -8,7 +8,7 @@ static String wifi_ssid;      // Store the name of the wireless network.
 static String wifi_password;  // Store the password of the wireless network.
 
 static WiFiClient net;
-static MQTTClient client = MQTTClient(512);
+static MQTTClient client = MQTTClient(2048);
 
 typedef struct _victron_mqtt_context_t {
   String portalID;
