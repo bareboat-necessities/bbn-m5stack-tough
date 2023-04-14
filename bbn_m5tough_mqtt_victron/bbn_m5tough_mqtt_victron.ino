@@ -10,34 +10,36 @@ static String wifi_password;  // Store the password of the wireless network.
 static WiFiClient net;
 static MQTTClient client = MQTTClient(4096);
 
-unsigned long lastMillis = 0;
+typedef struct _victron_mqtt_context_t {
+  String portalID;
+  bool needs_id = true;
+  unsigned long lastMillis = 0;
+} victron_mqtt_context_t;
+
+static victron_mqtt_context_t victronCtx;
 
 void connect() {
   client.onMessage(messageReceived);
   client.setKeepAlive(10);
   //M5.Lcd.print("\nconnecting...");
-  while (!client.connect("arduino" /* clientID */, "" /*user*/, "" /*password*/)) {
+  while (!client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/)) {
     M5.Lcd.print(".");
     delay(1000);
   }
   //M5.Lcd.println("\nconnected!");
 
   client.subscribe("N/+/+/#");
-  client.publish("R/0242ac110002/system/0/Serial");
-  //client.subscribe("N/#");
-  //client.subscribe("N/0242ac110002/tank/#");
-  // client.unsubscribe("/hello");
 }
 
 void messageReceived(String &topic, String &payload) {
-  if (topic.endsWith("/system/0/Serial")) {
-    //client.publish("R/0242ac110002/system/0/Serial");
-    //client.subscribe("N/0242ac110002/+/#");
-    //client.subscribe("N/0242ac110002/#");
+  if (topic.endsWith("/system/0/Serial") && victronCtx.needs_id) {
+    String str = topic.substring(2);
+    str.remove(str.indexOf("/"));
+    victronCtx.portalID.clear();
+    victronCtx.portalID += str;
     //M5.Lcd.println("incoming: " + topic + " - " + payload);
-  }
-  if (topic == "N/0242ac110002/vebus/257/Ac/Out/L1/P") {
-    M5.Lcd.println("incoming: " + topic + " - " + payload);
+    //M5.Lcd.println("victronCtx.portalID: " + victronCtx.portalID);
+    victronCtx.needs_id = false;
   }
   if (topic.indexOf("tank") > 0 /*topic.indexOf("L1/Power") > 0*/) {
     M5.Lcd.println("incoming: " + topic + " - " + payload);
@@ -81,7 +83,6 @@ void setup() {
   connect();
 }
 
-
 void loop() {
   M5.update();
   client.loop();
@@ -90,8 +91,11 @@ void loop() {
     connect();
   }
 
-  if (millis() - lastMillis > 20000) {
-    lastMillis = millis();
-    client.publish("R/0242ac110002/system/0/Serial");
+  if (millis() - victronCtx.lastMillis > 20000) {
+    victronCtx.lastMillis = millis();
+    // keep alive
+    if (victronCtx.portalID.length() > 0) {
+      client.publish("R/" + victronCtx.portalID + "/system/0/Serial");
+    }
   }
 }
