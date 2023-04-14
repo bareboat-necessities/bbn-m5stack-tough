@@ -30,6 +30,8 @@ extern "C" {
   static void erase_net_conf_evt_handler(lv_event_t* e) {
     lv_event_code_t code = lv_event_get_code(e);
     if (code == LV_EVENT_LONG_PRESSED) {
+      erase_mdns_lookups();
+      ESP.restart();
     }
   }
 
