@@ -41,14 +41,15 @@ extern "C" {
   int mdns_query_svc(const char* service, const char* proto) {
     if (!mdns_up) {
       mdns_begin();
+      delay(500);
     }
+    delay(100);
     return MDNS.queryService(service, proto);
   }
 
   bool discover_n_config() {
     bool saved = false;
 
-    delay(50);
     String signalk_tcp_host = preferences.getString(SK_TCP_HOST_PREF);
     int signalk_tcp_port = preferences.getInt(SK_TCP_PORT_PREF);
     if (signalk_tcp_host.length() <= 0 || signalk_tcp_host == "0.0.0.0" || signalk_tcp_port <= 0) {
@@ -65,10 +66,9 @@ extern "C" {
       }
     }
 
-    delay(15);
     String nmea0183_tcp_host = preferences.getString(NMEA0183_TCP_HOST_PREF);
     int nmea0183_tcp_port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
-    if (nmea0183_tcp_host.length() <= 0 || nmea0183_tcp_host == "0.0.0.0" || nmea0183_tcp_port <= 0) {
+    if (nmea0183_tcp_host.length() <= 0 || nmea0183_tcp_host == "0.0.0.0" || nmea0183_tcp_port <= 0 || nmea0183_tcp_port != 10110) {
       int n = mdns_query_svc("nmea-0183", "tcp");
       if (n > 0) {
         if (n == 1) {
@@ -111,7 +111,6 @@ extern "C" {
       }
     }
 
-    delay(15);
     String pypilot_tcp_host = preferences.getString(PYP_TCP_HOST_PREF);
     int pypilot_tcp_port = preferences.getInt(PYP_TCP_PORT_PREF);
     if (pypilot_tcp_host.length() <= 0 || pypilot_tcp_host == "0.0.0.0" || pypilot_tcp_port <= 0) {
@@ -128,7 +127,6 @@ extern "C" {
       }
     }
 
-    delay(15);
     String mpd_tcp_host = preferences.getString(MPD_TCP_HOST_PREF);
     int mpd_tcp_port = preferences.getInt(MPD_TCP_PORT_PREF);
     if (mpd_tcp_host.length() <= 0 || mpd_tcp_host == "0.0.0.0" || mpd_tcp_port <= 0) {
@@ -145,7 +143,6 @@ extern "C" {
       }
     }
 
-    delay(15);
     String venus_mqtt_host = preferences.getString(VENUS_MQTT_HOST_PREF);
     int venus_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
     if (venus_mqtt_host.length() <= 0 || venus_mqtt_host == "0.0.0.0" || venus_mqtt_port <= 0) {
