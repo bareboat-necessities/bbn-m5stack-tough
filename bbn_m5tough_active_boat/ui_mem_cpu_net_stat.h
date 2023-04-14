@@ -10,6 +10,8 @@ extern "C" {
   static lv_obj_t *pyp_status_label;
   static lv_obj_t *nmea0183_status_label;
   static lv_obj_t *signalk_status_label;
+  static lv_obj_t *venus_mqtt_status_label;
+  static lv_obj_t *mpd_status_label;
 
   void printDeviceStats() {
     M5.Lcd.printf("FreeHeap: %d bytes\n", ESP.getFreeHeap());
@@ -46,6 +48,18 @@ extern "C" {
     lv_label_set_recolor(nmea0183_status_label, true);
     lv_label_set_text(nmea0183_status_label,
                       (String("#ff0000 " LV_SYMBOL_OK "  #") + String("NMEA 0183:       ") + preferences.getString(NMEA0183_TCP_HOST_PREF) + String(":") + String(preferences.getInt(NMEA0183_TCP_PORT_PREF))).c_str());
+
+    venus_mqtt_status_label = lv_label_create(parent);
+    lv_obj_align(venus_mqtt_status_label, LV_ALIGN_TOP_LEFT, 20, 120);
+    lv_label_set_recolor(venus_mqtt_status_label, true);
+    lv_label_set_text(venus_mqtt_status_label,
+                      (String("#ff0000 " LV_SYMBOL_OK "  #") + String("Venus MQTT:    ") + preferences.getString(VENUS_MQTT_HOST_PREF) + String(":") + String(preferences.getInt(VENUS_MQTT_PORT_PREF))).c_str());
+
+    mpd_status_label = lv_label_create(parent);
+    lv_obj_align(mpd_status_label, LV_ALIGN_TOP_LEFT, 20, 150);
+    lv_label_set_recolor(mpd_status_label, true);
+    lv_label_set_text(mpd_status_label,
+                      (String("#ff0000 " LV_SYMBOL_OK "  #") + String("MPD:                  ") + preferences.getString(MPD_TCP_HOST_PREF) + String(":") + String(preferences.getInt(MPD_TCP_PORT_PREF))).c_str());
   }
 
   static void dev_status_update_cb() {
