@@ -190,6 +190,10 @@ extern "C" {
     delay(100);
     browseServiceMDNS("mpd", "tcp");
     delay(100);
+    browseServiceMDNS("mqtt", "tcp"); // port 1883
+    delay(100);
+    browseServiceMDNS("secure-mqtt", "tcp"); // port 8883
+    delay(100);
     browseServiceMDNS("mopidy-http", "tcp");
     delay(100);
   }
