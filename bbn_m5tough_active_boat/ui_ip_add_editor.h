@@ -1,5 +1,5 @@
-#ifndef UI_IP_ADDR_EDITOR_H
-#define UI_IP_ADDR_EDITOR_H
+#ifndef UI_IP_ADD_EDITOR_H
+#define UI_IP_ADD_EDITOR_H
 
 #ifdef __cplusplus
 extern "C" {
