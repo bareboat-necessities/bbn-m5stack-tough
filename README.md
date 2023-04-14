@@ -148,6 +148,8 @@ https://github.com/RalfJL/VE.Direct2MQTT
 - Long wave time signals decoding DCF77, HBG, ALS162, WWVB
 - BMS displays ex: https://github.com/wholybee/esp32-smartBMSdisplay
 - TimeZone from location 
+- Power winches controls
+- Power furler controls 
 
 ##  Interfaces:
 
