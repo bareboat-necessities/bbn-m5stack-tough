@@ -146,6 +146,22 @@ extern "C" {
         }
       }
     }
+
+    String venus_mqtt_host = preferences.getString(VENUS_MQTT_HOST_PREF);
+    int venus_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
+    if (venus_mqtt_host.length() <= 0 || venus_mqtt_host == "0.0.0.0" || venus_mqtt_port <= 0) {
+      int n = mdns_query_svc("mqtt", "tcp");
+      if (n > 0) {
+        preferences.remove("VENUS_MQTT_HOST_PREF");
+        preferences.remove("VENUS_MQTT_PORT_PREF");
+        preferences.putString(VENUS_MQTT_HOST_PREF, MDNS.IP(0).toString());
+        preferences.putInt(VENUS_MQTT_PORT_PREF, MDNS.port(0));
+        saved = true;
+        M5.Lcd.print(MDNS.IP(0).toString());
+        M5.Lcd.print(":");
+        M5.Lcd.printf("%d - venus mqtt\n", MDNS.port(0));
+      }
+    }
     if (mdns_up) {
       mdns_end();
     }
@@ -193,9 +209,9 @@ extern "C" {
     delay(100);
     browseServiceMDNS("mpd", "tcp");
     delay(100);
-    browseServiceMDNS("mqtt", "tcp"); // port 1883
+    browseServiceMDNS("mqtt", "tcp");  // port 1883
     delay(100);
-    browseServiceMDNS("secure-mqtt", "tcp"); // port 8883
+    browseServiceMDNS("secure-mqtt", "tcp");  // port 8883
     delay(100);
     browseServiceMDNS("mopidy-http", "tcp");
     delay(100);
