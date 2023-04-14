@@ -27,6 +27,18 @@ extern "C" {
     M5.Lcd.printf("ChipCores: %d\n", ESP.getChipCores());
   }
 
+  static void erase_net_conf_evt_handler(lv_event_t* e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    if (code == LV_EVENT_LONG_PRESSED) {
+    }
+  }
+
+  static void edit_net_conf_evt_handler(lv_event_t* e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    if (code == LV_EVENT_CLICKED) {
+    }
+  }
+
   /**
    * A dev status display 
    */
@@ -60,6 +72,18 @@ extern "C" {
     lv_label_set_recolor(mpd_status_label, true);
     lv_label_set_text(mpd_status_label,
                       (String("#ff0000 " LV_SYMBOL_OK "  #") + String("MPD:                  ") + preferences.getString(MPD_TCP_HOST_PREF) + String(":") + String(preferences.getInt(MPD_TCP_PORT_PREF))).c_str());
+
+    lv_obj_t *btn_erase = lv_btn_create(parent);
+    lv_obj_add_event_cb(btn_erase, erase_net_conf_evt_handler, LV_EVENT_ALL, parent);
+    lv_obj_align(btn_erase, LV_ALIGN_CENTER, 40, 90);
+    lv_obj_t *btn_erase_l = lv_label_create(btn_erase);
+    lv_label_set_text(btn_erase_l, LV_SYMBOL_TRASH);
+
+    lv_obj_t *btn_edit = lv_btn_create(parent);
+    lv_obj_add_event_cb(btn_edit, edit_net_conf_evt_handler, LV_EVENT_ALL, parent);
+    lv_obj_align(btn_edit, LV_ALIGN_CENTER, -40, 90);
+    lv_obj_t *btn_edit_l = lv_label_create(btn_edit);
+    lv_label_set_text(btn_edit_l, LV_SYMBOL_SETTINGS);
   }
 
   static void dev_status_update_cb() {
