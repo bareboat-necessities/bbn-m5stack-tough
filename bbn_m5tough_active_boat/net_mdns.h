@@ -54,16 +54,14 @@ extern "C" {
     if (signalk_tcp_host.length() <= 0 || signalk_tcp_host == "0.0.0.0" || signalk_tcp_port <= 0) {
       int n = mdns_query_svc("signalk-tcp", "tcp");
       if (n > 0) {
-        if (n == 1) {
-          preferences.remove(SK_TCP_HOST_PREF);
-          preferences.remove(SK_TCP_PORT_PREF);
-          preferences.putString(SK_TCP_HOST_PREF, MDNS.IP(0).toString());
-          preferences.putInt(SK_TCP_PORT_PREF, MDNS.port(0));
-          saved = true;
-          M5.Lcd.print(MDNS.IP(0).toString());
-          M5.Lcd.print(":");
-          M5.Lcd.printf("%d - signalk\n", MDNS.port(0));
-        }
+        preferences.remove(SK_TCP_HOST_PREF);
+        preferences.remove(SK_TCP_PORT_PREF);
+        preferences.putString(SK_TCP_HOST_PREF, MDNS.IP(0).toString());
+        preferences.putInt(SK_TCP_PORT_PREF, MDNS.port(0));
+        saved = true;
+        M5.Lcd.print(MDNS.IP(0).toString());
+        M5.Lcd.print(":");
+        M5.Lcd.printf("%d - signalk\n", MDNS.port(0));
       }
     }
 
@@ -119,16 +117,14 @@ extern "C" {
     if (pypilot_tcp_host.length() <= 0 || pypilot_tcp_host == "0.0.0.0" || pypilot_tcp_port <= 0) {
       int n = mdns_query_svc("pypilot", "tcp");
       if (n > 0) {
-        if (n == 1) {
-          preferences.remove(PYP_TCP_HOST_PREF);
-          preferences.remove(PYP_TCP_HOST_PREF);
-          preferences.putString(PYP_TCP_HOST_PREF, MDNS.IP(0).toString());
-          preferences.putInt(PYP_TCP_PORT_PREF, MDNS.port(0));
-          saved = true;
-          M5.Lcd.print(MDNS.IP(0).toString());
-          M5.Lcd.print(":");
-          M5.Lcd.printf("%d - pypilot\n", MDNS.port(0));
-        }
+        preferences.remove(PYP_TCP_HOST_PREF);
+        preferences.remove(PYP_TCP_HOST_PREF);
+        preferences.putString(PYP_TCP_HOST_PREF, MDNS.IP(0).toString());
+        preferences.putInt(PYP_TCP_PORT_PREF, MDNS.port(0));
+        saved = true;
+        M5.Lcd.print(MDNS.IP(0).toString());
+        M5.Lcd.print(":");
+        M5.Lcd.printf("%d - pypilot\n", MDNS.port(0));
       }
     }
 
@@ -138,16 +134,14 @@ extern "C" {
     if (mpd_tcp_host.length() <= 0 || mpd_tcp_host == "0.0.0.0" || mpd_tcp_port <= 0) {
       int n = mdns_query_svc("mpd", "tcp");
       if (n > 0) {
-        if (n == 1) {
-          preferences.remove(MPD_TCP_HOST_PREF);
-          preferences.remove(MPD_TCP_PORT_PREF);
-          preferences.putString(MPD_TCP_HOST_PREF, MDNS.IP(0).toString());
-          preferences.putInt(MPD_TCP_PORT_PREF, MDNS.port(0));
-          saved = true;
-          M5.Lcd.print(MDNS.IP(0).toString());
-          M5.Lcd.print(":");
-          M5.Lcd.printf("%d - mpd\n", MDNS.port(0));
-        }
+        preferences.remove(MPD_TCP_HOST_PREF);
+        preferences.remove(MPD_TCP_PORT_PREF);
+        preferences.putString(MPD_TCP_HOST_PREF, MDNS.IP(0).toString());
+        preferences.putInt(MPD_TCP_PORT_PREF, MDNS.port(0));
+        saved = true;
+        M5.Lcd.print(MDNS.IP(0).toString());
+        M5.Lcd.print(":");
+        M5.Lcd.printf("%d - mpd\n", MDNS.port(0));
       }
     }
 
