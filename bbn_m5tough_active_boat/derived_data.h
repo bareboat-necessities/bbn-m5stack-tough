@@ -19,8 +19,10 @@ extern "C" {
       float longitude = shipDataModel.navigation.position.lon.deg;
       float latitude = shipDataModel.navigation.position.lat.deg;
       float mag_var_deg = myDeclination.magneticDeclination(latitude, longitude, RTCdate.Year % 100, 1 + RTCdate.Month, RTCdate.Date);
-      shipDataModel.navigation.mag_var.deg = mag_var_deg;
-      shipDataModel.navigation.mag_var.age = millis();
+      if (abs(mag_var_deg) > 0.00001) { // do not trust 0
+        shipDataModel.navigation.mag_var.deg = mag_var_deg;
+        shipDataModel.navigation.mag_var.age = millis();
+      }
     }
 
     if (fresh(shipDataModel.navigation.course_over_ground_true.age)) {
@@ -45,7 +47,7 @@ extern "C" {
       float ground_wind_speed =
         sqrt(aws * aws + head_wind * head_wind + 2.0 * aws * head_wind * cos(awa));
       float ground_wind_angle_rad = acos((aws * cos(awa) + head_wind) / ground_wind_speed);
-      if (awa < 0 || awa > PI) { // port side
+      if (awa < 0 || awa > PI) {  // port side
         ground_wind_angle_rad = (-ground_wind_angle_rad);
       }
       float ground_wind_angle_deg = ground_wind_angle_rad * 180.0 / PI;
