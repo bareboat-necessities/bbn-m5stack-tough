@@ -76,6 +76,13 @@ extern "C" {
                                                        shipDataModel.navigation.speed_through_water.kn, k_factor);
       shipDataModel.navigation.leeway.age = millis();
     }
+
+    // derive mag variation if unknown
+    if (!fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) &&
+      abs(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg) > 0.00001) {
+        shipDataModel.navigation.mag_var.deg = shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg;
+        shipDataModel.navigation.mag_var.age = millis();
+    }
   }
 
 #ifdef __cplusplus
