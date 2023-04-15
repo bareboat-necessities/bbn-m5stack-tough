@@ -1,3 +1,5 @@
+#include "misc/lv_area.h"
+#include "font/lv_symbol_def.h"
 #ifndef UI_IP_ADD_EDITOR_H
 #define UI_IP_ADD_EDITOR_H
 
@@ -5,10 +7,11 @@
 extern "C" {
 #endif
 
-  static lv_obj_t *spinbox1;
-  static lv_obj_t *spinbox2;
-  static lv_obj_t *spinbox3;
-  static lv_obj_t *spinbox4;
+  static lv_obj_t *spinboxes_parent = NULL;
+  static lv_obj_t *spinbox1 = NULL;
+  static lv_obj_t *spinbox2 = NULL;
+  static lv_obj_t *spinbox3 = NULL;
+  static lv_obj_t *spinbox4 = NULL;
 
   static void lv_set_spinbox_val(lv_obj_t *spinbox, int32_t v) {
     int digits = 1;
@@ -30,17 +33,11 @@ extern "C" {
     lv_set_spinbox_val(spinbox3, ip[2]);
     lv_set_spinbox_val(spinbox4, ip[3]);
 
-    lv_obj_clear_flag(spinbox1, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_clear_flag(spinbox2, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_clear_flag(spinbox3, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_clear_flag(spinbox4, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_clear_flag(spinboxes_parent, LV_OBJ_FLAG_HIDDEN);
   }
 
   void lv_ip_addr_editor_hide() {
-    lv_obj_add_flag(spinbox1, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(spinbox2, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(spinbox3, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(spinbox4, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(spinboxes_parent, LV_OBJ_FLAG_HIDDEN);
   }
 
   static void lv_spinbox_255_inc_ev_cb(lv_event_t *e) {
@@ -96,18 +93,34 @@ extern "C" {
     return spinbox;
   }
 
-  void lv_ip_addr_editor(lv_obj_t *parent, const char *addr) {
-    spinbox1 = lv_spinbox_255(parent, LV_ALIGN_CENTER, -105, 0);
-    spinbox2 = lv_spinbox_255(parent, LV_ALIGN_CENTER, -35, 0);
-    spinbox3 = lv_spinbox_255(parent, LV_ALIGN_CENTER, 35, 0);
-    spinbox4 = lv_spinbox_255(parent, LV_ALIGN_CENTER, 105, 0);
+  static void save_ip_evt_handler(lv_event_t *e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    if (code == LV_EVENT_CLICKED) {
+      lv_ip_addr_editor_hide();
+      // TODO:
+    }
+  }
 
-    IPAddress ip;
-    ip.fromString(addr);
-    lv_set_spinbox_val(spinbox1, ip[0]);
-    lv_set_spinbox_val(spinbox2, ip[1]);
-    lv_set_spinbox_val(spinbox3, ip[2]);
-    lv_set_spinbox_val(spinbox4, ip[3]);
+  void lv_ip_addr_editor(lv_obj_t *parent) {
+    if (spinboxes_parent == NULL) {
+      spinboxes_parent = lv_obj_create(parent);
+      lv_obj_set_size(spinboxes_parent, 320, 240);
+      spinbox1 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, -105, -20);
+      spinbox2 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, -35, -20);
+      spinbox3 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, 35, -20);
+      spinbox4 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, 105, -20);
+    }
+
+    lv_set_spinbox_val(spinbox1, 0);
+    lv_set_spinbox_val(spinbox2, 0);
+    lv_set_spinbox_val(spinbox3, 0);
+    lv_set_spinbox_val(spinbox4, 0);
+
+    lv_obj_t *btn_save = lv_btn_create(spinboxes_parent);
+    lv_obj_add_event_cb(btn_save, save_ip_evt_handler, LV_EVENT_ALL, spinboxes_parent);
+    lv_obj_align(btn_save, LV_ALIGN_BOTTOM_RIGHT, -5, -5);
+    lv_obj_t *btn_save_l = lv_label_create(btn_save);
+    lv_label_set_text(btn_save_l, LV_SYMBOL_OK);
   }
 
 #ifdef __cplusplus
