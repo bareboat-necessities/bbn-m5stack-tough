@@ -26,35 +26,35 @@ extern "C" {
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "VE Venus MQTT", VENUS_MQTT_HOST_PREF);
+        lv_ip_addr_editor_show(host.c_str(), (int32_t)port, "VE Venus MQTT", VENUS_MQTT_HOST_PREF);
       } else if (strcmp(host_type, PYP_TCP_HOST_PREF) == 0) {
         String host = preferences.getString(PYP_TCP_HOST_PREF);
         int port = preferences.getInt(PYP_TCP_PORT_PREF);
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "PyPilot TCP", PYP_TCP_HOST_PREF);
+        lv_ip_addr_editor_show(host.c_str(), (int32_t)port, "PyPilot TCP", PYP_TCP_HOST_PREF);
       } else if (strcmp(host_type, SK_TCP_HOST_PREF) == 0) {
         String host = preferences.getString(SK_TCP_HOST_PREF);
         int port = preferences.getInt(SK_TCP_PORT_PREF);
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "SignalK TCP", SK_TCP_HOST_PREF);
+        lv_ip_addr_editor_show(host.c_str(), (int32_t)port, "SignalK TCP", SK_TCP_HOST_PREF);
       } else if (strcmp(host_type, MPD_TCP_HOST_PREF) == 0) {
         String host = preferences.getString(MPD_TCP_HOST_PREF);
         int port = preferences.getInt(MPD_TCP_PORT_PREF);
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "MPD Player", MPD_TCP_HOST_PREF);
+        lv_ip_addr_editor_show(host.c_str(), (int32_t)port, "MPD Player", MPD_TCP_HOST_PREF);
       } else if (strcmp(host_type, NMEA0183_TCP_HOST_PREF) == 0) {
         String host = preferences.getString(NMEA0183_TCP_HOST_PREF);
         int port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "NMEA 0183 TCP", NMEA0183_TCP_HOST_PREF);
+        lv_ip_addr_editor_show(host.c_str(), (int32_t)port, "NMEA 0183 TCP", NMEA0183_TCP_HOST_PREF);
       }
     }
   }
@@ -79,7 +79,7 @@ extern "C" {
     lv_ip_addr_editor(parent);
     lv_ip_addr_editor_hide();
   }
-/*
+  /*
   void printDeviceStats() {
     M5.Lcd.printf("FreeHeap: %d bytes\n", ESP.getFreeHeap());
     M5.Lcd.printf("MinFreeHeap: %d bytes\n", ESP.getMinFreeHeap());
@@ -177,6 +177,12 @@ extern "C" {
                                                    : String("#ff0000 " LV_SYMBOL_OK "  #"))
                        + String("NMEA 0183:       ") + preferences.getString(NMEA0183_TCP_HOST_PREF)
                        + String(":") + String(preferences.getInt(NMEA0183_TCP_PORT_PREF)))
+                        .c_str());
+    lv_label_set_text(venus_mqtt_status_label,
+                      ((mqttClient.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
+                                               : String("#ff0000 " LV_SYMBOL_OK "  #"))
+                       + String("Venus MQTT:    ") + preferences.getString(VENUS_MQTT_HOST_PREF)
+                       + String(":") + String(preferences.getInt(VENUS_MQTT_PORT_PREF)))
                         .c_str());
   }
 
