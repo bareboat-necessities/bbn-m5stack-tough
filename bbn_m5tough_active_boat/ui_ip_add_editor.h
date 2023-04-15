@@ -43,6 +43,30 @@ extern "C" {
     lv_obj_add_flag(spinbox4, LV_OBJ_FLAG_HIDDEN);
   }
 
+  static void lv_spinbox_255_inc_ev_cb(lv_event_t *e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t *spinbox = (lv_obj_t *)lv_event_get_user_data(e);
+    if (spinbox != NULL) {
+      if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT) {
+        int32_t v = lv_spinbox_get_value(spinbox);
+        v = ((v + 1) >= 255 ? 0 : (v + 1));
+        lv_set_spinbox_val(spinbox, v);
+      }
+    }
+  }
+
+  static void lv_spinbox_255_dec_ev_cb(lv_event_t *e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t *spinbox = (lv_obj_t *)lv_event_get_user_data(e);
+    if (spinbox != NULL) {
+      if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT) {
+        int32_t v = lv_spinbox_get_value(spinbox);
+        v = ((v - 1) >= 0 ? (v - 1) : 255);
+        lv_set_spinbox_val(spinbox, v);
+      }
+    }
+  }
+
   lv_obj_t *lv_spinbox_255(lv_obj_t *parent, lv_align_t align, lv_coord_t x_ofs, lv_coord_t y_ofs) {
     lv_obj_t *spinbox = lv_spinbox_create(parent);
     lv_spinbox_set_range(spinbox, 0, 255);
@@ -70,30 +94,6 @@ extern "C" {
 
     lv_set_spinbox_val(spinbox, 0);
     return spinbox;
-  }
-
-  static void lv_spinbox_255_inc_ev_cb(lv_event_t *e) {
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t *spinbox = (lv_obj_t *)lv_event_get_user_data(e);
-    if (spinbox != NULL) {
-      if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT) {
-        int32_t v = lv_spinbox_get_value(spinbox);
-        v = ((v + 1) >= 255 ? 0 : (v + 1));
-        lv_set_spinbox_val(spinbox, v);
-      }
-    }
-  }
-
-  static void lv_spinbox_255_dec_ev_cb(lv_event_t *e) {
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t *spinbox = (lv_obj_t *)lv_event_get_user_data(e);
-    if (spinbox != NULL) {
-      if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT) {
-        int32_t v = lv_spinbox_get_value(spinbox);
-        v = ((v - 1) >= 0 ? (v - 1) : 255);
-        lv_set_spinbox_val(spinbox, v);
-      }
-    }
   }
 
   void lv_ip_addr_editor(lv_obj_t *parent, const char *addr) {
