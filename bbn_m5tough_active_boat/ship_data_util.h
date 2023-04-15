@@ -9,7 +9,7 @@ extern "C" {
   #define LONG_EXPIRE_TO 172800000
 
   bool fresh(unsigned long age, unsigned long limit = 5000) {
-    return millis() - age < limit;
+    return millis() - age < limit && age != 0;
   }
 
 #ifdef __cplusplus
