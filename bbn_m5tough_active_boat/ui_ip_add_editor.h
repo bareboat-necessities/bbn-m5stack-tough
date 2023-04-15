@@ -72,20 +72,6 @@ extern "C" {
     return spinbox;
   }
 
-  void lv_ip_addr_editor(lv_obj_t *parent, const char *addr) {
-    spinbox1 = lv_spinbox_255(parent, LV_ALIGN_CENTER, -105, 0);
-    spinbox2 = lv_spinbox_255(parent, LV_ALIGN_CENTER, -35, 0);
-    spinbox3 = lv_spinbox_255(parent, LV_ALIGN_CENTER, 35, 0);
-    spinbox4 = lv_spinbox_255(parent, LV_ALIGN_CENTER, 105, 0);
-
-    IPAddress ip;
-    ip.fromString(addr);
-    lv_set_spinbox_val(spinbox1, ip[0]);
-    lv_set_spinbox_val(spinbox2, ip[1]);
-    lv_set_spinbox_val(spinbox3, ip[2]);
-    lv_set_spinbox_val(spinbox4, ip[3]);
-  }
-
   static void lv_spinbox_255_inc_ev_cb(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t *spinbox = (lv_obj_t *)lv_event_get_user_data(e);
@@ -108,6 +94,20 @@ extern "C" {
         lv_set_spinbox_val(spinbox, v);
       }
     }
+  }
+
+  void lv_ip_addr_editor(lv_obj_t *parent, const char *addr) {
+    spinbox1 = lv_spinbox_255(parent, LV_ALIGN_CENTER, -105, 0);
+    spinbox2 = lv_spinbox_255(parent, LV_ALIGN_CENTER, -35, 0);
+    spinbox3 = lv_spinbox_255(parent, LV_ALIGN_CENTER, 35, 0);
+    spinbox4 = lv_spinbox_255(parent, LV_ALIGN_CENTER, 105, 0);
+
+    IPAddress ip;
+    ip.fromString(addr);
+    lv_set_spinbox_val(spinbox1, ip[0]);
+    lv_set_spinbox_val(spinbox2, ip[1]);
+    lv_set_spinbox_val(spinbox3, ip[2]);
+    lv_set_spinbox_val(spinbox4, ip[3]);
   }
 
 #ifdef __cplusplus
