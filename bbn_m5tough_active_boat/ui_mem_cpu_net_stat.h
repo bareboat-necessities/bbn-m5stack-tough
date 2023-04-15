@@ -65,10 +65,10 @@ extern "C" {
     lv_obj_align(data_connections_list, LV_ALIGN_CENTER, 0, 19);
 
     lv_obj_t *btn;
-    btn = lv_list_add_btn(data_connections_list, NULL, "SignalK TCP");
-    lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)SK_TCP_HOST_PREF);
     btn = lv_list_add_btn(data_connections_list, NULL, "PyPilot TCP");
     lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)PYP_TCP_HOST_PREF);
+    btn = lv_list_add_btn(data_connections_list, NULL, "SignalK TCP");
+    lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)SK_TCP_HOST_PREF);
     btn = lv_list_add_btn(data_connections_list, NULL, "NMEA 0183 TCP");
     lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)NMEA0183_TCP_HOST_PREF);
     btn = lv_list_add_btn(data_connections_list, NULL, "VE Venus MQTT");
