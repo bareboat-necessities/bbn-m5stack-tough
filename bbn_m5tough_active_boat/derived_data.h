@@ -19,19 +19,21 @@ extern "C" {
       float longitude = shipDataModel.navigation.position.lon.deg;
       float latitude = shipDataModel.navigation.position.lat.deg;
       float mag_var_deg = myDeclination.magneticDeclination(latitude, longitude, RTCdate.Year % 100, 1 + RTCdate.Month, RTCdate.Date);
-      if (abs(mag_var_deg) > 0.00001) { // do not trust 0
+      if (abs(mag_var_deg) > 0.00001) {  // do not trust 0
         shipDataModel.navigation.mag_var.deg = mag_var_deg;
         shipDataModel.navigation.mag_var.age = millis();
       }
     }
 
-    if (fresh(shipDataModel.navigation.course_over_ground_true.age)) {
-      shipDataModel.navigation.course_over_ground_mag.deg = shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.mag_var.deg;
-      shipDataModel.navigation.course_over_ground_mag.age = millis();
-    }
-    if (fresh(shipDataModel.navigation.heading_mag.age)) {
-      shipDataModel.navigation.heading_true.deg = shipDataModel.navigation.heading_mag.deg + shipDataModel.navigation.mag_var.deg;
-      shipDataModel.navigation.heading_true.age = millis();
+    if (fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO)) {
+      if (fresh(shipDataModel.navigation.course_over_ground_true.age)) {
+        shipDataModel.navigation.course_over_ground_mag.deg = shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.mag_var.deg;
+        shipDataModel.navigation.course_over_ground_mag.age = millis();
+      }
+      if (fresh(shipDataModel.navigation.heading_mag.age)) {
+        shipDataModel.navigation.heading_true.deg = shipDataModel.navigation.heading_mag.deg + shipDataModel.navigation.mag_var.deg;
+        shipDataModel.navigation.heading_true.age = millis();
+      }
     }
 
     // ground wind calc
@@ -61,7 +63,7 @@ extern "C" {
       shipDataModel.environment.wind.ground_wind_angle_true.age = millis();
     }
 
-    if (fresh(shipDataModel.environment.wind.ground_wind_angle_true.age)) {
+    if (fresh(shipDataModel.environment.wind.ground_wind_angle_true.age) && fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO)) {
       shipDataModel.environment.wind.ground_wind_angle_mag.age = shipDataModel.environment.wind.ground_wind_angle_true.deg - shipDataModel.navigation.mag_var.deg;
       shipDataModel.environment.wind.ground_wind_angle_mag.age = millis();
     }
