@@ -27,7 +27,7 @@ extern "C" {
   void lv_data_connections(lv_obj_t *parent) {
     data_connections_list = lv_list_create(parent);
     lv_obj_set_size(data_connections_list, 220, 180);
-    lv_obj_align(data_connections_list, LV_ALIGN_CENTER, 0, 17);
+    lv_obj_align(data_connections_list, LV_ALIGN_CENTER, 0, 19);
 
     lv_obj_t *btn;
     btn = lv_list_add_btn(data_connections_list, NULL, "SignalK TCP");
