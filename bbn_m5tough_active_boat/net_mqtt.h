@@ -59,6 +59,7 @@ extern "C" {
   }
 
   void victron_mqtt_client_begin(MQTTClient& client, Client& net, const char* host, int port) {
+    setKeepAlive(net);
     client.begin(host, port, net);
     victron_mqtt_client_connect(client);
   }
