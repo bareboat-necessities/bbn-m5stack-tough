@@ -1,4 +1,3 @@
-#include "core/lv_obj.h"
 #ifndef UI_IP_ADD_EDITOR_H
 #define UI_IP_ADD_EDITOR_H
 
@@ -66,7 +65,7 @@ extern "C" {
     ((lv_spinbox_t *)spinbox)->ta.cursor.show = 0;
   }
 
-  void lv_ip_addr_editor_show(const char *addr) {
+  void lv_ip_addr_editor_show(const char *addr, int32_t port) {
     IPAddress ip;
     ip.fromString(addr);
 
@@ -74,6 +73,7 @@ extern "C" {
     lv_set_spinbox_val(spinbox2, ip[1]);
     lv_set_spinbox_val(spinbox3, ip[2]);
     lv_set_spinbox_val(spinbox4, ip[3]);
+    lv_spinbox_set_value(spinbox_port, port);
 
     lv_obj_clear_flag(spinboxes_parent, LV_OBJ_FLAG_HIDDEN);
   }
@@ -159,7 +159,7 @@ extern "C" {
     lv_set_spinbox_val(spinbox2, 0);
     lv_set_spinbox_val(spinbox3, 0);
     lv_set_spinbox_val(spinbox4, 0);
-    lv_set_spinbox_val(spinbox_port, 0);
+    lv_spinbox_set_value(spinbox_port, 0);
 
     lv_obj_t *btn_save = lv_btn_create(spinboxes_parent);
     lv_obj_add_event_cb(btn_save, save_ip_evt_handler, LV_EVENT_ALL, spinboxes_parent);
