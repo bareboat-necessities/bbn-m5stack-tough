@@ -11,6 +11,7 @@ extern "C" {
   static lv_obj_t *spinbox3 = NULL;
   static lv_obj_t *spinbox4 = NULL;
   static lv_obj_t *spinbox_port = NULL;
+  static lv_obj_t *ip_editor_label = NULL;
 
   static void lv_spinbox_port_inc_ev_cb(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
@@ -32,7 +33,6 @@ extern "C" {
     lv_obj_t *spinbox = lv_spinbox_create(parent);
     lv_spinbox_set_range(spinbox, 0, 65535);
     lv_spinbox_set_digit_format(spinbox, 5, 0);
-    lv_spinbox_step_prev(spinbox);
     lv_obj_set_width(spinbox, 80);
     lv_obj_align(spinbox, align, x_ofs, y_ofs);
     lv_obj_set_style_text_align(spinbox, LV_TEXT_ALIGN_CENTER, 0);
@@ -65,7 +65,7 @@ extern "C" {
     ((lv_spinbox_t *)spinbox)->ta.cursor.show = 0;
   }
 
-  void lv_ip_addr_editor_show(const char *addr, int32_t port) {
+  void lv_ip_addr_editor_show(const char *addr, int32_t port, const char *label) {
     IPAddress ip;
     ip.fromString(addr);
 
@@ -74,6 +74,11 @@ extern "C" {
     lv_set_spinbox_val(spinbox3, ip[2]);
     lv_set_spinbox_val(spinbox4, ip[3]);
     lv_spinbox_set_value(spinbox_port, port);
+    lv_spinbox_step_next(spinbox_port);
+    lv_spinbox_step_next(spinbox_port);
+    lv_spinbox_step_next(spinbox_port);
+    lv_spinbox_step_next(spinbox_port);
+    lv_label_set_text(ip_editor_label, label);  
 
     lv_obj_clear_flag(spinboxes_parent, LV_OBJ_FLAG_HIDDEN);
   }
@@ -153,6 +158,7 @@ extern "C" {
       spinbox3 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, 35, -50);
       spinbox4 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, 105, -50);
       spinbox_port = lv_spinbox_port(spinboxes_parent, LV_ALIGN_CENTER, 0, 50);
+      ip_editor_label = lv_label_create(spinboxes_parent);
     }
 
     lv_set_spinbox_val(spinbox1, 0);
@@ -163,9 +169,12 @@ extern "C" {
 
     lv_obj_t *btn_save = lv_btn_create(spinboxes_parent);
     lv_obj_add_event_cb(btn_save, save_ip_evt_handler, LV_EVENT_ALL, spinboxes_parent);
-    lv_obj_align(btn_save, LV_ALIGN_BOTTOM_RIGHT, -4, -4);
+    lv_obj_align(btn_save, LV_ALIGN_BOTTOM_RIGHT, -4, -2);
     lv_obj_t *btn_save_l = lv_label_create(btn_save);
     lv_label_set_text(btn_save_l, LV_SYMBOL_OK);
+
+    lv_obj_align(ip_editor_label, LV_ALIGN_BOTTOM_LEFT, 4, -5);
+    lv_label_set_text(ip_editor_label, "IP address and port");  
   }
 
 #ifdef __cplusplus
