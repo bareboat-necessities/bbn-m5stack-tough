@@ -48,17 +48,16 @@ extern "C" {
 
   void victron_mqtt_client_connect(MQTTClient& client) {
     client.onMessage(victron_mqtt_on_message);
-    client.setKeepAlive(10);
     while (!client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/)) {
-      M5.Lcd.print(".");
       delay(1000);
     }
-    M5.Lcd.println("\nMQTT connected!");
+    M5.Lcd.println("Connected to mqtt");
 
     client.subscribe("N/+/+/#");
   }
 
   void victron_mqtt_client_begin(MQTTClient& client, WiFiClient& net, const char* host, int port) {
+    client.setKeepAlive(10);
     setKeepAlive(net);
     client.begin(host, port, net);
     victron_mqtt_client_connect(client);
