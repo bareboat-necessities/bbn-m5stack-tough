@@ -69,9 +69,12 @@ extern "C" {
     ((lv_spinbox_t *)spinbox)->ta.cursor.show = 0;
   }
 
-  void lv_ip_addr_editor_show(const char *addr, int32_t port, const char *label) {
+  static const char* editor_host_type;
+
+  void lv_ip_addr_editor_show(const char *addr, int32_t port, const char *label, const char* host_type) {
     IPAddress ip;
     ip.fromString(addr);
+    editor_host_type = host_type;
 
     lv_label_set_text(spinbox1, (String(ip[0]) + '.').c_str());
     lv_label_set_text(spinbox2, (String(ip[1]) + '.').c_str());
@@ -85,6 +88,21 @@ extern "C" {
     lv_label_set_text(ip_editor_label, label);
 
     lv_obj_clear_flag(spinboxes_parent, LV_OBJ_FLAG_HIDDEN);
+  }
+
+  static String editor_ip_address;
+
+  void build_ip_address() {
+    editor_ip_address = String(lv_label_get_text(spinbox1))
+                        + String(lv_label_get_text(spinbox2))
+                        + String(lv_label_get_text(spinbox3))
+                        + String(lv_spinbox_get_value(spinbox4));
+  }
+
+  static int editor_port;
+
+  void build_port() {
+    editor_port = lv_spinbox_get_value(spinbox_port);
   }
 
   void lv_ip_addr_editor_hide() {
@@ -156,8 +174,26 @@ extern "C" {
   static void save_ip_evt_handler(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
     if (code == LV_EVENT_CLICKED) {
+      build_ip_address();
+      build_port();
+      if (strcmp(editor_host_type, VENUS_MQTT_HOST_PREF) == 0) {
+        preferences.putString(VENUS_MQTT_HOST_PREF, editor_ip_address);
+        preferences.putInt(VENUS_MQTT_PORT_PREF, editor_port);
+      } else if (strcmp(editor_host_type, PYP_TCP_HOST_PREF) == 0) {
+        preferences.putString(PYP_TCP_HOST_PREF, editor_ip_address);
+        preferences.putInt(PYP_TCP_PORT_PREF, editor_port);
+      } else if (strcmp(editor_host_type, SK_TCP_HOST_PREF) == 0) {
+        preferences.putString(SK_TCP_HOST_PREF, editor_ip_address);
+        preferences.putInt(SK_TCP_PORT_PREF, editor_port);
+      } else if (strcmp(editor_host_type, MPD_TCP_HOST_PREF) == 0) {
+        preferences.putString(MPD_TCP_HOST_PREF, editor_ip_address);
+        preferences.putInt(MPD_TCP_PORT_PREF, editor_port);
+      } else if (strcmp(editor_host_type, NMEA0183_TCP_HOST_PREF) == 0) {
+        preferences.putString(NMEA0183_TCP_HOST_PREF, editor_ip_address);
+        preferences.putInt(NMEA0183_TCP_PORT_PREF, editor_port);
+      }
       lv_ip_addr_editor_hide();
-      // TODO:
+      ESP.restart();
     }
   }
 
