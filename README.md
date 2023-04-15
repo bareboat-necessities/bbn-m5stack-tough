@@ -150,6 +150,7 @@ https://github.com/humppafreak/SensESP-PeetBrosWind
 - TimeZone from location 
 - Power winches controls
 - Power furler controls 
+- UI to control fog horn signal, and horn in general
 
 ##  Interfaces:
 
