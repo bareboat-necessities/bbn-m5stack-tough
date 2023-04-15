@@ -20,6 +20,7 @@ extern "C" {
     }
     ((lv_spinbox_t *)spinbox)->digit_count = digits;
     lv_spinbox_set_value(spinbox, v);
+    ((lv_spinbox_t *)spinbox)->ta.cursor.show = 0;
   }
 
   void lv_ip_addr_editor_show(const char *addr) {
@@ -47,6 +48,7 @@ extern "C" {
         v = ((v + 1) >= 255 ? 0 : (v + 1));
         lv_set_spinbox_val(spinbox, v);
       }
+      ((lv_spinbox_t *)spinbox)->ta.cursor.show = 0;
     }
   }
 
@@ -59,6 +61,7 @@ extern "C" {
         v = ((v - 1) >= 0 ? (v - 1) : 255);
         lv_set_spinbox_val(spinbox, v);
       }
+      ((lv_spinbox_t *)spinbox)->ta.cursor.show = 0;
     }
   }
 
@@ -70,7 +73,7 @@ extern "C" {
     lv_spinbox_set_rollover(spinbox, true);
     lv_obj_set_width(spinbox, 62);
     lv_obj_align(spinbox, align, x_ofs, y_ofs);
-    lv_obj_set_style_bg_opa(spinbox, 0, LV_PART_CURSOR);
+    //lv_obj_set_style_bg_opa(spinbox, 0, LV_PART_CURSOR);
     lv_obj_set_style_text_align(spinbox, LV_TEXT_ALIGN_CENTER, 0);
 
     lv_coord_t h = lv_obj_get_height(spinbox);
