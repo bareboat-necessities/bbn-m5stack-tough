@@ -23,7 +23,7 @@ extern "C" {
       if (strcmp(host_type, VENUS_MQTT_HOST_PREF) == 0) {
         String venus_mqtt_host = preferences.getString(VENUS_MQTT_HOST_PREF);
         int venus_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
-        lv_ip_addr_editor_show(venus_mqtt_host.c_str());
+        lv_ip_addr_editor_show(venus_mqtt_host.c_str(), (int32_t) venus_mqtt_port, "VE Venus MQTT");
       } else {
         // TODO:
       }
