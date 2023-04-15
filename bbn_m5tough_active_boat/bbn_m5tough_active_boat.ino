@@ -66,6 +66,7 @@ WiFiClient skClient;
 WiFiClient pypClient;
 MQTTClient mqttClient;
 
+#include "ui_ip_add_editor.h"
 #include "ui_mem_cpu_net_stat.h"
 #include "ui_compass.h"
 #include "ui_wind.h"
