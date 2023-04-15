@@ -51,54 +51,54 @@ typedef unsigned long age_t;
 
 typedef struct on_off_t {
   on_off_e st;
-  age_t age;
+  age_t age = 0U;
 } on_off_t;
 
 typedef struct _ap_mode_t {
   ap_mode_e mode;
-  age_t age;
+  age_t age = 0U;
 } ap_mode_t;
 
 typedef struct _ap_cmd_type_t {
   ap_cmd_type_e cmd;
-  age_t age;
+  age_t age = 0U;
 } ap_cmd_type_t;
 
 typedef struct _ap_state_t {
   ap_state_e st;
-  age_t age;
+  age_t age = 0U;
 } ap_state_t;
 
 typedef struct _angle_deg_t {
   float deg;
-  age_t age;
+  age_t age = 0U;
 } angle_deg_t;
 
 typedef struct _kn_t {
   float kn;
-  age_t age;
+  age_t age = 0U;
 } kn_t;
 
 typedef struct _RPM_t {
   float rpm;
-  age_t age;
+  age_t age = 0U;
 } RPM_t;
 
 typedef tm time_tm_t;
 
 typedef struct _env_time_t {
   time_tm_t t;
-  age_t age;
+  age_t age = 0U;
 } env_time_t;
 
 typedef struct _nav_light {
   on_off_t state;
-  age_t age;
+  age_t age = 0U;
 } nav_light;
 
 typedef struct _angular_velocity_t {
   float deg_min;
-  age_t age;
+  age_t age = 0U;
 } _angular_velocity_t;
 
 typedef struct _position_t {
@@ -153,32 +153,32 @@ typedef struct _depth_t {
   float below_keel;
   float below_transducer;
   float below_surface;
-  age_t age;
+  age_t age = 0U;
 } depth_t;
 
 typedef struct _deg_C_t {
   float deg_C;
-  age_t age;
+  age_t age = 0U;
 } deg_C_t;
 
 typedef struct _hPa_t {
   float hPa;
-  age_t age;
+  age_t age = 0U;
 } hPa_t;
 
 typedef struct _percent_t {
   float pct;
-  age_t age;
+  age_t age = 0U;
 } percent_t;
 
 typedef struct _lux_t {
   float lux;
-  age_t age;
+  age_t age = 0U;
 } lux_t;
 
 typedef struct _litters_t {
   float L;
-  age_t age;
+  age_t age = 0U;
 } litters_t;
 
 typedef struct _water_t {
@@ -204,22 +204,22 @@ typedef struct _environment_t {
 
 typedef struct _current_amp_t {
   float amp;
-  age_t age;
+  age_t age = 0U;
 } current_amp_t;
 
 typedef struct _voltage_V_t {
   float volt;
-  age_t age;
+  age_t age = 0U;
 } voltage_V_t;
 
 typedef struct _power_W_t {
   float watt;
-  age_t age;
+  age_t age = 0U;
 } power_W_t;
 
 typedef struct _freq_Hz_t {
   float Hz;
-  age_t age;
+  age_t age = 0U;
 } freq_Hz_t;
 
 typedef struct _ac_load_t {
@@ -276,12 +276,12 @@ typedef enum {
 
 typedef struct _inverter_state_t {
   inverter_state_e st;
-  age_t age;
+  age_t age = 0U;
 } inverter_state_t;
 
 typedef struct _charger_state_t {
   charger_state_e st;
-  age_t age;
+  age_t age = 0U;
 } charger_state_t;
 
 typedef struct _inverter_t {
@@ -381,7 +381,7 @@ typedef struct _propulsion_t {
 typedef struct _notification_t {
   notification_severity_e severity;
   const char *message;
-  age_t age;
+  age_t age = 0U;
 } _notification_t;
 
 typedef struct _notifications_t {
