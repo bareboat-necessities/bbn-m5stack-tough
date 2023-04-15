@@ -1,5 +1,3 @@
-#include "misc/lv_area.h"
-#include "font/lv_symbol_def.h"
 #ifndef UI_IP_ADD_EDITOR_H
 #define UI_IP_ADD_EDITOR_H
 
