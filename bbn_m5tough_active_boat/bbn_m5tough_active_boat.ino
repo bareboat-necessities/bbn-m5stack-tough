@@ -64,7 +64,8 @@ WMM_Tinier myDeclination;
 WiFiClient nmea0183Client;
 WiFiClient skClient;
 WiFiClient pypClient;
-MQTTClient mqttClient;
+WiFiClient mqttNetClient;
+MQTTClient mqttClient = MQTTClient(4096); // Data loss if buffer is not enough
 
 #include "ui_ip_add_editor.h"
 #include "ui_mem_cpu_net_stat.h"
@@ -173,6 +174,13 @@ void setup() {
     if (nmea0183_tcp_host.length() > 0 && nmea0183_tcp_port > 0) {
       nmea0183_tcp_begin(nmea0183Client, nmea0183_tcp_host.c_str(), nmea0183_tcp_port);  // Connect to the NMEA 0183 TCP server
     }
+
+    static String victron_mqtt_host = preferences.getString(VENUS_MQTT_HOST_PREF);
+    static int victron_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
+    M5.Lcd.println(victron_mqtt_host);
+    if (victron_mqtt_host.length() > 0 && victron_mqtt_port > 0) {
+      victron_mqtt_client_begin(mqttClient, mqttNetClient, victron_mqtt_host.c_str(), victron_mqtt_port);
+    }
   });
 
   SpeakerInit();
@@ -186,7 +194,8 @@ void loop() {
   lv_task_handler();
   app.tick();
   lv_tick_inc(1);
-  //mqttClient.loop();
+  
+  victron_mqtt_client_loop(mqttClient);
 
   if (!settingMode) {
     handle_swipe();
