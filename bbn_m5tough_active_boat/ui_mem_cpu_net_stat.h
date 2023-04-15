@@ -17,10 +17,16 @@ extern "C" {
   static void event_handler_data_conn(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t *obj = lv_event_get_target(e);
+    const char *host_type = (const char *)lv_event_get_user_data(e);
+    lv_obj_add_flag(data_connections_list, LV_OBJ_FLAG_HIDDEN);
     if (code == LV_EVENT_CLICKED) {
-      const char *host_type = (const char *)lv_event_get_user_data(e);
-      // TODO:
-      lv_obj_add_flag(data_connections_list, LV_OBJ_FLAG_HIDDEN);
+      if (strcmp(host_type, VENUS_MQTT_HOST_PREF) == 0) {
+        String venus_mqtt_host = preferences.getString(VENUS_MQTT_HOST_PREF);
+        int venus_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
+        lv_ip_addr_editor_show(venus_mqtt_host.c_str());
+      } else {
+        // TODO:
+      }
     }
   }
 
@@ -40,6 +46,9 @@ extern "C" {
     lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)VENUS_MQTT_HOST_PREF);
     btn = lv_list_add_btn(data_connections_list, NULL, "MPD Player");
     lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)MPD_TCP_HOST_PREF);
+
+    lv_ip_addr_editor(parent);
+    lv_ip_addr_editor_hide();
   }
 
   void printDeviceStats() {
