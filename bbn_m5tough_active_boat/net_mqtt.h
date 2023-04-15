@@ -33,12 +33,10 @@ extern "C" {
       str.remove(str.indexOf("/"));
       victronCtx.portalID.clear();
       victronCtx.portalID += str;
-      //M5.Lcd.println("incoming: " + topic + " - " + payload);
-      //M5.Lcd.println("victronCtx.portalID: " + victronCtx.portalID);
       victronCtx.needs_id = false;
     }
     if (topic.indexOf("tank") > 0 /*topic.indexOf("L1/Power") > 0*/) {
-      M5.Lcd.println("incoming: " + topic + " - " + payload);
+      //M5.Lcd.println("incoming: " + topic + " - " + payload);
     }
     //M5.Lcd.println("incoming: " + topic);
 
