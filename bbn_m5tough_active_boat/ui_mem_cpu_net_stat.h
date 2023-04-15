@@ -21,14 +21,40 @@ extern "C" {
     lv_obj_add_flag(data_connections_list, LV_OBJ_FLAG_HIDDEN);
     if (code == LV_EVENT_CLICKED) {
       if (strcmp(host_type, VENUS_MQTT_HOST_PREF) == 0) {
-        String venus_mqtt_host = preferences.getString(VENUS_MQTT_HOST_PREF);
-        int venus_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
-        if (venus_mqtt_host.length() == 0 || venus_mqtt_host == "0.0.0.0") {
-          venus_mqtt_host = WiFi.localIP().toString();
+        String host = preferences.getString(VENUS_MQTT_HOST_PREF);
+        int port = preferences.getInt(VENUS_MQTT_PORT_PREF);
+        if (host.length() == 0 || host == "0.0.0.0") {
+          host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(venus_mqtt_host.c_str(), (int32_t) venus_mqtt_port, "VE Venus MQTT");
-      } else {
-        // TODO:
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "VE Venus MQTT");
+      } else if (strcmp(host_type, PYP_TCP_HOST_PREF) == 0) {
+        String host = preferences.getString(PYP_TCP_HOST_PREF);
+        int port = preferences.getInt(PYP_TCP_PORT_PREF);
+        if (host.length() == 0 || host == "0.0.0.0") {
+          host = WiFi.localIP().toString();
+        }
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "PyPilot TCP");
+      } else if (strcmp(host_type, SK_TCP_HOST_PREF) == 0) {
+        String host = preferences.getString(SK_TCP_HOST_PREF);
+        int port = preferences.getInt(SK_TCP_PORT_PREF);
+        if (host.length() == 0 || host == "0.0.0.0") {
+          host = WiFi.localIP().toString();
+        }
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "SignalK TCP");
+      } else if (strcmp(host_type, MPD_TCP_HOST_PREF) == 0) {
+        String host = preferences.getString(MPD_TCP_HOST_PREF);
+        int port = preferences.getInt(MPD_TCP_PORT_PREF);
+        if (host.length() == 0 || host == "0.0.0.0") {
+          host = WiFi.localIP().toString();
+        }
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "MPD Player");
+      } else if (strcmp(host_type, NMEA0183_TCP_HOST_PREF) == 0) {
+        String host = preferences.getString(NMEA0183_TCP_HOST_PREF);
+        int port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
+        if (host.length() == 0 || host == "0.0.0.0") {
+          host = WiFi.localIP().toString();
+        }
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "NMEA 0183 TCP");
       }
     }
   }
