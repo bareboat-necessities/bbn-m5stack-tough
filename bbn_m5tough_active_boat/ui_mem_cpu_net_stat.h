@@ -26,35 +26,35 @@ extern "C" {
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "VE Venus MQTT");
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "VE Venus MQTT", VENUS_MQTT_HOST_PREF);
       } else if (strcmp(host_type, PYP_TCP_HOST_PREF) == 0) {
         String host = preferences.getString(PYP_TCP_HOST_PREF);
         int port = preferences.getInt(PYP_TCP_PORT_PREF);
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "PyPilot TCP");
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "PyPilot TCP", PYP_TCP_HOST_PREF);
       } else if (strcmp(host_type, SK_TCP_HOST_PREF) == 0) {
         String host = preferences.getString(SK_TCP_HOST_PREF);
         int port = preferences.getInt(SK_TCP_PORT_PREF);
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "SignalK TCP");
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "SignalK TCP", SK_TCP_HOST_PREF);
       } else if (strcmp(host_type, MPD_TCP_HOST_PREF) == 0) {
         String host = preferences.getString(MPD_TCP_HOST_PREF);
         int port = preferences.getInt(MPD_TCP_PORT_PREF);
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "MPD Player");
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "MPD Player", MPD_TCP_HOST_PREF);
       } else if (strcmp(host_type, NMEA0183_TCP_HOST_PREF) == 0) {
         String host = preferences.getString(NMEA0183_TCP_HOST_PREF);
         int port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
         if (host.length() == 0 || host == "0.0.0.0") {
           host = WiFi.localIP().toString();
         }
-        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "NMEA 0183 TCP");
+        lv_ip_addr_editor_show(host.c_str(), (int32_t) port, "NMEA 0183 TCP", NMEA0183_TCP_HOST_PREF);
       }
     }
   }
