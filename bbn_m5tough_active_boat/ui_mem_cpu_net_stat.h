@@ -23,6 +23,9 @@ extern "C" {
       if (strcmp(host_type, VENUS_MQTT_HOST_PREF) == 0) {
         String venus_mqtt_host = preferences.getString(VENUS_MQTT_HOST_PREF);
         int venus_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
+        if (venus_mqtt_host.length() == 0 || venus_mqtt_host == "0.0.0.0") {
+          venus_mqtt_host = WiFi.localIP().toString();
+        }
         lv_ip_addr_editor_show(venus_mqtt_host.c_str(), (int32_t) venus_mqtt_port, "VE Venus MQTT");
       } else {
         // TODO:
@@ -50,7 +53,7 @@ extern "C" {
     lv_ip_addr_editor(parent);
     lv_ip_addr_editor_hide();
   }
-
+/*
   void printDeviceStats() {
     M5.Lcd.printf("FreeHeap: %d bytes\n", ESP.getFreeHeap());
     M5.Lcd.printf("MinFreeHeap: %d bytes\n", ESP.getMinFreeHeap());
@@ -64,7 +67,7 @@ extern "C" {
     M5.Lcd.printf("MaxAllocPsram: %d bytes\n", ESP.getMaxAllocPsram());
     M5.Lcd.printf("ChipCores: %d\n", ESP.getChipCores());
   }
-
+*/
   static void erase_net_conf_evt_handler(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
     if (code == LV_EVENT_LONG_PRESSED) {
