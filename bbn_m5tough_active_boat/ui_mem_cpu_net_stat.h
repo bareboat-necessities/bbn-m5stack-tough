@@ -179,7 +179,7 @@ extern "C" {
                        + String(":") + String(preferences.getInt(NMEA0183_TCP_PORT_PREF)))
                         .c_str());
     lv_label_set_text(venus_mqtt_status_label,
-                      ((mqttClient.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
+                      ((mqttNetClient.connected() && mqttClient.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
                                                : String("#ff0000 " LV_SYMBOL_OK "  #"))
                        + String("Venus MQTT:    ") + preferences.getString(VENUS_MQTT_HOST_PREF)
                        + String(":") + String(preferences.getInt(VENUS_MQTT_PORT_PREF)))
