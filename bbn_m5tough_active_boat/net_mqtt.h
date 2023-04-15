@@ -60,7 +60,7 @@ extern "C" {
     client.subscribe("N/+/+/#");
   }
 
-  void victron_mqtt_client_begin(MQTTClient& client, Client& net, cost char* host, int port) {
+  void victron_mqtt_client_begin(MQTTClient& client, Client& net, const char* host, int port) {
     client.begin(host, port, net);
     victron_mqtt_client_connect(client);
   }
