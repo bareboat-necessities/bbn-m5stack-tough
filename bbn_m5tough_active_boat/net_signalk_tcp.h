@@ -7,8 +7,6 @@ extern "C" {
 
   void signalk_greet(WiFiClient& client) {
     String dataFeed = client.readStringUntil('\n');
-    // request only what is needed for the current screen ???
-    // const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"navigation.rateOfTurn\"}]}";
     const char* data = "{\"context\": \"*\",\"subscribe\": [{\"path\": \"*\"}]}";
     client.println(data);
     client.flush();
@@ -43,12 +41,8 @@ extern "C" {
     setKeepAlive(skClient);
     setup_signalk_reconnect(skClient, host, port);
     if (skClient.connect(host, port)) {
-      //M5.Lcd.print("Connected to signalK ");
-      //M5.Lcd.println(host);
       signalk_subscribe(skClient);
-    } //else {
-      //M5.Lcd.println("Connection failed.");
-    //}
+    }
   }
 
 #ifdef __cplusplus
