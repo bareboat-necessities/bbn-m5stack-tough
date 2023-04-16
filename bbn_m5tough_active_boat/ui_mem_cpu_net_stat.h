@@ -16,7 +16,6 @@ extern "C" {
 
   static void event_handler_data_conn(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t *obj = lv_event_get_target(e);
     const char *host_type = (const char *)lv_event_get_user_data(e);
     lv_obj_add_flag(data_connections_list, LV_OBJ_FLAG_HIDDEN);
     if (code == LV_EVENT_CLICKED) {
