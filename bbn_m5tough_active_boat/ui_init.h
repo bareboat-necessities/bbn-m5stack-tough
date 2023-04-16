@@ -1,7 +1,6 @@
 #ifndef UI_INIT_H
 #define UI_INIT_H
 
-
 #define LV_SYMBOL_DOUBLE_LEFT LV_SYMBOL_LEFT " " LV_SYMBOL_LEFT
 #define LV_SYMBOL_DOUBLE_RIGHT LV_SYMBOL_RIGHT " " LV_SYMBOL_RIGHT
 #define LV_SYMBOL_DEGREES "\xC2\xB0"
@@ -71,7 +70,7 @@ extern "C" {
     lv_indev_drv_init(&indev_drv);
     indev_drv.type = LV_INDEV_TYPE_POINTER;
     indev_drv.read_cb = my_touchpad_read;
-    lv_indev_t *my_indev = lv_indev_drv_register(&indev_drv);  // register
+    lv_indev_drv_register(&indev_drv);  // register
   }
 
 #ifdef __cplusplus
