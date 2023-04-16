@@ -8,20 +8,20 @@
 extern "C" {
 #endif
 
-#define SK_TCP_HOST_PREF "signalk_host"
-#define SK_TCP_PORT_PREF "signalk_port"
+  static const char* PROGMEM SK_TCP_HOST_PREF = "signalk_host";
+  static const char* PROGMEM SK_TCP_PORT_PREF = "signalk_port";
 
-#define PYP_TCP_HOST_PREF "pypilot_host"
-#define PYP_TCP_PORT_PREF "pypilot_port"
+  static const char* PROGMEM PYP_TCP_HOST_PREF = "pypilot_host";
+  static const char* PROGMEM PYP_TCP_PORT_PREF = "pypilot_port";
 
-#define NMEA0183_TCP_HOST_PREF "n0183_host"
-#define NMEA0183_TCP_PORT_PREF "n0183_port"
+  static const char* PROGMEM NMEA0183_TCP_HOST_PREF = "n0183_host";
+  static const char* PROGMEM NMEA0183_TCP_PORT_PREF = "n0183_port";
 
-#define MPD_TCP_HOST_PREF "mpd_host"
-#define MPD_TCP_PORT_PREF "mpd_port"
+  static const char* PROGMEM MPD_TCP_HOST_PREF = "mpd_host";
+  static const char* PROGMEM MPD_TCP_PORT_PREF = "mpd_port";
 
-#define VENUS_MQTT_HOST_PREF "ve_mqtt_host"
-#define VENUS_MQTT_PORT_PREF "ve_mqtt_port"
+  static const char* PROGMEM VENUS_MQTT_HOST_PREF = "ve_mqtt_host";
+  static const char* PROGMEM VENUS_MQTT_PORT_PREF = "ve_mqtt_port";
 
   static bool mdns_up = false;
 
