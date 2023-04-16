@@ -34,7 +34,6 @@ Preferences preferences;
 #include "ui_clock.h"
 #include "ui_player_control.h"
 #include "ui_about.h"
-#include "ui_brightness.h"
 
 #include "ui_keyboard.h"
 #include "ui_settings_wifi.h"
