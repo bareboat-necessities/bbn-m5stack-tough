@@ -90,6 +90,8 @@ https://github.com/RalfJL/VE.Direct2MQTT
 
 https://github.com/humppafreak/SensESP-PeetBrosWind
 
+https://github.com/sharandac/My-TTGO-Watch
+
 
 ##  Possible future ehnancements:
 
@@ -151,6 +153,7 @@ https://github.com/humppafreak/SensESP-PeetBrosWind
 - Power winches controls
 - Power furler controls 
 - UI to control fog horn signal, and horn in general
+
 
 ##  Interfaces:
 
