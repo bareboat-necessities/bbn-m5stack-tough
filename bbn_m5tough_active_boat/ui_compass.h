@@ -92,7 +92,7 @@ extern "C" {
     lv_label_set_text(compass_l, "--" LV_SYMBOL_DEGREES);
     lv_obj_align(compass_l, LV_ALIGN_CENTER, 0, 0);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(compass_l, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(compass_l, &lv_font_montserrat_20, 0);
 #endif
 
     lv_meter_set_scale_range(compass_display, scale_compass, 0, 72, 360, 270);
@@ -105,14 +105,14 @@ extern "C" {
     lv_label_set_text(compass_hdt_l, "HDT:  --" LV_SYMBOL_DEGREES);
     lv_obj_align(compass_hdt_l, LV_ALIGN_TOP_LEFT, 2, 2);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(compass_hdt_l, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(compass_hdt_l, &lv_font_montserrat_20, 0);
 #endif
 
     compass_mag_var_l = lv_label_create(parent);
     lv_label_set_text(compass_mag_var_l, "Var:\n--" LV_SYMBOL_DEGREES);
     lv_obj_align(compass_mag_var_l, LV_ALIGN_BOTTOM_LEFT, 2, -2);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(compass_mag_var_l, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(compass_mag_var_l, &lv_font_montserrat_20, 0);
 #endif
   }
 
