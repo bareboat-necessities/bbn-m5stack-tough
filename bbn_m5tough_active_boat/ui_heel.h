@@ -39,7 +39,7 @@ extern "C" {
     pitch_label = lv_label_create(parent);
     lv_obj_align(pitch_label, LV_ALIGN_TOP_LEFT, 5, 5);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(pitch_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(pitch_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(pitch_label, "PITCH:   --");
 
