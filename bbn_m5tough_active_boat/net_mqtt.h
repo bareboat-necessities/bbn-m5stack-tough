@@ -51,7 +51,7 @@ extern "C" {
     while (!client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/)) {
       delay(1000);
     }
-    M5.Lcd.println("Connected to mqtt");
+    //M5.Lcd.println("Connected to mqtt");
 
     client.subscribe("N/+/+/#");
   }
