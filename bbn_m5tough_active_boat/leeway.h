@@ -8,10 +8,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-  static float leeway_angle(float hdt, float cogt) {
-    return fabs(hdt - cogt);
-  }
  
   // Empirical formula for leeway.
   // Leeway (deg) is angle to adjust heading to maintain constant COG (assuming no current)
