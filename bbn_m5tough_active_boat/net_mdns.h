@@ -55,8 +55,6 @@ extern "C" {
     if (signalk_tcp_host.length() <= 0 || signalk_tcp_host == "0.0.0.0" || signalk_tcp_port <= 0) {
       int n = mdns_query_svc("signalk-tcp", "tcp");
       if (n > 0) {
-        preferences.remove(SK_TCP_HOST_PREF);
-        preferences.remove(SK_TCP_PORT_PREF);
         preferences.putString(SK_TCP_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(SK_TCP_PORT_PREF, MDNS.port(0));
         saved = true;
@@ -72,8 +70,6 @@ extern "C" {
       int n = mdns_query_svc("nmea-0183", "tcp");
       if (n > 0) {
         if (n == 1) {
-          preferences.remove(NMEA0183_TCP_HOST_PREF);
-          preferences.remove(NMEA0183_TCP_PORT_PREF);
           preferences.putString(NMEA0183_TCP_HOST_PREF, MDNS.IP(0).toString());
           preferences.putInt(NMEA0183_TCP_PORT_PREF, MDNS.port(0));
           saved = true;
@@ -89,8 +85,6 @@ extern "C" {
             break;
           }
           if (found10110 != NULL && found10110.length() > 0) {
-            preferences.remove(NMEA0183_TCP_HOST_PREF);
-            preferences.remove(NMEA0183_TCP_PORT_PREF);
             preferences.putString(NMEA0183_TCP_HOST_PREF, found10110);
             preferences.putInt(NMEA0183_TCP_PORT_PREF, 10110);
             saved = true;
@@ -98,8 +92,6 @@ extern "C" {
             M5.Lcd.print(":");
             M5.Lcd.printf("%d - nmea0183\n", 10110);
           } else {
-            preferences.remove(NMEA0183_TCP_HOST_PREF);
-            preferences.remove(NMEA0183_TCP_PORT_PREF);
             preferences.putString(NMEA0183_TCP_HOST_PREF, MDNS.IP(0).toString());
             preferences.putInt(NMEA0183_TCP_PORT_PREF, MDNS.port(0));
             saved = true;
@@ -116,8 +108,6 @@ extern "C" {
     if (pypilot_tcp_host.length() <= 0 || pypilot_tcp_host == "0.0.0.0" || pypilot_tcp_port <= 0) {
       int n = mdns_query_svc("pypilot", "tcp");
       if (n > 0) {
-        preferences.remove(PYP_TCP_HOST_PREF);
-        preferences.remove(PYP_TCP_HOST_PREF);
         preferences.putString(PYP_TCP_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(PYP_TCP_PORT_PREF, MDNS.port(0));
         saved = true;
@@ -132,8 +122,6 @@ extern "C" {
     if (mpd_tcp_host.length() <= 0 || mpd_tcp_host == "0.0.0.0" || mpd_tcp_port <= 0) {
       int n = mdns_query_svc("mpd", "tcp");
       if (n > 0) {
-        preferences.remove(MPD_TCP_HOST_PREF);
-        preferences.remove(MPD_TCP_PORT_PREF);
         preferences.putString(MPD_TCP_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(MPD_TCP_PORT_PREF, MDNS.port(0));
         saved = true;
@@ -148,8 +136,6 @@ extern "C" {
     if (venus_mqtt_host.length() <= 0 || venus_mqtt_host == "0.0.0.0" || venus_mqtt_port <= 0) {
       int n = mdns_query_svc("mqtt", "tcp");
       if (n > 0) {
-        preferences.remove(VENUS_MQTT_HOST_PREF);
-        preferences.remove(VENUS_MQTT_PORT_PREF);
         preferences.putString(VENUS_MQTT_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(VENUS_MQTT_PORT_PREF, MDNS.port(0));
         saved = true;
