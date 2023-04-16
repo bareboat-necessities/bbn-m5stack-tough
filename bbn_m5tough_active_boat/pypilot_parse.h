@@ -13,6 +13,7 @@ extern "C" {
     // ap.enabled=false
     // ap.mode="compass"
     if (dataFeed.length() > 0) {
+      found = true;
       if (dataFeed.startsWith("ap.heading=")) {
         shipDataModel.steering.autopilot.heading.deg =
           strtof(dataFeed.substring(strlen("ap.heading="), dataFeed.length()).c_str(), NULL);
@@ -40,9 +41,11 @@ extern "C" {
         } else if (mode == "true wind") {
           shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::TRUE_WIND;
         }
-      }
-      return found;
+      } else {
+        found = false;
+      }      
     }
+    return found;
   }
 
 #ifdef __cplusplus
