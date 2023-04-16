@@ -155,28 +155,24 @@ void setup() {
 
     static String signalk_tcp_host = preferences.getString(SK_TCP_HOST_PREF);
     static int signalk_tcp_port = preferences.getInt(SK_TCP_PORT_PREF);
-    M5.Lcd.println(signalk_tcp_host);
     if (signalk_tcp_host.length() > 0 && signalk_tcp_port > 0) {
       signalk_begin(skClient, signalk_tcp_host.c_str(), signalk_tcp_port);  // Connect to the SignalK TCP server
     }
 
     static String pypilot_tcp_host = preferences.getString(PYP_TCP_HOST_PREF);
     static int pypilot_tcp_port = preferences.getInt(PYP_TCP_PORT_PREF);
-    M5.Lcd.println(pypilot_tcp_host);
     if (pypilot_tcp_host.length() > 0 && pypilot_tcp_port > 0) {
       pypilot_begin(pypClient, pypilot_tcp_host.c_str(), pypilot_tcp_port);  // Connect to the PyPilot TCP server
     }
 
     static String nmea0183_tcp_host = preferences.getString(NMEA0183_TCP_HOST_PREF);
     static int nmea0183_tcp_port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
-    M5.Lcd.println(nmea0183_tcp_host);
     if (nmea0183_tcp_host.length() > 0 && nmea0183_tcp_port > 0) {
       nmea0183_tcp_begin(nmea0183Client, nmea0183_tcp_host.c_str(), nmea0183_tcp_port);  // Connect to the NMEA 0183 TCP server
     }
 
     static String victron_mqtt_host = preferences.getString(VENUS_MQTT_HOST_PREF);
     static int victron_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
-    M5.Lcd.println(victron_mqtt_host);
     if (victron_mqtt_host.length() > 0 && victron_mqtt_port > 0) {
       victron_mqtt_client_begin(mqttClient, mqttNetClient, victron_mqtt_host.c_str(), victron_mqtt_port);
     }
