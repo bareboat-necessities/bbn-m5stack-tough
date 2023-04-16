@@ -7,6 +7,11 @@ extern "C" {
 
   lv_updatable_screen_t autopilotScreen;
 
+  static const char *PROGMEM UI_AP_COMPASS = "Compass";
+  static const char *PROGMEM UI_AP_GPS = "GPS";
+  static const char *PROGMEM UI_AP_WIND = "Wind";
+  static const char *PROGMEM UI_AP_TRUE_WIND = "True Wind";
+
   static lv_obj_t *autopilot_led;
   static lv_obj_t *heading_l;
   static lv_obj_t *command_l;
@@ -36,13 +41,13 @@ extern "C" {
     lv_obj_align(autopilot_list_modes, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 
     lv_obj_t *btn;
-    btn = lv_list_add_btn(autopilot_list_modes, NULL, "Compass");
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, UI_AP_COMPASS);
     lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_COMPASS);
-    btn = lv_list_add_btn(autopilot_list_modes, NULL, "GPS");
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, UI_AP_GPS);
     lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_GPS);
-    btn = lv_list_add_btn(autopilot_list_modes, NULL, "Wind");
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, UI_AP_WIND);
     lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_WIND);
-    btn = lv_list_add_btn(autopilot_list_modes, NULL, "True Wind");
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, UI_AP_TRUE_WIND);
     lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_WIND_TRUE);
   }
 
