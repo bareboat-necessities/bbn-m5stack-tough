@@ -112,7 +112,6 @@ extern "C" {
 
   static void event_handler_wifi(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t *obj = lv_event_get_target(e);
     if (code == LV_EVENT_LONG_PRESSED) {
       int n = (int)lv_event_get_user_data(e);
       lv_connect_wifi_win(n);
