@@ -25,35 +25,35 @@ extern "C" {
     gps_time_label = lv_label_create(parent);
     lv_obj_align(gps_time_label, LV_ALIGN_TOP_LEFT, 10, 40);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(gps_time_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(gps_time_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(gps_time_label, "GPS Time:         --");
 
     gps_lat_label = lv_label_create(parent);
     lv_obj_align(gps_lat_label, LV_ALIGN_TOP_LEFT, 10, 80);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(gps_lat_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(gps_lat_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(gps_lat_label, "LAT:                    --");
 
     gps_lon_label = lv_label_create(parent);
     lv_obj_align(gps_lon_label, LV_ALIGN_TOP_LEFT, 10, 120);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(gps_lon_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(gps_lon_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(gps_lon_label, "LON:                   --");
 
     gps_cogt_label = lv_label_create(parent);
     lv_obj_align(gps_cogt_label, LV_ALIGN_TOP_LEFT, 10, 160);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(gps_cogt_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(gps_cogt_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(gps_cogt_label, "COGT:                 --");
 
     gps_cogm_label = lv_label_create(parent);
     lv_obj_align(gps_cogm_label, LV_ALIGN_TOP_LEFT, 10, 200);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(gps_cogm_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(gps_cogm_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(gps_cogm_label, "COGM:                 --");
   }
