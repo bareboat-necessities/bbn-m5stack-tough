@@ -60,8 +60,8 @@ extern "C" {
     set_clock_value(indic_min, RTCtime.Minutes);
     set_clock_value(indic_sec, RTCtime.Seconds);
 
-    char bufferDate[11];
-    char bufferTime[9];
+    char bufferDate[14];
+    char bufferTime[12];
 
     sprintf(bufferDate, "%04d-%02d-%02d", 100 + RTCdate.Year, 1 + RTCdate.Month, RTCdate.Date);
     sprintf(bufferTime, "%02d:%02d:%02d", RTCtime.Hours, RTCtime.Minutes, RTCtime.Seconds);
