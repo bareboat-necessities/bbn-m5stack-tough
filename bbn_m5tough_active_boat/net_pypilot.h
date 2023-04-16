@@ -19,10 +19,10 @@ extern "C" {
 
   */
 
-#define AP_MODE_COMPASS "MODE (Compass)"
-#define AP_MODE_GPS "MODE (GPS)"
-#define AP_MODE_WIND "MODE (Wind)"
-#define AP_MODE_WIND_TRUE "MODE (True Wind)"
+  static const char* PROGMEM AP_MODE_COMPASS = "MODE (Compass)";
+  static const char* PROGMEM AP_MODE_GPS = "MODE (GPS)";
+  static const char* PROGMEM AP_MODE_WIND = "MODE (Wind)";
+  static const char* PROGMEM AP_MODE_WIND_TRUE = "MODE (True Wind)";
 
   void pypilot_greet(WiFiClient& client) {
     client.println(F("watch={\"ap.heading\":0.5}"));
