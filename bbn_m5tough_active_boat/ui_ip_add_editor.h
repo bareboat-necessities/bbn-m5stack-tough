@@ -69,9 +69,9 @@ extern "C" {
     ((lv_spinbox_t *)spinbox)->ta.cursor.show = 0;
   }
 
-  static const char* editor_host_type;
+  static const char *editor_host_type;
 
-  void lv_ip_addr_editor_show(const char *addr, int32_t port, const char *label, const char* host_type) {
+  void lv_ip_addr_editor_show(const char *addr, int32_t port, const char *label, const char *host_type) {
     IPAddress ip;
     ip.fromString(addr);
     editor_host_type = host_type;
@@ -93,10 +93,10 @@ extern "C" {
   static String editor_ip_address;
 
   void build_ip_address() {
-    editor_ip_address = String(lv_label_get_text(spinbox1))
-                        + String(lv_label_get_text(spinbox2))
-                        + String(lv_label_get_text(spinbox3))
-                        + String(lv_spinbox_get_value(spinbox4));
+    editor_ip_address = String(lv_label_get_text(spinbox1));
+    editor_ip_address += String(lv_label_get_text(spinbox2));
+    editor_ip_address += String(lv_label_get_text(spinbox3));
+    editor_ip_address += String(lv_spinbox_get_value(spinbox4));
   }
 
   static int editor_port;
