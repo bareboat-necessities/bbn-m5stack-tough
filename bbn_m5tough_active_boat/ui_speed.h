@@ -25,35 +25,35 @@ extern "C" {
     sog_label = lv_label_create(parent);
     lv_obj_align(sog_label, LV_ALIGN_TOP_LEFT, 10, 40);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(sog_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(sog_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(sog_label, "SOG (kt):                       --");
 
     sog_avg_label = lv_label_create(parent);
     lv_obj_align(sog_avg_label, LV_ALIGN_TOP_LEFT, 10, 80);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(sog_avg_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(sog_avg_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(sog_avg_label, "SOG AVG (kt):             --");
 
     spd_label = lv_label_create(parent);
     lv_obj_align(spd_label, LV_ALIGN_TOP_LEFT, 10, 120);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(spd_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(spd_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(spd_label, "SPD (kt):                       --");
 
     leeway_label = lv_label_create(parent);
     lv_obj_align(leeway_label, LV_ALIGN_TOP_LEFT, 10, 160);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(leeway_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(leeway_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(leeway_label, "Leeway (est):              --" LV_SYMBOL_DEGREES);
 
     g_force_label = lv_label_create(parent);
     lv_obj_align(g_force_label, LV_ALIGN_TOP_LEFT, 10, 200);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(g_force_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(g_force_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(g_force_label, "G Force (% of g):        --");
   }
