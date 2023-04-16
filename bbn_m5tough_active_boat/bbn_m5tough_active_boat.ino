@@ -131,7 +131,7 @@ void setup() {
   init_touch_driver();
   init_theme();
 
-  settingUpWiFi([&page, &screens]() {
+  settingUpWiFi([]() {
     init_dateTime();
     init_windScreen();
     init_engineScreen();
