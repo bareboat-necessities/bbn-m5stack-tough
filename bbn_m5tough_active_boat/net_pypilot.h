@@ -74,14 +74,14 @@ extern "C" {
 
   void pypilot_send_engage(WiFiClient& client) {
     if (client.connected()) {
-      client.println("ap.enabled=true");
+      client.println(F("ap.enabled=true"));
       client.flush();
     }
   }
 
   void pypilot_send_disengage(WiFiClient& client) {
     if (client.connected()) {
-      client.println("ap.enabled=false");
+      client.println(F("ap.enabled=false"));
       client.flush();
     }
   }
@@ -96,13 +96,13 @@ extern "C" {
   void pypilot_send_mode(WiFiClient& client, const char* mode) {
     if (client.connected()) {
       if (strcmp(AP_MODE_GPS, mode) == 0) {
-        client.println("ap.mode=\"gps\"");
+        client.println(F("ap.mode=\"gps\""));
       } else if (strcmp(AP_MODE_WIND, mode) == 0) {
-        client.println("ap.mode=\"wind\"");
+        client.println(F("ap.mode=\"wind\""));
       } else if (strcmp(AP_MODE_WIND_TRUE, mode) == 0) {
-        client.println("ap.mode=\"true wind\"");
+        client.println(F("ap.mode=\"true wind\""));
       } else {
-        client.println("ap.mode=\"compass\"");
+        client.println(F("ap.mode=\"compass\""));
       }
       client.flush();
     }
@@ -137,12 +137,8 @@ extern "C" {
     setKeepAlive(pypClient);
     setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
     if (pypClient.connect(pyp_host, pyp_port)) {
-      //M5.Lcd.print("Connected to pypilot ");
-      //M5.Lcd.println(pyp_host);
       pypilot_subscribe(pypClient);
-    } //else {
-      //M5.Lcd.println("Connection failed.");
-    //}
+    }
   }
 
 #ifdef __cplusplus
