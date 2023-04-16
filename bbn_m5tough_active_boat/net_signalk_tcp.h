@@ -43,12 +43,12 @@ extern "C" {
     setKeepAlive(skClient);
     setup_signalk_reconnect(skClient, host, port);
     if (skClient.connect(host, port)) {
-      M5.Lcd.print("Connected to signalK ");
-      M5.Lcd.println(host);
+      //M5.Lcd.print("Connected to signalK ");
+      //M5.Lcd.println(host);
       signalk_subscribe(skClient);
-    } else {
-      M5.Lcd.println("Connection failed.");
-    }
+    } //else {
+      //M5.Lcd.println("Connection failed.");
+    //}
   }
 
 #ifdef __cplusplus
