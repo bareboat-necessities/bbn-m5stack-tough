@@ -8,7 +8,7 @@ extern "C" {
   TinyGPSPlus gps;
 
   // Sample: $WIMWV,27,R,00,N,A*26
-  char* wind_prefix[] = { "WIMWV", "IIMWV" };
+  const char* wind_prefix[] = { "WIMWV", "IIMWV" };
 
   int wind_prefix_index = 0;
 
@@ -22,15 +22,15 @@ extern "C" {
   TinyGPSCustom windSpeedI(gps, wind_prefix[1], 3);      // Example: 0.1
   TinyGPSCustom windSpeedUnitI(gps, wind_prefix[1], 4);  // Units: M = Meter per second, N = Knots, K = Kilometres per hour
 
-  char* heading_true_prefix = "IIHDT";  // Sample: $IIHDT,347.4,T*26
-  char* heading_mag_prefix = "APHDM";   // Sample: $APHDM,0.000,M*33
+  const char* heading_true_prefix = "IIHDT";  // Sample: $IIHDT,347.4,T*26
+  const char* heading_mag_prefix = "APHDM";   // Sample: $APHDM,0.000,M*33
 
   TinyGPSCustom headingTrue(gps, heading_true_prefix, 1);  // Example: 347.4
   TinyGPSCustom headingMag(gps, heading_mag_prefix, 1);    // Example: 347.4
 
   // Sample: $APXDR,A,0.000,D,PTCH*7B
   // Sample: $APXDR,A,0.000,D,ROLL*69
-  char* custom_data_prefix = "APXDR";
+  const char* custom_data_prefix = "APXDR";
 
   TinyGPSCustom customData_Value(gps, custom_data_prefix, 2);
   TinyGPSCustom customData_Type(gps, custom_data_prefix, 4);
