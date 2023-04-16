@@ -78,10 +78,11 @@ extern "C" {
     }
 
     // derive mag variation if unknown
-    if (!fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) &&
-      abs(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg) > 0.00001) {
+    if (!fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) && abs(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg) > 0.00001) {
+      if (fresh(shipDataModel.navigation.heading_true.age) && fresh(shipDataModel.navigation.heading_mag.age)) {
         shipDataModel.navigation.mag_var.deg = shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg;
         shipDataModel.navigation.mag_var.age = millis();
+      }
     }
   }
 
