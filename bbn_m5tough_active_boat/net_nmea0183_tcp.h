@@ -31,12 +31,12 @@ extern "C" {
     setKeepAlive(nmea0183Client);
     setup_nmea0183_reconnect(nmea0183Client, nmea0183_host, nmea0183_port);
     if (nmea0183Client.connect(nmea0183_host, nmea0183_port)) {
-      M5.Lcd.print("Connected to nmea0183 TCP");
-      M5.Lcd.println(nmea0183_host);
+      //M5.Lcd.print("Connected to nmea0183 TCP");
+      //M5.Lcd.println(nmea0183_host);
       nmea0183_subscribe(nmea0183Client);
-    } else {
-      M5.Lcd.println("Connection failed.");
-    }
+    } //else {
+      //M5.Lcd.println("Connection failed.");
+    //}
   }
 
 #ifdef __cplusplus
