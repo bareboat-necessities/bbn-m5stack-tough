@@ -27,7 +27,6 @@ extern "C" {
 
   static void event_handler_ap_mode(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t *obj = lv_event_get_target(e);
     if (code == LV_EVENT_CLICKED) {
       const char *mode = (const char *)lv_event_get_user_data(e);
       pypilot_send_mode(pypClient, mode);
@@ -94,7 +93,7 @@ extern "C" {
     lv_obj_set_style_text_align(heading_l, LV_TEXT_ALIGN_LEFT, 0);
     lv_obj_align(heading_l, LV_ALIGN_TOP_LEFT, left_l, top_l);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(heading_l, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(heading_l, &lv_font_montserrat_20, 0);
 #endif
 
     command_l = lv_label_create(parent);
@@ -103,7 +102,7 @@ extern "C" {
     lv_obj_set_style_text_align(command_l, LV_TEXT_ALIGN_LEFT, 0);
     lv_obj_align(command_l, LV_ALIGN_TOP_LEFT, left_l + width_l, top_l);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(command_l, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(command_l, &lv_font_montserrat_20, 0);
 #endif
 
     autopilot_btnm = lv_btnmatrix_create(parent);
