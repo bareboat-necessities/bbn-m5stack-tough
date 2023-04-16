@@ -35,10 +35,6 @@ extern "C" {
       victronCtx.portalID += str;
       victronCtx.needs_id = false;
     }
-    if (topic.indexOf("tank") > 0 /*topic.indexOf("L1/Power") > 0*/) {
-      //M5.Lcd.println("incoming: " + topic + " - " + payload);
-    }
-    //M5.Lcd.println("incoming: " + topic);
 
     // Note: Do not use the client in the callback to publish, subscribe or
     // unsubscribe as it may cause deadlocks when other things arrive while
@@ -51,7 +47,6 @@ extern "C" {
     while (!client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/)) {
       delay(1000);
     }
-    //M5.Lcd.println("Connected to mqtt");
 
     client.subscribe("N/+/+/#");
   }
