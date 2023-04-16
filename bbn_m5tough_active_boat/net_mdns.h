@@ -27,7 +27,7 @@ extern "C" {
 
   void mdns_begin() {
     if (!MDNS.begin("ESP32_Browser")) {
-      M5.Lcd.println("Error setting up MDNS responder!");
+      M5.Lcd.println(F("Error setting up MDNS responder!"));
     } else {
       mdns_up = true;
     }
@@ -59,7 +59,7 @@ extern "C" {
         preferences.putInt(SK_TCP_PORT_PREF, MDNS.port(0));
         saved = true;
         M5.Lcd.print(MDNS.IP(0).toString());
-        M5.Lcd.print(":");
+        M5.Lcd.print(F(":"));
         M5.Lcd.printf("%d - signalk\n", MDNS.port(0));
       }
     }
@@ -74,7 +74,7 @@ extern "C" {
           preferences.putInt(NMEA0183_TCP_PORT_PREF, MDNS.port(0));
           saved = true;
           M5.Lcd.print(MDNS.IP(0).toString());
-          M5.Lcd.print(":");
+          M5.Lcd.print(F(":"));
           M5.Lcd.printf("%d - nmea0183\n", MDNS.port(0));
         } else {
           String found10110;
@@ -89,14 +89,14 @@ extern "C" {
             preferences.putInt(NMEA0183_TCP_PORT_PREF, 10110);
             saved = true;
             M5.Lcd.print(found10110);
-            M5.Lcd.print(":");
+            M5.Lcd.print(F(":"));
             M5.Lcd.printf("%d - nmea0183\n", 10110);
           } else {
             preferences.putString(NMEA0183_TCP_HOST_PREF, MDNS.IP(0).toString());
             preferences.putInt(NMEA0183_TCP_PORT_PREF, MDNS.port(0));
             saved = true;
             M5.Lcd.print(MDNS.IP(0).toString());
-            M5.Lcd.print(":");
+            M5.Lcd.print(F(":"));
             M5.Lcd.printf("%d - nmea0183\n", MDNS.port(0));
           }
         }
@@ -112,7 +112,7 @@ extern "C" {
         preferences.putInt(PYP_TCP_PORT_PREF, MDNS.port(0));
         saved = true;
         M5.Lcd.print(MDNS.IP(0).toString());
-        M5.Lcd.print(":");
+        M5.Lcd.print(F(":"));
         M5.Lcd.printf("%d - pypilot\n", MDNS.port(0));
       }
     }
@@ -126,7 +126,7 @@ extern "C" {
         preferences.putInt(MPD_TCP_PORT_PREF, MDNS.port(0));
         saved = true;
         M5.Lcd.print(MDNS.IP(0).toString());
-        M5.Lcd.print(":");
+        M5.Lcd.print(F(":"));
         M5.Lcd.printf("%d - mpd\n", MDNS.port(0));
       }
     }
@@ -140,7 +140,7 @@ extern "C" {
         preferences.putInt(VENUS_MQTT_PORT_PREF, MDNS.port(0));
         saved = true;
         M5.Lcd.print(MDNS.IP(0).toString());
-        M5.Lcd.print(":");
+        M5.Lcd.print(F(":"));
         M5.Lcd.printf("%d - venus mqtt\n", MDNS.port(0));
       }
     }
@@ -154,23 +154,23 @@ extern "C" {
     M5.Lcd.printf("Scan _%s._%s.local. ... ", service, proto);
     int n = mdns_query_svc(service, proto);
     if (n == 0) {
-      M5.Lcd.println("no found");
+      M5.Lcd.println(F("not found"));
     } else {
       M5.Lcd.setTextColor(WHITE);
       M5.Lcd.print(n);
-      M5.Lcd.println(" found");
+      M5.Lcd.println(F(" found"));
       M5.Lcd.setTextColor(YELLOW);
       for (int i = 0; i < n; ++i) {
         // Print details for each service found
-        M5.Lcd.print(" ");
+        M5.Lcd.print(F(" "));
         M5.Lcd.print(i + 1);
-        M5.Lcd.print(": ");
+        M5.Lcd.print(F(": "));
         M5.Lcd.print(MDNS.hostname(i));
-        M5.Lcd.print(" (");
+        M5.Lcd.print(F(" ("));
         M5.Lcd.print(MDNS.IP(i));
-        M5.Lcd.print(":");
+        M5.Lcd.print(F(":"));
         M5.Lcd.print(MDNS.port(i));
-        M5.Lcd.println(")");
+        M5.Lcd.println(F(")"));
       }
     }
     M5.Lcd.println();
