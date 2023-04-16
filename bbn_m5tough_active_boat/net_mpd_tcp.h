@@ -45,4 +45,7 @@ bitrate: 0
 OK
 idle
 
+
+https://mpd.readthedocs.io/en/latest/protocol.html
+
 */
