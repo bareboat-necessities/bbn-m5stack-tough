@@ -137,12 +137,12 @@ extern "C" {
     setKeepAlive(pypClient);
     setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
     if (pypClient.connect(pyp_host, pyp_port)) {
-      M5.Lcd.print("Connected to pypilot ");
-      M5.Lcd.println(pyp_host);
+      //M5.Lcd.print("Connected to pypilot ");
+      //M5.Lcd.println(pyp_host);
       pypilot_subscribe(pypClient);
-    } else {
-      M5.Lcd.println("Connection failed.");
-    }
+    } //else {
+      //M5.Lcd.println("Connection failed.");
+    //}
   }
 
 #ifdef __cplusplus
