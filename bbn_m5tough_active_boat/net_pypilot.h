@@ -7,42 +7,6 @@ extern "C" {
 
   /*
    
-  Uses Socket.IO over websockets
-  
-  #include <Arduino.h>
-  #include <M5Tough.h>
-  #include <WiFi.h>
-  #include <WiFiClientSecure.h>
-  #include <ArduinoJson.h>
-  #include <WebSocketsClient.h>
-  #include <SocketIOclient.h>
-
-  ws://lysmarine:8080/socket.io/?EIO=4&transport=websocket&sid=Umq_p3uti3tZNSv2AAAG
-
-  Requests:
-  
-  2probe
-  5
-  42["pypilot","watch={\"ap.heading\":0.5}"]
-  42["pypilot","watch={\"ap.heading_command\":0.5}"]
-  42["pypilot","watch={\"ap.mode\":true}"]
-  42["pypilot","watch={\"ap.enabled\":true}"]
-  42["ping"]
-  42["pypilot","ap.heading_command=198.337"]
-  42["pypilot","ap.mode=\"gps\""]
-  42["pypilot","ap.mode=\"true\""]
-  42["pypilot","ap.mode=\"true wind\""]
-  42["pypilot","ap.mode=\"wind\""]
-  42["pypilot","{\"ap.mode\":\"compass\",\"ap.heading_command\":164.3069}"]
-
-  Responses:
-
-  3probe
-  42["pypilot","{\"ap.heading\":164.479}"]
-  42["pong"]
-  42["pypilot","{\"ap.heading_command\":198.337,\"ap.heading\":164.615}"]
-  42["pypilot","{\"ap.mode\":\"compass\"}"]
-
   TCP client on port 23322:
 
   Just one line commands like this:
@@ -84,7 +48,8 @@ extern "C" {
 
   void pypilot_send_command(WiFiClient& client, float heading) {
     if (client.connected()) {
-      client.println(String("ap.heading_command=") + String(heading, 1));
+      client.print(F("ap.heading_command="));
+      client.println(String(heading, 1));
       client.flush();
     }
   }
