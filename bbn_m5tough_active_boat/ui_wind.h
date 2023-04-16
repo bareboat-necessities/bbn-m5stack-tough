@@ -63,21 +63,21 @@ extern "C" {
     wind_label = lv_label_create(parent);
     lv_obj_align(wind_label, LV_ALIGN_TOP_LEFT, 5, 3);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(wind_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(wind_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(wind_label, "AWS:\n--");
 
     gws_label = lv_label_create(parent);
     lv_obj_align(gws_label, LV_ALIGN_BOTTOM_LEFT, 5, -3);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(gws_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(gws_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(gws_label, "GWS:\n-- kt");
 
     gwat_label = lv_label_create(parent);
     lv_obj_align(gwat_label, LV_ALIGN_BOTTOM_RIGHT, -5, -3);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(gwat_label, &lv_font_montserrat_20, NULL);
+    lv_obj_set_style_text_font(gwat_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(gwat_label, "GWAT:\n--" LV_SYMBOL_DEGREES);
   }
