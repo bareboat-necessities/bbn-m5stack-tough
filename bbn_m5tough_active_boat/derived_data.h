@@ -12,7 +12,8 @@ extern "C" {
 #endif
 
   static void sunrise_sunset() {
-    if (fresh(shipDataModel.navigation.position.lat.age)
+    if ((!fresh(shipDataModel.environment.sunrise.age, TWO_MINUTES) || !fresh(shipDataModel.environment.sunset.age, TWO_MINUTES))
+        && fresh(shipDataModel.navigation.position.lat.age)
         && fresh(shipDataModel.navigation.position.lon.age)) {
       M5.Rtc.GetDate(&RTCdate);
       float lon = shipDataModel.navigation.position.lon.deg;
@@ -26,40 +27,26 @@ extern "C" {
       float nautlen = day_nautical_twilight_length(year, month, day, lon, lat);  // Day length with With nautical twilight (hr)
       float nauttwilight = (nautlen - daylen) / 2.0;                             // Length of nautical twilight (hr)
 
-      M5.Lcd.printf("Day length:                  %5.2f hours\n", daylen);
-      M5.Lcd.printf("With nautical twilight       %5.2f hours\n", nautlen);
-      M5.Lcd.printf("Length of twilight: nautical %5.2f hours\n", nauttwilight);
+      shipDataModel.environment.daylight_duration.hr = daylen;
+      shipDataModel.environment.daylight_duration.age = millis();
+      shipDataModel.environment.nautical_twilight_duration.hr = nauttwilight;
+      shipDataModel.environment.nautical_twilight_duration.age = millis();
 
       float rise, set, naut_start, naut_end;
-      int rs = sun_rise_set(year, month, day, lon, lat, &rise, &set);
-      int naut = nautical_twilight(year, month, day, lon, lat, &naut_start, &naut_end);
+      int rs = sun_rise_set(year, month, day, lon, lat, &rise, &set); // 1, 0, or -1
+      int naut = nautical_twilight(year, month, day, lon, lat, &naut_start, &naut_end); // 1, 0, or -1
 
-      switch (rs) {
-        case 0:
-          M5.Lcd.printf("Sun rises %5.2fh UT, sets %5.2fh UT\n", rise, set);
-          //sprint_t(rise_b, "", (rise + zone));
-          //sprint_t(set_b, "", (set + zone));
-          //M5.Lcd.printf("Rise: %s\nSet: %s\nZone: %d\n", rise_b, set_b, zone);
-          break;
-        case +1:
-          M5.Lcd.printf("Sun doesn't set\n");
-          break;
-        case -1:
-          M5.Lcd.printf("Sun doesn't rise\n");
-          break;
-      }
+      shipDataModel.environment.sunrise.hr = rise;
+      shipDataModel.environment.sunrise.age = millis();
+      shipDataModel.environment.sunset.hr = set;
+      shipDataModel.environment.sunset.age = millis();
+      shipDataModel.environment.no_sunset_flag = rs; //  1 - above, -1 - below, 0 - rises and sets
 
-      switch (naut) {
-        case 0:
-          M5.Lcd.printf("Nautical twilight starts %5.2fh, ends %5.2fh UT\n", naut_start, naut_end);
-          break;
-        case +1:
-          M5.Lcd.printf("Never darker than nautical twilight\n");
-          break;
-        default:
-          M5.Lcd.printf("Never brighter than nautical twilight\n");
-          break;
-      }
+      shipDataModel.environment.nautical_twilight_start.hr = naut_start;
+      shipDataModel.environment.nautical_twilight_start.age = millis();
+      shipDataModel.environment.nautical_twilight_end.hr = naut_end;
+      shipDataModel.environment.nautical_twilight_end.age = millis();
+      shipDataModel.environment.no_dark_flag = naut;
     }
   }
 
