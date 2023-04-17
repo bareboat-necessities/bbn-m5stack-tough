@@ -211,6 +211,8 @@ typedef struct _environment_t {
   int no_dark_flag = 0;
   struct _hour_float_t daylight_duration;
   struct _hour_float_t nautical_twilight_duration;
+  struct _hour_float_t nautical_twilight_start;
+  struct _hour_float_t nautical_twilight_end;
 } environment_t;
 
 typedef struct _current_amp_t {
