@@ -38,33 +38,33 @@ extern "C" {
 #endif
     lv_label_set_text(weather_time_label, "UTC Time:         --");
 
+    weather_twilight_begin_label = lv_label_create(parent);
+    lv_obj_align(weather_twilight_begin_label, LV_ALIGN_TOP_LEFT, 10, 70);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(weather_twilight_begin_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(weather_twilight_begin_label, "Twilight Start: ---");
+
     weather_sunrise_label = lv_label_create(parent);
-    lv_obj_align(weather_sunrise_label, LV_ALIGN_TOP_LEFT, 10, 70);
+    lv_obj_align(weather_sunrise_label, LV_ALIGN_TOP_LEFT, 10, 100);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(weather_sunrise_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(weather_sunrise_label, "Sunrise:          --");
 
     weather_sunset_label = lv_label_create(parent);
-    lv_obj_align(weather_sunset_label, LV_ALIGN_TOP_LEFT, 10, 100);
+    lv_obj_align(weather_sunset_label, LV_ALIGN_TOP_LEFT, 10, 130);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(weather_sunset_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(weather_sunset_label, "Sunset:          --");
 
-    weather_twilight_begin_label = lv_label_create(parent);
-    lv_obj_align(weather_twilight_begin_label, LV_ALIGN_TOP_LEFT, 10, 130);
-#if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(weather_twilight_begin_label, &lv_font_montserrat_20, 0);
-#endif
-    lv_label_set_text(weather_twilight_begin_label, "Twilight Start:        ---");
-
     weather_twilight_end_label = lv_label_create(parent);
-    lv_obj_align(weather_twilight_end_label, LV_ALIGN_TOP_LEFT, 10, 130);
+    lv_obj_align(weather_twilight_end_label, LV_ALIGN_TOP_LEFT, 10, 160);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(weather_twilight_end_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(weather_twilight_end_label, "Twilight End:        ---");
+    lv_label_set_text(weather_twilight_end_label, "Twilight End:   ---");
   }
 
   static String hour_format(float hr) {
@@ -81,20 +81,20 @@ extern "C" {
                       (String("UTC Time:          ")
                        + (fresh(shipDataModel.environment.time_gps.age) ? time_format(shipDataModel.environment.time_gps.t) : String("--")))
                         .c_str());
+    lv_label_set_text(weather_twilight_begin_label,
+                      (String("Twilight Start:  ")
+                       + (fresh(shipDataModel.environment.nautical_twilight_start.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.nautical_twilight_start.hr) : String("--")))
+                        .c_str());
     lv_label_set_text(weather_sunrise_label,
-                      (String("Sunrise:              ")
+                      (String("Sunrise:               ")
                        + (fresh(shipDataModel.environment.sunrise.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.sunrise.hr) : String("--")))
                         .c_str());
     lv_label_set_text(weather_sunset_label,
-                      (String("Sunset:               ")
+                      (String("Sunset:                ")
                        + (fresh(shipDataModel.environment.sunset.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.sunset.hr) : String("--")))
                         .c_str());
-    lv_label_set_text(weather_twilight_begin_label,
-                      (String("Twilight Start:               ")
-                       + (fresh(shipDataModel.environment.nautical_twilight_start.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.nautical_twilight_start.hr) : String("--")))
-                        .c_str());
     lv_label_set_text(weather_twilight_end_label,
-                      (String("Twilight End:               ")
+                      (String("Twilight End:    ")
                        + (fresh(shipDataModel.environment.nautical_twilight_end.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.nautical_twilight_end.hr) : String("--")))
                         .c_str());
   }
