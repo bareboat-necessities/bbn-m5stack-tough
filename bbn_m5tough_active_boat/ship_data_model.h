@@ -74,6 +74,11 @@ typedef struct _angle_deg_t {
   age_t age = 0U;
 } angle_deg_t;
 
+typedef struct _hour_float_t {
+  float hr;
+  age_t age = 0U;
+} hour_float_t;
+
 typedef struct _kn_t {
   float kn;
   age_t age = 0U;
@@ -200,6 +205,12 @@ typedef struct _environment_t {
   struct _water_t water;
   struct _air_t air_outside;
   struct _air_t air_inside;
+  struct _hour_float_t sunrise;
+  struct _hour_float_t sunset;
+  int no_sunset_flag = 0;
+  int no_dark_flag = 0;
+  struct _hour_float_t daylight_duration;
+  struct _hour_float_t nautical_twilight_duration;
 } environment_t;
 
 typedef struct _current_amp_t {
