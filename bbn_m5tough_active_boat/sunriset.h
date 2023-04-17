@@ -18,13 +18,9 @@ mgrouch, 2023 - modifications for esp32 Arduino
 #ifndef SUNRISET_H
 #define SUNRISET_H
 
-//#include <math.h>
-//#include <time.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
   /* A macro to compute the number of days elapsed since 2000 Jan 0.0 */
   /* (which is equal to 1999 Dec 31, 0h UT)                           */
@@ -52,12 +48,10 @@ extern "C" {
 #define acosd(x) (RADEG * acos(x))
 #define atan2d(y, x) (RADEG * atan2(y, x))
 
-
 /* Following are some macros around the "workhorse" function __daylen__ */
 /* They mainly fill in the desired values for the reference altitude    */
 /* below the horizon, and also selects whether this altitude should     */
 /* refer to the Sun's center or its upper limb.                         */
-
 
 /* This macro computes the length of the day, from sunrise to sunset. */
 /* Sunrise/set is considered to occur when the Sun's upper limb is    */
@@ -109,7 +103,6 @@ extern "C" {
 /* below the horizon.                                                      */
 #define astronomical_twilight(year, month, day, lon, lat, start, end) \
   __sunriset__(year, month, day, lon, lat, -18.0, 0, start, end)
-
 
   /* Function prototypes */
 
@@ -215,11 +208,7 @@ extern "C" {
     return rc;
   } /* __sunriset__ */
 
-
-
   /* The "workhorse" function */
-
-
   double __daylen__(int year, int month, int day, double lon, double lat,
                     double altit, int upper_limb)
   /**********************************************************************/
@@ -281,9 +270,7 @@ extern "C" {
     return t;
   } /* __daylen__ */
 
-
   /* This function computes the Sun's position at any instant */
-
   void sunpos(double d, double *lon, double *r)
   /******************************************************/
   /* Computes the Sun's ecliptic longitude and distance */
@@ -370,7 +357,6 @@ extern "C" {
     return (x - 360.0 * floor(x * INV360 + 0.5));
   } /* revolution */
 
-
   /*******************************************************************/
   /* This function computes GMST0, the Greenwich Mean Sidereal Time  */
   /* at 0h UT (i.e. the sidereal time at the Greenwhich meridian at  */
@@ -407,7 +393,6 @@ extern "C" {
     sidtim0 = revolution((180.0 + 356.0470 + 282.9404) + (0.9856002585 + 4.70935E-5) * d);
     return sidtim0;
   } /* GMST0 */
-
 
 #ifdef __cplusplus
 } /*extern "C"*/
