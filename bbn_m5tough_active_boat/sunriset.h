@@ -15,10 +15,9 @@ Released to the public domain by Paul Schlyter, December 1992
 mgrouch, 2023 - modifications for esp32 Arduino
 */
 
-#ifndef KEEPALIVE_H
-#define KEEPALIVE_H
+#ifndef SUNRISET_H
+#define SUNRISET_H
 
-#include <lwip/sockets.h>
 //#include <math.h>
 //#include <time.h>
 
