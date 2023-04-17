@@ -51,6 +51,7 @@ static ship_data_t shipDataModel;
 
 WMM_Tinier myDeclination;
 
+#include "sunriset.h"
 #include "derived_data.h"
 #include "TinyGPSPlus.h"
 #include "nmea0183_parse.h"
