@@ -79,10 +79,12 @@ MQTTClient mqttClient = MQTTClient(4096); // Data loss if buffer is not enough
 #include "ui_autopilot.h"
 #include "ui_rudder.h"
 #include "ui_tanks.h"
+#include "ui_weather.h"
 #include "ui_power_victron.h"
 
 lv_updatable_screen_t* screens[] = {
   &windScreen,
+  &weatherScreen,
   &aboutScreen,
   &devStatusScreen,
   &rebootScreen,
@@ -135,6 +137,7 @@ void setup() {
   settingUpWiFi([]() {
     init_dateTime();
     init_windScreen();
+    init_weatherScreen();
     init_engineScreen();
     init_gpsScreen();
     init_speedScreen();
