@@ -106,28 +106,28 @@ extern "C" {
 
   /* Function prototypes */
 
-  double __daylen__(int year, int month, int day, double lon, double lat,
-                    double altit, int upper_limb);
+  float __daylen__(int year, int month, int day, float lon, float lat,
+                   float altit, int upper_limb);
 
-  int __sunriset__(int year, int month, int day, double lon, double lat,
-                   double altit, int upper_limb, double *rise, double *set);
+  int __sunriset__(int year, int month, int day, float lon, float lat,
+                   float altit, int upper_limb, float *rise, float *set);
 
-  void sunpos(double d, double *lon, double *r);
+  void sunpos(float d, float *lon, float *r);
 
-  void sun_RA_dec(double d, double *RA, double *dec, double *r);
+  void sun_RA_dec(float d, float *RA, float *dec, float *r);
 
-  double revolution(double x);
+  float revolution(float x);
 
-  double rev180(double x);
+  float rev180(float x);
 
-  double GMST0(double d);
+  float GMST0(float d);
 
 #define sprint_t(buf, s, val) sprintf(buf, "%2d:%02d" s, (int)(val), (int)(60. * (val - (int)(val))))
 
   /* The "workhorse" function for sun rise/set times */
 
-  int __sunriset__(int year, int month, int day, double lon, double lat,
-                   double altit, int upper_limb, double *trise, double *tset)
+  int __sunriset__(int year, int month, int day, float lon, float lat,
+                   float altit, int upper_limb, float *trise, float *tset)
   /***************************************************************************/
   /* Note: year,month,date = calendar date, 1801-2099 only.             */
   /*       Eastern longitude positive, Western longitude negative       */
@@ -158,7 +158,7 @@ extern "C" {
   /*                                                                    */
   /**********************************************************************/
   {
-    double d,  /* Days since 2000 Jan 0.0 (negative before) */
+    float d,   /* Days since 2000 Jan 0.0 (negative before) */
       sr,      /* Solar distance, astronomical units */
       sRA,     /* Sun's Right Ascension */
       sdec,    /* Sun's declination */
@@ -191,7 +191,7 @@ extern "C" {
     /* Compute the diurnal arc that the Sun traverses to reach */
     /* the specified altitude altit: */
     {
-      double cost;
+      float cost;
       cost = (sind(altit) - sind(lat) * sind(sdec)) / (cosd(lat) * cosd(sdec));
       if (cost >= 1.0)
         rc = -1, t = 0.0; /* Sun always below altit */
@@ -209,8 +209,8 @@ extern "C" {
   } /* __sunriset__ */
 
   /* The "workhorse" function */
-  double __daylen__(int year, int month, int day, double lon, double lat,
-                    double altit, int upper_limb)
+  float __daylen__(int year, int month, int day, float lon, float lat,
+                   float altit, int upper_limb)
   /**********************************************************************/
   /* Note: year,month,date = calendar date, 1801-2099 only.             */
   /*       Eastern longitude positive, Western longitude negative       */
@@ -227,7 +227,7 @@ extern "C" {
   /*               and to zero when computing day+twilight length.      */
   /**********************************************************************/
   {
-    double d,    /* Days since 2000 Jan 0.0 (negative before) */
+    float d,     /* Days since 2000 Jan 0.0 (negative before) */
       obl_ecl,   /* Obliquity (inclination) of Earth's axis */
       sr,        /* Solar distance, astronomical units */
       slon,      /* True solar longitude */
@@ -259,7 +259,7 @@ extern "C" {
     /* Compute the diurnal arc that the Sun traverses to reach */
     /* the specified altitude altit: */
     {
-      double cost;
+      float cost;
       cost = (sind(altit) - sind(lat) * sin_sdecl) / (cosd(lat) * cos_sdecl);
       if (cost >= 1.0)
         t = 0.0; /* Sun always below altit */
@@ -271,7 +271,7 @@ extern "C" {
   } /* __daylen__ */
 
   /* This function computes the Sun's position at any instant */
-  void sunpos(double d, double *lon, double *r)
+  void sunpos(float d, float *lon, float *r)
   /******************************************************/
   /* Computes the Sun's ecliptic longitude and distance */
   /* at an instant given in d, number of days since     */
@@ -279,13 +279,13 @@ extern "C" {
   /* computed, since it's always very near 0.           */
   /******************************************************/
   {
-    double M, /* Mean anomaly of the Sun */
-      w,      /* Mean longitude of perihelion */
-              /* Note: Sun's mean longitude = M + w */
-      e,      /* Eccentricity of Earth's orbit */
-      E,      /* Eccentric anomaly */
-      x, y,   /* x, y coordinates in orbit */
-      v;      /* True anomaly */
+    float M, /* Mean anomaly of the Sun */
+      w,     /* Mean longitude of perihelion */
+             /* Note: Sun's mean longitude = M + w */
+      e,     /* Eccentricity of Earth's orbit */
+      E,     /* Eccentric anomaly */
+      x, y,  /* x, y coordinates in orbit */
+      v;     /* True anomaly */
 
     /* Compute mean elements */
     M = revolution(356.0470 + 0.9856002585 * d);
@@ -303,14 +303,14 @@ extern "C" {
       *lon -= 360.0; /* Make it 0..360 degrees */
   }
 
-  void sun_RA_dec(double d, double *RA, double *dec, double *r)
+  void sun_RA_dec(float d, float *RA, float *dec, float *r)
   /******************************************************/
   /* Computes the Sun's equatorial coordinates RA, Decl */
   /* and also its distance, at an instant given in d,   */
   /* the number of days since 2000 Jan 0.0.             */
   /******************************************************/
   {
-    double lon, obl_ecl, x, y, z;
+    float lon, obl_ecl, x, y, z;
 
     /* Compute Sun's ecliptical coordinates */
     sunpos(d, &lon, r);
@@ -341,7 +341,7 @@ extern "C" {
 
 #define INV360 (1.0 / 360.0)
 
-  double revolution(double x)
+  float revolution(float x)
   /*****************************************/
   /* Reduce angle to within 0..360 degrees */
   /*****************************************/
@@ -349,7 +349,7 @@ extern "C" {
     return (x - 360.0 * floor(x * INV360));
   } /* revolution */
 
-  double rev180(double x)
+  float rev180(float x)
   /*********************************************/
   /* Reduce angle to within +180..+180 degrees */
   /*********************************************/
@@ -383,8 +383,8 @@ extern "C" {
   /*                                                                 */
   /*******************************************************************/
 
-  double GMST0(double d) {
-    double sidtim0;
+  float GMST0(float d) {
+    float sidtim0;
     /* Sidtime at 0h UT = L (Sun's mean longitude) + 180.0 degr  */
     /* L = M + w, as defined in sunpos().  Since I'm too lazy to */
     /* add these numbers, I'll let the C compiler do it for me.  */
