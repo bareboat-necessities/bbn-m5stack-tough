@@ -84,7 +84,7 @@ extern "C" {
   }
 
   static String hour_format(float hr) {
-    char bufferTime[16];
+    static char bufferTime[16];
     int h = hr;
     int m = (hr - h) * 60;
     int s = ((hr - h) * 60 - m) * 60;
@@ -94,31 +94,31 @@ extern "C" {
 
   static void weather_update_cb() {
     lv_label_set_text(weather_time_label,
-                      (String("UTC Time:                   ")
+                      (String(F("UTC Time:                   "))
                        + (fresh(shipDataModel.environment.time_gps.age) ? time_format(shipDataModel.environment.time_gps.t) : String("--")))
                         .c_str());
     lv_label_set_text(weather_twilight_begin_label,
-                      (String("Twilight Start:           ")
+                      (String(F("Twilight Start:           "))
                        + (fresh(shipDataModel.environment.nautical_twilight_start.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.nautical_twilight_start.hr) : String("--")))
                         .c_str());
     lv_label_set_text(weather_sunrise_label,
-                      (String("Sunrise:                       ")
+                      (String(F("Sunrise:                       "))
                        + (fresh(shipDataModel.environment.sunrise.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.sunrise.hr) : String("--")))
                         .c_str());
     lv_label_set_text(weather_daylight_label,
-                      (String("Day Duration:           ")
+                      (String(F("Day Duration:           "))
                        + (fresh(shipDataModel.environment.daylight_duration.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.daylight_duration.hr) : String("--")))
                         .c_str());
     lv_label_set_text(weather_sunset_label,
-                      (String("Sunset:                        ")
+                      (String(F("Sunset:                        "))
                        + (fresh(shipDataModel.environment.sunset.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.sunset.hr) : String("--")))
                         .c_str());
     lv_label_set_text(weather_twilight_label,
-                      (String("Twilight Duration:  ")
+                      (String(F("Twilight Duration:  "))
                        + (fresh(shipDataModel.environment.nautical_twilight_duration.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.nautical_twilight_duration.hr) : String("--")))
                         .c_str());
     lv_label_set_text(weather_twilight_end_label,
-                      (String("Twilight End:            ")
+                      (String(F("Twilight End:            "))
                        + (fresh(shipDataModel.environment.nautical_twilight_end.age, TWO_MINUTES) ? hour_format(shipDataModel.environment.nautical_twilight_end.hr) : String("--")))
                         .c_str());
   }
