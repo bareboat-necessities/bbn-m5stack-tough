@@ -11,6 +11,58 @@
 extern "C" {
 #endif
 
+  static void sunrise_sunset() {
+    if (fresh(shipDataModel.navigation.position.lat.age)
+        && fresh(shipDataModel.navigation.position.lon.age)) {
+      M5.Rtc.GetDate(&RTCdate);
+      float lon = shipDataModel.navigation.position.lon.deg;
+      float lat = shipDataModel.navigation.position.lat.deg;
+
+      int year = (RTCdate.Year % 100) + 1900;
+      int month = RTCdate.Month + 1;
+      int day = RTCdate.Date;
+
+      float daylen = day_length(year, month, day, lon, lat);                     // Day length (hr)
+      float nautlen = day_nautical_twilight_length(year, month, day, lon, lat);  // Day length with With nautical twilight (hr)
+      float nauttwilight = (nautlen - daylen) / 2.0;                             // Length of nautical twilight (hr)
+
+      M5.Lcd.printf("Day length:                  %5.2f hours\n", daylen);
+      M5.Lcd.printf("With nautical twilight       %5.2f hours\n", nautlen);
+      M5.Lcd.printf("Length of twilight: nautical %5.2f hours\n", nauttwilight);
+
+      float rise, set, naut_start, naut_end;
+      int rs = sun_rise_set(year, month, day, lon, lat, &rise, &set);
+      int naut = nautical_twilight(year, month, day, lon, lat, &naut_start, &naut_end);
+
+      switch (rs) {
+        case 0:
+          M5.Lcd.printf("Sun rises %5.2fh UT, sets %5.2fh UT\n", rise, set);
+          //sprint_t(rise_b, "", (rise + zone));
+          //sprint_t(set_b, "", (set + zone));
+          //M5.Lcd.printf("Rise: %s\nSet: %s\nZone: %d\n", rise_b, set_b, zone);
+          break;
+        case +1:
+          M5.Lcd.printf("Sun doesn't set\n");
+          break;
+        case -1:
+          M5.Lcd.printf("Sun doesn't rise\n");
+          break;
+      }
+
+      switch (naut) {
+        case 0:
+          M5.Lcd.printf("Nautical twilight starts %5.2fh, ends %5.2fh UT\n", naut_start, naut_end);
+          break;
+        case +1:
+          M5.Lcd.printf("Never darker than nautical twilight\n");
+          break;
+        default:
+          M5.Lcd.printf("Never brighter than nautical twilight\n");
+          break;
+      }
+    }
+  }
+
   static void derive_data() {
     // derive magnetic variation
     if (fresh(shipDataModel.navigation.position.lat.age)
@@ -84,6 +136,8 @@ extern "C" {
         shipDataModel.navigation.mag_var.age = millis();
       }
     }
+
+    sunrise_sunset();
   }
 
 #ifdef __cplusplus
