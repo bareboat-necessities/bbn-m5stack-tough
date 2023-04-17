@@ -88,6 +88,7 @@ lv_updatable_screen_t* screens[] = {
   &aboutScreen,
   &devStatusScreen,
   &rebootScreen,
+  /*
   &clockScreen,
   &playerScreen,
   &victronScreen,
@@ -100,20 +101,25 @@ lv_updatable_screen_t* screens[] = {
   &gpsScreen,
   &speedScreen,
   &depthScreen,
+  */
 };
 
 int page = 0;
 int pages_count = sizeof(screens) / sizeof(screens[0]);
 
 void next_page() {
+  lv_obj_clean(screens[page]->screen);
   page++;
   if (page >= pages_count) page = 0;
+  init_screen(*screens[page]);
   lv_scr_load(screens[page]->screen);
 }
 
 void prev_page() {
+  lv_obj_clean(screens[page]->screen);
   page--;
   if (page < 0) page = pages_count - 1;
+  init_screen(*screens[page]);
   lv_scr_load(screens[page]->screen);
 }
 
@@ -136,14 +142,14 @@ void setup() {
 
   settingUpWiFi([]() {
     init_dateTime();
+    
     init_windScreen();
     init_weatherScreen();
+    /*
     init_engineScreen();
     init_gpsScreen();
     init_speedScreen();
     init_depthScreen();
-    init_aboutScreen();
-    init_rebootScreen();
     init_clockScreen();
     init_playerScreen();
     init_victronScreen();
@@ -152,7 +158,12 @@ void setup() {
     init_heelScreen();
     init_compassScreen();
     init_rudderScreen();
+    */
+    init_aboutScreen();
+    init_rebootScreen();
     init_devStatusScreen();
+  
+    init_screen(*screens[page]);
     lv_scr_load(screens[page]->screen);
 
     discover_n_config();  // Discover services via mDNS
