@@ -24,7 +24,7 @@ extern "C" {
 
   // triggers callback function set in init_cb
   void init_screen(lv_updatable_screen_t& screen) {
-    //lv_obj_clean(screen.screen);
+    lv_obj_clean(screen.screen);
     (*screen.init_cb)(screen.screen);
   }
 
