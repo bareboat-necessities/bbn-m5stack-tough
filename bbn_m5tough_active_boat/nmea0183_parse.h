@@ -51,48 +51,6 @@ extern "C" {
     return strtof(str, NULL);
   }
 
-  void displayGPSData() {
-    if (gps.location.isUpdated()) {
-      M5.Lcd.print("POS:  ");
-      M5.Lcd.print(gps.location.lat());
-      M5.Lcd.print(" ");
-      M5.Lcd.println(gps.location.lng());
-    }
-    if (gps.altitude.isUpdated()) {
-      M5.Lcd.print("ALT:  ");
-      M5.Lcd.println(gps.altitude.feet());
-    }
-    if (gps.speed.isUpdated()) {
-      M5.Lcd.print("SOG:  ");
-      M5.Lcd.println(gps.speed.knots());
-    }
-    if (gps.course.isUpdated()) {
-      M5.Lcd.print("COG:  ");
-      M5.Lcd.println(gps.course.deg());
-    }
-    if (gps.time.isUpdated()) {
-      M5.Lcd.print("TIME: ");
-      M5.Lcd.print(gps.time.hour());
-      M5.Lcd.print(":");
-      M5.Lcd.print(gps.time.minute());
-      M5.Lcd.print(":");
-      M5.Lcd.println(gps.time.second());
-    }
-    if (headingTrue.isUpdated()) {
-      M5.Lcd.print("HDT:  ");
-      M5.Lcd.println(headingTrue.value());
-    }
-    if (headingMag.isUpdated()) {
-      M5.Lcd.print("HDM:  ");
-      M5.Lcd.println(headingMag.value());
-    }
-    if (customData_Value.isUpdated() && customData_Type.isValid()) {
-      M5.Lcd.print(customData_Type.value());
-      M5.Lcd.print(": ");
-      M5.Lcd.println(customData_Value.value());
-    }
-  }
-
 #define NMEA_END_CHAR_1 '\n'
 #define NMEA_MAX_LENGTH 128
 
@@ -127,7 +85,6 @@ extern "C" {
     bool found = false;
     String dataLine = client.readStringUntil('\n');
     found = nmea_parse(dataLine);
-    // displayGPSData();
 
     if (customData_Value.isUpdated() && customData_Type.isValid()) {
       if (strcmp("PTCH", customData_Type.value()) == 0 || strcmp("PITCH", customData_Type.value()) == 0) {
@@ -146,8 +103,6 @@ extern "C" {
     }
     if (gps.altitude.isUpdated()) {
       // TODO:
-      //M5.Lcd.print("ALT:  ");
-      //M5.Lcd.println(gps.altitude.feet());
     }
     if (gps.speed.isUpdated()) {
       shipDataModel.navigation.speed_over_ground.kn = gps.speed.knots();
