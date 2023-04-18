@@ -27,7 +27,7 @@ extern "C" {
   /**
    * A weather display 
    */
-  void lv_weather_display(lv_obj_t *parent) {
+  static void lv_weather_display(lv_obj_t *parent) {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
@@ -125,7 +125,7 @@ extern "C" {
 
   void init_weatherScreen() {
     weatherScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_weather_display(weatherScreen.screen);
+    weatherScreen.init_cb = lv_weather_display;
     weatherScreen.update_cb = weather_update_cb;
   }
 
