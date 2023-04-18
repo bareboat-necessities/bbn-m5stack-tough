@@ -16,7 +16,7 @@ extern "C" {
   /**
    * A GPS display 
    */
-  void lv_gps_display(lv_obj_t *parent) {
+  static void lv_gps_display(lv_obj_t *parent) {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
@@ -97,7 +97,7 @@ extern "C" {
 
   void init_gpsScreen() {
     gpsScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_gps_display(gpsScreen.screen);
+    gpsScreen.init_cb = lv_gps_display;
     gpsScreen.update_cb = gps_update_cb;
   }
 
