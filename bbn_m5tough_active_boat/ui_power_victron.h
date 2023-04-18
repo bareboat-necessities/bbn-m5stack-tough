@@ -10,7 +10,7 @@ extern "C" {
   /**
    * A victron display 
    */
-  void lv_victron_display(lv_obj_t *parent) {
+  static void lv_victron_display(lv_obj_t *parent) {
     static lv_style_t style_shadow;
     lv_style_init(&style_shadow);
 
@@ -136,7 +136,7 @@ extern "C" {
 
   void init_victronScreen() {
     victronScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_victron_display(victronScreen.screen);
+    victronScreen.init_cb = lv_victron_display;
     victronScreen.update_cb = victron_update_cb;
   }
 
