@@ -88,7 +88,6 @@ lv_updatable_screen_t* screens[] = {
   &aboutScreen,
   &devStatusScreen,
   &rebootScreen,
-  /*
   &clockScreen,
   &playerScreen,
   &victronScreen,
@@ -101,7 +100,6 @@ lv_updatable_screen_t* screens[] = {
   &gpsScreen,
   &speedScreen,
   &depthScreen,
-  */
 };
 
 int page = 0;
@@ -145,7 +143,6 @@ void setup() {
     
     init_windScreen();
     init_weatherScreen();
-    /*
     init_engineScreen();
     init_gpsScreen();
     init_speedScreen();
@@ -158,7 +155,6 @@ void setup() {
     init_heelScreen();
     init_compassScreen();
     init_rudderScreen();
-    */
     init_aboutScreen();
     init_rebootScreen();
     init_devStatusScreen();
