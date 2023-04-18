@@ -15,7 +15,7 @@ extern "C" {
     ESP.restart();
   }
 
-  void lv_reboot_display(lv_obj_t *parent) {
+  static void lv_reboot_display(lv_obj_t *parent) {
     lv_obj_t *labelIP = lv_label_create(parent);
     lv_obj_set_pos(labelIP, 10, 10);
     lv_label_set_text(labelIP,
@@ -45,7 +45,7 @@ extern "C" {
 
   void init_rebootScreen() {
     rebootScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_reboot_display(rebootScreen.screen);
+    rebootScreen.init_cb = lv_reboot_display;
   }
 
 #ifdef __cplusplus
