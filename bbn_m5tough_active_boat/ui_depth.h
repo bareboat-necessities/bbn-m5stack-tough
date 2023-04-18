@@ -15,7 +15,7 @@ extern "C" {
   /**
    * A depth display 
    */
-  void lv_depth_display(lv_obj_t *parent) {
+  static void lv_depth_display(lv_obj_t *parent) {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
@@ -55,7 +55,7 @@ extern "C" {
 
   void init_depthScreen() {
     depthScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_depth_display(depthScreen.screen);
+    depthScreen.init_cb = lv_depth_display;
     depthScreen.update_cb = depth_update_cb;
   }
 
