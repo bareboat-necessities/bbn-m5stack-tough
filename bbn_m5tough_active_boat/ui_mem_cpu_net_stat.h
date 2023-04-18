@@ -111,7 +111,7 @@ extern "C" {
   /**
    * A dev status display 
    */
-  void lv_dev_status_display(lv_obj_t *parent) {
+  static void lv_dev_status_display(lv_obj_t *parent) {
     pyp_status_label = lv_label_create(parent);
     lv_obj_align(pyp_status_label, LV_ALIGN_TOP_LEFT, 20, 30);
     lv_label_set_recolor(pyp_status_label, true);
@@ -187,7 +187,7 @@ extern "C" {
 
   void init_devStatusScreen() {
     devStatusScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_dev_status_display(devStatusScreen.screen);
+    devStatusScreen.init_cb = lv_dev_status_display;
     devStatusScreen.update_cb = dev_status_update_cb;
   }
 
