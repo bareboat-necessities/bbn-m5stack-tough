@@ -23,7 +23,7 @@ extern "C" {
   /**
    * A compass display
    */
-  void lv_compass_display(lv_obj_t *parent) {
+  static void lv_compass_display(lv_obj_t *parent) {
     compass_display = lv_meter_create(parent);
 
     lv_obj_remove_style(compass_display, NULL, LV_PART_MAIN);
@@ -144,7 +144,7 @@ extern "C" {
 
   void init_compassScreen() {
     compassScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_compass_display(compassScreen.screen);
+    compassScreen.init_cb = lv_compass_display;
     compassScreen.update_cb = compass_update_cb;
   }
 
