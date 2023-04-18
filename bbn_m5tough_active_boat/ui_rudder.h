@@ -18,7 +18,7 @@ extern "C" {
   /**
    * A rudder position display
    */
-  void lv_rudder_display(lv_obj_t *parent) {
+  static void lv_rudder_display(lv_obj_t *parent) {
     rudder_display = lv_meter_create(parent);
     lv_obj_align(rudder_display, LV_ALIGN_CENTER, 0, -40);
     lv_obj_set_size(rudder_display, 300, 300);
@@ -60,7 +60,7 @@ extern "C" {
 
   void init_rudderScreen() {
     rudderScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_rudder_display(rudderScreen.screen);
+    rudderScreen.init_cb = lv_rudder_display;
     rudderScreen.update_cb = rudder_update_cb;
   }
 
