@@ -18,7 +18,7 @@ extern "C" {
   /**
    * A heel display (clinometer)
    */
-  void lv_heel_display(lv_obj_t *parent) {
+  static void lv_heel_display(lv_obj_t *parent) {
     heel_display = lv_meter_create(parent);
     lv_obj_align(heel_display, LV_ALIGN_CENTER, 0, -40);
     lv_obj_set_size(heel_display, 300, 300);
@@ -59,7 +59,7 @@ extern "C" {
 
   void init_heelScreen() {
     heelScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_heel_display(heelScreen.screen);
+    heelScreen.init_cb = lv_heel_display;
     heelScreen.update_cb = heel_update_cb;
   }
 
