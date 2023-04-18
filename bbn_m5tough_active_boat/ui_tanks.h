@@ -17,9 +17,9 @@ extern "C" {
   static lv_obj_t *bar_g2;
 
   /**
- * A tanks display 
- */
-  void lv_tanks_display(lv_obj_t *parent) {
+   * A tanks display 
+   */
+  static void lv_tanks_display(lv_obj_t *parent) {
     bar_w1 = lv_bar_create(parent);
     lv_obj_set_size(bar_w1, 50, 70);
     lv_obj_set_style_bg_color(bar_w1, lv_palette_lighten(LV_PALETTE_GREY, 3), LV_PART_MAIN);
@@ -134,7 +134,7 @@ extern "C" {
 
   void init_tanksScreen() {
     tanksScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_tanks_display(tanksScreen.screen);
+    tanksScreen.init_cb = lv_tanks_display;
     tanksScreen.update_cb = tanks_update_cb;
   }
 
