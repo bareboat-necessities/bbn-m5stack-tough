@@ -19,7 +19,7 @@ extern "C" {
   /**
    * A clock display 
    */
-  void lv_clock_display(lv_obj_t *parent) {
+  static void lv_clock_display(lv_obj_t *parent) {
     clock_display = lv_meter_create(parent);
     lv_obj_set_size(clock_display, 220, 220);
     lv_obj_center(clock_display);
@@ -74,7 +74,7 @@ extern "C" {
 
   void init_clockScreen() {
     clockScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_clock_display(clockScreen.screen);
+    clockScreen.init_cb = lv_clock_display;
     clockScreen.update_cb = clock_update_cb;
   }
 
