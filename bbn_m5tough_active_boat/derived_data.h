@@ -36,16 +36,20 @@ extern "C" {
       int rs = sun_rise_set(year, month, day, lon, lat, &rise, &set); // 1, 0, or -1
       int naut = nautical_twilight(year, month, day, lon, lat, &naut_start, &naut_end); // 1, 0, or -1
 
-      shipDataModel.environment.sunrise.hr = rise;
-      shipDataModel.environment.sunrise.age = millis();
-      shipDataModel.environment.sunset.hr = set;
-      shipDataModel.environment.sunset.age = millis();
+      if (rs == 0) {
+        shipDataModel.environment.sunrise.hr = rise;
+        shipDataModel.environment.sunrise.age = millis();
+        shipDataModel.environment.sunset.hr = set;
+        shipDataModel.environment.sunset.age = millis();
+      }
       shipDataModel.environment.no_sunset_flag = rs; //  1 - above, -1 - below, 0 - rises and sets
 
-      shipDataModel.environment.nautical_twilight_start.hr = naut_start;
-      shipDataModel.environment.nautical_twilight_start.age = millis();
-      shipDataModel.environment.nautical_twilight_end.hr = naut_end;
-      shipDataModel.environment.nautical_twilight_end.age = millis();
+      if (naut == 0) {
+        shipDataModel.environment.nautical_twilight_start.hr = naut_start;
+        shipDataModel.environment.nautical_twilight_start.age = millis();
+        shipDataModel.environment.nautical_twilight_end.hr = naut_end;
+        shipDataModel.environment.nautical_twilight_end.age = millis();
+      }
       shipDataModel.environment.no_dark_flag = naut;
     }
   }
