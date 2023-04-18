@@ -17,7 +17,7 @@ extern "C" {
   /**
    * A engine display
    */
-  void lv_engine_display(lv_obj_t *parent) {
+  static void lv_engine_display(lv_obj_t *parent) {
     engine_rpm_meter = lv_meter_create(parent);
     lv_obj_center(engine_rpm_meter);
     lv_obj_set_size(engine_rpm_meter, 200, 200);
@@ -64,7 +64,7 @@ extern "C" {
 
   void init_engineScreen() {
     engineScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_engine_display(engineScreen.screen);
+    engineScreen.init_cb = lv_engine_display;
     engineScreen.update_cb = engine_update_cb;
   }
 
