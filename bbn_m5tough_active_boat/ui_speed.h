@@ -16,7 +16,7 @@ extern "C" {
   /**
    * A speed display 
    */
-  void lv_speed_display(lv_obj_t *parent) {
+  static void lv_speed_display(lv_obj_t *parent) {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
@@ -75,7 +75,7 @@ extern "C" {
 
   void init_speedScreen() {
     speedScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_speed_display(speedScreen.screen);
+    speedScreen.init_cb = lv_speed_display;
     speedScreen.update_cb = speed_update_cb;
   }
 
