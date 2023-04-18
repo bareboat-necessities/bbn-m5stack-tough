@@ -20,7 +20,7 @@ extern "C" {
   /**
  * A wind display meter
  */
-  void lv_wind_display(lv_obj_t *parent) {
+  static void lv_wind_display(lv_obj_t *parent) {
     wind_display = lv_meter_create(parent);
     lv_obj_align(wind_display, LV_ALIGN_CENTER, 0, 6);
     lv_obj_set_size(wind_display, 210, 210);
@@ -103,7 +103,7 @@ extern "C" {
 
   void init_windScreen() {
     windScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_wind_display(windScreen.screen);
+    windScreen.init_cb = lv_wind_display;
     windScreen.update_cb = wind_update_cb;
   }
 
