@@ -21,7 +21,7 @@ extern "C" {
   /**
    * A player display 
    */
-  void lv_player_display(lv_obj_t *parent) {
+  static void lv_player_display(lv_obj_t *parent) {
     player_display = lv_btnmatrix_create(parent);
     lv_btnmatrix_set_map(player_display, player_btnm_map);
     lv_obj_set_size(player_display, 320, 78);
@@ -34,7 +34,7 @@ extern "C" {
 
   void init_playerScreen() {
     playerScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_player_display(playerScreen.screen);
+    playerScreen.init_cb = lv_player_display;
     playerScreen.update_cb = player_update_cb;
   }
 
