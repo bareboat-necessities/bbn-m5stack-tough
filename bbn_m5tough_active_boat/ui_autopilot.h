@@ -149,7 +149,7 @@ extern "C" {
 
   void init_autopilotScreen() {
     autopilotScreen.screen = lv_obj_create(NULL);  // Creates a Screen object
-    lv_autopilot_buttons(autopilotScreen.screen);
+    autopilotScreen.init_cb = lv_autopilot_buttons;
     autopilotScreen.update_cb = autopilot_update_cb;
   }
 
