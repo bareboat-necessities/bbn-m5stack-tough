@@ -16,13 +16,46 @@ extern "C" {
     JsonObject obj = doc.as<JsonObject>();
     if (obj != NULL) {
       auto update_value = [&](String& path, size_t& u_idx, size_t& v_idx, JsonVariant& value) {
-        String updatedValue = path;
-        if (value.is<float>()) {
-          updatedValue = updatedValue + " float: ";
-          if (path == "navigation.rateOfTurn") {
+        //String updatedValue = path;
+        if (path == "navigation.rateOfTurn") {
+          if (value.is<float>()) {
             shipDataModel.navigation.rate_of_turn.deg_min = 60 * value.as<float>() * 180 / PI;
             shipDataModel.navigation.rate_of_turn.age = millis();
           }
+        } else if (path == "environment.depth.belowKeel") {
+          if (value.is<float>()) {
+            shipDataModel.environment.depth.below_keel = value.as<float>();
+            shipDataModel.environment.depth.age = millis();
+          }
+        } else if (path == "environment.depth.belowTransducer") {
+          if (value.is<float>()) {
+            shipDataModel.environment.depth.below_transducer = value.as<float>();
+            shipDataModel.environment.depth.age = millis();
+          }
+        } else if (path == "environment.depth.belowSurface") {
+          if (value.is<float>()) {
+            shipDataModel.environment.depth.below_surface = value.as<float>();
+            shipDataModel.environment.depth.age = millis();
+          }
+        } else if (path == "environment.wind.angleApparent") {
+          if (value.is<float>()) {
+            shipDataModel.environment.wind.apparent_wind_angle.deg = value.as<float>() * 180.0 / PI;
+            shipDataModel.environment.wind.apparent_wind_angle.age = millis();
+          }
+        } else if (path == "environment.wind.angleTrueGround") {
+          if (value.is<float>()) {
+            shipDataModel.environment.wind.ground_wind_angle.deg = value.as<float>() * 180.0 / PI;
+            shipDataModel.environment.wind.ground_wind_angle.age = millis();
+          }
+        } else if (path == "environment.wind.angleTrueWater") {
+          if (value.is<float>()) {
+            shipDataModel.environment.wind.true_wind_angle.deg = value.as<float>() * 180.0 / PI;
+            shipDataModel.environment.wind.true_wind_angle.age = millis();
+          }
+        }
+        /*
+        if (value.is<float>()) {
+          updatedValue = updatedValue + " float: ";
         } else if (value.is<int>()) {
           updatedValue = updatedValue + " int: ";
         } else if (value.is<const char*>()) {
@@ -33,6 +66,7 @@ extern "C" {
           updatedValue = updatedValue + " ";
         }
         serializeJson(value, updatedValue);
+        */
       };
 
       JsonArray updates = obj["updates"];
