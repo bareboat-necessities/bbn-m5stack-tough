@@ -195,7 +195,7 @@ extern "C" {
     struct _deg_C_t temp_deg_C;
     struct _hPa_t pressure;
     struct _percent_t humidity_pct;
-    struct _lux_t illumination;
+    struct _lux_t illuminance;
   } air_t;
 
   typedef struct _environment_t {
