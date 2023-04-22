@@ -70,7 +70,7 @@ extern "C" {
           if (value.is<float>()) {
             shipDataModel.navigation.speed_over_ground.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
             shipDataModel.navigation.speed_over_ground.age = millis();
-          } 
+          }
         } else if (path == "navigation.speedThroughWaterLongitudinal") {
           if (value.is<float>()) {
             shipDataModel.navigation.speed_through_water.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
@@ -105,6 +105,15 @@ extern "C" {
           if (value.is<float>()) {
             shipDataModel.environment.air_outside.illuminance.lux = value.as<float>();
             shipDataModel.environment.air_outside.illuminance.age = millis();
+          }
+        } else if (path == "navigation.position") {
+          if (value.containsKey("longitude") && value.containsKey("latitude")) {
+            if (value["longitude"].is<float>() && value["latitude"].is<float>()) {
+              shipDataModel.navigation.position.lat.deg = value["latitude"].as<float>();  // SignalK sends degrees for it
+              shipDataModel.navigation.position.lat.age = millis();
+              shipDataModel.navigation.position.lon.deg = value["longitude"].as<float>(); // SignalK sends degrees for it
+              shipDataModel.navigation.position.lon.age = millis();
+            }
           }
         }
       };
