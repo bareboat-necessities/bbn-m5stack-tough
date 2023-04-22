@@ -61,17 +61,20 @@ extern "C" {
         if (starts_with(lev2, "tank/")) {
           int num = atoi(lev3);
           if (strcmp(lev4, "FluidType") == 0) {
-            int fluid_type_i = doc["value"].as<int>();
+            // topic:    N/0242ac110002/tank/3/FluidType
+            // payload:  {"value": 5}
             if (num < MAX_TANKS && num >= 0) {
-              // topic:    N/0242ac110002/tank/3/FluidType
-              // payload:  {"value": 5}
+              int fluid_type_i = doc["value"].as<int>();
               shipDataModel.tanks.tank[num].fluid_type = (fluid_type_e)fluid_type_i;
             }
           } else if (strcmp(lev4, "Remaining") == 0) {
             // topic:    N/0242ac110002/tank/3/Remaining
             // payload:  {"value": 0.18332000076770782}
-            float remaining = doc["value"].as<float>();
-            shipDataModel.tanks.tank[num].percent_of_full.pct = remaining * 100;
+            if (num < MAX_TANKS && num >= 0) {
+              float remaining = doc["value"].as<float>();
+              shipDataModel.tanks.tank[num].percent_of_full.pct = remaining * 100;
+              shipDataModel.tanks.tank[num].percent_of_full.age = millis();
+            }
           }
         }
       }
