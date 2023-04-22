@@ -143,15 +143,16 @@ extern "C" {
   typedef struct _wind_t {
     struct _kn_t apparent_wind_speed;
     struct _angle_deg_t apparent_wind_angle;
-    struct _angle_deg_t apparent_wind_angle_true;
-    struct _angle_deg_t apparent_wind_angle_mag;
+    struct _angle_deg_t apparent_wind_dir_true;
+    struct _angle_deg_t apparent_wind_dir_mag;
     struct _kn_t true_wind_speed;
     struct _angle_deg_t true_wind_angle;
-    struct _angle_deg_t true_wind_angle_true;
-    struct _angle_deg_t true_wind_angle_mag;
+    struct _angle_deg_t true_wind_dir_true;
+    struct _angle_deg_t true_wind_dir_mag;
     struct _kn_t ground_wind_speed;
-    struct _angle_deg_t ground_wind_angle_true;
-    struct _angle_deg_t ground_wind_angle_mag;
+    struct _angle_deg_t ground_wind_angle;
+    struct _angle_deg_t ground_wind_dir_true;
+    struct _angle_deg_t ground_wind_dir_mag;
   } _wind_t;
 
   typedef struct _depth_t {
