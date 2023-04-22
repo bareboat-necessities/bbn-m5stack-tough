@@ -16,7 +16,6 @@ extern "C" {
     JsonObject obj = doc.as<JsonObject>();
     if (obj != NULL) {
       auto update_value = [&](String& path, size_t& u_idx, size_t& v_idx, JsonVariant& value) {
-        //String updatedValue = path;
         if (path == "navigation.rateOfTurn") {
           if (value.is<float>()) {
             shipDataModel.navigation.rate_of_turn.deg_min = 60 * value.as<float>() * 180 / PI;
@@ -52,21 +51,62 @@ extern "C" {
             shipDataModel.environment.wind.true_wind_angle.deg = value.as<float>() * 180.0 / PI;
             shipDataModel.environment.wind.true_wind_angle.age = millis();
           }
+        } else if (path == "environment.wind.speedApparent") {
+          if (value.is<float>()) {
+            shipDataModel.environment.wind.apparent_wind_speed.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
+            shipDataModel.environment.wind.apparent_wind_speed.age = millis();
+          }
+        } else if (path == "environment.wind.speedOverGround") {
+          if (value.is<float>()) {
+            shipDataModel.environment.wind.ground_wind_speed.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
+            shipDataModel.environment.wind.ground_wind_speed.age = millis();
+          }
+        } else if (path == "environment.wind.speedTrue") {
+          if (value.is<float>()) {
+            shipDataModel.environment.wind.true_wind_speed.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
+            shipDataModel.environment.wind.true_wind_speed.age = millis();
+          }
+        } else if (path == "navigation.speedOverGround") {
+          if (value.is<float>()) {
+            shipDataModel.navigation.speed_over_ground.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
+            shipDataModel.navigation.speed_over_ground.age = millis();
+          } 
+        } else if (path == "navigation.speedThroughWaterLongitudinal") {
+          if (value.is<float>()) {
+            shipDataModel.navigation.speed_through_water.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
+            shipDataModel.navigation.speed_through_water.age = millis();
+          }
+        } else if (path == "navigation.headingMagnetic") {
+          if (value.is<float>()) {
+            shipDataModel.navigation.heading_mag.deg = value.as<float>() * 180.0 / PI;
+            shipDataModel.navigation.heading_mag.age = millis();
+          }
+        } else if (path == "navigation.courseOverGroundTrue") {
+          if (value.is<float>()) {
+            shipDataModel.navigation.course_over_ground_true.deg = value.as<float>() * 180.0 / PI;
+            shipDataModel.navigation.course_over_ground_true.age = millis();
+          }
+        } else if (path == "environment.outside.pressure") {
+          if (value.is<float>()) {
+            shipDataModel.environment.air_outside.pressure.hPa = value.as<float>() / 100.0;
+            shipDataModel.environment.air_outside.pressure.age = millis();
+          }
+        } else if (path == "environment.outside.humidity") {
+          if (value.is<float>()) {
+            shipDataModel.environment.air_outside.humidity_pct.pct = value.as<float>() * 100.0;
+            shipDataModel.environment.air_outside.humidity_pct.age = millis();
+          }
+        } else if (path == "environment.outside.temperature") {
+          if (value.is<float>()) {
+            shipDataModel.environment.air_outside.temp_deg_C.deg_C = value.as<float>() - 273.15;
+            shipDataModel.environment.air_outside.temp_deg_C.age = millis();
+          }
+        } else if (path == "environment.outside.illuminance") {
+          if (value.is<float>()) {
+            shipDataModel.environment.air_outside.illuminance.lux = value.as<float>();
+            shipDataModel.environment.air_outside.illuminance.age = millis();
+          }
         }
-        /*
-        if (value.is<float>()) {
-          updatedValue = updatedValue + " float: ";
-        } else if (value.is<int>()) {
-          updatedValue = updatedValue + " int: ";
-        } else if (value.is<const char*>()) {
-          updatedValue = updatedValue + " str: ";
-        } else if (value.is<boolean>()) {
-          updatedValue = updatedValue + " bool: ";
-        } else {
-          updatedValue = updatedValue + " ";
-        }
-        serializeJson(value, updatedValue);
-        */
       };
 
       JsonArray updates = obj["updates"];
