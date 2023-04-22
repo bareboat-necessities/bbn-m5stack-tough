@@ -122,14 +122,14 @@ extern "C" {
   }
 
   static void tanks_update_cb() {
-    lv_bar_set_value(bar_w1, 50, LV_ANIM_OFF);
-    lv_bar_set_value(bar_w2, 50, LV_ANIM_OFF);
-    lv_bar_set_value(bar_bw1, 50, LV_ANIM_OFF);
-    lv_bar_set_value(bar_bw2, 50, LV_ANIM_OFF);
-    lv_bar_set_value(bar_f1, 50, LV_ANIM_OFF);
-    lv_bar_set_value(bar_f2, 50, LV_ANIM_OFF);
-    lv_bar_set_value(bar_g1, 50, LV_ANIM_OFF);
-    lv_bar_set_value(bar_g2, 50, LV_ANIM_OFF);
+    lv_bar_set_value(bar_w1, shipDataModel.tanks.tank[0].percent_of_full.pct, LV_ANIM_OFF);
+    lv_bar_set_value(bar_w2, shipDataModel.tanks.tank[1].percent_of_full.pct, LV_ANIM_OFF);
+    lv_bar_set_value(bar_bw1, shipDataModel.tanks.tank[2].percent_of_full.pct, LV_ANIM_OFF);
+    lv_bar_set_value(bar_bw2, shipDataModel.tanks.tank[3].percent_of_full.pct, LV_ANIM_OFF);
+    lv_bar_set_value(bar_f1, shipDataModel.tanks.tank[4].percent_of_full.pct, LV_ANIM_OFF);
+    lv_bar_set_value(bar_f2, shipDataModel.tanks.tank[5].percent_of_full.pct, LV_ANIM_OFF);
+    lv_bar_set_value(bar_g1, shipDataModel.tanks.tank[6].percent_of_full.pct, LV_ANIM_OFF);
+    lv_bar_set_value(bar_g2, shipDataModel.tanks.tank[7].percent_of_full.pct, LV_ANIM_OFF);
   }
 
   void init_tanksScreen() {
