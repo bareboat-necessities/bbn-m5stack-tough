@@ -98,7 +98,7 @@ extern "C" {
           shipDataModel.electrical.sys_dc.battery.voltage.age = millis();
         } else if (strcmp(lev2, "system/0/Dc/Battery/Soc") == 0) {
           float val = doc["value"].as<float>();
-          shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.pct = val * 100;
+          shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.pct = val;
           shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.age = millis();
         } else if (strcmp(lev2, "system/0/Ac/Consumption/L1/Power") == 0) {
           float val = doc["value"].as<float>();
