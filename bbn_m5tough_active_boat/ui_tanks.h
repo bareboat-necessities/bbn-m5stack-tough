@@ -45,7 +45,7 @@ extern "C" {
   static void tanks_update_cb() {
     for (int i = 0; i < MAX_TANKS; i++) {
       float pct = shipDataModel.tanks.tank[i].percent_of_full.pct;
-      if (fresh(shipDataModel.tanks.tank[i].percent_of_full.age, TWO_MINUTES)) {
+      if (fresh(shipDataModel.tanks.tank[i].percent_of_full.age, 3600000 /*hour*/)) {
         lv_bar_set_value(bar_tank[i], pct, LV_ANIM_OFF);
         if (shipDataModel.tanks.tank[i].fluid_type == fluid_type_e::FUEL) {
           lv_obj_set_style_bg_color(bar_tank[i], lv_palette_lighten(LV_PALETTE_GREEN, 1), LV_PART_INDICATOR);
