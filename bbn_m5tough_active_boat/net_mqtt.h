@@ -25,16 +25,6 @@ extern "C" {
     unsigned long lastMillis = 0;
   } victron_mqtt_context_t;
 
-  typedef enum {
-    FLUID_TYPE_NA = -1,
-    FUEL = 0,
-    FRESH_WATER = 1,
-    WASTE_WATER = 2,
-    LIVE_WELL = 3,
-    LUBRICATION = 4,
-    BLACK_WATER = 5
-  } fluid_type_e;
-
   static victron_mqtt_context_t victronCtx;
 
   bool starts_with(const char* str, const char* pre) {
@@ -44,7 +34,7 @@ extern "C" {
   const char* step_into_path(const char* path) {
     if (path == NULL) return NULL;
     const char* s = strchr(path, '/');
-    return s != NULL ? s++ : NULL;
+    return s != NULL ? ++s : NULL;
   }
 
   static void victron_mqtt_on_message(String& topic, String& payload) {
@@ -61,22 +51,30 @@ extern "C" {
       const char* lev4 = step_into_path(lev3);
       const char* lev5 = step_into_path(lev4);
 
-      if (lev5 != NULL) {
-        if (starts_with(lev3, "tank/")) {
-          int num = atoi(lev4);
-          if (strcmp(lev5, "FluidType") == 0) {
-            // TODO:
-          } else if (strcmp(lev5, "Remaining") == 0) {
-            // TODO: %
+      DynamicJsonDocument doc(1024);
+      DeserializationError error = deserializeJson(doc, payload);
+      if (error) {
+        return;
+      }
+
+      if (lev4 != NULL) {
+        if (starts_with(lev2, "tank/")) {
+          int num = atoi(lev3);
+          if (strcmp(lev4, "FluidType") == 0) {
+            int fluid_type_i = doc["value"].as<int>();
+            if (num < MAX_TANKS && num >= 0) {
+              // topic:    N/0242ac110002/tank/3/FluidType
+              // payload:  {"value": 5}
+              shipDataModel.tanks.tank[num].fluid_type = (fluid_type_e)fluid_type_i;
+            }
+          } else if (strcmp(lev4, "Remaining") == 0) {
+            // topic:    N/0242ac110002/tank/3/Remaining
+            // payload:  {"value": 0.18332000076770782}
+            float remaining = doc["value"].as<float>();
+            shipDataModel.tanks.tank[num].percent_of_full.pct = remaining * 100;
           }
         }
       }
-
-      // topic:    N/0242ac110002/tank/3/FluidType
-      // payload:  {"value": 5}
-
-      // topic:    N/0242ac110002/tank/3/Remaining
-      // payload:  {"value": 0.18332000076770782}
     }
 
     // Note: Do not use the client in the callback to publish, subscribe or
