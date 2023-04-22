@@ -76,6 +76,46 @@ extern "C" {
               shipDataModel.tanks.tank[num].percent_of_full.age = millis();
             }
           }
+        } else if (strcmp(lev2, "system/0/Dc/Pv/Power") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_dc.pv.powerW.watt = val;
+          shipDataModel.electrical.sys_dc.pv.powerW.age = millis();
+        } else if (strcmp(lev2, "system/0/Dc/Pv/Current") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_dc.pv.current.amp = val;
+          shipDataModel.electrical.sys_dc.pv.current.age = millis();
+        } else if (strcmp(lev2, "system/0/Dc/Battery/Power") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_dc.battery.powerW.watt = val;
+          shipDataModel.electrical.sys_dc.battery.powerW.age = millis();
+        } else if (strcmp(lev2, "system/0/Dc/Battery/Current") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_dc.battery.current.amp = val;
+          shipDataModel.electrical.sys_dc.battery.current.age = millis();
+        } else if (strcmp(lev2, "system/0/Dc/Battery/Voltage") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_dc.battery.voltage.volt = val;
+          shipDataModel.electrical.sys_dc.battery.voltage.age = millis();
+        } else if (strcmp(lev2, "system/0/Dc/Battery/Soc") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.pct = val * 100;
+          shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.age = millis();
+        } else if (strcmp(lev2, "system/0/Ac/Consumption/L1/Power") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_ac.consumption[0].powerW.watt = val;
+          shipDataModel.electrical.sys_ac.consumption[0].powerW.age = millis();
+        } else if (strcmp(lev2, "system/0/Ac/Consumption/L1/Current") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_ac.consumption[0].current.amp = val;
+          shipDataModel.electrical.sys_ac.consumption[0].current.age = millis();
+        } else if (strcmp(lev2, "system/0/Ac/ActiveIn/L1/Power") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_ac.active_in[0].powerW.watt = val;
+          shipDataModel.electrical.sys_ac.active_in[0].powerW.age = millis();
+        } else if (strcmp(lev2, "system/0/Ac/ActiveIn/L1/Current") == 0) {
+          float val = doc["value"].as<float>();
+          shipDataModel.electrical.sys_ac.active_in[0].current.amp = val;
+          shipDataModel.electrical.sys_ac.active_in[0].current.age = millis();
         }
       }
     }
