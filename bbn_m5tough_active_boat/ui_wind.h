@@ -95,7 +95,7 @@ extern "C" {
 
     lv_label_set_text(gwat_label,
                       (String("GWAT:\n")
-                       + (fresh(shipDataModel.environment.wind.ground_wind_angle_true.age) ? String(shipDataModel.environment.wind.ground_wind_angle_true.deg, 0) + LV_SYMBOL_DEGREES : String("--" LV_SYMBOL_DEGREES)))
+                       + (fresh(shipDataModel.environment.wind.ground_wind_dir_true.age) ? String(shipDataModel.environment.wind.ground_wind_dir_true.deg, 0) + LV_SYMBOL_DEGREES : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
 
     set_wind_value(indic_wind, fresh(shipDataModel.environment.wind.apparent_wind_angle.age) ? shipDataModel.environment.wind.apparent_wind_angle.deg : 0);
