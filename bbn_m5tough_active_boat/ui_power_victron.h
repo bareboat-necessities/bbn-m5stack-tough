@@ -7,6 +7,12 @@ extern "C" {
 
   lv_updatable_screen_t victronScreen;
 
+  static lv_obj_t *shore_label;
+  static lv_obj_t *ac_label;
+  static lv_obj_t *dc_label;
+  static lv_obj_t *dc_ld_label;
+  static lv_obj_t *pv_label;
+
   /**
    * A victron display 
    */
@@ -34,7 +40,7 @@ extern "C" {
     lv_obj_align(shore, LV_ALIGN_TOP_LEFT, 5, 5);
     lv_obj_set_style_bg_color(shore, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
 
-    lv_obj_t *shore_label = lv_label_create(shore);
+    shore_label = lv_label_create(shore);
     lv_label_set_text(shore_label, "Shore\nn/a W");
     lv_obj_align(shore_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
@@ -56,7 +62,7 @@ extern "C" {
     lv_obj_align(ac, LV_ALIGN_TOP_RIGHT, -5, 5);
     lv_obj_set_style_bg_color(ac, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
 
-    lv_obj_t *ac_label = lv_label_create(ac);
+    ac_label = lv_label_create(ac);
     lv_label_set_text(ac_label, "AC Load\nn/a W");
     lv_obj_align(ac_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
@@ -67,7 +73,7 @@ extern "C" {
     lv_obj_align(dc, LV_ALIGN_BOTTOM_LEFT, 5, -5);
     lv_obj_set_style_bg_color(dc, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
 
-    lv_obj_t *dc_label = lv_label_create(dc);
+    dc_label = lv_label_create(dc);
     lv_label_set_text(dc_label, "Batteries\n--%");
     lv_obj_align(dc_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
@@ -78,7 +84,7 @@ extern "C" {
     lv_obj_align(dc_ld, LV_ALIGN_BOTTOM_MID, 0, -5);
     lv_obj_set_style_bg_color(dc_ld, lv_palette_main(LV_PALETTE_TEAL), LV_PART_MAIN);
 
-    lv_obj_t *dc_ld_label = lv_label_create(dc_ld);
+    dc_ld_label = lv_label_create(dc_ld);
     lv_label_set_text(dc_ld_label, "DC Load\nn/a W");
     lv_obj_align(dc_ld_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
@@ -89,7 +95,7 @@ extern "C" {
     lv_obj_align(pv, LV_ALIGN_BOTTOM_RIGHT, -5, -5);
     lv_obj_set_style_bg_color(pv, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN);
 
-    lv_obj_t *pv_label = lv_label_create(pv);
+    pv_label = lv_label_create(pv);
     lv_label_set_text(pv_label, "PV\nn/a W");
     lv_obj_align(pv_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
@@ -131,7 +137,26 @@ extern "C" {
   }
 
   static void victron_update_cb() {
-    // TODO:
+    lv_label_set_text(dc_label,
+                      fresh(shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.age, TWO_MINUTES)
+                        ? (String("Batteries\n") + String(shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.pct, 1) + "%").c_str()
+                        : "Batteries\n--%");
+    lv_label_set_text(pv_label,
+                      fresh(shipDataModel.electrical.sys_dc.pv.powerW.age, 15000)
+                        ? (String("PV\n") + String(shipDataModel.electrical.sys_dc.pv.powerW.watt, 1) + " W").c_str()
+                        : "PV\nn/a W");
+    lv_label_set_text(dc_ld_label,
+                      fresh(shipDataModel.electrical.sys_dc.battery.powerW.age, 15000)
+                        ? (String("DC Load\n") + String(shipDataModel.electrical.sys_dc.battery.powerW.watt, 1) + " W").c_str()
+                        : "DC Load\nn/a W");
+    lv_label_set_text(shore_label,
+                      fresh(shipDataModel.electrical.sys_ac.active_in[0].powerW.age, 15000)
+                        ? (String("Shore\n") + String(shipDataModel.electrical.sys_ac.active_in[0].powerW.watt, 1) + " W").c_str()
+                        : "Shore\nn/a W");
+    lv_label_set_text(ac_label,
+                      fresh(shipDataModel.electrical.sys_ac.consumption[0].powerW.age, 15000)
+                        ? (String("AC Load\n") + String(shipDataModel.electrical.sys_ac.consumption[0].powerW.watt, 1) + " W").c_str()
+                        : "AC Load\nn/a W");
   }
 
   void init_victronScreen() {
