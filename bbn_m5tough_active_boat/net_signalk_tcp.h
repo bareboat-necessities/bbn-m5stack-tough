@@ -40,7 +40,7 @@ extern "C" {
   void signalk_begin(WiFiClient& skClient, const char* host, int port) {
     setKeepAlive(skClient);
     setup_signalk_reconnect(skClient, host, port);
-    if (skClient.connect(host, port)) {
+    if (skClient.connect(host, port, 3000)) {
       signalk_subscribe(skClient);
     }
   }
