@@ -28,8 +28,8 @@ extern "C" {
   }
 
   void wifi_connected(void (*on_connected)()) {
-    settingMode = false;  // Turn off setting mode.
     (*on_connected)();
+    settingMode = false;  // Turn off setting mode.
   }
 
   static inline int8_t dBm_to_percents(int8_t dBm) {
