@@ -97,7 +97,7 @@ extern "C" {
   void pypilot_begin(WiFiClient& pypClient, const char* pyp_host, int pyp_port) {
     setKeepAlive(pypClient);
     setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
-    if (pypClient.connect(pyp_host, pyp_port)) {
+    if (pypClient.connect(pyp_host, pyp_port, 3000)) {
       pypilot_subscribe(pypClient);
     }
   }
