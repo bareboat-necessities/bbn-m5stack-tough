@@ -128,12 +128,7 @@ extern "C" {
 
   void victron_mqtt_client_connect(MQTTClient& client) {
     client.onMessage(victron_mqtt_on_message);
-    int attempt = 0;
-    while (!client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/)) {
-      delay(200);
-      attempt++;
-      if (attempt > 10) break; 
-    }
+    client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/); 
     if (client.connected()) {
       client.subscribe("N/+/+/#");
     }
@@ -149,12 +144,15 @@ extern "C" {
   void victron_mqtt_client_loop(MQTTClient& client) {
     client.loop();
     if (!client.connected()) {
-      victron_mqtt_client_connect(client);
+      if (millis() - victronCtx.lastMillis > 5000) {
+        victronCtx.lastMillis = millis();
+        victron_mqtt_client_connect(client);
+      }
     }
     if (millis() - victronCtx.lastMillis > 20000) {
       victronCtx.lastMillis = millis();
       // keep alive
-      if (victronCtx.portalID.length() > 0) {
+      if (victronCtx.portalID.length() > 0 && client.connected()) {
         client.publish("R/" + victronCtx.portalID + "/system/0/Serial");
       }
     }
