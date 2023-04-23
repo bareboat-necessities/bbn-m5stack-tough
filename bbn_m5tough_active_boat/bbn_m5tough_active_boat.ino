@@ -201,9 +201,8 @@ void loop() {
   app.tick();
   lv_tick_inc(1);
   
-  victron_mqtt_client_loop(mqttClient);
-
   if (!settingMode) {
+    victron_mqtt_client_loop(mqttClient);
     handle_swipe();
     if (millis() - last_ui_upd > 250) {  // throttle expensive UI updates, and calculations
       derive_data();
