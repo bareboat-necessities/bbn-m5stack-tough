@@ -28,7 +28,7 @@ extern "C" {
     signalk_greet(client);
 
     app.onAvailable(client, [&client]() {
-      while (client.available() > 256 /* Very important for performance and responsiveness */ && client.connected()) {
+      while (client.connected() && client.available() > 256 /* Very important for performance and responsiveness */) {
         bool found = signalk_parse(client);
         if (found) {
           break;
