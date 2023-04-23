@@ -128,11 +128,15 @@ extern "C" {
 
   void victron_mqtt_client_connect(MQTTClient& client) {
     client.onMessage(victron_mqtt_on_message);
+    int attempt = 0;
     while (!client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/)) {
-      delay(1000);
+      delay(200);
+      attempt++;
+      if (attempt > 10) break; 
     }
-
-    client.subscribe("N/+/+/#");
+    if (client.connected()) {
+      client.subscribe("N/+/+/#");
+    }
   }
 
   void victron_mqtt_client_begin(MQTTClient& client, WiFiClient& net, const char* host, int port) {
