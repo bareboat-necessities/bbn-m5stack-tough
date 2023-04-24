@@ -128,7 +128,7 @@ extern "C" {
 
   void victron_mqtt_client_connect(MQTTClient& client) {
     client.onMessage(victron_mqtt_on_message);
-    client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/); 
+    client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/, true); 
     if (client.connected()) {
       client.subscribe("N/+/+/#");
     }
@@ -136,7 +136,7 @@ extern "C" {
 
   void victron_mqtt_client_begin(MQTTClient& client, WiFiClient& net, const char* host, int port) {
     client.setKeepAlive(10);
-    client.setTimeout(3000);
+    client.setTimeout(400);
     setKeepAlive(net);
     client.begin(host, port, net);
     victron_mqtt_client_connect(client);
@@ -145,7 +145,7 @@ extern "C" {
   void victron_mqtt_client_loop(MQTTClient& client) {
     client.loop();
     if (!client.connected()) {
-      if (millis() - victronCtx.lastMillis > 5000) {
+      if (millis() - victronCtx.lastMillis > 7000) {
         victronCtx.lastMillis = millis();
         victron_mqtt_client_connect(client);
       }
