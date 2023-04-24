@@ -25,11 +25,14 @@ extern "C" {
   static const char* PROGMEM AP_MODE_WIND_TRUE = "MODE (True Wind)";
 
   void pypilot_greet(WiFiClient& client) {
-    client.println(F("watch={\"ap.heading\":0.5}"));
-    client.println(F("watch={\"ap.heading_command\":true}"));
-    client.println(F("watch={\"ap.enabled\":true}"));
-    client.println(F("watch={\"ap.mode\":true}"));
-    client.flush();
+    if (client.connected()) {
+      deplay(10);
+      client.println(F("watch={\"ap.heading\":0.5}"));
+      client.println(F("watch={\"ap.heading_command\":true}"));
+      client.println(F("watch={\"ap.enabled\":true}"));
+      client.println(F("watch={\"ap.mode\":true}"));
+      client.flush();
+    }
   }
 
   void pypilot_send_engage(WiFiClient& client) {
