@@ -70,10 +70,10 @@ extern "C" {
   }
 
   void setup_pypilot_reconnect(WiFiClient& client, const char* host, int port) {
-    app.onRepeat(5000, [&client, host, port]() {
+    app.onRepeat(7000, [&client, host, port]() {
       if (!client.connected()) {
         setKeepAlive(client);
-        if (client.connect(host, port, 3000)) {
+        if (client.connect(host, port, 200)) {
           pypilot_greet(client);
         }
       }
@@ -97,7 +97,7 @@ extern "C" {
   void pypilot_begin(WiFiClient& pypClient, const char* pyp_host, int pyp_port) {
     setKeepAlive(pypClient);
     setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
-    if (pypClient.connect(pyp_host, pyp_port, 3000)) {
+    if (pypClient.connect(pyp_host, pyp_port, 300)) {
       pypilot_subscribe(pypClient);
     }
   }
