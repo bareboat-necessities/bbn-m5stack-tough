@@ -13,10 +13,10 @@ extern "C" {
   }
 
   void setup_signalk_reconnect(WiFiClient& client, const char* host, int port) {
-    app.onRepeat(5000, [&client, host, port]() {
+    app.onRepeat(7000, [&client, host, port]() {
       if (!client.connected()) {
         setKeepAlive(client);
-        if (client.connect(host, port, 3000)) {
+        if (client.connect(host, port, 200)) {
           signalk_greet(client);
         }
       }
@@ -40,7 +40,7 @@ extern "C" {
   void signalk_begin(WiFiClient& skClient, const char* host, int port) {
     setKeepAlive(skClient);
     setup_signalk_reconnect(skClient, host, port);
-    if (skClient.connect(host, port, 3000)) {
+    if (skClient.connect(host, port, 300)) {
       signalk_subscribe(skClient);
     }
   }
