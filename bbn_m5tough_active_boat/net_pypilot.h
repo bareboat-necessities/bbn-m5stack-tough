@@ -26,7 +26,7 @@ extern "C" {
 
   void pypilot_greet(WiFiClient& client) {
     if (client.connected()) {
-      deplay(10);
+      delay(10);
       client.println(F("watch={\"ap.heading\":0.5}"));
       client.println(F("watch={\"ap.heading_command\":true}"));
       client.println(F("watch={\"ap.enabled\":true}"));
