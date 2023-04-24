@@ -6,10 +6,10 @@ extern "C" {
 #endif
 
   void setup_nmea0183_reconnect(WiFiClient& client, const char* host, int port) {
-    app.onRepeat(5000, [&client, host, port]() {
+    app.onRepeat(7000, [&client, host, port]() {
       if (!client.connected()) {
         setKeepAlive(client);
-        if (client.connect(host, port, 3000)) {
+        if (client.connect(host, port, 200)) {
         }
       }
     });
@@ -30,7 +30,7 @@ extern "C" {
   void nmea0183_tcp_begin(WiFiClient& nmea0183Client, const char* nmea0183_host, int nmea0183_port) {
     setKeepAlive(nmea0183Client);
     setup_nmea0183_reconnect(nmea0183Client, nmea0183_host, nmea0183_port);
-    if (nmea0183Client.connect(nmea0183_host, nmea0183_port, 3000)) {
+    if (nmea0183Client.connect(nmea0183_host, nmea0183_port, 300)) {
       nmea0183_subscribe(nmea0183Client);
     }
   }
