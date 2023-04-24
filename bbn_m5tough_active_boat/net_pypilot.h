@@ -98,7 +98,7 @@ extern "C" {
     setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
     pypilot_subscribe(pypClient);
     if (pypClient.connect(pyp_host, pyp_port, 300)) {
-      pypilot_greet(client);
+      pypilot_greet(pypClient);
     }
   }
 
