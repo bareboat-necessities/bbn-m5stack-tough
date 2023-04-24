@@ -26,7 +26,6 @@ extern "C" {
 
   void pypilot_greet(WiFiClient& client) {
     if (client.connected()) {
-      delay(10);
       client.println(F("watch={\"ap.heading\":0.5}"));
       client.println(F("watch={\"ap.heading_command\":true}"));
       client.println(F("watch={\"ap.enabled\":true}"));
@@ -84,9 +83,6 @@ extern "C" {
   }
 
   void pypilot_subscribe(WiFiClient& client) {
-
-    pypilot_greet(client);
-
     app.onAvailable(client, [&client]() {
       while (client.connected() && client.available() > 8 /* Very important for performance and responsiveness */) {
         bool found = pypilot_parse(client);
@@ -100,8 +96,9 @@ extern "C" {
   void pypilot_begin(WiFiClient& pypClient, const char* pyp_host, int pyp_port) {
     setKeepAlive(pypClient);
     setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
+    pypilot_subscribe(pypClient);
     if (pypClient.connect(pyp_host, pyp_port, 300)) {
-      pypilot_subscribe(pypClient);
+      pypilot_greet(client);
     }
   }
 
