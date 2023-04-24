@@ -16,7 +16,6 @@ extern "C" {
   }
 
   void nmea0183_subscribe(WiFiClient& client) {
-
     app.onAvailable(client, [&client]() {
       while (client.connected() && client.available() > 128 /* Very important for performance and responsiveness */) {
         bool found = nmea0183_parse(client);
@@ -30,9 +29,8 @@ extern "C" {
   void nmea0183_tcp_begin(WiFiClient& nmea0183Client, const char* nmea0183_host, int nmea0183_port) {
     setKeepAlive(nmea0183Client);
     setup_nmea0183_reconnect(nmea0183Client, nmea0183_host, nmea0183_port);
-    if (nmea0183Client.connect(nmea0183_host, nmea0183_port, 300)) {
-      nmea0183_subscribe(nmea0183Client);
-    }
+    nmea0183_subscribe(nmea0183Client);
+    if (nmea0183Client.connect(nmea0183_host, nmea0183_port, 300)) {}
   }
 
 #ifdef __cplusplus
