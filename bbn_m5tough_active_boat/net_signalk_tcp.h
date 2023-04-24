@@ -24,9 +24,6 @@ extern "C" {
   }
 
   void signalk_subscribe(WiFiClient& client) {
-
-    signalk_greet(client);
-
     app.onAvailable(client, [&client]() {
       while (client.connected() && client.available() > 256 /* Very important for performance and responsiveness */) {
         bool found = signalk_parse(client);
@@ -40,8 +37,9 @@ extern "C" {
   void signalk_begin(WiFiClient& skClient, const char* host, int port) {
     setKeepAlive(skClient);
     setup_signalk_reconnect(skClient, host, port);
+    signalk_subscribe(skClient);
     if (skClient.connect(host, port, 300)) {
-      signalk_subscribe(skClient);
+      signalk_greet(skClient);
     }
   }
 
