@@ -160,26 +160,26 @@ extern "C" {
 
   static void dev_status_update_cb() {
     lv_label_set_text(pyp_status_label,
-                      ((pypClient.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
-                                              : String("#ff0000 " LV_SYMBOL_OK "  #"))
+                      ((pypClient.c.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
+                                                : String("#ff0000 " LV_SYMBOL_OK "  #"))
                        + String("PyPilot:              ") + preferences.getString(PYP_TCP_HOST_PREF)
                        + String(":") + String(preferences.getInt(PYP_TCP_PORT_PREF)))
                         .c_str());
     lv_label_set_text(signalk_status_label,
-                      ((skClient.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
-                                             : String("#ff0000 " LV_SYMBOL_OK "  #"))
+                      ((skClient.c.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
+                                               : String("#ff0000 " LV_SYMBOL_OK "  #"))
                        + String("SignalK:             ") + preferences.getString(SK_TCP_HOST_PREF)
                        + String(":") + String(preferences.getInt(SK_TCP_PORT_PREF)))
                         .c_str());
     lv_label_set_text(nmea0183_status_label,
-                      ((nmea0183Client.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
-                                                   : String("#ff0000 " LV_SYMBOL_OK "  #"))
+                      ((nmea0183Client.c.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
+                                                     : String("#ff0000 " LV_SYMBOL_OK "  #"))
                        + String("NMEA 0183:       ") + preferences.getString(NMEA0183_TCP_HOST_PREF)
                        + String(":") + String(preferences.getInt(NMEA0183_TCP_PORT_PREF)))
                         .c_str());
     lv_label_set_text(venus_mqtt_status_label,
                       ((mqttNetClient.connected() && mqttClient.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
-                                               : String("#ff0000 " LV_SYMBOL_OK "  #"))
+                                                                            : String("#ff0000 " LV_SYMBOL_OK "  #"))
                        + String("Venus MQTT:    ") + preferences.getString(VENUS_MQTT_HOST_PREF)
                        + String(":") + String(preferences.getInt(VENUS_MQTT_PORT_PREF)))
                         .c_str());
