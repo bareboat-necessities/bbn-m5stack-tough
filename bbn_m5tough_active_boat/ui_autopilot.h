@@ -29,7 +29,7 @@ extern "C" {
     lv_event_code_t code = lv_event_get_code(e);
     if (code == LV_EVENT_CLICKED) {
       const char *mode = (const char *)lv_event_get_user_data(e);
-      pypilot_send_mode(pypClient, mode);
+      pypilot_send_mode(pypClient.c, mode);
       lv_obj_add_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
     }
   }
@@ -58,17 +58,17 @@ extern "C" {
       const char *txt = lv_btnmatrix_get_btn_text(obj, id);
       if (txt != NULL) {
         if (strcmp("AUTO", txt) == 0) {
-          pypilot_send_engage(pypClient);
+          pypilot_send_engage(pypClient.c);
         } else if (strcmp("STANDBY", txt) == 0) {
-          pypilot_send_disengage(pypClient);
+          pypilot_send_disengage(pypClient.c);
         } else if (strcmp(LV_SYMBOL_DOUBLE_LEFT, txt) == 0) {
-          pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg - 10.0);
+          pypilot_send_command(pypClient.c, shipDataModel.steering.autopilot.command.deg - 10.0);
         } else if (strcmp(LV_SYMBOL_LEFT, txt) == 0) {
-          pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg - 2.0);
+          pypilot_send_command(pypClient.c, shipDataModel.steering.autopilot.command.deg - 2.0);
         } else if (strcmp(LV_SYMBOL_DOUBLE_RIGHT, txt) == 0) {
-          pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg + 10.0);
+          pypilot_send_command(pypClient.c, shipDataModel.steering.autopilot.command.deg + 10.0);
         } else if (strcmp(LV_SYMBOL_RIGHT, txt) == 0) {
-          pypilot_send_command(pypClient, shipDataModel.steering.autopilot.command.deg + 2.0);
+          pypilot_send_command(pypClient.c, shipDataModel.steering.autopilot.command.deg + 2.0);
         } else if (strcmp(LV_SYMBOL_EYE_OPEN, txt) == 0) {
         } else {
           lv_obj_clear_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
