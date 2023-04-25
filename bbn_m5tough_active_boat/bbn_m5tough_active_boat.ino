@@ -21,6 +21,11 @@ Preferences preferences;
 #undef min(a, b)
 #include <ReactESP.h>  // https://github.com/mairas/ReactESP
 
+typedef struct _NetClient {
+  WiFiClient c = WiFiClient();
+  unsigned long lastActivity = 0U;
+} NetClient;
+
 #include "keepalive.h"
 #include "m5_rtc.h"
 #include "m5_sound.h"
@@ -61,9 +66,9 @@ WMM_Tinier myDeclination;
 #include "pypilot_parse.h"
 #include "net_pypilot.h"
 
-WiFiClient nmea0183Client;
-WiFiClient skClient;
-WiFiClient pypClient;
+NetClient nmea0183Client;
+NetClient skClient;
+NetClient pypClient;
 WiFiClient mqttNetClient;
 MQTTClient mqttClient = MQTTClient(4096); // Data loss if buffer is not enough
 
