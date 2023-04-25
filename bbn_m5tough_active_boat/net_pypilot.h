@@ -71,34 +71,39 @@ extern "C" {
     }
   }
 
-  void setup_pypilot_reconnect(WiFiClient& client, const char* host, int port) {
+  void setup_pypilot_reconnect(NetClient& client, const char* host, int port) {
     app.onRepeat(7000, [&client, host, port]() {
-      if (!client.connected()) {
-        setKeepAlive(client);
-        if (client.connect(host, port, 200)) {
-          pypilot_greet(client);
+      if (!client.c.connected()) {
+        setKeepAlive(client.c);
+        if (client.c.connect(host, port, 200)) {
+          pypilot_greet(client.c);
         }
+      }
+      if (client.lastActivity > 0 && (millis() - client.lastActivity) > 10000) {
+        client.c.stop();
+        client.lastActivity = 0;
       }
     });
   }
 
-  void pypilot_subscribe(WiFiClient& client) {
-    app.onAvailable(client, [&client]() {
-      while (client.connected() && client.available() > 8 /* Very important for performance and responsiveness */) {
-        bool found = pypilot_parse(client);
+  void pypilot_subscribe(NetClient& client) {
+    app.onAvailable(client.c, [&client]() {
+      while (client.c.connected() && client.c.available() > 8 /* Very important for performance and responsiveness */) {
+        bool found = pypilot_parse(client.c);
         if (found) {
+          client.lastActivity = millis();
           break; /* Very important for performance and responsiveness */
         }
       }
     });
   }
 
-  void pypilot_begin(WiFiClient& pypClient, const char* pyp_host, int pyp_port) {
-    setKeepAlive(pypClient);
+  void pypilot_begin(NetClient& pypClient, const char* pyp_host, int pyp_port) {
+    setKeepAlive(pypClient.c);
     setup_pypilot_reconnect(pypClient, pyp_host, pyp_port);
     pypilot_subscribe(pypClient);
-    if (pypClient.connect(pyp_host, pyp_port, 300)) {
-      pypilot_greet(pypClient);
+    if (pypClient.c.connect(pyp_host, pyp_port, 300)) {
+      pypilot_greet(pypClient.c);
     }
   }
 
