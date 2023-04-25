@@ -12,34 +12,39 @@ extern "C" {
     client.flush();
   }
 
-  void setup_signalk_reconnect(WiFiClient& client, const char* host, int port) {
+  void setup_signalk_reconnect(NetClient& client, const char* host, int port) {
     app.onRepeat(7000, [&client, host, port]() {
-      if (!client.connected()) {
-        setKeepAlive(client);
-        if (client.connect(host, port, 200)) {
-          signalk_greet(client);
+      if (!client.c.connected()) {
+        setKeepAlive(client.c);
+        if (client.c.connect(host, port, 200)) {
+          signalk_greet(client.c);
         }
+      }
+      if (client.lastActivity > 0 && (millis() - client.lastActivity) > 10000) {
+        client.c.stop();
+        client.lastActivity = 0;
       }
     });
   }
 
-  void signalk_subscribe(WiFiClient& client) {
-    app.onAvailable(client, [&client]() {
-      while (client.connected() && client.available() > 256 /* Very important for performance and responsiveness */) {
-        bool found = signalk_parse(client);
+  void signalk_subscribe(NetClient& client) {
+    app.onAvailable(client.c, [&client]() {
+      while (client.c.connected() && client.c.available() > 256 /* Very important for performance and responsiveness */) {
+        bool found = signalk_parse(client.c);
         if (found) {
+          client.lastActivity = millis();
           break;
         }
       }
     });
   }
 
-  void signalk_begin(WiFiClient& skClient, const char* host, int port) {
-    setKeepAlive(skClient);
+  void signalk_begin(NetClient& skClient, const char* host, int port) {
+    setKeepAlive(skClient.c);
     setup_signalk_reconnect(skClient, host, port);
     signalk_subscribe(skClient);
-    if (skClient.connect(host, port, 300)) {
-      signalk_greet(skClient);
+    if (skClient.c.connect(host, port, 300)) {
+      signalk_greet(skClient.c);
     }
   }
 
