@@ -76,9 +76,9 @@ extern "C" {
     ip.fromString(addr);
     editor_host_type = host_type;
 
-    lv_label_set_text(spinbox1, (String(ip[0]) + '.').c_str());
-    lv_label_set_text(spinbox2, (String(ip[1]) + '.').c_str());
-    lv_label_set_text(spinbox3, (String(ip[2]) + '.').c_str());
+    lv_set_spinbox_val(spinbox1, ip[0]);
+    lv_set_spinbox_val(spinbox2, ip[1]);
+    lv_set_spinbox_val(spinbox3, ip[2]);
     lv_set_spinbox_val(spinbox4, ip[3]);
     lv_spinbox_set_value(spinbox_port, port);
     lv_spinbox_step_next(spinbox_port);
@@ -93,9 +93,12 @@ extern "C" {
   static String editor_ip_address;
 
   void build_ip_address() {
-    editor_ip_address = String(lv_label_get_text(spinbox1));
-    editor_ip_address += String(lv_label_get_text(spinbox2));
-    editor_ip_address += String(lv_label_get_text(spinbox3));
+    editor_ip_address = String(lv_spinbox_get_value(spinbox1));
+    editor_ip_address += '.';
+    editor_ip_address += String(lv_spinbox_get_value(spinbox2));
+    editor_ip_address += '.';
+    editor_ip_address += String(lv_spinbox_get_value(spinbox3));
+    editor_ip_address += '.';
     editor_ip_address += String(lv_spinbox_get_value(spinbox4));
   }
 
@@ -135,40 +138,32 @@ extern "C" {
     }
   }
 
-  lv_obj_t *lv_spinbox_255(lv_obj_t *parent, bool editable, lv_align_t align, lv_coord_t x_ofs, lv_coord_t y_ofs) {
-    if (editable) {
-      lv_obj_t *spinbox = lv_spinbox_create(parent);
-      lv_spinbox_set_range(spinbox, 0, 255);
-      lv_spinbox_set_digit_format(spinbox, 3, 0);
-      lv_spinbox_set_step(spinbox, 1);
-      lv_spinbox_set_rollover(spinbox, true);
-      lv_obj_set_width(spinbox, 62);
-      lv_obj_align(spinbox, align, x_ofs, y_ofs);
-      lv_obj_set_style_text_align(spinbox, LV_TEXT_ALIGN_CENTER, 0);
+  lv_obj_t *lv_spinbox_255(lv_obj_t *parent, lv_align_t align, lv_coord_t x_ofs, lv_coord_t y_ofs) {
+    lv_obj_t *spinbox = lv_spinbox_create(parent);
+    lv_spinbox_set_range(spinbox, 0, 255);
+    lv_spinbox_set_digit_format(spinbox, 3, 0);
+    lv_spinbox_set_step(spinbox, 1);
+    lv_spinbox_set_rollover(spinbox, true);
+    lv_obj_set_width(spinbox, 62);
+    lv_obj_align(spinbox, align, x_ofs, y_ofs);
+    lv_obj_set_style_text_align(spinbox, LV_TEXT_ALIGN_CENTER, 0);
 
-      lv_coord_t h = lv_obj_get_height(spinbox);
+    lv_coord_t h = lv_obj_get_height(spinbox);
 
-      lv_obj_t *btn = lv_btn_create(parent);
-      lv_obj_set_size(btn, h, h);
-      lv_obj_align_to(btn, spinbox, LV_ALIGN_OUT_TOP_MID, 0, -10);
-      lv_obj_set_style_bg_img_src(btn, LV_SYMBOL_PLUS, 0);
-      lv_obj_add_event_cb(btn, lv_spinbox_255_inc_ev_cb, LV_EVENT_ALL, (void *)spinbox);
+    lv_obj_t *btn = lv_btn_create(parent);
+    lv_obj_set_size(btn, h, h);
+    lv_obj_align_to(btn, spinbox, LV_ALIGN_OUT_TOP_MID, 0, -10);
+    lv_obj_set_style_bg_img_src(btn, LV_SYMBOL_PLUS, 0);
+    lv_obj_add_event_cb(btn, lv_spinbox_255_inc_ev_cb, LV_EVENT_ALL, (void *)spinbox);
 
-      btn = lv_btn_create(parent);
-      lv_obj_set_size(btn, h, h);
-      lv_obj_align_to(btn, spinbox, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
-      lv_obj_set_style_bg_img_src(btn, LV_SYMBOL_MINUS, 0);
-      lv_obj_add_event_cb(btn, lv_spinbox_255_dec_ev_cb, LV_EVENT_ALL, (void *)spinbox);
+    btn = lv_btn_create(parent);
+    lv_obj_set_size(btn, h, h);
+    lv_obj_align_to(btn, spinbox, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
+    lv_obj_set_style_bg_img_src(btn, LV_SYMBOL_MINUS, 0);
+    lv_obj_add_event_cb(btn, lv_spinbox_255_dec_ev_cb, LV_EVENT_ALL, (void *)spinbox);
 
-      lv_set_spinbox_val(spinbox, 0);
-      return spinbox;
-    } else {
-      lv_obj_t *ip_label = lv_label_create(parent);
-      lv_obj_set_style_text_align(ip_label, LV_TEXT_ALIGN_CENTER, 0);
-      lv_obj_align(ip_label, align, x_ofs, y_ofs);
-      lv_label_set_text(ip_label, "0");
-      return ip_label;
-    }
+    lv_set_spinbox_val(spinbox, 0);
+    return spinbox;
   }
 
   static void save_ip_evt_handler(lv_event_t *e) {
@@ -200,10 +195,10 @@ extern "C" {
   void lv_ip_addr_editor(lv_obj_t *parent) {
     spinboxes_parent = lv_obj_create(parent);
     lv_obj_set_size(spinboxes_parent, 320, 240);
-    spinbox1 = lv_spinbox_255(spinboxes_parent, false, LV_ALIGN_CENTER, -35, -50);
-    spinbox2 = lv_spinbox_255(spinboxes_parent, false, LV_ALIGN_CENTER, 5, -50);
-    spinbox3 = lv_spinbox_255(spinboxes_parent, false, LV_ALIGN_CENTER, 45, -50);
-    spinbox4 = lv_spinbox_255(spinboxes_parent, true, LV_ALIGN_CENTER, 105, -50);
+    spinbox1 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, -105, -50);
+    spinbox2 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, -35, -50);
+    spinbox3 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, 35, -50);
+    spinbox4 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, 105, -50);
     spinbox_port = lv_spinbox_port(spinboxes_parent, LV_ALIGN_CENTER, 0, 50);
     ip_editor_label = lv_label_create(spinboxes_parent);
 
