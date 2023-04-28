@@ -58,6 +58,8 @@ typedef struct _NetClient {
 #include "ui_gestures.h"
 #include "ui_theme.h"
 #include "ui_screens.h"
+#include "ui_brightness.h"
+#include "ui_settings.h"
 #include "ui_clock.h"
 #include "ui_player_control.h"
 #include "ui_about.h"
