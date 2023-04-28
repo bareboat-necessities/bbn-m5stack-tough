@@ -144,17 +144,24 @@ extern "C" {
 
     lv_obj_t *btn_erase = lv_btn_create(parent);
     lv_obj_add_event_cb(btn_erase, erase_net_conf_evt_handler, LV_EVENT_ALL, parent);
-    lv_obj_align(btn_erase, LV_ALIGN_CENTER, 40, 90);
+    lv_obj_align(btn_erase, LV_ALIGN_CENTER, 60, 90);
     lv_obj_t *btn_erase_l = lv_label_create(btn_erase);
     lv_label_set_text(btn_erase_l, LV_SYMBOL_TRASH);
 
     lv_obj_t *btn_edit = lv_btn_create(parent);
     lv_obj_add_event_cb(btn_edit, edit_net_conf_evt_handler, LV_EVENT_ALL, parent);
-    lv_obj_align(btn_edit, LV_ALIGN_CENTER, -40, 90);
+    lv_obj_align(btn_edit, LV_ALIGN_CENTER, 0, 90);
     lv_obj_t *btn_edit_l = lv_label_create(btn_edit);
     lv_label_set_text(btn_edit_l, LV_SYMBOL_SETTINGS);
 
+    lv_obj_t *btn_lcd = lv_btn_create(parent);
+    lv_obj_add_event_cb(btn_lcd, edit_lcd_conf_evt_handler, LV_EVENT_ALL, parent);
+    lv_obj_align(btn_lcd, LV_ALIGN_CENTER, -60, 90);
+    lv_obj_t *btn_lcd_l = lv_label_create(btn_lcd);
+    lv_label_set_text(btn_lcd_l, LV_SYMBOL_EYE_OPEN);
+
     lv_data_connections(parent);
+    lv_lcd_settings(parent);
     lv_obj_add_flag(data_connections_list, LV_OBJ_FLAG_HIDDEN);
   }
 
