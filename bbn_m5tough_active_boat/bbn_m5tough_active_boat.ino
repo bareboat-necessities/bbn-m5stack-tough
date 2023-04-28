@@ -1,10 +1,33 @@
 #define LV_HOR_RES_MAX 320
 #define LV_VER_RES_MAX 240
 
+//
+//
+//  Changes to lv_conf.h (LVGL 8.x) needed:
+//
+//   /* clang-format off */
+//   #if 1 /*Set it to "1" to enable content*/
+// 
+//   #define LV_COLOR_DEPTH 16
+//
+//   #define LV_COLOR_SCREEN_TRANSP 1
+//
+//   #define LV_FONT_MONTSERRAT_20 1
+//
+//   *Use a custom tick source that tells the elapsed time in milliseconds.
+//    *It removes the need to manually update the tick with `lv_tick_inc()`)*/
+//   #define LV_TICK_CUSTOM 1
+//   #if LV_TICK_CUSTOM
+//       #define LV_TICK_CUSTOM_INCLUDE "Arduino.h"         /*Header for the system time function*/
+//       #define LV_TICK_CUSTOM_SYS_TIME_EXPR (millis())    /*Expression evaluating to current system time in ms*/
+//
+//
+
+
 #include <M5Tough.h>  // https://github.com/m5stack/M5Tough
+#include <lvgl.h>
 #include <Arduino.h>
 #include <time.h>
-#include <lvgl.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <driver/i2s.h>
@@ -204,8 +227,10 @@ void loop() {
   M5.update();
   lv_task_handler();
   app.tick();
+#if !(LV_TICK_CUSTOM)
   lv_tick_inc(1);
-  
+#endif
+
   if (!settingMode) {
     victron_mqtt_client_loop(mqttClient);
     handle_swipe();
