@@ -14,8 +14,8 @@
 //
 //   #define LV_FONT_MONTSERRAT_20 1
 //
-//   *Use a custom tick source that tells the elapsed time in milliseconds.
-//    *It removes the need to manually update the tick with `lv_tick_inc()`)*/
+//   /*Use a custom tick source that tells the elapsed time in milliseconds.
+//   /*It removes the need to manually update the tick with `lv_tick_inc()`)*/
 //   #define LV_TICK_CUSTOM 1
 //   #if LV_TICK_CUSTOM
 //       #define LV_TICK_CUSTOM_INCLUDE "Arduino.h"         /*Header for the system time function*/
