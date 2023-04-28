@@ -128,7 +128,7 @@ extern "C" {
 
   void victron_mqtt_client_connect(MQTTClient& client) {
     client.onMessage(victron_mqtt_on_message);
-    client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/, true); 
+    client.connect("arduino" /*clientID*/, "" /*user*/, "" /*password*/);
     if (client.connected()) {
       client.subscribe("N/+/+/#");
     }
