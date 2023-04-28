@@ -10,10 +10,10 @@ extern "C" {
   Victron MQQT
   To start simulator wth docker https://github.com/victronenergy/venus-docker
   
-  /simulate.sh --with-solarcharger --with-tanks p
+  ./simulate.sh --with-solarcharger --with-tanks p
   
   To see messages:
-  mosquitto_sub -t 'N/#'
+  mosquitto_sub -h 192.168.1.64 -p 1883 -t 'N/+/+/#'
 
   See also: https://github.com/sbender9/signalk-venus-plugin/blob/master/index.js
 
