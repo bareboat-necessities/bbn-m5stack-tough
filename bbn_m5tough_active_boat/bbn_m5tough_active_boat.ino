@@ -151,14 +151,18 @@ void prev_page() {
   lv_scr_load(screens[page]->screen);
 }
 
-void handle_swipe() {
+bool handle_swipe() {
   if (swipe_vert_detected()) {
-    toggle_ui_theme();
+    toggle_ui_theme(); 
+    return true;
   } else if (swipe_right_detected()) {
     next_page();
+    return true;
   } else if (swipe_left_detected()) {
     prev_page();
+    return true;
   }
+  return false;
 }
 
 void setup() {
@@ -235,8 +239,8 @@ void loop() {
 
   if (!settingMode) {
     victron_mqtt_client_loop(mqttClient);
-    handle_swipe();
-    if (millis() - last_ui_upd > 250) {  // throttle expensive UI updates, and calculations
+    bool detected = handle_swipe();
+    if (detected || (millis() - last_ui_upd > 250)) {  // throttle expensive UI updates, and calculations
       derive_data();
       update_screen(*screens[page]);
       last_ui_upd = millis();
