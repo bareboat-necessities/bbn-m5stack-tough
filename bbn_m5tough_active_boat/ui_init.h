@@ -20,11 +20,11 @@ extern "C" {
     M5.begin();
     lv_init();
 
-    static lv_color_t *buf1 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 2, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
-    static lv_color_t *buf2 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)) / 2, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
+    static lv_color_t *buf1 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)), MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
+    static lv_color_t *buf2 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)), MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
 
     // Initialize `disp_buf` display buffer with the buffer(s).
-    lv_disp_draw_buf_init(&draw_buf, buf1, buf2, (LV_HOR_RES_MAX * LV_VER_RES_MAX) / 2);
+    lv_disp_draw_buf_init(&draw_buf, buf1, buf2, (LV_HOR_RES_MAX * LV_VER_RES_MAX));
     tft = &M5.Lcd;
   }
 
