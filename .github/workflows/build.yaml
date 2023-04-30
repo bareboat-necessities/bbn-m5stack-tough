@@ -28,7 +28,7 @@ jobs:
     - name: copy lv_conf.h
       uses: canastro/copy-file-action@master
       with:
-        source: "/home/runner/work/bbn-m5stack-tough/bbn-m5stack-tough/lv_conf.h-custom"
+        source: "/github/workspace/lv_conf.h-custom"
         target: "/home/runner/Arduino/libraries/lv_conf.h"                    
 
     - name: Compile sketch
