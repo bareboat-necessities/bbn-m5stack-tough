@@ -46,7 +46,7 @@ extern "C" {
       fail = mdns_begin();
     }
     if (!fail) {
-      delay(10);
+      delay(50);
       return MDNS.queryService(service, proto);
     } else {
       return 0;
