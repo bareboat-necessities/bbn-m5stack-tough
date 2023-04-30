@@ -43,7 +43,7 @@ extern "C" {
   int mdns_query_svc(const char* service, const char* proto) {
     bool fail = false;
     if (!mdns_up) {
-      fail = mdns_begin();
+      fail = !mdns_begin();
     }
     if (!fail) {
       delay(50);
