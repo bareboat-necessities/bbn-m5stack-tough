@@ -32,4 +32,4 @@ jobs:
         platform-url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
         required-libraries: MQTT@2.5.1,LVGL@8.3.6,ArduinoJson@6.21.2
         sketch-names: "*.ino"
-        sketch-names-find-start: /bbn_m5tough_active_boat/*
+        sketch-names-find-start: bbn_m5tough_active_boat/*
