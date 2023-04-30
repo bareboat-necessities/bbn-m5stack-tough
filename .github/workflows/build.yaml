@@ -38,4 +38,5 @@ jobs:
         required-libraries: MQTT@2.5.1,LVGL@8.3.6,ArduinoJson@6.21.2
         sketch-names: "*.ino"
         sketch-names-find-start: bbn_m5tough_active_boat/*
+        extra-arduino-cli-args: "--warnings default"
         set-build-path: true
