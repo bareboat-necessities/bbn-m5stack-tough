@@ -96,6 +96,7 @@ NetClient skClient;
 NetClient pypClient;
 WiFiClient mqttNetClient;
 MQTTClient mqttClient = MQTTClient(4096); // Data loss if buffer is not enough
+static bool victron_mqtt_began = false;
 
 #include "ui_ip_add_editor.h"
 #include "ui_mem_cpu_net_stat.h"
@@ -220,6 +221,7 @@ void setup() {
     static int victron_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
     if (victron_mqtt_host.length() > 0 && victron_mqtt_port > 0) {
       victron_mqtt_client_begin(mqttClient, mqttNetClient, victron_mqtt_host.c_str(), victron_mqtt_port);
+      victron_mqtt_began = true;
     }
   });
 
@@ -238,7 +240,9 @@ void loop() {
 #endif
 
   if (!settingMode) {
-    victron_mqtt_client_loop(mqttClient);
+    if (victron_mqtt_began) {
+      victron_mqtt_client_loop(mqttClient);
+    }
     bool detected = handle_swipe();
     if (detected || (millis() - last_ui_upd > 250)) {  // throttle expensive UI updates, and calculations
       derive_data();
