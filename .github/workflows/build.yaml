@@ -22,7 +22,7 @@ jobs:
       uses: actions/checkout@v3
       with:
           repository: mairas/ReactESP
-          ref: master
+          ref: v2.1.0
           path: CustomLibrary_ReactESP # must also contain string "Custom"
 
     - name: Compile sketch
