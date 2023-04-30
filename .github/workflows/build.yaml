@@ -25,6 +25,12 @@ jobs:
           ref: v2.1.0
           path: CustomLibrary_ReactESP # must also contain string "Custom"
 
+    - name: copy lv_conf.h
+      uses: canastro/copy-file-action@master
+      with:
+        source: "/home/runner/work/bbn-m5stack-tough/bbn-m5stack-tough/lv_conf.h-custom"
+        target: "/home/runner/Arduino/libraries/lv_conf.h"                    
+
     - name: Compile sketch
       uses: ArminJo/arduino-test-compile@v3
       with:
