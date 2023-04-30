@@ -49,7 +49,6 @@ extern "C" {
       const char* lev2 = step_into_path(lev1);
       const char* lev3 = step_into_path(lev2);
       const char* lev4 = step_into_path(lev3);
-      const char* lev5 = step_into_path(lev4);
 
       DynamicJsonDocument doc(1024);
       DeserializationError error = deserializeJson(doc, payload);
