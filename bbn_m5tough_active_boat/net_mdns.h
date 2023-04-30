@@ -25,11 +25,13 @@ extern "C" {
 
   static bool mdns_up = false;
 
-  void mdns_begin() {
+  bool mdns_begin() {
     if (!MDNS.begin("ESP32_Browser")) {
       M5.Lcd.println(F("Error setting up MDNS responder!"));
+      return false;
     } else {
       mdns_up = true;
+      return true;
     }
   }
 
@@ -39,12 +41,16 @@ extern "C" {
   }
 
   int mdns_query_svc(const char* service, const char* proto) {
+    bool fail = false;
     if (!mdns_up) {
-      mdns_begin();
-      delay(500);
+      fail = mdns_begin();
     }
-    delay(100);
-    return MDNS.queryService(service, proto);
+    if (!fail) {
+      delay(10);
+      return MDNS.queryService(service, proto);
+    } else {
+      return 0;
+    }
   }
 
   bool discover_n_config() {
