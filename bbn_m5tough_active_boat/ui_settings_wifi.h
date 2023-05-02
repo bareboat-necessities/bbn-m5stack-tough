@@ -1,6 +1,3 @@
-#include "core/lv_obj.h"
-#include "core/lv_obj_style.h"
-#include "misc/lv_area.h"
 #ifndef UI_SETTINGS_WIFI_H
 #define UI_SETTINGS_WIFI_H
 
