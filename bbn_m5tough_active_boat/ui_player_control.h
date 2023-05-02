@@ -24,7 +24,7 @@ extern "C" {
   static void lv_player_display(lv_obj_t *parent) {
     player_display = lv_btnmatrix_create(parent);
     lv_btnmatrix_set_map(player_display, player_btnm_map);
-    lv_obj_set_size(player_display, 320, 78);
+    lv_obj_set_size(player_display, LV_HOR_RES_MAX, 78);
     lv_obj_align(player_display, LV_ALIGN_CENTER, 0, 75);
     //lv_obj_add_event(player_display, event_handler, LV_EVENT_ALL, NULL);
   }
