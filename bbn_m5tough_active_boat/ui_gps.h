@@ -20,7 +20,8 @@ extern "C" {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
-    lv_label_set_text(main_label, "GPS  " LV_SYMBOL_GPS);
+    lv_label_set_recolor(main_label, true);
+    lv_label_set_text(main_label, "GPS  #0080ff " LV_SYMBOL_GPS " #");
 
     gps_time_label = lv_label_create(parent);
     lv_obj_align(gps_time_label, LV_ALIGN_TOP_LEFT, 10, 40);
