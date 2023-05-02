@@ -194,7 +194,7 @@ extern "C" {
 
   void lv_ip_addr_editor(lv_obj_t *parent) {
     spinboxes_parent = lv_obj_create(parent);
-    lv_obj_set_size(spinboxes_parent, 320, 240);
+    lv_obj_set_size(spinboxes_parent, LV_HOR_RES_MAX, LV_VER_RES_MAX);
     spinbox1 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, -105, -50);
     spinbox2 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, -35, -50);
     spinbox3 = lv_spinbox_255(spinboxes_parent, LV_ALIGN_CENTER, 35, -50);
