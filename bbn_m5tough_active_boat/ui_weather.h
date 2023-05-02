@@ -31,7 +31,7 @@ extern "C" {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
-    lv_label_set_text(main_label, "Weather  " LV_SYMBOL_IMAGE);
+    lv_label_set_text(main_label, "SUN  " LV_SYMBOL_IMAGE);
 
     weather_time_label = lv_label_create(parent);
     lv_obj_align(weather_time_label, LV_ALIGN_TOP_LEFT, 10, 30);
