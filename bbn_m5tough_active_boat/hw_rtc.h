@@ -8,6 +8,10 @@ extern "C" {
   RTC_TimeTypeDef RTCtime;
   RTC_DateTypeDef RTCdate;
 
+  void rtc_begin() {
+    M5.Rtc.begin();
+  }
+
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
