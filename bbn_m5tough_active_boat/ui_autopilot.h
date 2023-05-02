@@ -108,7 +108,7 @@ extern "C" {
     autopilot_btnm = lv_btnmatrix_create(parent);
     lv_btnmatrix_set_map(autopilot_btnm, autopilot_btnm_map);
     lv_btnmatrix_set_btn_width(autopilot_btnm, 6, 3);
-    lv_obj_set_size(autopilot_btnm, 320, 190);
+    lv_obj_set_size(autopilot_btnm, LV_HOR_RES_MAX, 190);
     lv_obj_add_event_cb(autopilot_btnm, autopilot_event_cb, LV_EVENT_LONG_PRESSED, NULL);
     lv_obj_align(autopilot_btnm, LV_ALIGN_CENTER, 0, 25);
 
