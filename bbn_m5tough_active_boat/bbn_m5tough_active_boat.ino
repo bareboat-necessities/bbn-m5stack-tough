@@ -50,9 +50,9 @@ typedef struct _NetClient {
 } NetClient;
 
 #include "keepalive.h"
+#include "hw_brightness.h"
 #include "hw_rtc.h"
 #include "hw_sound.h"
-#include "hw_brightness.h"
 #include "net_ntp_time.h"
 #include "net_mdns.h"
 #include "ui_init.h"
@@ -172,6 +172,7 @@ void setup() {
   init_disp_driver();
   init_touch_driver();
   init_theme();
+  rtc_begin();
 
   settingUpWiFi([]() {
     init_dateTime();
