@@ -1,3 +1,6 @@
+#include "core/lv_obj.h"
+#include "core/lv_obj_style.h"
+#include "misc/lv_area.h"
 #ifndef UI_SETTINGS_WIFI_H
 #define UI_SETTINGS_WIFI_H
 
@@ -80,33 +83,30 @@ extern "C" {
 
   void lv_password_textarea(int i, lv_obj_t *cont) {
     /*Create the password box*/
+    lv_obj_set_style_pad_all(cont, 2, LV_PART_MAIN);
     lv_obj_t *pwd_ta = lv_textarea_create(cont);
     lv_textarea_set_text(pwd_ta, "");
     //lv_textarea_set_password_mode(pwd_ta, true);
     lv_textarea_set_one_line(pwd_ta, true);
     lv_obj_set_width(pwd_ta, 230);
-    lv_obj_align(pwd_ta, LV_ALIGN_TOP_LEFT, 10, 10);
+    lv_obj_align(pwd_ta, LV_ALIGN_TOP_LEFT, 2, 2);
     lv_obj_add_event_cb(pwd_ta, ta_password_event_cb, LV_EVENT_ALL, (void *)i);
-
-    /*Create a label and position it above the text box*/
-    lv_obj_t *pwd_label = lv_label_create(cont);
-    lv_label_set_text(pwd_label, "Password: ");
-    lv_obj_align_to(pwd_label, pwd_ta, LV_ALIGN_OUT_TOP_LEFT, 0, 0);
 
     /*Create a keyboard*/
     kb = lv_keyboard2(cont);
-    lv_obj_set_size(kb, LV_HOR_RES - 40, (LV_VER_RES / 2) + 5);
+    lv_obj_align(kb, LV_ALIGN_BOTTOM_MID, 0, 0);
+    lv_obj_set_size(kb, LV_HOR_RES - 4, (LV_VER_RES / 2) + 48);
 
     lv_keyboard_set_textarea(kb, pwd_ta); /*Focus it on one of the text areas to start*/
     lv_obj_add_state(pwd_ta, LV_STATE_FOCUSED);
   }
 
   void lv_connect_wifi_win(int i) {
-    lv_obj_t *win = lv_win_create(lv_scr_act(), 36);
-    lv_win_add_title(win, "Connect to Wi-Fi");
-    lv_obj_t *btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE, 36);
+    lv_obj_t *win = lv_win_create(lv_scr_act(), 28);
+    lv_win_add_title(win, " Wi-Fi Password:");
+    lv_obj_t *btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE, 28);
     lv_obj_add_event_cb(btn, lv_win_close_event_cb, LV_EVENT_PRESSED, win);
-    lv_obj_t *cont = lv_win_get_content(win); /*Content can be added here*/
+    lv_obj_t *cont = lv_win_get_content(win); /*Content can be added here*/    
     lv_password_textarea(i, cont);
   }
 
