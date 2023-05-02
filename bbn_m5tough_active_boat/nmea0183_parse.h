@@ -42,7 +42,6 @@ extern "C" {
   }
 
   bool nmea_parse(String& line) {
-    //M5.Lcd.println(line);
     parse_sentence(line.c_str());
     return line.length() > 0;
   }
