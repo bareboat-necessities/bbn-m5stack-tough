@@ -107,6 +107,7 @@ static bool victron_mqtt_began = false;
 #include "ui_speed.h"
 #include "ui_depth.h"
 #include "ui_heel.h"
+#include "ui_trip_data.h"
 #include "ui_autopilot.h"
 #include "ui_rudder.h"
 #include "ui_tanks.h"
@@ -125,6 +126,7 @@ lv_updatable_screen_t* screens[] = {
   &tanksScreen,
   &autopilotScreen,
   &heelScreen,
+  &tripDataScreen,
   &compassScreen,
   &rudderScreen,
   &engineScreen,
@@ -189,6 +191,7 @@ void setup() {
     init_tanksScreen();
     init_autopilotScreen();
     init_heelScreen();
+    init_tripDataScreen();
     init_compassScreen();
     init_rudderScreen();
     init_aboutScreen();
