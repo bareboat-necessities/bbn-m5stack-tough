@@ -50,7 +50,7 @@ typedef struct _NetClient {
 } NetClient;
 
 #include "keepalive.h"
-#include "m5_rtc.h"
+#include "hw_rtc.h"
 #include "m5_sound.h"
 #include "net_ntp_time.h"
 #include "net_mdns.h"
