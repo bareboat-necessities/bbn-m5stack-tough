@@ -51,7 +51,7 @@ typedef struct _NetClient {
 
 #include "keepalive.h"
 #include "hw_rtc.h"
-#include "m5_sound.h"
+#include "hw_sound.h"
 #include "net_ntp_time.h"
 #include "net_mdns.h"
 #include "ui_init.h"
