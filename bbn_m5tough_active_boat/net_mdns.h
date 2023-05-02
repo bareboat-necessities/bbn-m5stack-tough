@@ -27,7 +27,6 @@ extern "C" {
 
   bool mdns_begin() {
     if (!MDNS.begin("ESP32_Browser")) {
-      M5.Lcd.println(F("Error setting up MDNS responder!"));
       return false;
     } else {
       mdns_up = true;
@@ -64,9 +63,6 @@ extern "C" {
         preferences.putString(SK_TCP_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(SK_TCP_PORT_PREF, MDNS.port(0));
         saved = true;
-        M5.Lcd.print(MDNS.IP(0).toString());
-        M5.Lcd.print(F(":"));
-        M5.Lcd.printf("%d - signalk\n", MDNS.port(0));
       }
     }
 
@@ -79,9 +75,6 @@ extern "C" {
           preferences.putString(NMEA0183_TCP_HOST_PREF, MDNS.IP(0).toString());
           preferences.putInt(NMEA0183_TCP_PORT_PREF, MDNS.port(0));
           saved = true;
-          M5.Lcd.print(MDNS.IP(0).toString());
-          M5.Lcd.print(F(":"));
-          M5.Lcd.printf("%d - nmea0183\n", MDNS.port(0));
         } else {
           String found10110;
           for (int i = 0; i < n; ++i) {
@@ -94,16 +87,10 @@ extern "C" {
             preferences.putString(NMEA0183_TCP_HOST_PREF, found10110);
             preferences.putInt(NMEA0183_TCP_PORT_PREF, 10110);
             saved = true;
-            M5.Lcd.print(found10110);
-            M5.Lcd.print(F(":"));
-            M5.Lcd.printf("%d - nmea0183\n", 10110);
           } else {
             preferences.putString(NMEA0183_TCP_HOST_PREF, MDNS.IP(0).toString());
             preferences.putInt(NMEA0183_TCP_PORT_PREF, MDNS.port(0));
             saved = true;
-            M5.Lcd.print(MDNS.IP(0).toString());
-            M5.Lcd.print(F(":"));
-            M5.Lcd.printf("%d - nmea0183\n", MDNS.port(0));
           }
         }
       }
@@ -117,9 +104,6 @@ extern "C" {
         preferences.putString(PYP_TCP_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(PYP_TCP_PORT_PREF, MDNS.port(0));
         saved = true;
-        M5.Lcd.print(MDNS.IP(0).toString());
-        M5.Lcd.print(F(":"));
-        M5.Lcd.printf("%d - pypilot\n", MDNS.port(0));
       }
     }
 
@@ -131,9 +115,6 @@ extern "C" {
         preferences.putString(MPD_TCP_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(MPD_TCP_PORT_PREF, MDNS.port(0));
         saved = true;
-        M5.Lcd.print(MDNS.IP(0).toString());
-        M5.Lcd.print(F(":"));
-        M5.Lcd.printf("%d - mpd\n", MDNS.port(0));
       }
     }
 
@@ -145,9 +126,6 @@ extern "C" {
         preferences.putString(VENUS_MQTT_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(VENUS_MQTT_PORT_PREF, MDNS.port(0));
         saved = true;
-        M5.Lcd.print(MDNS.IP(0).toString());
-        M5.Lcd.print(F(":"));
-        M5.Lcd.printf("%d - venus mqtt\n", MDNS.port(0));
       }
     }
     if (mdns_up) {
@@ -156,61 +134,12 @@ extern "C" {
     return saved;
   }
 
-  void browseServiceMDNS(const char* service, const char* proto) {
-    M5.Lcd.printf("Scan _%s._%s.local. ... ", service, proto);
-    int n = mdns_query_svc(service, proto);
-    if (n == 0) {
-      M5.Lcd.println(F("not found"));
-    } else {
-      M5.Lcd.setTextColor(WHITE);
-      M5.Lcd.print(n);
-      M5.Lcd.println(F(" found"));
-      M5.Lcd.setTextColor(YELLOW);
-      for (int i = 0; i < n; ++i) {
-        // Print details for each service found
-        M5.Lcd.print(F(" "));
-        M5.Lcd.print(i + 1);
-        M5.Lcd.print(F(": "));
-        M5.Lcd.print(MDNS.hostname(i));
-        M5.Lcd.print(F(" ("));
-        M5.Lcd.print(MDNS.IP(i));
-        M5.Lcd.print(F(":"));
-        M5.Lcd.print(MDNS.port(i));
-        M5.Lcd.println(F(")"));
-      }
-    }
-    M5.Lcd.println();
-  }
-
   void erase_mdns_lookups() {
     preferences.remove(VENUS_MQTT_HOST_PREF);
     preferences.remove(NMEA0183_TCP_HOST_PREF);
     preferences.remove(PYP_TCP_HOST_PREF);
     preferences.remove(SK_TCP_HOST_PREF);
     preferences.remove(MPD_TCP_HOST_PREF);
-  }
-
-  void discoverBasics() {
-    browseServiceMDNS("http", "tcp");
-    delay(100);
-    browseServiceMDNS("nmea-0183", "tcp");
-    delay(100);
-    browseServiceMDNS("signalk-http", "tcp");
-    delay(100);
-    browseServiceMDNS("signalk-tcp", "tcp");
-    delay(100);
-    browseServiceMDNS("signalk-ws", "tcp");
-    delay(100);
-    browseServiceMDNS("pypilot", "tcp");
-    delay(100);
-    browseServiceMDNS("mpd", "tcp");
-    delay(100);
-    browseServiceMDNS("mqtt", "tcp");  // port 1883
-    delay(100);
-    browseServiceMDNS("secure-mqtt", "tcp");  // port 8883
-    delay(100);
-    browseServiceMDNS("mopidy-http", "tcp");
-    delay(100);
   }
 
 #ifdef __cplusplus
