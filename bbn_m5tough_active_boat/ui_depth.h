@@ -19,7 +19,8 @@ extern "C" {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
-    lv_label_set_text(main_label, "DEPTH  " LV_SYMBOL_DOWNLOAD);
+    lv_label_set_recolor(main_label, true);
+    lv_label_set_text(main_label, "DEPTH  #0080ff " LV_SYMBOL_DOWNLOAD " #");
 
     dbt_label = lv_label_create(parent);
     lv_obj_align(dbt_label, LV_ALIGN_TOP_LEFT, 10, 40);
