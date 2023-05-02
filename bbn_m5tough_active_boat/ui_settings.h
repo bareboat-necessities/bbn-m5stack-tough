@@ -1,5 +1,5 @@
-#ifndef M5_UI_SETTINGS_H
-#define M5_UI_SETTINGS_H
+#ifndef UI_SETTINGS_H
+#define UI_SETTINGS_H
 
 #ifdef __cplusplus
 extern "C" {
