@@ -152,7 +152,7 @@ https://github.com/sharandac/My-TTGO-Watch
 - Power winches controls
 - Power furler controls 
 - UI to control fog horn signal, and horn in general
-- Trip data display, VMG
+- Trip data display, VMG  (:heavy_check_mark:)
 
 
 ##  Interfaces:
