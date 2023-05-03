@@ -23,18 +23,18 @@ extern "C" {
           }
         } else if (path == "environment.depth.belowKeel") {
           if (value.is<float>()) {
-            shipDataModel.environment.depth.below_keel = value.as<float>();
-            shipDataModel.environment.depth.age = millis();
+            shipDataModel.environment.depth.below_keel.m = value.as<float>();
+            shipDataModel.environment.depth.below_keel.age = millis();
           }
         } else if (path == "environment.depth.belowTransducer") {
           if (value.is<float>()) {
-            shipDataModel.environment.depth.below_transducer = value.as<float>();
-            shipDataModel.environment.depth.age = millis();
+            shipDataModel.environment.depth.below_transducer.m = value.as<float>();
+            shipDataModel.environment.depth.below_transducer.age = millis();
           }
         } else if (path == "environment.depth.belowSurface") {
           if (value.is<float>()) {
-            shipDataModel.environment.depth.below_surface = value.as<float>();
-            shipDataModel.environment.depth.age = millis();
+            shipDataModel.environment.depth.below_surface.m = value.as<float>();
+            shipDataModel.environment.depth.below_surface.age = millis();
           }
         } else if (path == "environment.wind.angleApparent") {
           if (value.is<float>()) {
