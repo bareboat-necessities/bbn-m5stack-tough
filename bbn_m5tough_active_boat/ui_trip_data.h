@@ -72,7 +72,7 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(ttg_at_vmg_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(ttg_at_vmg_label, "TTG@VMG:              --");
+    lv_label_set_text(ttg_at_vmg_label, "TTG@VMG (hr):      --");
   }
 
   static void trip_data_update_cb() {
@@ -110,6 +110,16 @@ extern "C" {
                       ("RNG (nm):                "
                        + (fresh(shipDataModel.navigation.course_rhumbline.next_point.distance.age, 10000)
                             ? String(shipDataModel.navigation.course_rhumbline.next_point.distance.m / NM_TO_METERS, 1)
+                            : String("--")))
+                        .c_str());
+    lv_label_set_text(ttg_at_vmg_label,
+                      ("TTG@VMG (hr):      "
+                       + (fresh(shipDataModel.navigation.course_rhumbline.next_point.distance.age, 10000)
+                              && fresh(shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.age, 10000)
+                              && shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.kn > 0.001
+                            ? String(shipDataModel.navigation.course_rhumbline.next_point.distance.m / NM_TO_METERS
+                                       / shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.kn,
+                                     2)
                             : String("--")))
                         .c_str());
   }
