@@ -102,13 +102,13 @@ extern "C" {
                         .c_str());
     lv_label_set_text(vmg_label,
                       ("VMG (kn):                 "
-                       + (fresh(shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.age)
+                       + (fresh(shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.age, 10000)
                             ? String(shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.kn, 2)
                             : String("--")))
                         .c_str());
     lv_label_set_text(rng_label,
                       ("RNG (nm):                "
-                       + (fresh(shipDataModel.navigation.course_rhumbline.next_point.distance.age, 30000)
+                       + (fresh(shipDataModel.navigation.course_rhumbline.next_point.distance.age, 10000)
                             ? String(shipDataModel.navigation.course_rhumbline.next_point.distance.m / NM_TO_METERS, 1)
                             : String("--")))
                         .c_str());
