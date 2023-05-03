@@ -51,7 +51,7 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(hdm_leg_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(hdm_leg_label, "HDM (deg):              --");
+    lv_label_set_text(hdm_leg_label, "HDM (deg):             --");
 
     vmg_label = lv_label_create(parent);
     lv_obj_align(vmg_label, LV_ALIGN_TOP_LEFT, 10, 150);
@@ -95,7 +95,7 @@ extern "C" {
                             : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
     lv_label_set_text(hdm_leg_label,
-                      ("HDM (deg):              "
+                      ("HDM (deg):             "
                        + (fresh(shipDataModel.navigation.heading_mag.age)
                             ? String(shipDataModel.navigation.heading_mag.deg, 0) + LV_SYMBOL_DEGREES
                             : String("--" LV_SYMBOL_DEGREES)))
