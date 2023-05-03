@@ -106,6 +106,16 @@ extern "C" {
             shipDataModel.environment.air_outside.illuminance.lux = value.as<float>();
             shipDataModel.environment.air_outside.illuminance.age = millis();
           }
+        } else if (path == "navigation.courseRhumbline.crossTrackError") {
+          if (value.is<float>()) {
+            shipDataModel.navigation.course_rhumbline.cross_track_error.m = value.as<float>();
+            shipDataModel.navigation.course_rhumbline.cross_track_error.age = millis();
+          }
+        } else if (path == "navigation.courseRhumbline.crossTrackError") {
+          if (value.is<float>()) {
+            shipDataModel.navigation.course_rhumbline.bearing_track_true.deg = value.as<float>() * 180.0 / PI;
+            shipDataModel.navigation.course_rhumbline.bearing_track_true.age = millis();
+          }
         } else if (path == "navigation.position") {
           if (value.containsKey("longitude") && value.containsKey("latitude")) {
             if (value["longitude"].is<float>() && value["latitude"].is<float>()) {
