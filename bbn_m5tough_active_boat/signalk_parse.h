@@ -121,7 +121,7 @@ extern "C" {
             shipDataModel.navigation.course_rhumbline.next_point.distance.m = value.as<float>();
             shipDataModel.navigation.course_rhumbline.next_point.distance.age = millis();
           }
-        } else if (path == "navigation.courseRhumbline.nextPoint.velocity_made_good") {
+        } else if (path == "navigation.courseRhumbline.nextPoint.velocityMadeGood") {
           if (value.is<float>()) {
             shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
             shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.age = millis();
