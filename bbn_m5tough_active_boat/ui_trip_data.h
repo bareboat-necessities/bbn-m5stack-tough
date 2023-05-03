@@ -10,6 +10,7 @@ extern "C" {
   static lv_obj_t *xte_label;
   static lv_obj_t *brgt_label;
   static lv_obj_t *brgm_label;
+  static lv_obj_t *hdm_leg_label;
   static lv_obj_t *vmg_label;
   static lv_obj_t *rng_label;
   static lv_obj_t *ttg_at_vmg_label;
@@ -43,24 +44,31 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(brgm_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(brgm_label, "BRG (m deg):           --");
+    lv_label_set_text(brgm_label, "BRG (m deg):         --");
+
+    hdm_leg_label = lv_label_create(parent);
+    lv_obj_align(hdm_leg_label, LV_ALIGN_TOP_LEFT, 10, 120);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(hdm_leg_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(hdm_leg_label, "HDM (deg):              --");
 
     vmg_label = lv_label_create(parent);
-    lv_obj_align(vmg_label, LV_ALIGN_TOP_LEFT, 10, 120);
+    lv_obj_align(vmg_label, LV_ALIGN_TOP_LEFT, 10, 150);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vmg_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(vmg_label, "VMG (kn):                 --");
 
     rng_label = lv_label_create(parent);
-    lv_obj_align(rng_label, LV_ALIGN_TOP_LEFT, 10, 150);
+    lv_obj_align(rng_label, LV_ALIGN_TOP_LEFT, 10, 180);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(rng_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(rng_label, "RNG (nm):                --");
 
     ttg_at_vmg_label = lv_label_create(parent);
-    lv_obj_align(ttg_at_vmg_label, LV_ALIGN_TOP_LEFT, 10, 180);
+    lv_obj_align(ttg_at_vmg_label, LV_ALIGN_TOP_LEFT, 10, 210);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(ttg_at_vmg_label, &lv_font_montserrat_20, 0);
 #endif
@@ -81,9 +89,15 @@ extern "C" {
                             : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
     lv_label_set_text(brgm_label,
-                      ("BRG (m deg):           "
+                      ("BRG (m deg):         "
                        + (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_mag.age)
                             ? String(shipDataModel.navigation.course_rhumbline.bearing_track_mag.deg, 0) + LV_SYMBOL_DEGREES
+                            : String("--" LV_SYMBOL_DEGREES)))
+                        .c_str());
+    lv_label_set_text(hdm_leg_label,
+                      ("HDM (deg):              "
+                       + (fresh(shipDataModel.navigation.heading_mag.age)
+                            ? String(shipDataModel.navigation.heading_mag.deg, 0) + LV_SYMBOL_DEGREES
                             : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
   }
