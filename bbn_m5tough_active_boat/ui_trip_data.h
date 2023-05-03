@@ -8,7 +8,8 @@ extern "C" {
   lv_updatable_screen_t tripDataScreen;
 
   static lv_obj_t *xte_label;
-  static lv_obj_t *brg_label;
+  static lv_obj_t *brgt_label;
+  static lv_obj_t *brgm_label;
   static lv_obj_t *vmg_label;
   static lv_obj_t *rng_label;
   static lv_obj_t *ttg_at_vmg_label;
@@ -24,18 +25,25 @@ extern "C" {
     lv_label_set_text(main_label, "TRIP LEG  #0080ff " LV_SYMBOL_GPS " #");
 
     xte_label = lv_label_create(parent);
-    lv_obj_align(xte_label, LV_ALIGN_TOP_LEFT, 10, 40);
+    lv_obj_align(xte_label, LV_ALIGN_TOP_LEFT, 10, 30);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(xte_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(xte_label, "XTE (nm):                 --");
 
-    brg_label = lv_label_create(parent);
-    lv_obj_align(brg_label, LV_ALIGN_TOP_LEFT, 10, 80);
+    brgt_label = lv_label_create(parent);
+    lv_obj_align(brgt_label, LV_ALIGN_TOP_LEFT, 10, 60);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(brg_label, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(brgt_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(brg_label, "BRG (t deg):            --");
+    lv_label_set_text(brgt_label, "BRG (t deg):            --");
+
+    brgm_label = lv_label_create(parent);
+    lv_obj_align(brgm_label, LV_ALIGN_TOP_LEFT, 10, 90);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(brgm_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(brgm_label, "BRG (m deg):           --");
 
     vmg_label = lv_label_create(parent);
     lv_obj_align(vmg_label, LV_ALIGN_TOP_LEFT, 10, 120);
@@ -45,14 +53,14 @@ extern "C" {
     lv_label_set_text(vmg_label, "VMG (kn):                 --");
 
     rng_label = lv_label_create(parent);
-    lv_obj_align(rng_label, LV_ALIGN_TOP_LEFT, 10, 160);
+    lv_obj_align(rng_label, LV_ALIGN_TOP_LEFT, 10, 150);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(rng_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(rng_label, "RNG (nm):                --");
 
     ttg_at_vmg_label = lv_label_create(parent);
-    lv_obj_align(ttg_at_vmg_label, LV_ALIGN_TOP_LEFT, 10, 200);
+    lv_obj_align(ttg_at_vmg_label, LV_ALIGN_TOP_LEFT, 10, 180);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(ttg_at_vmg_label, &lv_font_montserrat_20, 0);
 #endif
@@ -66,10 +74,16 @@ extern "C" {
                             ? String(shipDataModel.navigation.course_rhumbline.cross_track_error.m / NM_TO_METERS, 3)
                             : String("--")))
                         .c_str());
-    lv_label_set_text(brg_label,
+    lv_label_set_text(brgt_label,
                       ("BRG (t deg):            "
                        + (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_true.age)
                             ? String(shipDataModel.navigation.course_rhumbline.bearing_track_true.deg, 0) + LV_SYMBOL_DEGREES
+                            : String("--" LV_SYMBOL_DEGREES)))
+                        .c_str());
+    lv_label_set_text(brgm_label,
+                      ("BRG (m deg):           "
+                       + (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_mag.age)
+                            ? String(shipDataModel.navigation.course_rhumbline.bearing_track_mag.deg, 0) + LV_SYMBOL_DEGREES
                             : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
   }
