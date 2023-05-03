@@ -8,6 +8,8 @@ extern "C" {
   #define TWO_MINUTES 120000
   #define LONG_EXPIRE_TO 172800000
 
+  #define NM_TO_METERS 1852.0
+
   bool fresh(unsigned long age, unsigned long limit = 5000) {
     return millis() - age < limit && age != 0;
   }
