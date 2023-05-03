@@ -111,7 +111,7 @@ extern "C" {
             shipDataModel.navigation.course_rhumbline.cross_track_error.m = value.as<float>();
             shipDataModel.navigation.course_rhumbline.cross_track_error.age = millis();
           }
-        } else if (path == "navigation.courseRhumbline.crossTrackError") {
+        } else if (path == "navigation.courseRhumbline.bearingTrackTrue") {
           if (value.is<float>()) {
             shipDataModel.navigation.course_rhumbline.bearing_track_true.deg = value.as<float>() * 180.0 / PI;
             shipDataModel.navigation.course_rhumbline.bearing_track_true.age = millis();
