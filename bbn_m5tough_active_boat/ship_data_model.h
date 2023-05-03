@@ -128,10 +128,18 @@ extern "C" {
     struct _nav_light bow_red_green;
   } nav_lights_t;
 
+  typedef struct _next_point_t {
+    struct _angle_deg_t bearing_true;
+    struct _angle_deg_t bearing_mag;
+    struct _length_m_t distance;
+    struct _kn_t velocity_made_good;
+  } next_point_t;
+
   typedef struct _course_rhumbline_t {
     struct _length_m_t cross_track_error;
     struct _angle_deg_t bearing_track_true;
     struct _angle_deg_t bearing_track_mag;
+    struct _next_point_t next_point;
   } course_rhumbline_t;
 
   typedef struct _navigation_t {
