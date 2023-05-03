@@ -116,6 +116,16 @@ extern "C" {
             shipDataModel.navigation.course_rhumbline.bearing_track_true.deg = value.as<float>() * 180.0 / PI;
             shipDataModel.navigation.course_rhumbline.bearing_track_true.age = millis();
           }
+        } else if (path == "navigation.courseRhumbline.nextPoint.distance") {
+          if (value.is<float>()) {
+            shipDataModel.navigation.course_rhumbline.next_point.distance.m = value.as<float>();
+            shipDataModel.navigation.course_rhumbline.next_point.distance.age = millis();
+          }
+        } else if (path == "navigation.courseRhumbline.nextPoint.velocity_made_good") {
+          if (value.is<float>()) {
+            shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
+            shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.age = millis();
+          }
         } else if (path == "navigation.position") {
           if (value.containsKey("longitude") && value.containsKey("latitude")) {
             if (value["longitude"].is<float>() && value["latitude"].is<float>()) {
