@@ -63,7 +63,7 @@ extern "C" {
     lv_label_set_text(xte_label,
                       ("XTE (nm):                 "
                        + (fresh(shipDataModel.navigation.course_rhumbline.cross_track_error.age)
-                            ? String(shipDataModel.navigation.course_rhumbline.cross_track_error.m / NM_TO_METERS, 2)
+                            ? String(shipDataModel.navigation.course_rhumbline.cross_track_error.m / NM_TO_METERS, 3)
                             : String("--")))
                         .c_str());
     lv_label_set_text(brg_label,
