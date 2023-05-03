@@ -84,6 +84,11 @@ extern "C" {
     age_t age = 0U;
   } kn_t;
 
+  typedef struct _length_m_t {
+    float m;
+    age_t age = 0U;
+  } length_m_t;
+
   typedef struct _RPM_t {
     float rpm;
     age_t age = 0U;
@@ -123,6 +128,12 @@ extern "C" {
     struct _nav_light bow_red_green;
   } nav_lights_t;
 
+  typedef struct _course_rhumbline_t {
+    struct _length_m_t cross_track_error;
+    struct _angle_deg_t bearing_track_true;
+    struct _angle_deg_t bearing_track_mag;
+  } course_rhumbline_t;
+
   typedef struct _navigation_t {
     struct _position_t position;
     struct _attitude_t attitude;
@@ -138,6 +149,7 @@ extern "C" {
     struct _kn_t speed_over_ground;
     struct _kn_t speed_through_water;
     struct _nav_lights_t lights;
+    struct _course_rhumbline_t course_rhumbline;
   } navigation_t;
 
   typedef struct _wind_t {
@@ -156,10 +168,9 @@ extern "C" {
   } _wind_t;
 
   typedef struct _depth_t {
-    float below_keel;
-    float below_transducer;
-    float below_surface;
-    age_t age = 0U;
+    struct _length_m_t below_keel;
+    struct _length_m_t below_transducer;
+    struct _length_m_t below_surface;
   } depth_t;
 
   typedef struct _deg_C_t {
