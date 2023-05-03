@@ -10,6 +10,10 @@ extern "C" {
   Victron MQQT
   To start simulator wth docker https://github.com/victronenergy/venus-docker
   
+  cd venus-docker
+  ./run.sh
+  
+  ./start_services.sh
   ./simulate.sh --with-solarcharger --with-tanks p
   
   To see messages:
