@@ -60,6 +60,18 @@ extern "C" {
   }
 
   static void trip_data_update_cb() {
+    lv_label_set_text(xte_label,
+                      ("XTE (nm):                 "
+                       + (fresh(shipDataModel.navigation.course_rhumbline.cross_track_error.age)
+                            ? String(shipDataModel.navigation.course_rhumbline.cross_track_error.m / NM_TO_METERS, 2)
+                            : String("--")))
+                        .c_str());
+    lv_label_set_text(brg_label,
+                      ("BRG (t deg):            "
+                       + (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_true.age)
+                            ? String(shipDataModel.navigation.course_rhumbline.bearing_track_true.deg, 2) + LV_SYMBOL_DEGREES
+                            : String("--" LV_SYMBOL_DEGREES)))
+                        .c_str());
   }
 
   void init_tripDataScreen() {
