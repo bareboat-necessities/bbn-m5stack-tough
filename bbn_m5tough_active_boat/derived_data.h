@@ -77,6 +77,10 @@ extern "C" {
         shipDataModel.navigation.heading_true.deg = shipDataModel.navigation.heading_mag.deg + shipDataModel.navigation.mag_var.deg;
         shipDataModel.navigation.heading_true.age = millis();
       }
+      if (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_true.age)) {
+        shipDataModel.navigation.course_rhumbline.bearing_track_mag.deg = shipDataModel.navigation.course_rhumbline.bearing_track_true.deg - shipDataModel.navigation.mag_var.deg;
+        shipDataModel.navigation.course_rhumbline.bearing_track_mag.age = millis();
+      }
     }
 
     // ground wind calc
