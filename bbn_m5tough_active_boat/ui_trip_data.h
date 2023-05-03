@@ -69,7 +69,7 @@ extern "C" {
     lv_label_set_text(brg_label,
                       ("BRG (t deg):            "
                        + (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_true.age)
-                            ? String(shipDataModel.navigation.course_rhumbline.bearing_track_true.deg, 2) + LV_SYMBOL_DEGREES
+                            ? String(shipDataModel.navigation.course_rhumbline.bearing_track_true.deg, 0) + LV_SYMBOL_DEGREES
                             : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
   }
