@@ -86,6 +86,9 @@ extern "C" {
 
   static String hour_format(float hr) {
     static char bufferTime[16];
+    if (hr < 0) {
+      hr = 24 + hr;
+    }
     int h = hr;
     int m = (hr - h) * 60;
     int s = ((hr - h) * 60 - m) * 60;
