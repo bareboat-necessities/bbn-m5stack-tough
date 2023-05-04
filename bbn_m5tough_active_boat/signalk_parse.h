@@ -140,6 +140,38 @@ extern "C" {
               shipDataModel.navigation.position.lon.age = millis();
             }
           }
+        } else if (path != NULL && path.startsWith("propulsion.")) {
+          String engineID = path.substring(11);
+          int idx = engineID.indexOf('.');
+          if (idx > 0) {
+            engineID = engineID.substring(0, idx);
+            if (engineID != NULL) {
+              engine_t *eng = lookup_engine(engineID.c_str());
+              if (eng != NULL) {                
+                if (path == (String("propulsion.") + engineID + ".revolutions")) {
+                  if (value.is<float>()) {
+                    eng->revolutions_RPM.rpm = value.as<float>() * 60;
+                    eng->revolutions_RPM.age = millis();
+                  }
+                } else if (path == (String("propulsion.") + engineID + ".temperature")) {
+                  if (value.is<float>()) {
+                    eng->temp_deg_C.deg_C = value.as<float>() - 273.15;
+                    eng->temp_deg_C.age = millis();
+                  }
+                } else if (path == (String("propulsion.") + engineID + ".oilPressure")) {
+                  if (value.is<float>()) {
+                    eng->oil_pressure.hPa = value.as<float>() / 100.0;
+                    eng->oil_pressure.age = millis();
+                  }
+                } else if (path == (String("propulsion.") + engineID + ".alternatorVoltage")) {
+                  if (value.is<float>()) {
+                    eng->alternator_voltage.volt = value.as<float>();
+                    eng->alternator_voltage.age = millis();
+                  }
+                }
+              }
+            }
+          }
         }
       };
 
