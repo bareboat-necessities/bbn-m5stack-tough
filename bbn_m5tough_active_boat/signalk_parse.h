@@ -76,7 +76,7 @@ extern "C" {
             shipDataModel.navigation.speed_over_ground.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
             shipDataModel.navigation.speed_over_ground.age = millis();
           }
-        } else if (path == "navigation.speedThroughWaterLongitudinal") {
+        } else if (path == "navigation.speedThroughWater") {
           if (value.is<float>()) {
             shipDataModel.navigation.speed_through_water.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
             shipDataModel.navigation.speed_through_water.age = millis();
