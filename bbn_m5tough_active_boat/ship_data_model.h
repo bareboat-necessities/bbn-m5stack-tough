@@ -255,6 +255,8 @@ extern "C" {
     age_t age = 0U;
   } freq_Hz_t;
 
+  /*
+
   typedef struct _ac_load_t {
     struct _current_amp_t current;
     struct _voltage_V_t voltage;
@@ -354,6 +356,7 @@ extern "C" {
     const char *batteries_labels[8];
     struct _battery_t by_idx[8];
   } batteries_t;
+*/
 
   typedef struct _power_n_current_t {
     struct _current_amp_t current;
@@ -385,11 +388,11 @@ extern "C" {
   typedef struct _electrical_t {
     struct _sys_ac_t sys_ac;
     struct _sys_dc_t sys_dc;
-    struct _ac_t ac;
-    struct _dc_t dc;
-    struct _inverters_t inverters;
-    struct _batteries_t batteries;
-    struct _chargers_t chargers;
+    //    struct _ac_t ac;
+    //    struct _dc_t dc;
+    //    struct _inverters_t inverters;
+    //    struct _batteries_t batteries;
+    //    struct _chargers_t chargers;
   } electrical_t;
 
   typedef struct _autopilot_t {
@@ -406,7 +409,7 @@ extern "C" {
   } steering_t;
 
   typedef enum {
-    FLUID_TYPE_NA = -1, // not available
+    FLUID_TYPE_NA = -1,  // not available
     FUEL = 0,
     FRESH_WATER = 1,
     WASTE_WATER = 2,
@@ -417,7 +420,7 @@ extern "C" {
   } fluid_type_e;
 
   typedef struct _tank_t {
-    const char *label;
+    //const char *tank_label;
     fluid_type_e fluid_type = FLUID_TYPE_NA;
     struct _litters_t volume;
     struct _percent_t percent_of_full;
