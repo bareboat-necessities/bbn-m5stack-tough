@@ -14,6 +14,16 @@ extern "C" {
     return millis() - age < limit && age != 0;
   }
 
+  engine_t *lookup_engine(const char *engineID) {
+    for (int i = 0; i < MAX_ENGINES; i++) {
+      if (strncmp(shipDataModel.propulsion.engines[i].engine_label, engineID, MAX_ENGINE_LBL_LENGTH) == 0) {
+        return &shipDataModel.propulsion.engines[i];
+      }
+    }
+    return NULL;
+  }
+
+
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
