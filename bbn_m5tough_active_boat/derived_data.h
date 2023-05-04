@@ -135,10 +135,12 @@ extern "C" {
     // derive leeway
     if (fresh(shipDataModel.navigation.speed_through_water.age)
         && fresh(shipDataModel.navigation.attitude.heel.age)) {
-      int k_factor = 12;  // TODO:
-      shipDataModel.navigation.leeway.deg = leeway_deg(shipDataModel.navigation.attitude.heel.deg,
-                                                       shipDataModel.navigation.speed_through_water.kn, k_factor);
-      shipDataModel.navigation.leeway.age = millis();
+      if (shipDataModel.navigation.speed_through_water.kn > 1) {
+        int k_factor = 12;  // TODO:
+        shipDataModel.navigation.leeway.deg = leeway_deg(shipDataModel.navigation.attitude.heel.deg,
+                                                         shipDataModel.navigation.speed_through_water.kn, k_factor);
+        shipDataModel.navigation.leeway.age = millis();
+      }
     }
 
     // derive mag variation if unknown
