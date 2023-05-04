@@ -59,7 +59,10 @@ extern "C" {
   }
 
   static void engine_update_cb() {
-    set_engine_rpm_value(engine_rpm_indic, 20);  // TODO:
+    set_engine_rpm_value(engine_rpm_indic,
+                         (fresh(shipDataModel.propulsion.engines[0].revolutions_RPM.age)
+                            ? shipDataModel.propulsion.engines[0].revolutions_RPM.rpm * 100
+                            : 0));
   }
 
   void init_engineScreen() {
