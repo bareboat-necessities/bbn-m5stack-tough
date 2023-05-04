@@ -119,30 +119,30 @@ extern "C" {
       //}
     }
     if (headingTrue.isUpdated() && headingTrue.isValid()) {
-      shipDataModel.navigation.heading_true.deg = parse_float(headingTrue.value());
+      shipDataModel.navigation.heading_true.deg = norm_deg(parse_float(headingTrue.value()));
       shipDataModel.navigation.heading_true.age = millis();
     }
     if (headingMag.isUpdated()) {
-      shipDataModel.navigation.heading_mag.deg = parse_float(headingMag.value());
+      shipDataModel.navigation.heading_mag.deg = norm_deg(parse_float(headingMag.value()));
       shipDataModel.navigation.heading_mag.age = millis();
     }
     if (windAngle.isUpdated() && windReference.isUpdated()) {
       if (strcmp("R", windReference.value()) == 0) {
-        shipDataModel.environment.wind.apparent_wind_angle.deg = parse_float(windAngle.value());
+        shipDataModel.environment.wind.apparent_wind_angle.deg = norm180_deg(parse_float(windAngle.value()));
         shipDataModel.environment.wind.apparent_wind_angle.age = millis();
       }
       if (strcmp("T", windReference.value()) == 0) {
-        shipDataModel.environment.wind.true_wind_angle.deg = parse_float(windAngle.value());
+        shipDataModel.environment.wind.true_wind_angle.deg = norm180_deg(parse_float(windAngle.value()));
         shipDataModel.environment.wind.true_wind_angle.age = millis();
       }
     }
     if (windAngleI.isUpdated() && windReferenceI.isUpdated()) {
       if (strcmp("R", windReferenceI.value()) == 0) {
-        shipDataModel.environment.wind.apparent_wind_angle.deg = parse_float(windAngleI.value());
+        shipDataModel.environment.wind.apparent_wind_angle.deg = norm180_deg(parse_float(windAngleI.value()));
         shipDataModel.environment.wind.apparent_wind_angle.age = millis();
       }
       if (strcmp("T", windReferenceI.value()) == 0) {
-        shipDataModel.environment.wind.true_wind_angle.deg = parse_float(windAngleI.value());
+        shipDataModel.environment.wind.true_wind_angle.deg = norm180_deg(parse_float(windAngleI.value()));
         shipDataModel.environment.wind.true_wind_angle.age = millis();
       }
       if (windSpeed.isUpdated() && windSpeedUnit.isUpdated()) {
