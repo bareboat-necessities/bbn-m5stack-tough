@@ -84,6 +84,11 @@ extern "C" {
     age_t age = 0U;
   } kn_t;
 
+  typedef struct _length_m_t {
+    float m;
+    age_t age = 0U;
+  } length_m_t;
+
   typedef struct _RPM_t {
     float rpm;
     age_t age = 0U;
@@ -123,6 +128,20 @@ extern "C" {
     struct _nav_light bow_red_green;
   } nav_lights_t;
 
+  typedef struct _next_point_t {
+    struct _angle_deg_t bearing_true;
+    struct _angle_deg_t bearing_mag;
+    struct _length_m_t distance;
+    struct _kn_t velocity_made_good;
+  } next_point_t;
+
+  typedef struct _course_rhumbline_t {
+    struct _length_m_t cross_track_error;
+    struct _angle_deg_t bearing_track_true;
+    struct _angle_deg_t bearing_track_mag;
+    struct _next_point_t next_point;
+  } course_rhumbline_t;
+
   typedef struct _navigation_t {
     struct _position_t position;
     struct _attitude_t attitude;
@@ -138,6 +157,7 @@ extern "C" {
     struct _kn_t speed_over_ground;
     struct _kn_t speed_through_water;
     struct _nav_lights_t lights;
+    struct _course_rhumbline_t course_rhumbline;
   } navigation_t;
 
   typedef struct _wind_t {
@@ -156,10 +176,9 @@ extern "C" {
   } _wind_t;
 
   typedef struct _depth_t {
-    float below_keel;
-    float below_transducer;
-    float below_surface;
-    age_t age = 0U;
+    struct _length_m_t below_keel;
+    struct _length_m_t below_transducer;
+    struct _length_m_t below_surface;
   } depth_t;
 
   typedef struct _deg_C_t {
@@ -235,6 +254,8 @@ extern "C" {
     float Hz;
     age_t age = 0U;
   } freq_Hz_t;
+
+  /*
 
   typedef struct _ac_load_t {
     struct _current_amp_t current;
@@ -335,6 +356,7 @@ extern "C" {
     const char *batteries_labels[8];
     struct _battery_t by_idx[8];
   } batteries_t;
+*/
 
   typedef struct _power_n_current_t {
     struct _current_amp_t current;
@@ -366,11 +388,11 @@ extern "C" {
   typedef struct _electrical_t {
     struct _sys_ac_t sys_ac;
     struct _sys_dc_t sys_dc;
-    struct _ac_t ac;
-    struct _dc_t dc;
-    struct _inverters_t inverters;
-    struct _batteries_t batteries;
-    struct _chargers_t chargers;
+    //    struct _ac_t ac;
+    //    struct _dc_t dc;
+    //    struct _inverters_t inverters;
+    //    struct _batteries_t batteries;
+    //    struct _chargers_t chargers;
   } electrical_t;
 
   typedef struct _autopilot_t {
@@ -387,7 +409,7 @@ extern "C" {
   } steering_t;
 
   typedef enum {
-    FLUID_TYPE_NA = -1, // not available
+    FLUID_TYPE_NA = -1,  // not available
     FUEL = 0,
     FRESH_WATER = 1,
     WASTE_WATER = 2,
@@ -398,7 +420,7 @@ extern "C" {
   } fluid_type_e;
 
   typedef struct _tank_t {
-    const char *label;
+    //const char *tank_label;
     fluid_type_e fluid_type = FLUID_TYPE_NA;
     struct _litters_t volume;
     struct _percent_t percent_of_full;
