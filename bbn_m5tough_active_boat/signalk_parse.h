@@ -21,6 +21,11 @@ extern "C" {
             shipDataModel.navigation.rate_of_turn.deg_min = 60 * value.as<float>() * 180 / PI;
             shipDataModel.navigation.rate_of_turn.age = millis();
           }
+        } else if (path == "steering.rudderAngle") {
+          if (value.is<float>()) {
+            shipDataModel.steering.rudder_angle.deg = value.as<float>() * 180.0 / PI;
+            shipDataModel.steering.rudder_angle.age = millis();
+          }
         } else if (path == "environment.depth.belowKeel") {
           if (value.is<float>()) {
             shipDataModel.environment.depth.below_keel.m = value.as<float>();
