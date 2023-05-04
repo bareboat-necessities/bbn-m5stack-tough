@@ -432,6 +432,10 @@ extern "C" {
     struct _tank_t tank[MAX_TANKS];
   } tanks_t;
 
+#define MAX_ENGINES 8
+
+#define MAX_ENGINE_LBL_LENGTH 32
+
   typedef struct _engine_t {
     struct _deg_C_t temp_deg_C;
     struct _RPM_t revolutions_RPM;
@@ -440,11 +444,11 @@ extern "C" {
     struct _deg_C_t coolant_temp;
     struct _hPa_t coolant_pressure;
     struct _voltage_V_t alternator_voltage;
+    const char engine_label[MAX_ENGINE_LBL_LENGTH] = {0};
   } engine_t;
 
   typedef struct _propulsion_t {
-    const char *labels[8];
-    struct _engine_t engines[8];
+    struct _engine_t engines[MAX_ENGINES];
   } propulsion_t;
 
   typedef struct _notification_t {
