@@ -79,7 +79,7 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(gwat_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(gwat_label, "GWAT:\n--" LV_SYMBOL_DEGREES);
+    lv_label_set_text(gwat_label, "GWD:\n--" LV_SYMBOL_DEGREES "t");
   }
 
   static void wind_update_cb() {
@@ -94,8 +94,8 @@ extern "C" {
                         .c_str());
 
     lv_label_set_text(gwat_label,
-                      (String("GWAT:\n")
-                       + (fresh(shipDataModel.environment.wind.ground_wind_dir_true.age) ? String(shipDataModel.environment.wind.ground_wind_dir_true.deg, 0) + LV_SYMBOL_DEGREES : String("--" LV_SYMBOL_DEGREES)))
+                      (String("GWD:\n")
+                       + (fresh(shipDataModel.environment.wind.ground_wind_dir_true.age) ? String(shipDataModel.environment.wind.ground_wind_dir_true.deg, 0) + LV_SYMBOL_DEGREES "t" : String("--" LV_SYMBOL_DEGREES "t")))
                         .c_str());
 
     set_wind_value(indic_wind, fresh(shipDataModel.environment.wind.apparent_wind_angle.age) ? shipDataModel.environment.wind.apparent_wind_angle.deg : 0);
