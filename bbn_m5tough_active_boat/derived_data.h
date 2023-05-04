@@ -21,6 +21,16 @@ extern "C" {
     }
   }
 
+  float norm180_deg(float deg) {
+    if (deg < -180.0) {
+      return 360 + deg;
+    } else if (deg > 180.0) {
+      return deg - 360;
+    } else {
+      return deg;
+    }
+  }
+
   static void sunrise_sunset() {
     if ((!fresh(shipDataModel.environment.sunrise.age, TWO_MINUTES) || !fresh(shipDataModel.environment.sunset.age, TWO_MINUTES))
         && fresh(shipDataModel.navigation.position.lat.age)
@@ -102,7 +112,7 @@ extern "C" {
       float heading_speed_over_ground = shipDataModel.navigation.speed_over_ground.kn * cos((shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.heading_true.deg) * PI / 180.0);
       float head_wind = (-heading_speed_over_ground);
       float aws = shipDataModel.environment.wind.apparent_wind_speed.kn;
-      float awa = shipDataModel.environment.wind.apparent_wind_angle.deg * PI / 180.0;
+      float awa = norm180_deg(shipDataModel.environment.wind.apparent_wind_angle.deg) * PI / 180.0;
       float ground_wind_speed =
         sqrt(aws * aws + head_wind * head_wind + 2.0 * aws * head_wind * cos(awa));
       float ground_wind_angle_rad = acos((aws * cos(awa) + head_wind) / ground_wind_speed);
