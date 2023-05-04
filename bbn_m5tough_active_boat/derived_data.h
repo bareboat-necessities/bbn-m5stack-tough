@@ -11,6 +11,16 @@
 extern "C" {
 #endif
 
+  float norm_deg(float deg) {
+    if (deg < 0.0) {
+      return 360 + deg;
+    } else if (deg > 360.0) {
+      return deg - 360;
+    } else {
+      return deg;
+    }
+  }
+
   static void sunrise_sunset() {
     if ((!fresh(shipDataModel.environment.sunrise.age, TWO_MINUTES) || !fresh(shipDataModel.environment.sunset.age, TWO_MINUTES))
         && fresh(shipDataModel.navigation.position.lat.age)
@@ -33,8 +43,8 @@ extern "C" {
       shipDataModel.environment.nautical_twilight_duration.age = millis();
 
       float rise, set, naut_start, naut_end;
-      int rs = sun_rise_set(year, month, day, lon, lat, &rise, &set); // 1, 0, or -1
-      int naut = nautical_twilight(year, month, day, lon, lat, &naut_start, &naut_end); // 1, 0, or -1
+      int rs = sun_rise_set(year, month, day, lon, lat, &rise, &set);                    // 1, 0, or -1
+      int naut = nautical_twilight(year, month, day, lon, lat, &naut_start, &naut_end);  // 1, 0, or -1
 
       if (rs == 0) {
         shipDataModel.environment.sunrise.hr = rise;
@@ -42,7 +52,7 @@ extern "C" {
         shipDataModel.environment.sunset.hr = set;
         shipDataModel.environment.sunset.age = millis();
       }
-      shipDataModel.environment.no_sunset_flag = rs; //  1 - above, -1 - below, 0 - rises and sets
+      shipDataModel.environment.no_sunset_flag = rs;  //  1 - above, -1 - below, 0 - rises and sets
 
       if (naut == 0) {
         shipDataModel.environment.nautical_twilight_start.hr = naut_start;
@@ -70,15 +80,15 @@ extern "C" {
 
     if (fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO)) {
       if (fresh(shipDataModel.navigation.course_over_ground_true.age)) {
-        shipDataModel.navigation.course_over_ground_mag.deg = shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.mag_var.deg;
+        shipDataModel.navigation.course_over_ground_mag.deg = norm_deg(shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.mag_var.deg);
         shipDataModel.navigation.course_over_ground_mag.age = millis();
       }
       if (fresh(shipDataModel.navigation.heading_mag.age)) {
-        shipDataModel.navigation.heading_true.deg = shipDataModel.navigation.heading_mag.deg + shipDataModel.navigation.mag_var.deg;
+        shipDataModel.navigation.heading_true.deg = norm_deg(shipDataModel.navigation.heading_mag.deg + shipDataModel.navigation.mag_var.deg);
         shipDataModel.navigation.heading_true.age = millis();
       }
       if (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_true.age)) {
-        shipDataModel.navigation.course_rhumbline.bearing_track_mag.deg = shipDataModel.navigation.course_rhumbline.bearing_track_true.deg - shipDataModel.navigation.mag_var.deg;
+        shipDataModel.navigation.course_rhumbline.bearing_track_mag.deg = norm_deg(shipDataModel.navigation.course_rhumbline.bearing_track_true.deg - shipDataModel.navigation.mag_var.deg);
         shipDataModel.navigation.course_rhumbline.bearing_track_mag.age = millis();
       }
     }
@@ -100,10 +110,7 @@ extern "C" {
         ground_wind_angle_rad = (-ground_wind_angle_rad);
       }
       float ground_wind_angle_deg = ground_wind_angle_rad * 180.0 / PI;
-      float ground_wind_dir_true_deg = ground_wind_angle_deg + shipDataModel.navigation.heading_true.deg;
-      if (ground_wind_dir_true_deg < 0.0) {
-        ground_wind_dir_true_deg = 360 + ground_wind_dir_true_deg;
-      }
+      float ground_wind_dir_true_deg = norm_deg(ground_wind_angle_deg + shipDataModel.navigation.heading_true.deg);
       shipDataModel.environment.wind.ground_wind_speed.kn = ground_wind_speed;
       shipDataModel.environment.wind.ground_wind_speed.age = millis();
       shipDataModel.environment.wind.ground_wind_dir_true.deg = ground_wind_dir_true_deg;
@@ -111,7 +118,7 @@ extern "C" {
     }
 
     if (fresh(shipDataModel.environment.wind.ground_wind_dir_true.age) && fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO)) {
-      shipDataModel.environment.wind.ground_wind_dir_mag.age = shipDataModel.environment.wind.ground_wind_dir_true.deg - shipDataModel.navigation.mag_var.deg;
+      shipDataModel.environment.wind.ground_wind_dir_mag.deg = norm_deg(shipDataModel.environment.wind.ground_wind_dir_true.deg - shipDataModel.navigation.mag_var.deg);
       shipDataModel.environment.wind.ground_wind_dir_mag.age = millis();
     }
 
@@ -127,7 +134,7 @@ extern "C" {
     // derive mag variation if unknown
     if (!fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) && abs(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg) > 0.00001) {
       if (fresh(shipDataModel.navigation.heading_true.age) && fresh(shipDataModel.navigation.heading_mag.age)) {
-        shipDataModel.navigation.mag_var.deg = shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg;
+        shipDataModel.navigation.mag_var.deg = norm_deg(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg);
         shipDataModel.navigation.mag_var.age = millis();
       }
     }
