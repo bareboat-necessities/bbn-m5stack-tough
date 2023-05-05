@@ -11,6 +11,9 @@ extern "C" {
   static const char* PROGMEM SK_TCP_HOST_PREF = "signalk_host";
   static const char* PROGMEM SK_TCP_PORT_PREF = "signalk_port";
 
+  static const char* PROGMEM SK_HTTP_HOST_PREF = "sk_http_host";
+  static const char* PROGMEM SK_HTTP_PORT_PREF = "sk_http_port";
+
   static const char* PROGMEM PYP_TCP_HOST_PREF = "pypilot_host";
   static const char* PROGMEM PYP_TCP_PORT_PREF = "pypilot_port";
 
@@ -62,6 +65,17 @@ extern "C" {
       if (n > 0) {
         preferences.putString(SK_TCP_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(SK_TCP_PORT_PREF, MDNS.port(0));
+        saved = true;
+      }
+    }
+
+    String signalk_http_host = preferences.getString(SK_HTTP_HOST_PREF);
+    int signalk_http_port = preferences.getInt(SK_HTTP_PORT_PREF);
+    if (signalk_http_host.length() <= 0 || signalk_http_host == "0.0.0.0" || signalk_http_port <= 0) {
+      int n = mdns_query_svc("signalk-http", "http");
+      if (n > 0) {
+        preferences.putString(SK_HTTP_HOST_PREF, MDNS.IP(0).toString());
+        preferences.putInt(SK_HTTP_PORT_PREF, MDNS.port(0));
         saved = true;
       }
     }
@@ -139,6 +153,7 @@ extern "C" {
     preferences.remove(NMEA0183_TCP_HOST_PREF);
     preferences.remove(PYP_TCP_HOST_PREF);
     preferences.remove(SK_TCP_HOST_PREF);
+    preferences.remove(SK_HTTP_HOST_PREF);
     preferences.remove(MPD_TCP_HOST_PREF);
   }
 
