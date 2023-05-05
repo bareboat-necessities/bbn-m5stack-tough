@@ -1,29 +1,26 @@
-String httpGETRequest(const char* serverName) {
-  HTTPClient http;
+#ifndef NET_HTTP_H
+#define NET_HTTP_H
 
-  // Your IP address with path or Domain name with URL path 
-  http.begin(serverName);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-  // If you need Node-RED/server authentication, insert user and password below
-  //http.setAuthorization("REPLACE_WITH_SERVER_USERNAME", "REPLACE_WITH_SERVER_PASSWORD");
+  String httpGETRequest(const char* url) {
+    HTTPClient http;
+    http.begin(url); // without http:// part
+    int httpResponseCode = http.GET();
 
+    String payload = "{}";
+    if (httpResponseCode > 0) {
+      payload = http.getString();
+    }
 
-  // Send HTTP POST request
-  int httpResponseCode = http.GET();
-
-  String payload = "{}"; 
-
-  if (httpResponseCode>0) {
-    Serial.print("HTTP Response code: ");
-    Serial.println(httpResponseCode);
-    payload = http.getString();
+    http.end();
+    return payload;
   }
-  else {
-    Serial.print("Error code: ");
-    Serial.println(httpResponseCode);
-  }
-  // Free resources
-  http.end();
 
-  return payload;
-}
+#ifdef __cplusplus
+} /*extern "C"*/
+#endif
+
+#endif
