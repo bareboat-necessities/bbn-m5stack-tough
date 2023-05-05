@@ -114,6 +114,7 @@ static bool victron_mqtt_began = false;
 #include "ui_tanks.h"
 #include "ui_weather.h"
 #include "ui_power_victron.h"
+#include "ui_vessel_info.h"
 
 lv_updatable_screen_t* screens[] = {
   
@@ -125,6 +126,7 @@ lv_updatable_screen_t* screens[] = {
   &playerScreen,
   &victronScreen,
   &tanksScreen,
+  &vesselScreen,
   &rebootScreen,
   &aboutScreen,
   &devStatusScreen,
@@ -199,6 +201,7 @@ void setup() {
     init_aboutScreen();
     init_rebootScreen();
     init_devStatusScreen();
+    init_vesselScreen();
   
     init_screen(*screens[page]);
     lv_scr_load(screens[page]->screen);
