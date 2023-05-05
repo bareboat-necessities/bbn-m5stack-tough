@@ -131,6 +131,25 @@ extern "C" {
             shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.kn = value.as<float>() / _GPS_MPS_PER_KNOT;
             shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.age = millis();
           }
+        } else if (path == "navigation.state") {
+          if (value.is<String>()) {
+            String val = value.as<String>();
+            if (val != NULL) {
+              if (val == "moored") {
+                shipDataModel.navigation.state.st = nav_state_e::NS_MOORED;
+                shipDataModel.navigation.state.age = millis();
+              } else if (val == "sailing") {
+                shipDataModel.navigation.state.st = nav_state_e::NS_SAILING;
+                shipDataModel.navigation.state.age = millis();
+              } else if (val == "motoring") {
+                shipDataModel.navigation.state.st = nav_state_e::NS_MOTORING;
+                shipDataModel.navigation.state.age = millis();
+              } else if (val == "anchored") {
+                shipDataModel.navigation.state.st = nav_state_e::NS_ANCHORED;
+                shipDataModel.navigation.state.age = millis();
+              }
+            }
+          }
         } else if (path == "navigation.position") {
           if (value.containsKey("longitude") && value.containsKey("latitude")) {
             if (value["longitude"].is<float>() && value["latitude"].is<float>()) {
