@@ -142,7 +142,16 @@ extern "C" {
     struct _next_point_t next_point;
   } course_rhumbline_t;
 
+  typedef enum {
+    NS_NA = -1,  // not available
+    NS_MOORED = 0,
+    NS_MOTORING = 1,
+    NS_SAILING = 2,
+    NS_ANCHORED = 3,
+  } nav_state_e;
+
   typedef struct _navigation_t {
+    nav_state_e state = nav_state_e::NS_NA;
     struct _position_t position;
     struct _attitude_t attitude;
     struct _angle_deg_t course_over_ground_true;
