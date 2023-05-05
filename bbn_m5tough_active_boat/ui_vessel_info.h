@@ -77,25 +77,25 @@ extern "C" {
 
   static void vessel_update_cb() {
     lv_label_set_text(vessel_name_label,
-                      (String(F("Name:             ")) 
+                      (String(F("Name:              ")) 
                       + (isSet(shipDataModel.vessel.name) ? String(shipDataModel.vessel.name) : String("--"))).c_str());
     lv_label_set_text(vessel_mmsi_label,
-                      (String(F("MMSI:              ")) 
+                      (String(F("MMSI:               ")) 
                       + (isSet(shipDataModel.vessel.mmsi) ? String(shipDataModel.vessel.mmsi) : String("--"))).c_str());
     lv_label_set_text(vessel_nav_status_label,
-                      (String(F("Nav Status:    ")) 
+                      (String(F("Nav Status:     ")) 
                       + (String("--"))).c_str());
     lv_label_set_text(vessel_length_label,
-                      (String(F("Length:           ")) 
+                      (String(F("Length:            ")) 
                       + (shipDataModel.design.length.m > 0 ? String(shipDataModel.design.length.m * _GPS_FEET_PER_METER, 1) + "'" : String("--"))).c_str());
     lv_label_set_text(vessel_draft_label,
-                      (String(F("Draft:               ")) 
+                      (String(F("Draft:                ")) 
                       + (shipDataModel.design.draft.m > 0 ? String(shipDataModel.design.draft.m * _GPS_FEET_PER_METER, 1) + "'" : String("--"))).c_str());
     lv_label_set_text(vessel_beam_label,
-                      (String(F("Beam:              ")) 
+                      (String(F("Beam:               ")) 
                       + (shipDataModel.design.beam.m > 0 ? String(shipDataModel.design.beam.m * _GPS_FEET_PER_METER, 1) + "'" : String("--"))).c_str());
     lv_label_set_text(vessel_air_height_label,
-                      (String(F("Air Height:     ")) 
+                      (String(F("Air Height:      ")) 
                       + (shipDataModel.design.air_height.m > 0 ? String(shipDataModel.design.air_height.m * _GPS_FEET_PER_METER, 1) + "'" : String("--"))).c_str());
   }
 
