@@ -35,6 +35,7 @@
 #include <ESPmDNS.h>
 #include <mdns.h>
 #include <MQTT.h>  // https://github.com/256dpi/arduino-mqtt
+#include <HTTPClient.h>
 #include <Preferences.h>
 
 // config store.
@@ -55,6 +56,7 @@ typedef struct _NetClient {
 #include "hw_sound.h"
 #include "net_ntp_time.h"
 #include "net_mdns.h"
+#include "net_http.h"
 #include "ui_init.h"
 #include "ui_gestures.h"
 #include "ui_theme.h"
