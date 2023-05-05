@@ -150,8 +150,13 @@ extern "C" {
     NS_ANCHORED = 3,
   } nav_state_e;
 
+  typedef struct _nav_state_t {
+    nav_state_e st = nav_state_e::NS_NA;
+    age_t age = 0U;
+  } nav_state_t;
+
   typedef struct _navigation_t {
-    nav_state_e state = nav_state_e::NS_NA;
+    struct _nav_state_t state;
     struct _position_t position;
     struct _attitude_t attitude;
     struct _angle_deg_t course_over_ground_true;
