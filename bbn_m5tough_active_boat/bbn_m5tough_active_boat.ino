@@ -91,6 +91,7 @@ WMM_Tinier myDeclination;
 #include "net_mqtt.h"
 #include "signalk_parse.h"
 #include "net_signalk_tcp.h"
+#include "net_signalk_http.h"
 #include "pypilot_parse.h"
 #include "net_pypilot.h"
 
