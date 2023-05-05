@@ -235,6 +235,10 @@ void setup() {
       victron_mqtt_client_begin(mqttClient, mqttNetClient, victron_mqtt_host.c_str(), victron_mqtt_port);
       victron_mqtt_began = true;
     }
+
+    app.onDelay(400, []() {
+      getVesselInfo();
+    });
   });
 
   SpeakerInit();
