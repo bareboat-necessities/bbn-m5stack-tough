@@ -85,11 +85,12 @@ extern "C" {
   }
 
   static void vessel_update_cb() {
+    getVesselInfo();
     lv_label_set_text(vessel_name_label,
-                      (String(F("Name:              ")) 
+                      (String(F("Name:  ")) 
                       + (isSet(shipDataModel.vessel.name) ? String(shipDataModel.vessel.name) : String("--"))).c_str());
     lv_label_set_text(vessel_mmsi_label,
-                      (String(F("MMSI:               ")) 
+                      (String(F("MMSI:  ")) 
                       + (isSet(shipDataModel.vessel.mmsi) ? String(shipDataModel.vessel.mmsi) : String("--"))).c_str());
     lv_label_set_text(vessel_nav_status_label,
                       (String(F("Nav Status:     ")) 
