@@ -75,7 +75,7 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_nav_status_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vessel_nav_status_label, "Nav Status:");
+    lv_label_set_text(vessel_nav_status_label, "Nav State:");
 
     lv_label_set_text(vessel_name_label,
                       (String(F("Name:    "))
@@ -103,10 +103,27 @@ extern "C" {
                         .c_str());
   }
 
+  String navStateToStr(nav_state_e st) {
+    switch (st) {
+      case nav_state_e::NS_MOORED:
+        return "moored";
+      case nav_state_e::NS_SAILING:
+        return "sailing";
+      case nav_state_e::NS_MOTORING:
+        return "motoring";
+      case nav_state_e::NS_ANCHORED:
+        return "anchored";
+      default:
+        return "--";
+    }
+  }
+
   static void vessel_update_cb() {
     lv_label_set_text(vessel_nav_status_label,
-                      (String(F("Nav Status:     "))
-                       + (String("--")))
+                      (String(F("Nav State:       "))
+                       + (fresh(shipDataModel.navigation.state.age, 600000)
+                            ? (navStateToStr(shipDataModel.navigation.state.st))
+                            : String("--")))
                         .c_str());
   }
 
