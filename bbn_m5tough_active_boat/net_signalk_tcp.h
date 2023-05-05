@@ -18,6 +18,9 @@ extern "C" {
         setKeepAlive(client.c);
         if (client.c.connect(host, port, 200)) {
           signalk_greet(client.c);
+          app.onDelay(2000, []() {
+            getVesselInfo();
+          });
         }
       }
       if (client.lastActivity > 0 && (millis() - client.lastActivity) > 10000) {
