@@ -82,19 +82,15 @@ extern "C" {
     lv_obj_set_style_text_font(vessel_nav_status_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(vessel_nav_status_label, "Nav Status:");
-  }
 
-  static void vessel_update_cb() {
     getVesselInfo();
+
     lv_label_set_text(vessel_name_label,
                       (String(F("Name:  ")) 
                       + (isSet(shipDataModel.vessel.name) ? String(shipDataModel.vessel.name) : String("--"))).c_str());
     lv_label_set_text(vessel_mmsi_label,
                       (String(F("MMSI:  ")) 
                       + (isSet(shipDataModel.vessel.mmsi) ? String(shipDataModel.vessel.mmsi) : String("--"))).c_str());
-    lv_label_set_text(vessel_nav_status_label,
-                      (String(F("Nav Status:     ")) 
-                      + (String("--"))).c_str());
     lv_label_set_text(vessel_length_label,
                       (String(F("Length:            ")) 
                       + (shipDataModel.design.length.m > 0 ? String(shipDataModel.design.length.m * _GPS_FEET_PER_METER, 1) + "'" : String("--"))).c_str());
@@ -107,6 +103,12 @@ extern "C" {
     lv_label_set_text(vessel_air_height_label,
                       (String(F("Air Height:      ")) 
                       + (shipDataModel.design.air_height.m > 0 ? String(shipDataModel.design.air_height.m * _GPS_FEET_PER_METER, 1) + "'" : String("--"))).c_str());
+  }
+
+  static void vessel_update_cb() {
+    lv_label_set_text(vessel_nav_status_label,
+                      (String(F("Nav Status:     ")) 
+                      + (String("--"))).c_str());
   }
 
   void init_vesselScreen() {
