@@ -5,6 +5,22 @@
 extern "C" {
 #endif
 
+  void set_vessel_nav_state(String val) {
+    if (val == "moored") {
+      shipDataModel.navigation.state.st = nav_state_e::NS_MOORED;
+      shipDataModel.navigation.state.age = millis();
+    } else if (val == "sailing") {
+      shipDataModel.navigation.state.st = nav_state_e::NS_SAILING;
+      shipDataModel.navigation.state.age = millis();
+    } else if (val == "motoring") {
+      shipDataModel.navigation.state.st = nav_state_e::NS_MOTORING;
+      shipDataModel.navigation.state.age = millis();
+    } else if (val == "anchored") {
+      shipDataModel.navigation.state.st = nav_state_e::NS_ANCHORED;
+      shipDataModel.navigation.state.age = millis();
+    }
+  }
+
   bool signalk_parse(Stream& stream) {
     bool found = false;
     DynamicJsonDocument doc(4096);
@@ -135,19 +151,7 @@ extern "C" {
           if (value.is<String>()) {
             String val = value.as<String>();
             if (val != NULL) {
-              if (val == "moored") {
-                shipDataModel.navigation.state.st = nav_state_e::NS_MOORED;
-                shipDataModel.navigation.state.age = millis();
-              } else if (val == "sailing") {
-                shipDataModel.navigation.state.st = nav_state_e::NS_SAILING;
-                shipDataModel.navigation.state.age = millis();
-              } else if (val == "motoring") {
-                shipDataModel.navigation.state.st = nav_state_e::NS_MOTORING;
-                shipDataModel.navigation.state.age = millis();
-              } else if (val == "anchored") {
-                shipDataModel.navigation.state.st = nav_state_e::NS_ANCHORED;
-                shipDataModel.navigation.state.age = millis();
-              }
+              set_vessel_nav_state(val);
             }
           }
         } else if (path == "navigation.position") {
@@ -155,7 +159,7 @@ extern "C" {
             if (value["longitude"].is<float>() && value["latitude"].is<float>()) {
               shipDataModel.navigation.position.lat.deg = value["latitude"].as<float>();  // SignalK sends degrees for it
               shipDataModel.navigation.position.lat.age = millis();
-              shipDataModel.navigation.position.lon.deg = value["longitude"].as<float>(); // SignalK sends degrees for it
+              shipDataModel.navigation.position.lon.deg = value["longitude"].as<float>();  // SignalK sends degrees for it
               shipDataModel.navigation.position.lon.age = millis();
             }
           }
@@ -165,8 +169,8 @@ extern "C" {
           if (idx > 0) {
             engineID = engineID.substring(0, idx);
             if (engineID != NULL) {
-              engine_t *eng = lookup_engine(engineID.c_str());
-              if (eng != NULL) {                
+              engine_t* eng = lookup_engine(engineID.c_str());
+              if (eng != NULL) {
                 if (path == (String("propulsion.") + engineID + ".revolutions")) {
                   if (value.is<float>()) {
                     eng->revolutions_RPM.rpm = value.as<float>() * 60;
