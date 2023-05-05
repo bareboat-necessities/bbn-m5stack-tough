@@ -14,6 +14,10 @@ extern "C" {
     return millis() - age < limit && age != 0;
   }
 
+  bool isSet(char *str) {
+    return str != NULL && str[0] != 0;
+  }
+
   engine_t *lookup_engine(const char *engineID) {
     int last = -1;
     for (int i = 0; i < MAX_ENGINES; i++) {
