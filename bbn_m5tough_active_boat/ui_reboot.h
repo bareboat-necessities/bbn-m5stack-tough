@@ -34,6 +34,7 @@ extern "C" {
     lv_label_set_text(label2, LV_SYMBOL_POWER);
     lv_obj_center(label2);
     lv_obj_add_event_cb(btn2, btnPowerOff_event, LV_EVENT_LONG_PRESSED, NULL);
+    lv_obj_set_style_bg_color(btn2, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
 
     lv_obj_t *btn3 = lv_btn_create(parent);
     lv_obj_t *label3 = lv_label_create(btn3);
