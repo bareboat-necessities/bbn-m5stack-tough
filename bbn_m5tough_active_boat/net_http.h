@@ -7,14 +7,13 @@ extern "C" {
 
   String httpGETRequest(const char* url) {
     HTTPClient http;
-    http.begin(url); // without http:// part
+    http.begin(url);
     int httpResponseCode = http.GET();
 
-    String payload = "{}";
+    String payload = "";
     if (httpResponseCode > 0) {
       payload = http.getString();
     }
-
     http.end();
     return payload;
   }
