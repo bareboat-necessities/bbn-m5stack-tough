@@ -40,6 +40,11 @@ extern "C" {
         resp.replace("\"", "");
         strncpy(shipDataModel.vessel.mmsi, resp.c_str(), sizeof(shipDataModel.vessel.mmsi) - 1);
       }
+      resp = httpGETRequest((api + "vessels/self/navigation/state/value/").c_str());
+      if (resp.length() > 0) {
+        resp.replace("\"", "");
+        set_vessel_nav_state(resp);
+      }
     }
   }
 
