@@ -12,16 +12,32 @@ extern "C" {
       shipDataModel.design.beam.m = resp.toFloat();
       shipDataModel.design.beam.age = millis();
     }
+    resp = httpGETRequest((api + "vessels/self/design/airHeight/value/").c_str());
+    if (resp.length() > 0) {
+      shipDataModel.design.air_height.m = resp.toFloat();
+      shipDataModel.design.air_height.age = millis();
+    }
+    resp = httpGETRequest((api + "vessels/self/design/draft/value/maximum").c_str());
+    if (resp.length() > 0) {
+      shipDataModel.design.draft.m = resp.toFloat();
+      shipDataModel.design.draft.age = millis();
+    }
+    resp = httpGETRequest((api + "vessels/self/design/length/value/overall").c_str());
+    if (resp.length() > 0) {
+      shipDataModel.design.length.m = resp.toFloat();
+      shipDataModel.design.length.age = millis();
+    }
     resp = httpGETRequest((api + "vessels/self/name/").c_str());
     if (resp.length() > 0) {
+      resp.replace("\"", "");
       strncpy(shipDataModel.vessel.name, resp.c_str(), sizeof(shipDataModel.vessel.name) - 1);
     }
     resp = httpGETRequest((api + "vessels/self/mmsi/").c_str());
     if (resp.length() > 0) {
+      resp.replace("\"", "");
       strncpy(shipDataModel.vessel.mmsi, resp.c_str(), sizeof(shipDataModel.vessel.mmsi) - 1);
     }
   }
-
 
 #ifdef __cplusplus
 } /*extern "C"*/
