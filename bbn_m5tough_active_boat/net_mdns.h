@@ -72,7 +72,7 @@ extern "C" {
     String signalk_http_host = preferences.getString(SK_HTTP_HOST_PREF);
     int signalk_http_port = preferences.getInt(SK_HTTP_PORT_PREF);
     if (signalk_http_host.length() <= 0 || signalk_http_host == "0.0.0.0" || signalk_http_port <= 0) {
-      int n = mdns_query_svc("signalk-http", "http");
+      int n = mdns_query_svc("signalk-http", "tcp");
       if (n > 0) {
         preferences.putString(SK_HTTP_HOST_PREF, MDNS.IP(0).toString());
         preferences.putInt(SK_HTTP_PORT_PREF, MDNS.port(0));
