@@ -5,6 +5,15 @@
 extern "C" {
 #endif
 
+  /*
+    TODO: Use Rest Api 
+
+    HTTP GET http://lysmarine:3000/signalk/v1/api/vessels/self/design/draft/value
+
+    and so on
+    
+  */
+
   lv_updatable_screen_t vesselScreen;
 
   static lv_obj_t *vessel_name_label;
