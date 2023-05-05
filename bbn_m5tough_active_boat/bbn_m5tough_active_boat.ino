@@ -90,8 +90,8 @@ WMM_Tinier myDeclination;
 #include "net_nmea0183_tcp.h"
 #include "net_mqtt.h"
 #include "signalk_parse.h"
-#include "net_signalk_tcp.h"
 #include "net_signalk_http.h"
+#include "net_signalk_tcp.h"
 #include "pypilot_parse.h"
 #include "net_pypilot.h"
 
