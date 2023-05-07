@@ -31,16 +31,6 @@ extern "C" {
 
   static victron_mqtt_context_t victronCtx;
 
-  bool starts_with(const char* str, const char* pre) {
-    return strncmp(pre, str, strlen(pre)) == 0;
-  }
-
-  const char* step_into_path(const char* path) {
-    if (path == NULL) return NULL;
-    const char* s = strchr(path, '/');
-    return s != NULL ? ++s : NULL;
-  }
-
   static void victron_mqtt_on_message(String& topic, String& payload) {
     if (topic.endsWith("/system/0/Serial") && victronCtx.needs_id) {
       String str = topic.substring(2);
