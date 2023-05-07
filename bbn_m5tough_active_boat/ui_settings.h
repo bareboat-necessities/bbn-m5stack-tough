@@ -1,3 +1,4 @@
+#include "font/lv_symbol_def.h"
 #ifndef UI_SETTINGS_H
 #define UI_SETTINGS_H
 
@@ -17,6 +18,19 @@ extern "C" {
     set_lcd_backlight_voltage((int)lv_slider_get_value(slider));
   }
 
+  static void btnRotateScreen_event(lv_event_t *event) {
+    preferences.end();
+    preferences.begin("scr-cfg", false);
+    bool rotate = preferences.getBool("ROTATE");
+    if (rotate) {
+      preferences.remove("ROTATE");
+    } else {
+      preferences.putBool("ROTATE", true);
+    }
+    preferences.end();
+    ESP.restart();
+  }
+
   void lv_lcd_settings(lv_obj_t *parent) {
     lcd_conf_obj = lv_obj_create(parent);
     lv_obj_center(lcd_conf_obj);
@@ -32,6 +46,13 @@ extern "C" {
 
     lv_obj_align_to(lcd_slider_label, slider, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
     lv_obj_add_flag(lcd_conf_obj, LV_OBJ_FLAG_HIDDEN);
+
+    lv_obj_t *btn_rotate = lv_btn_create(lcd_conf_obj);
+    lv_obj_t *label_rotate = lv_label_create(btn_rotate);
+    lv_obj_align(btn_rotate, LV_ALIGN_CENTER, 0, 60);
+    lv_label_set_text(label_rotate, LV_SYMBOL_LOOP);
+    lv_obj_center(label_rotate);
+    lv_obj_add_event_cb(btn_rotate, btnRotateScreen_event, LV_EVENT_LONG_PRESSED, NULL);
   }
 
   static void edit_lcd_conf_evt_handler(lv_event_t *e) {
