@@ -18,6 +18,22 @@ extern "C" {
     return str != NULL && str[0] != 0;
   }
 
+  bool starts_with(const char* str, const char* pre) {
+    return strncmp(pre, str, strlen(pre)) == 0;
+  }
+
+  const char* step_into_path(const char* path) {
+    if (path == NULL) return NULL;
+    const char* s = strchr(path, '/');
+    return s != NULL ? ++s : NULL;
+  }
+
+  const char* step_into_token(const char* path) {
+    if (path == NULL) return NULL;
+    const char* s = strchr(path, '.');
+    return s != NULL ? ++s : NULL;
+  }
+
   engine_t *lookup_engine(const char *engineID) {
     int last = -1;
     for (int i = 0; i < MAX_ENGINES; i++) {
