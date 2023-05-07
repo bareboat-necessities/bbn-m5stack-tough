@@ -18,6 +18,15 @@ extern "C" {
 
   void tft_lv_initialization() {
     M5.begin();
+
+    preferences.begin("scr-cfg", false);
+    bool rotate = preferences.getBool("ROTATE");
+    if (rotate) {
+      M5.Lcd.setRotation(3);
+      //disp_drv.rotated = LV_DISP_ROT_180;
+    }
+    preferences.end();
+
     lv_init();
 
     static lv_color_t *buf1 = (lv_color_t *)heap_caps_malloc((LV_HOR_RES_MAX * LV_VER_RES_MAX * sizeof(lv_color_t)), MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM);
