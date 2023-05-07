@@ -55,19 +55,19 @@ extern "C" {
     lv_label_set_text(dbt_label,
                       ("DBT (ft):          "
                        + (fresh(shipDataModel.environment.depth.below_transducer.age)
-                            ? String(shipDataModel.environment.depth.below_transducer.m * _GPS_FEET_PER_METER, 2)
+                            ? String(shipDataModel.environment.depth.below_transducer.m * _GPS_FEET_PER_METER, 1)
                             : String("--")))
                         .c_str());
     lv_label_set_text(dbk_label,
                       ("DBK (ft):          "
                        + (fresh(shipDataModel.environment.depth.below_keel.age)
-                            ? String(shipDataModel.environment.depth.below_keel.m * _GPS_FEET_PER_METER, 2)
+                            ? String(shipDataModel.environment.depth.below_keel.m * _GPS_FEET_PER_METER, 1)
                             : String("--")))
                         .c_str());
     lv_label_set_text(dbs_label,
                       ("DBS (ft):          "
                        + (fresh(shipDataModel.environment.depth.below_surface.age)
-                            ? String(shipDataModel.environment.depth.below_surface.m * _GPS_FEET_PER_METER, 2)
+                            ? String(shipDataModel.environment.depth.below_surface.m * _GPS_FEET_PER_METER, 1)
                             : String("--")))
                         .c_str());
   }
