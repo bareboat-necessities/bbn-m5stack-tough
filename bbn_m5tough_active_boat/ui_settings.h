@@ -51,12 +51,12 @@ extern "C" {
     lv_obj_align(btn_rotate, LV_ALIGN_CENTER, 0, 60);
     lv_label_set_text(label_rotate, LV_SYMBOL_LOOP);
     lv_obj_center(label_rotate);
-    lv_obj_add_event_cb(btn_rotate, btnRotateScreen_event, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_event_cb(btn_rotate, btnRotateScreen_event, LV_EVENT_ALL, NULL);
   }
 
   static void edit_lcd_conf_evt_handler(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
-    if (code == LV_EVENT_CLICKED) {
+    if (code == LV_EVENT_CLICKED || code == LV_EVENT_LONG_PRESSED) {
       lv_obj_clear_flag(lcd_conf_obj, LV_OBJ_FLAG_HIDDEN);
     }
   }
