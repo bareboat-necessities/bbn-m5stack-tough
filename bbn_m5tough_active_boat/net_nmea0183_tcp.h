@@ -21,7 +21,7 @@ extern "C" {
 
   void nmea0183_subscribe(NetClient& client) {
     app.onAvailable(client.c, [&client]() {
-      while (client.c.connected() && client.c.available() > 128 /* Very important for performance and responsiveness */) {
+      while (client.c.connected() && client.c.available() > 81 /* Very important for performance and responsiveness */) {
         bool found = nmea0183_parse(client.c);
         if (found) {
           client.lastActivity = millis();
