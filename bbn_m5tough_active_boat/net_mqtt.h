@@ -129,7 +129,7 @@ extern "C" {
 
   void victron_mqtt_client_begin(MQTTClient& client, WiFiClient& net, const char* host, int port) {
     client.setKeepAlive(10);
-    client.setTimeout(400);
+    client.setTimeout(150);
     setKeepAlive(net);
     client.begin(host, port, net);
     victron_mqtt_client_connect(client);
