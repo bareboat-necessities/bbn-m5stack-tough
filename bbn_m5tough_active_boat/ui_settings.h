@@ -17,17 +17,20 @@ extern "C" {
     set_lcd_backlight_voltage((int)lv_slider_get_value(slider));
   }
 
-  static void btnRotateScreen_event(lv_event_t *event) {
-    preferences.end();
-    preferences.begin("scr-cfg", false);
-    bool rotate = preferences.getBool("ROTATE");
-    if (rotate) {
-      preferences.remove("ROTATE");
-    } else {
-      preferences.putBool("ROTATE", true);
+  static void btnRotateScreen_event(lv_event_t *e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    if (code == LV_EVENT_CLICKED) {
+      preferences.end();
+      preferences.begin("scr-cfg", false);
+      bool rotate = preferences.getBool("ROTATE");
+      if (rotate) {
+        preferences.remove("ROTATE");
+      } else {
+        preferences.putBool("ROTATE", true);
+      }
+      preferences.end();
+      ESP.restart();
     }
-    preferences.end();
-    ESP.restart();
   }
 
   void lv_lcd_settings(lv_obj_t *parent) {
@@ -41,7 +44,7 @@ extern "C" {
     lcd_slider_label = lv_label_create(lcd_conf_obj);
     lv_slider_set_value(slider, 60, LV_ANIM_OFF);
     set_lcd_backlight_voltage((int)lv_slider_get_value(slider));
-    lv_label_set_text(lcd_slider_label, "60%");    
+    lv_label_set_text(lcd_slider_label, "60%");
 
     lv_obj_align_to(lcd_slider_label, slider, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
     lv_obj_add_flag(lcd_conf_obj, LV_OBJ_FLAG_HIDDEN);
