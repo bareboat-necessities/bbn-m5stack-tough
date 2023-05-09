@@ -110,12 +110,12 @@ extern "C" {
         && fresh(shipDataModel.environment.wind.apparent_wind_speed.age)
         && fresh(shipDataModel.environment.wind.apparent_wind_angle.age)) {
       float heading_speed_over_ground = shipDataModel.navigation.speed_over_ground.kn * cos((shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.heading_true.deg) * PI / 180.0);
-      float head_wind = (-heading_speed_over_ground);
+      float head_wind = abs(-heading_speed_over_ground);
       float aws = shipDataModel.environment.wind.apparent_wind_speed.kn;
       float awa = norm180_deg(shipDataModel.environment.wind.apparent_wind_angle.deg) * PI / 180.0;
       float ground_wind_speed =
-        sqrt(abs(aws * aws + head_wind * head_wind + 2.0 * aws * head_wind * cos(awa)));
-      float r = (aws * cos(awa) + head_wind) / ground_wind_speed;
+        sqrt(abs(aws * aws + head_wind * head_wind - 2.0 * aws * head_wind * cos(awa)));
+      float r = (aws * cos(awa) - head_wind) / ground_wind_speed;
       if (r >= -1 && r <= 1) {
         if (ground_wind_speed > 0.01) {
           float ground_wind_angle_rad = acos(r);
