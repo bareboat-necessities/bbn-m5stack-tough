@@ -90,8 +90,8 @@ extern "C" {
     lv_obj_set_style_pad_all(eng_temp_meter, 0, LV_PART_MAIN);
 
     lv_meter_scale_t *eng_temp_scale = lv_meter_add_scale(eng_temp_meter);
-    lv_meter_set_scale_ticks(eng_temp_meter, eng_temp_scale, 10, 2, 7, lv_palette_main(LV_PALETTE_GREY));
-    lv_meter_set_scale_major_ticks(eng_temp_meter, eng_temp_scale, 3, 2, 7, lv_palette_main(LV_PALETTE_GREY), 10);
+    lv_meter_set_scale_ticks(eng_temp_meter, eng_temp_scale, 13, 2, 7, lv_palette_main(LV_PALETTE_GREY));
+    lv_meter_set_scale_major_ticks(eng_temp_meter, eng_temp_scale, 4, 2, 7, lv_palette_main(LV_PALETTE_GREY), 10);
     lv_meter_set_scale_range(eng_temp_meter, eng_temp_scale, 0, 120, 270, 90);
 
     eng_temp_indic = lv_meter_add_arc(eng_temp_meter, eng_temp_scale, 3, lv_palette_main(LV_PALETTE_ORANGE), 1);
