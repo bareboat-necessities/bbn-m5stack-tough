@@ -70,14 +70,13 @@ extern "C" {
     lv_obj_remove_style(oil_press_meter, NULL, LV_PART_INDICATOR);
     lv_obj_set_style_pad_all(oil_press_meter, 0, LV_PART_MAIN);
 
-    lv_meter_scale_t * oil_press_scale = lv_meter_add_scale(oil_press_meter);
+    lv_meter_scale_t *oil_press_scale = lv_meter_add_scale(oil_press_meter);
     lv_meter_set_scale_ticks(oil_press_meter, oil_press_scale, 10, 2, 7, lv_palette_main(LV_PALETTE_GREY));
     lv_meter_set_scale_major_ticks(oil_press_meter, oil_press_scale, 3, 2, 7, lv_palette_main(LV_PALETTE_GREY), 10);
     lv_meter_set_scale_range(oil_press_meter, oil_press_scale, 0, 90, 270, 90);
 
     oil_press_indic = lv_meter_add_arc(oil_press_meter, oil_press_scale, 3, lv_palette_main(LV_PALETTE_BLUE), 1);
     lv_meter_set_indicator_start_value(oil_press_meter, oil_press_indic, 0);
-    lv_meter_set_indicator_end_value(oil_press_meter, oil_press_indic, 50); // TODO:
 
     lv_obj_t *oil_press_label = lv_label_create(parent);
     lv_obj_align(oil_press_label, LV_ALIGN_BOTTOM_LEFT, 80, -2);
@@ -90,14 +89,13 @@ extern "C" {
     lv_obj_remove_style(eng_temp_meter, NULL, LV_PART_INDICATOR);
     lv_obj_set_style_pad_all(eng_temp_meter, 0, LV_PART_MAIN);
 
-    lv_meter_scale_t * eng_temp_scale = lv_meter_add_scale(eng_temp_meter);
+    lv_meter_scale_t *eng_temp_scale = lv_meter_add_scale(eng_temp_meter);
     lv_meter_set_scale_ticks(eng_temp_meter, eng_temp_scale, 10, 2, 7, lv_palette_main(LV_PALETTE_GREY));
     lv_meter_set_scale_major_ticks(eng_temp_meter, eng_temp_scale, 3, 2, 7, lv_palette_main(LV_PALETTE_GREY), 10);
     lv_meter_set_scale_range(eng_temp_meter, eng_temp_scale, 0, 120, 270, 90);
 
     eng_temp_indic = lv_meter_add_arc(eng_temp_meter, eng_temp_scale, 3, lv_palette_main(LV_PALETTE_ORANGE), 1);
     lv_meter_set_indicator_start_value(eng_temp_meter, eng_temp_indic, 0);
-    lv_meter_set_indicator_end_value(eng_temp_meter, eng_temp_indic, 50); // TODO:
 
     lv_obj_t *eng_temp_label = lv_label_create(parent);
     lv_obj_align(eng_temp_label, LV_ALIGN_BOTTOM_RIGHT, -80, -2);
@@ -109,6 +107,14 @@ extern "C" {
                          (fresh(shipDataModel.propulsion.engines[0].revolutions_RPM.age)
                             ? shipDataModel.propulsion.engines[0].revolutions_RPM.rpm / 100
                             : 0));
+    lv_meter_set_indicator_end_value(oil_press_meter, oil_press_indic,
+                                     (fresh(shipDataModel.propulsion.engines[0].oil_pressure.age)
+                                        ? shipDataModel.propulsion.engines[0].oil_pressure.hPa * 0.0145037738 /* to psi */
+                                        : 0)); 
+    lv_meter_set_indicator_end_value(eng_temp_meter, eng_temp_indic,
+                                     (fresh(shipDataModel.propulsion.engines[0].temp_deg_C.age, 20000)
+                                        ? shipDataModel.propulsion.engines[0].temp_deg_C.deg_C
+                                        : 0));
   }
 
   void init_engineScreen() {
