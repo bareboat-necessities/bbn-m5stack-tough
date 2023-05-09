@@ -114,26 +114,29 @@ extern "C" {
       float aws = shipDataModel.environment.wind.apparent_wind_speed.kn;
       float awa = norm180_deg(shipDataModel.environment.wind.apparent_wind_angle.deg) * PI / 180.0;
       float ground_wind_speed =
-        sqrt(aws * aws + head_wind * head_wind + 2.0 * aws * head_wind * cos(awa));
-      float ground_wind_angle_rad = acos((aws * cos(awa) + head_wind) / ground_wind_speed);
-      if (awa < 0 || awa > PI) {  // port side
-        ground_wind_angle_rad = (-ground_wind_angle_rad);
+        sqrt(abs(aws * aws + head_wind * head_wind + 2.0 * aws * head_wind * cos(awa)));
+      float r = (aws * cos(awa) + head_wind) / ground_wind_speed;
+      if (r >= -1 && r <= 1) {
+        if (ground_wind_speed > 0.01) {
+          float ground_wind_angle_rad = acos(r);
+          if (awa < 0 || awa > PI) {  // port side
+            ground_wind_angle_rad = (-ground_wind_angle_rad);
+          }
+          float ground_wind_angle_deg = ground_wind_angle_rad * 180.0 / PI;
+          float ground_wind_dir_true_deg = norm_deg(ground_wind_angle_deg + shipDataModel.navigation.heading_true.deg);
+          shipDataModel.environment.wind.ground_wind_angle.deg = norm180_deg(ground_wind_angle_deg);
+          shipDataModel.environment.wind.ground_wind_angle.age = millis();
+          shipDataModel.environment.wind.ground_wind_dir_true.deg = ground_wind_dir_true_deg;
+          shipDataModel.environment.wind.ground_wind_dir_true.age = millis();
+        }
+        shipDataModel.environment.wind.ground_wind_speed.kn = ground_wind_speed;
+        shipDataModel.environment.wind.ground_wind_speed.age = millis();
       }
-      float ground_wind_angle_deg = ground_wind_angle_rad * 180.0 / PI;
-      float ground_wind_dir_true_deg = norm_deg(ground_wind_angle_deg + shipDataModel.navigation.heading_true.deg);
-      shipDataModel.environment.wind.ground_wind_speed.kn = ground_wind_speed;
-      shipDataModel.environment.wind.ground_wind_speed.age = millis();
-      shipDataModel.environment.wind.ground_wind_dir_true.deg = ground_wind_dir_true_deg;
-      shipDataModel.environment.wind.ground_wind_dir_true.age = millis();
     }
 
     if (fresh(shipDataModel.environment.wind.ground_wind_dir_true.age) && fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO)) {
       shipDataModel.environment.wind.ground_wind_dir_mag.deg = norm_deg(shipDataModel.environment.wind.ground_wind_dir_true.deg - shipDataModel.navigation.mag_var.deg);
       shipDataModel.environment.wind.ground_wind_dir_mag.age = millis();
-      if (fresh(shipDataModel.navigation.heading_true.age)) {
-        shipDataModel.environment.wind.ground_wind_angle.deg = norm180_deg(shipDataModel.environment.wind.ground_wind_dir_true.deg - shipDataModel.navigation.heading_true.deg);
-        shipDataModel.environment.wind.ground_wind_angle.age = millis();
-      }
     }
 
     // derive leeway
