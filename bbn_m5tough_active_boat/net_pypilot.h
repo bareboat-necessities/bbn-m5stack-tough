@@ -88,7 +88,7 @@ extern "C" {
 
   void pypilot_subscribe(NetClient& client) {
     app.onAvailable(client.c, [&client]() {
-      while (client.c.connected() && client.c.available() > 8 /* Very important for performance and responsiveness */) {
+      while (client.c.connected() && client.c.available() > 12 /* Very important for performance and responsiveness */) {
         bool found = pypilot_parse(client.c);
         if (found) {
           client.lastActivity = millis();
