@@ -79,6 +79,10 @@ extern "C" {
     lv_meter_set_indicator_start_value(oil_press_meter, oil_press_indic, 0);
     lv_meter_set_indicator_end_value(oil_press_meter, oil_press_indic, 50); // TODO:
 
+    lv_obj_t *oil_press_label = lv_label_create(parent);
+    lv_obj_align(oil_press_label, LV_ALIGN_BOTTOM_LEFT, 80, -2);
+    lv_label_set_text(oil_press_label, "psi");
+
     eng_temp_meter = lv_meter_create(parent);
     lv_obj_align(eng_temp_meter, LV_ALIGN_CENTER, 119, 79);
     lv_obj_set_size(eng_temp_meter, 75, 75);
@@ -94,6 +98,10 @@ extern "C" {
     eng_temp_indic = lv_meter_add_arc(eng_temp_meter, eng_temp_scale, 3, lv_palette_main(LV_PALETTE_ORANGE), 1);
     lv_meter_set_indicator_start_value(eng_temp_meter, eng_temp_indic, 0);
     lv_meter_set_indicator_end_value(eng_temp_meter, eng_temp_indic, 50); // TODO:
+
+    lv_obj_t *eng_temp_label = lv_label_create(parent);
+    lv_obj_align(eng_temp_label, LV_ALIGN_BOTTOM_RIGHT, -80, -2);
+    lv_label_set_text(eng_temp_label, LV_SYMBOL_DEGREES "C");
   }
 
   static void engine_update_cb() {
