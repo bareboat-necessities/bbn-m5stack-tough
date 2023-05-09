@@ -10,8 +10,9 @@ extern "C" {
   static lv_obj_t *wind_display;
   static lv_meter_indicator_t *indic_wind;
   static lv_obj_t *wind_label;
+  static lv_obj_t *spd_w_label;
   static lv_obj_t *gws_label;
-  static lv_obj_t *gwat_label;
+  static lv_obj_t *gwdt_label;
 
   static void set_wind_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(wind_display, (lv_meter_indicator_t *)indic, v);
@@ -61,39 +62,52 @@ extern "C" {
     indic_wind = lv_meter_add_needle_line(wind_display, scale, 6, lv_palette_main(LV_PALETTE_GREY), -10);
 
     wind_label = lv_label_create(parent);
-    lv_obj_align(wind_label, LV_ALIGN_TOP_LEFT, 5, 3);
+    lv_obj_align(wind_label, LV_ALIGN_TOP_LEFT, 5, 2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(wind_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(wind_label, "AWS:\n--");
+    lv_label_set_text(wind_label, "AWS:  --\nkt");
+
+    spd_w_label = lv_label_create(parent);
+    lv_obj_align(spd_w_label, LV_ALIGN_TOP_RIGHT, -5, 2);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(spd_w_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(spd_w_label, "SPD:  --\n      kt");
 
     gws_label = lv_label_create(parent);
-    lv_obj_align(gws_label, LV_ALIGN_BOTTOM_LEFT, 5, -3);
+    lv_obj_align(gws_label, LV_ALIGN_BOTTOM_LEFT, 5, -2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(gws_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(gws_label, "GWS:\n-- kt");
 
-    gwat_label = lv_label_create(parent);
-    lv_obj_align(gwat_label, LV_ALIGN_BOTTOM_RIGHT, -5, -3);
+    gwdt_label = lv_label_create(parent);
+    lv_obj_align(gwdt_label, LV_ALIGN_BOTTOM_RIGHT, -5, -2);
 #if LV_FONT_MONTSERRAT_20
-    lv_obj_set_style_text_font(gwat_label, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(gwdt_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(gwat_label, "GWD:\n--" LV_SYMBOL_DEGREES "t");
+    lv_label_set_text(gwdt_label, "GWD:\n--" LV_SYMBOL_DEGREES "t");
   }
 
   static void wind_update_cb() {
     lv_label_set_text(wind_label,
                       (String("AWS:   ")
-                       + (fresh(shipDataModel.environment.wind.apparent_wind_speed.age) ? String(shipDataModel.environment.wind.apparent_wind_speed.kn, 1) + "\n(kt)" : String("--\n(kt)")))
+                       + (fresh(shipDataModel.environment.wind.apparent_wind_speed.age) ? String(shipDataModel.environment.wind.apparent_wind_speed.kn, 1) + "\nkt" : String("--\nkt")))
                         .c_str());
+
+    lv_label_set_text(spd_w_label,
+                      (String("SPD:  ")
+                       + (fresh(shipDataModel.navigation.speed_through_water.age) ? String(shipDataModel.navigation.speed_through_water.kn, 1) + "\n     kt" : String("--\n     kt")))
+                        .c_str());
+
 
     lv_label_set_text(gws_label,
                       (String("GWS:\n")
                        + (fresh(shipDataModel.environment.wind.ground_wind_speed.age) ? String(shipDataModel.environment.wind.ground_wind_speed.kn, 1) + " kt" : String("-- kt")))
                         .c_str());
 
-    lv_label_set_text(gwat_label,
+    lv_label_set_text(gwdt_label,
                       (String("GWD:\n")
                        + (fresh(shipDataModel.environment.wind.ground_wind_dir_true.age) ? String(shipDataModel.environment.wind.ground_wind_dir_true.deg, 0) + LV_SYMBOL_DEGREES "t" : String("--" LV_SYMBOL_DEGREES "t")))
                         .c_str());
