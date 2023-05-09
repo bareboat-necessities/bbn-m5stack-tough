@@ -34,8 +34,17 @@ extern "C" {
     lv_label_set_recolor(main_label, true);
     lv_label_set_text(main_label, "VESSEL  #0080ff " LV_SYMBOL_LIST " #");
 
+    lv_obj_t *vessel_name_l = lv_label_create(parent);
+    lv_obj_align(vessel_name_l, LV_ALIGN_TOP_LEFT, 10, 30);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(vessel_name_l, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(vessel_name_l, "Name: ");
+
     vessel_name_label = lv_label_create(parent);
-    lv_obj_align(vessel_name_label, LV_ALIGN_TOP_LEFT, 10, 30);
+    lv_obj_align(vessel_name_label, LV_ALIGN_TOP_LEFT, 100, 30);
+    lv_label_set_long_mode(vessel_name_label, LV_LABEL_LONG_SCROLL_CIRCULAR);     /*Circular scroll*/
+    lv_obj_set_width(vessel_name_label, 180);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_name_label, &lv_font_montserrat_20, 0);
 #endif
@@ -78,8 +87,7 @@ extern "C" {
     lv_label_set_text(vessel_nav_status_label, "Nav State:");
 
     lv_label_set_text(vessel_name_label,
-                      (String(F("Name:    "))
-                       + (isSet(shipDataModel.vessel.name) ? String(shipDataModel.vessel.name) : String("--")))
+                      ((isSet(shipDataModel.vessel.name) ? String(shipDataModel.vessel.name) : String("--")))
                         .c_str());
     lv_label_set_text(vessel_mmsi_label,
                       (String(F("MMSI:     "))
