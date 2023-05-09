@@ -89,7 +89,7 @@ extern "C" {
 
   static void edit_net_conf_evt_handler(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
-    if (code == LV_EVENT_CLICKED) {
+    if (code == LV_EVENT_CLICKED || code == LV_EVENT_LONG_PRESSED) {
       lv_obj_clear_flag(data_connections_list, LV_OBJ_FLAG_HIDDEN);
     }
   }
