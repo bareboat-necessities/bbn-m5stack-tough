@@ -9,6 +9,7 @@ extern "C" {
 
   static lv_obj_t *wind_display;
   static lv_meter_indicator_t *indic_wind;
+  static lv_meter_indicator_t *indic_gwa_wind;
   static lv_obj_t *wind_label;
   static lv_obj_t *spd_w_label;
   static lv_obj_t *gws_label;
@@ -60,6 +61,9 @@ extern "C" {
 
     /*Add a needle line indicator*/
     indic_wind = lv_meter_add_needle_line(wind_display, scale, 6, lv_palette_main(LV_PALETTE_GREY), -10);
+
+    /*Add a ground wind angle needle line indicator*/
+    indic_gwa_wind = lv_meter_add_needle_line(wind_display, scale, 6, lv_palette_main(LV_PALETTE_ORANGE), -48);
 
     wind_label = lv_label_create(parent);
     lv_obj_align(wind_label, LV_ALIGN_TOP_LEFT, 5, 2);
@@ -113,6 +117,7 @@ extern "C" {
                         .c_str());
 
     set_wind_value(indic_wind, fresh(shipDataModel.environment.wind.apparent_wind_angle.age) ? shipDataModel.environment.wind.apparent_wind_angle.deg : 0);
+    set_wind_value(indic_gwa_wind, fresh(shipDataModel.environment.wind.ground_wind_angle.age) ? shipDataModel.environment.wind.ground_wind_angle.deg : 0);
   }
 
   void init_windScreen() {
