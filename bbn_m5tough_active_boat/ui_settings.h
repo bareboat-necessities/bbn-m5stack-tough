@@ -1,4 +1,3 @@
-#include "font/lv_symbol_def.h"
 #ifndef UI_SETTINGS_H
 #define UI_SETTINGS_H
 
@@ -52,7 +51,7 @@ extern "C" {
     lv_obj_align(btn_rotate, LV_ALIGN_CENTER, 0, 60);
     lv_label_set_text(label_rotate, LV_SYMBOL_LOOP);
     lv_obj_center(label_rotate);
-    lv_obj_add_event_cb(btn_rotate, btnRotateScreen_event, LV_EVENT_LONG_PRESSED, NULL);
+    lv_obj_add_event_cb(btn_rotate, btnRotateScreen_event, LV_EVENT_CLICKED, NULL);
   }
 
   static void edit_lcd_conf_evt_handler(lv_event_t *e) {
