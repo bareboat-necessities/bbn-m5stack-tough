@@ -132,13 +132,14 @@ extern "C" {
     client.setTimeout(150);
     setKeepAlive(net);
     client.begin(host, port, net);
+    victronCtx.lastMillis = millis();
     victron_mqtt_client_connect(client);
   }
 
   void victron_mqtt_client_loop(MQTTClient& client) {
     client.loop();
     if (!client.connected()) {
-      if (millis() - victronCtx.lastMillis > 7000) {
+      if (millis() - victronCtx.lastMillis > 10000) {
         victronCtx.lastMillis = millis();
         victron_mqtt_client_connect(client);
       }
