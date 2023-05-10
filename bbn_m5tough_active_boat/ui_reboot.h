@@ -39,7 +39,7 @@ extern "C" {
     lv_obj_t *btn3 = lv_btn_create(parent);
     lv_obj_t *label3 = lv_label_create(btn3);
     lv_obj_align(btn3, LV_ALIGN_CENTER, 0, -40);
-    lv_label_set_text(label3, "Reset Wi-Fi Settings");
+    lv_label_set_text(label3, "Reset Wi-Fi");
     lv_obj_center(label3);
     lv_obj_add_event_cb(btn3, btnResetWiFiSettings_event, LV_EVENT_LONG_PRESSED, NULL);
     lv_obj_set_style_bg_color(btn3, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
