@@ -21,7 +21,7 @@ extern "C" {
       lv_obj_set_style_radius(bar_tank[i], 0, LV_PART_INDICATOR);
       lv_bar_set_range(bar_tank[i], 0, 100);
       bar_tank_l[i] = lv_label_create(parent);
-      lv_label_set_text(bar_tank_l[i], "n/a");
+      lv_label_set_text(bar_tank_l[i], "--");
     }
 
     lv_obj_align(bar_tank[0], LV_ALIGN_CENTER, -120, -40);
@@ -75,7 +75,7 @@ extern "C" {
           lv_label_set_text(bar_tank_l[i], (String("Gas\n") + String(pct, 1) + "%").c_str());
         } else {
           lv_obj_set_style_radius(bar_tank[i], 6, LV_PART_MAIN);
-          lv_label_set_text(bar_tank_l[i], "n/a");
+          lv_label_set_text(bar_tank_l[i], "--");
         }
       }
     }
