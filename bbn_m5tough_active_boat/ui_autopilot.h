@@ -109,7 +109,7 @@ extern "C" {
 #endif
 
     command_l = lv_label_create(parent);
-    lv_label_set_text(command_l, "CMD:  n/a");
+    lv_label_set_text(command_l, "CMD:  --");
     lv_obj_set_width(command_l, width_l);
     lv_obj_set_style_text_align(command_l, LV_TEXT_ALIGN_LEFT, 0);
     lv_obj_align(command_l, LV_ALIGN_TOP_LEFT, left_l + width_l, top_l);
