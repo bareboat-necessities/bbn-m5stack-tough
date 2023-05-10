@@ -92,6 +92,8 @@ https://github.com/humppafreak/SensESP-PeetBrosWind
 
 https://github.com/sharandac/My-TTGO-Watch
 
+https://github.com/spascual90/Fenix
+
 https://github.com/KimBP/AIS/blob/master/Examples/AISDecode/AISDecode.ino
 
 
