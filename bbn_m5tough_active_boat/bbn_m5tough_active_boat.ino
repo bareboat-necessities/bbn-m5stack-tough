@@ -63,7 +63,7 @@ typedef struct _NetClient {
 #include "ui_screens.h"
 #include "ui_settings.h"
 #include "ui_clock.h"
-#include "ui_player_control.h"
+// TODO: #include "ui_player_control.h"
 #include "ui_about.h"
 
 #include "ui_keyboard.h"
@@ -126,7 +126,7 @@ lv_updatable_screen_t* screens[] = {
   &rudderScreen,
   &engineScreen,
   &autopilotScreen,
-  &playerScreen,
+// TODO:  &playerScreen,
   &victronScreen,
   &tanksScreen,
   &vesselScreen,
@@ -193,7 +193,7 @@ void setup() {
     init_speedScreen();
     init_depthScreen();
     init_clockScreen();
-    init_playerScreen();
+  // TODO:  init_playerScreen();
     init_victronScreen();
     init_tanksScreen();
     init_autopilotScreen();
