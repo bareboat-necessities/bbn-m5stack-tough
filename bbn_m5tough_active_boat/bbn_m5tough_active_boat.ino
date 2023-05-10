@@ -1,6 +1,7 @@
 #define LV_HOR_RES_MAX 320
 #define LV_VER_RES_MAX 240
 
+#undef ENABLE_MPD
 //
 //
 //  Changes to lv_conf.h (LVGL 8.x) needed:
@@ -63,7 +64,11 @@ typedef struct _NetClient {
 #include "ui_screens.h"
 #include "ui_settings.h"
 #include "ui_clock.h"
-// TODO: #include "ui_player_control.h"
+
+#ifdef ENABLE_MPD // TODO:
+#include "ui_player_control.h"
+#endif
+
 #include "ui_about.h"
 
 #include "ui_keyboard.h"
@@ -126,7 +131,9 @@ lv_updatable_screen_t* screens[] = {
   &rudderScreen,
   &engineScreen,
   &autopilotScreen,
-// TODO:  &playerScreen,
+#ifdef ENABLE_MPD // TODO:
+  &playerScreen,
+#endif
   &victronScreen,
   &tanksScreen,
   &vesselScreen,
@@ -193,7 +200,9 @@ void setup() {
     init_speedScreen();
     init_depthScreen();
     init_clockScreen();
-  // TODO:  init_playerScreen();
+#ifdef ENABLE_MPD // TODO:
+    init_playerScreen();
+#endif
     init_victronScreen();
     init_tanksScreen();
     init_autopilotScreen();
