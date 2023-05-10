@@ -11,7 +11,9 @@ extern "C" {
   static lv_obj_t *nmea0183_status_label;
   static lv_obj_t *signalk_status_label;
   static lv_obj_t *venus_mqtt_status_label;
+#ifdef ENABLE_MPD // TODO:
   static lv_obj_t *mpd_status_label;
+#endif
   static lv_obj_t *data_connections_list;
 
   static void event_handler_data_conn(lv_event_t *e) {
@@ -122,11 +124,13 @@ extern "C" {
     lv_label_set_text(venus_mqtt_status_label,
                       (String("#ff0000 " LV_SYMBOL_OK "  #") + String("Venus MQTT:    ") + preferences.getString(VENUS_MQTT_HOST_PREF) + String(":") + String(preferences.getInt(VENUS_MQTT_PORT_PREF))).c_str());
 
+#ifdef ENABLE_MPD // TODO:
     mpd_status_label = lv_label_create(parent);
     lv_obj_align(mpd_status_label, LV_ALIGN_TOP_LEFT, 20, 150);
     lv_label_set_recolor(mpd_status_label, true);
     lv_label_set_text(mpd_status_label,
                       (String("#ff0000 " LV_SYMBOL_OK "  #") + String("MPD:                  ") + preferences.getString(MPD_TCP_HOST_PREF) + String(":") + String(preferences.getInt(MPD_TCP_PORT_PREF))).c_str());
+#endif
 
     lv_obj_t *btn_erase = lv_btn_create(parent);
     lv_obj_add_event_cb(btn_erase, erase_net_conf_evt_handler, LV_EVENT_ALL, parent);
