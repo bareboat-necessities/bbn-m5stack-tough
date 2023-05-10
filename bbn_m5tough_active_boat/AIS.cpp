@@ -24,7 +24,7 @@
 
 // See: https://github.com/KimBP/AIS
 
-#include <AIS.h>
+#include "AIS.h"
 
 /* Copied from util.h */
 
