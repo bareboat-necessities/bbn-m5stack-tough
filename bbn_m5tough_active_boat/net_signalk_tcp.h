@@ -32,7 +32,7 @@ extern "C" {
 
   void signalk_subscribe(NetClient& client) {
     app.onAvailable(client.c, [&client]() {
-      while (client.c.connected() && client.c.available() > 256 /* Very important for performance and responsiveness */) {
+      while (client.c.connected() && client.c.available() > 160 /* Very important for performance and responsiveness */) {
         bool found = signalk_parse(client.c);
         if (found) {
           client.lastActivity = millis();
