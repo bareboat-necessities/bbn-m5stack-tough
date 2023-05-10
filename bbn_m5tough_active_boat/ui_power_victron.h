@@ -41,7 +41,7 @@ extern "C" {
     lv_obj_set_style_bg_color(shore, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
 
     shore_label = lv_label_create(shore);
-    lv_label_set_text(shore_label, "Shore\nn/a W");
+    lv_label_set_text(shore_label, "Shore\n-- W");
     lv_obj_align(shore_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     lv_obj_t *inverters;
@@ -63,7 +63,7 @@ extern "C" {
     lv_obj_set_style_bg_color(ac, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
 
     ac_label = lv_label_create(ac);
-    lv_label_set_text(ac_label, "AC Load\nn/a W");
+    lv_label_set_text(ac_label, "AC Load\n-- W");
     lv_obj_align(ac_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     lv_obj_t *dc;
@@ -85,7 +85,7 @@ extern "C" {
     lv_obj_set_style_bg_color(dc_ld, lv_palette_main(LV_PALETTE_TEAL), LV_PART_MAIN);
 
     dc_ld_label = lv_label_create(dc_ld);
-    lv_label_set_text(dc_ld_label, "DC Load\nn/a W");
+    lv_label_set_text(dc_ld_label, "DC Load\n-- W");
     lv_obj_align(dc_ld_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     lv_obj_t *pv;
@@ -96,7 +96,7 @@ extern "C" {
     lv_obj_set_style_bg_color(pv, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN);
 
     pv_label = lv_label_create(pv);
-    lv_label_set_text(pv_label, "PV\nn/a W");
+    lv_label_set_text(pv_label, "PV\n-- W");
     lv_obj_align(pv_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     static lv_style_t style_line;
@@ -144,19 +144,19 @@ extern "C" {
     lv_label_set_text(pv_label,
                       fresh(shipDataModel.electrical.sys_dc.pv.powerW.age, 15000)
                         ? (String("PV\n") + String(shipDataModel.electrical.sys_dc.pv.powerW.watt, 1) + " W").c_str()
-                        : "PV\nn/a W");
+                        : "PV\n-- W");
     lv_label_set_text(dc_ld_label,
                       fresh(shipDataModel.electrical.sys_dc.battery.powerW.age, 15000)
                         ? (String("DC Load\n") + String(shipDataModel.electrical.sys_dc.battery.powerW.watt, 1) + " W").c_str()
-                        : "DC Load\nn/a W");
+                        : "DC Load\n-- W");
     lv_label_set_text(shore_label,
                       fresh(shipDataModel.electrical.sys_ac.active_in[0].powerW.age, 15000)
                         ? (String("Shore\n") + String(shipDataModel.electrical.sys_ac.active_in[0].powerW.watt, 1) + " W").c_str()
-                        : "Shore\nn/a W");
+                        : "Shore\n-- W");
     lv_label_set_text(ac_label,
                       fresh(shipDataModel.electrical.sys_ac.consumption[0].powerW.age, 15000)
                         ? (String("AC Load\n") + String(shipDataModel.electrical.sys_ac.consumption[0].powerW.watt, 1) + " W").c_str()
-                        : "AC Load\nn/a W");
+                        : "AC Load\n-- W");
   }
 
   void init_victronScreen() {
