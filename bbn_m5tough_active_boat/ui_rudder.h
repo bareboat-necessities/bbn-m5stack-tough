@@ -10,6 +10,7 @@ extern "C" {
   static lv_obj_t *rudder_display;
   static lv_meter_indicator_t *indic_rudder;
   static lv_obj_t *rate_of_turn_label;
+  static lv_obj_t *rudder_hdt_label;
 
   static void set_rudder_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(rudder_display, (lv_meter_indicator_t *)indic, v);
@@ -47,6 +48,13 @@ extern "C" {
     lv_obj_set_style_text_font(rate_of_turn_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(rate_of_turn_label, "ROT (" LV_SYMBOL_DEGREES "/min):   --");
+
+    rudder_hdt_label = lv_label_create(parent);
+    lv_obj_align(rudder_hdt_label, LV_ALIGN_TOP_LEFT, 5, 50);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(rudder_hdt_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(rudder_hdt_label, "HDT:\n--");
   }
 
   static void rudder_update_cb() {
@@ -54,6 +62,8 @@ extern "C" {
                       (String("ROT (" LV_SYMBOL_DEGREES "/min):   ")
                        + (fresh(shipDataModel.navigation.rate_of_turn.age) ? String(shipDataModel.navigation.rate_of_turn.deg_min) : String("--")))
                         .c_str());
+    lv_label_set_text(rudder_hdt_label,
+                      (fresh(shipDataModel.navigation.heading_true.age) ? String("HDT:\n") + String(shipDataModel.navigation.heading_true.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
 
     set_rudder_value(indic_rudder, fresh(shipDataModel.steering.rudder_angle.age) ? shipDataModel.steering.rudder_angle.deg : 0);
   }
