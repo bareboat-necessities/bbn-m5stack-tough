@@ -16,6 +16,8 @@ extern "C" {
   static lv_obj_t *eng_temp_meter;
   static lv_meter_indicator_t *eng_temp_indic;
 
+  static lv_obj_t *eng_sog_label;
+
   static void set_engine_rpm_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(engine_rpm_meter, (lv_meter_indicator_t *)indic, v);
   }
@@ -100,6 +102,13 @@ extern "C" {
     lv_obj_t *eng_temp_label = lv_label_create(parent);
     lv_obj_align(eng_temp_label, LV_ALIGN_BOTTOM_RIGHT, -80, -2);
     lv_label_set_text(eng_temp_label, LV_SYMBOL_DEGREES "C");
+
+    eng_sog_label = lv_label_create(parent);
+    lv_obj_align(eng_sog_label, LV_ALIGN_TOP_LEFT, 5, 5);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(eng_sog_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(eng_sog_label, "SOG (kt):\n--");
   }
 
   static void engine_update_cb() {
@@ -110,11 +119,15 @@ extern "C" {
     lv_meter_set_indicator_end_value(oil_press_meter, oil_press_indic,
                                      (fresh(shipDataModel.propulsion.engines[0].oil_pressure.age)
                                         ? shipDataModel.propulsion.engines[0].oil_pressure.hPa * 0.0145037738 /* to psi */
-                                        : 0)); 
+                                        : 0));
     lv_meter_set_indicator_end_value(eng_temp_meter, eng_temp_indic,
                                      (fresh(shipDataModel.propulsion.engines[0].temp_deg_C.age, 20000)
                                         ? shipDataModel.propulsion.engines[0].temp_deg_C.deg_C
                                         : 0));
+    lv_label_set_text(eng_sog_label,
+                      ("SOG (kt):\n"
+                       + (fresh(shipDataModel.navigation.speed_over_ground.age) ? String(shipDataModel.navigation.speed_over_ground.kn, 1) : String("--")))
+                        .c_str());
   }
 
   void init_engineScreen() {
