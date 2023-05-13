@@ -63,7 +63,7 @@ extern "C" {
                        + (fresh(shipDataModel.navigation.rate_of_turn.age) ? String(shipDataModel.navigation.rate_of_turn.deg_min) : String("--")))
                         .c_str());
     lv_label_set_text(rudder_hdt_label,
-                      (fresh(shipDataModel.navigation.heading_true.age) ? String("HDT:\n") + String(shipDataModel.navigation.heading_true.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
+                      (fresh(shipDataModel.navigation.heading_true.age) ? String("HDT:\n") + String(shipDataModel.navigation.heading_true.deg, 0) + LV_SYMBOL_DEGREES : "HDT:\n--").c_str());
 
     set_rudder_value(indic_rudder, fresh(shipDataModel.steering.rudder_angle.age) ? shipDataModel.steering.rudder_angle.deg : 0);
   }
