@@ -10,6 +10,7 @@ extern "C" {
   static lv_obj_t *compass_display;
   static lv_obj_t *compass_l;
   static lv_obj_t *compass_hdt_l;
+  static lv_obj_t *compass_cogt_l;
   static lv_obj_t *compass_mag_var_l;
 
   static lv_obj_t *labelScont;
@@ -108,6 +109,13 @@ extern "C" {
     lv_obj_set_style_text_font(compass_hdt_l, &lv_font_montserrat_20, 0);
 #endif
 
+    compass_cogt_l = lv_label_create(parent);
+    lv_label_set_text(compass_cogt_l, "COG:   --" LV_SYMBOL_DEGREES "t");
+    lv_obj_align(compass_cogt_l, LV_ALIGN_TOP_RIGHT, -2, 2);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(compass_cogt_l, &lv_font_montserrat_20, 0);
+#endif
+
     compass_mag_var_l = lv_label_create(parent);
     lv_label_set_text(compass_mag_var_l, "Var:\n--" LV_SYMBOL_DEGREES);
     lv_obj_align(compass_mag_var_l, LV_ALIGN_BOTTOM_LEFT, 2, -2);
@@ -120,7 +128,7 @@ extern "C" {
   static unsigned long last_compass_upd = 0;
 
   static void compass_update_cb() {
-    if (millis() - last_compass_upd > 500) { // reduce expensive rotations
+    if (millis() - last_compass_upd > 500) {  // reduce expensive rotations
       int16_t h_deg = fresh(shipDataModel.navigation.heading_mag.age) ? shipDataModel.navigation.heading_mag.deg : 0;
       if (last_heading != h_deg) {
         int rot = 360 - h_deg;
@@ -133,10 +141,14 @@ extern "C" {
 
         lv_label_set_text(compass_l,
                           (fresh(shipDataModel.navigation.heading_mag.age) ? String(shipDataModel.navigation.heading_mag.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
-        lv_label_set_text(compass_mag_var_l, 
+        lv_label_set_text(compass_mag_var_l,
                           (fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) ? String("Var:\n") + String(shipDataModel.navigation.mag_var.deg, 1) + LV_SYMBOL_DEGREES : ("Var:\n--" LV_SYMBOL_DEGREES)).c_str());
-        lv_label_set_text(compass_hdt_l, 
+        lv_label_set_text(compass_hdt_l,
                           (fresh(shipDataModel.navigation.heading_true.age) ? String("HDT:  ") + String(shipDataModel.navigation.heading_true.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
+        lv_label_set_text(compass_cogt_l,
+                          (String("COG:  ")
+                           + (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 1) + String(LV_SYMBOL_DEGREES "t") : String("--")))
+                            .c_str());
       }
       last_compass_upd = millis();
     }
