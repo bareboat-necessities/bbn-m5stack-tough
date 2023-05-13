@@ -55,15 +55,14 @@ enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#de
 - GPS Location, speed, heading (true/mag) :heavy_check_mark:
 - Compass Display (True/Magnetic), Magnetic Variation for the location :heavy_check_mark:
 - Clock Display :heavy_check_mark:
-- Smart Discovery of available services using mDNS and other ways :heavy_check_mark:
 - Trip data display, VMG  (:heavy_check_mark:)
 - Local Sunset/Sunrise :heavy_check_mark:
 - Tanks levels display :heavy_check_mark:
 - Boat Design parameters :heavy_check_mark:
+- Smart Discovery of available services using mDNS and other ways :heavy_check_mark:
 - Brightness, screen orientation settings :heavy_check_mark:
 - WiFi set up, password on screen keyboard :heavy_check_mark:
 - Data providers IP addresses editors :heavy_check_mark:
-- Clock display :heavy_check_mark:
 - Connections statuses :heavy_check_mark:
 - Reboot, reset, power off :heavy_check_mark:
 
