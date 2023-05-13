@@ -170,6 +170,8 @@ extern "C" {
     struct _angular_velocity_t rate_of_turn;
     struct _kn_t speed_over_ground;
     struct _kn_t speed_through_water;
+    struct _kn_t drift;
+    struct _angle_deg_t set_true;
     struct _nav_lights_t lights;
     struct _course_rhumbline_t course_rhumbline;
   } navigation_t;
