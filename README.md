@@ -105,7 +105,7 @@ https://github.com/KimBP/AIS/blob/master/Examples/AISDecode/AISDecode.ino
 - Engine RPM, oil temp, voltage, fuel burn per nautical mile, etc Display
 - Batteries Status, etc Display :heavy_check_mark:
 - Wind Display (True/Apparent) :heavy_check_mark:
-- Drift and set, speed through water (knot meter)
+- Drift and set, speed through water (knot meter) :heavy_check_mark:
 - Wind Rose from climatology data for current location and time Display
 - Depth Display :heavy_check_mark:
 - Barometer (+Temp Humidity) with History
