@@ -46,7 +46,7 @@ enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#de
 - IMU (compass and attitude) :heavy_check_mark:
 - Engine RPM, oil temp display :heavy_check_mark:
 - Batteries Status, etc Display :heavy_check_mark:
-- Wind Display (True/Apparent) :heavy_check_mark:
+- Wind Display (Ground/(True?)/Apparent) :heavy_check_mark:
 - Drift and set, speed through water (knot meter) :heavy_check_mark:
 - Depth Display :heavy_check_mark:
 - Victron Data Display :heavy_check_mark:
