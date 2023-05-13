@@ -11,6 +11,7 @@ extern "C" {
   static lv_obj_t *dbk_label;
   static lv_obj_t *dbs_label;
   static lv_obj_t *depth_gradient_label;
+  static lv_obj_t *d_heel_label;
 
   /**
    * A depth display 
@@ -49,6 +50,13 @@ extern "C" {
     lv_obj_set_style_text_font(depth_gradient_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(depth_gradient_label, "Gradient:        --");
+
+    d_heel_label = lv_label_create(parent);
+    lv_obj_align(d_heel_label, LV_ALIGN_TOP_LEFT, 10, 200);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(d_heel_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(d_heel_label, "Heel:                 --");
   }
 
   static void depth_update_cb() {
@@ -70,6 +78,12 @@ extern "C" {
                             ? String(shipDataModel.environment.depth.below_surface.m * _GPS_FEET_PER_METER, 1)
                             : String("--")))
                         .c_str());
+    lv_label_set_text(d_heel_label,
+                      ("Heel:                 "
+                       + (fresh(shipDataModel.navigation.attitude.heel.age)
+                            ? String(shipDataModel.navigation.attitude.heel.deg, 1) + String(LV_SYMBOL_DEGREES)
+                            : String("--")))
+                           .c_str());
   }
 
   void init_depthScreen() {
