@@ -110,7 +110,7 @@ extern "C" {
 #endif
 
     compass_cogt_l = lv_label_create(parent);
-    lv_label_set_text(compass_cogt_l, "COG:   --" LV_SYMBOL_DEGREES "t");
+    lv_label_set_text(compass_cogt_l, "COGT:   --" LV_SYMBOL_DEGREES);
     lv_obj_align(compass_cogt_l, LV_ALIGN_TOP_RIGHT, -2, 2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(compass_cogt_l, &lv_font_montserrat_20, 0);
@@ -146,8 +146,8 @@ extern "C" {
         lv_label_set_text(compass_hdt_l,
                           (fresh(shipDataModel.navigation.heading_true.age) ? String("HDT:  ") + String(shipDataModel.navigation.heading_true.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
         lv_label_set_text(compass_cogt_l,
-                          (String("COG:  ")
-                           + (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 1) + String(LV_SYMBOL_DEGREES "t") : String("--")))
+                          (String("COGT:  ")
+                           + (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 0) + String(LV_SYMBOL_DEGREES) : String("--")))
                             .c_str());
       }
       last_compass_upd = millis();
