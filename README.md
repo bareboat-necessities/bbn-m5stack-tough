@@ -29,6 +29,82 @@ enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#de
 - ReactESP (install 2.x version via Arduino IDE libraries manager) https://github.com/mairas/ReactESP
 - ArduinoJson (install 6.x version via Arduino IDE libraries manager) https://arduinojson.org/
 
+##  Implemented Interfaces:
+
+- SignalK (partially :heavy_check_mark:)
+- NMEA 0183 (partially :heavy_check_mark:)
+- NMEA 2000
+- PyPilot (:heavy_check_mark:)
+- MPD
+- NTP (:heavy_check_mark:)
+- MQTT (for Victron and others) (:heavy_check_mark:)
+- mDNS (:heavy_check_mark:)
+
+##  Implemented Displays and Instruments:
+
+- Autopilot / PyPilot Remote Control Screen :heavy_check_mark:
+- IMU (compass and attitude) :heavy_check_mark:
+- Engine RPM, oil temp display :heavy_check_mark:
+- Batteries Status, etc Display :heavy_check_mark:
+- Wind Display (True/Apparent) :heavy_check_mark:
+- Drift and set, speed through water (knot meter) :heavy_check_mark:
+- Depth Display :heavy_check_mark:
+- Victron Data Display :heavy_check_mark:
+- Rudder Position, Rate of Turn Display :heavy_check_mark:
+- Heel (Clinometer) and Pitch :heavy_check_mark:
+- GPS Location, speed, heading (true/mag) :heavy_check_mark:
+- Compass Display (True/Magnetic), Magnetic Variation for the location :heavy_check_mark:
+- Clock Display :heavy_check_mark:
+- Smart Discovery of available services using mDNS and other ways :heavy_check_mark:
+- Trip data display, VMG  (:heavy_check_mark:)
+
+##  Possible future ehnancements:
+
+- Lightning Detector with Screen (AS3935 sensor or better)
+- Engine alternator voltage, fuel burn per nautical mile, etc display
+- Wind Rose from climatology data for current location and time Display
+- Barometer (+Temp Humidity) with History
+- Dangerous gases alarms
+- LoRa Tracker receiver and display
+- SignalK Alarms Display
+- Weather Display, Air/Water temp, pressure, humidity, air quality
+- Tides and Currents Display
+- AIS Display
+- Sailboat Polar Diagram Display
+- Anchor Alarm Set up and Display
+- Nav Lights and Digital Switching Control (ex: NMEA 2000 PGN 127501 "Binary Status Report" and PGN 127502 "Binary Switch Control")
+- Tanks levels display :heavy_check_mark:
+- Windlass remote control, chain counter display
+- Emergency steering Control by Autopilot
+- Bow Truster Remote Control
+- MOB Button
+- Music Player Controls (Spotify/Mopidy, etc)
+- Bilge Monitoring Screen
+- Wave Height, G-Forces Display based on: https://bareboat-necessities.github.io/my-bareboat/bareboat-math.html
+- Local Sunset/Sunrise :heavy_check_mark:
+- Fog Alarm, Fog Signals (reminders)
+- AC/Fridge/Heater/Watermaker/Hot Water Tank monitoring
+- Fridge/AC thermostat control
+- Retrievable Keel Status
+- Alarm Clock / Timer / Stopwatch
+- Solar Panel/Generator (Wind/Prop/Diesel) Power Monitoring
+- Cabin, Deck, Search, Underwater lights controls,Fans, Blower controls
+- Shrouds Load Forces Display from sensors
+- Hatches Status Display
+- Dinghy location (via LoRa and putting data into AIS stream)
+- Ship bell sound
+- Fish detected alarm (Do not know for sure how to implement that winner feature. It's possible though)
+- Weather forecast using location adjusted Zambretti algorithm, based on pressure and wind history, date time, and location.
+- Calculate mileage as integral of avg SOG
+- Predict open sea state based on tables from https://en.wikipedia.org/wiki/Wind_wave#Formation
+- Calculate dew point, air dencity. Detect fog conditions from pressure/temp/humidity
+- Long wave time signals decoding DCF77, HBG, ALS162, WWVB
+- BMS displays ex: https://github.com/wholybee/esp32-smartBMSdisplay
+- TimeZone from location 
+- Power winches controls
+- Power furler controls 
+- UI to control fog horn signal, and horn in general
+
 
 ## Related projects:
 
@@ -96,77 +172,4 @@ https://github.com/spascual90/Fenix
 
 https://github.com/KimBP/AIS/blob/master/Examples/AISDecode/AISDecode.ino
 
-
-##  Possible future ehnancements:
-
-- Autopilot / PyPilot Remote Control Screen :heavy_check_mark:
-- Lightning Detector with Screen (AS3935 sensor or better)
-- IMU (compass and attitude) to NMEA (2000 or 0183) :heavy_check_mark:
-- Engine RPM, oil temp, voltage, fuel burn per nautical mile, etc Display
-- Batteries Status, etc Display :heavy_check_mark:
-- Wind Display (True/Apparent) :heavy_check_mark:
-- Drift and set, speed through water (knot meter) :heavy_check_mark:
-- Wind Rose from climatology data for current location and time Display
-- Depth Display :heavy_check_mark:
-- Barometer (+Temp Humidity) with History
-- Dangerous gases alarms
-- LoRa Tracker receiver and display
-- SignalK Alarms Display
-- Weather Display, Air/Water temp, pressure, humidity, air quality
-- Tides and Currents Display
-- AIS Display
-- Sailboat Polar Diagram Display
-- Victron Data Display :heavy_check_mark:
-- Rudder Position, Rate of Turn Display :heavy_check_mark:
-- Anchor Alarm Set up and Display
-- Heel (Clinometer) and Pitch :heavy_check_mark:
-- GPS Location, speed, heading (true/mag) :heavy_check_mark:
-- Nav Lights and Digital Switching Control (ex: NMEA 2000 PGN 127501 "Binary Status Report" and PGN 127502 "Binary Switch Control")
-- Tanks levels display :heavy_check_mark:
-- Windlass remote control, chain counter display
-- Emergency steering Control by Autopilot
-- Bow Truster Remote Control
-- MOB Button
-- Compass Display (True/Magnetic), Magnetic Variation for the location :heavy_check_mark:
-- Clock Display :heavy_check_mark:
-- Music Player Controls (Spotify/Mopidy, etc)
-- Bilge Monitoring Screen
-- Wave Height, G-Forces Display based on: https://bareboat-necessities.github.io/my-bareboat/bareboat-math.html
-- Local Sunset/Sunrise :heavy_check_mark:
-- Fog Alarm, Fog Signals (reminders)
-- AC/Fridge/Heater/Watermaker/Hot Water Tank monitoring
-- Fridge/AC thermostat control
-- Retrievable Keel Status
-- Alarm Clock / Timer / Stopwatch
-- Solar Panel/Generator (Wind/Prop/Diesel) Power Monitoring
-- Cabin, Deck, Search, Underwater lights controls,Fans, Blower controls
-- Shrouds Load Forces Display from sensors
-- Hatches Status Display
-- Dinghy location (via LoRa and putting data into AIS stream)
-- Ship bell sound
-- Fish detected alarm (Do not know for sure how to implement that winner feature. It's possible though)
-- Smart Discovery of available services using mDNS and other ways :heavy_check_mark:
-- Weather forecast using location adjusted Zambretti algorithm, based on pressure and wind history, date time, and location.
-- Calculate mileage as integral of avg SOG
-- Predict open sea state based on tables from https://en.wikipedia.org/wiki/Wind_wave#Formation
-- Calculate dew point, air dencity. Detect fog conditions from pressure/temp/humidity
-- Long wave time signals decoding DCF77, HBG, ALS162, WWVB
-- BMS displays ex: https://github.com/wholybee/esp32-smartBMSdisplay
-- TimeZone from location 
-- Power winches controls
-- Power furler controls 
-- UI to control fog horn signal, and horn in general
-- Trip data display, VMG  (:heavy_check_mark:)
-
-
-##  Interfaces:
-
-- SignalK (partially :heavy_check_mark:)
-- NMEA 0183 (partially :heavy_check_mark:)
-- NMEA 2000
-- PyPilot (:heavy_check_mark:)
-- MPD
-- NTP (:heavy_check_mark:)
-- MQTT (for Victron and others) (:heavy_check_mark:)
-- mDNS (:heavy_check_mark:)
 
