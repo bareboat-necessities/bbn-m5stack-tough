@@ -11,6 +11,8 @@ extern "C" {
   static lv_meter_indicator_t *indic_heel;
   static lv_obj_t *pitch_label;
   static lv_obj_t *heel_leeway_label;
+  static lv_obj_t *heel_drift_label;
+  static lv_obj_t *heel_set_label;
 
   static void set_heel_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(heel_display, (lv_meter_indicator_t *)indic, v);
@@ -51,6 +53,20 @@ extern "C" {
 #endif
     lv_label_set_text(heel_leeway_label, "Leeway\n(est):\n--");
 
+    heel_drift_label = lv_label_create(parent);
+    lv_obj_align(heel_drift_label, LV_ALIGN_TOP_RIGHT, -5, 5);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(heel_drift_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(heel_drift_label, "DFT (kt):\n--");
+
+    heel_set_label = lv_label_create(parent);
+    lv_obj_align(heel_set_label, LV_ALIGN_TOP_RIGHT, -5, 50);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(heel_set_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(heel_set_label, "Set:\n--");
+
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -60);
     lv_label_set_text(main_label, "HEEL");
@@ -66,7 +82,15 @@ extern "C" {
                         + (fresh(shipDataModel.navigation.leeway.age) ? String(shipDataModel.navigation.leeway.deg, 1) : String("--")))
                        + LV_SYMBOL_DEGREES)
                         .c_str());
-
+    lv_label_set_text(heel_drift_label,
+                      ("DFT (kt):\n"
+                       + (fresh(shipDataModel.navigation.drift.age) ? String(shipDataModel.navigation.drift.kn, 1) : String("--")))
+                        .c_str());
+    lv_label_set_text(heel_set_label,
+                      (("Set:\n"
+                        + (fresh(shipDataModel.navigation.set_true.age) ? String(shipDataModel.navigation.set_true.deg, 0) : String("--")))
+                       + LV_SYMBOL_DEGREES "t")
+                        .c_str());
     set_heel_value(indic_heel, fresh(shipDataModel.navigation.attitude.heel.age) ? shipDataModel.navigation.attitude.heel.deg : 0);
   }
 
