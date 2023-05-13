@@ -57,6 +57,8 @@ enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#de
 - Clock Display :heavy_check_mark:
 - Smart Discovery of available services using mDNS and other ways :heavy_check_mark:
 - Trip data display, VMG  (:heavy_check_mark:)
+- Local Sunset/Sunrise :heavy_check_mark:
+- Tanks levels display :heavy_check_mark:
 
 ##  Possible future ehnancements:
 
@@ -73,7 +75,6 @@ enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#de
 - Sailboat Polar Diagram Display
 - Anchor Alarm Set up and Display
 - Nav Lights and Digital Switching Control (ex: NMEA 2000 PGN 127501 "Binary Status Report" and PGN 127502 "Binary Switch Control")
-- Tanks levels display :heavy_check_mark:
 - Windlass remote control, chain counter display
 - Emergency steering Control by Autopilot
 - Bow Truster Remote Control
@@ -81,7 +82,6 @@ enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#de
 - Music Player Controls (Spotify/Mopidy, etc)
 - Bilge Monitoring Screen
 - Wave Height, G-Forces Display based on: https://bareboat-necessities.github.io/my-bareboat/bareboat-math.html
-- Local Sunset/Sunrise :heavy_check_mark:
 - Fog Alarm, Fog Signals (reminders)
 - AC/Fridge/Heater/Watermaker/Hot Water Tank monitoring
 - Fridge/AC thermostat control
