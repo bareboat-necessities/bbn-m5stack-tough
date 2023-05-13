@@ -54,14 +54,14 @@ extern "C" {
     lv_label_set_text(heel_leeway_label, "Leeway\n(est):\n--");
 
     heel_drift_label = lv_label_create(parent);
-    lv_obj_align(heel_drift_label, LV_ALIGN_TOP_RIGHT, -5, 5);
+    lv_obj_align(heel_drift_label, LV_ALIGN_TOP_LEFT, 175, 5);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(heel_drift_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(heel_drift_label, "DFT (kt):\n--");
+    lv_label_set_text(heel_drift_label, "DFT (kt):  --");
 
     heel_set_label = lv_label_create(parent);
-    lv_obj_align(heel_set_label, LV_ALIGN_TOP_RIGHT, -5, 50);
+    lv_obj_align(heel_set_label, LV_ALIGN_TOP_LEFT, 245, 50);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(heel_set_label, &lv_font_montserrat_20, 0);
 #endif
@@ -83,7 +83,7 @@ extern "C" {
                        + LV_SYMBOL_DEGREES)
                         .c_str());
     lv_label_set_text(heel_drift_label,
-                      ("DFT (kt):\n"
+                      ("DFT (kt):  "
                        + (fresh(shipDataModel.navigation.drift.age) ? String(shipDataModel.navigation.drift.kn, 1) : String("--")))
                         .c_str());
     lv_label_set_text(heel_set_label,
