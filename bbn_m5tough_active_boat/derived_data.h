@@ -89,17 +89,19 @@ extern "C" {
     }
 
     if (fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO)) {
-      if (fresh(shipDataModel.navigation.course_over_ground_true.age)) {
-        shipDataModel.navigation.course_over_ground_mag.deg = norm_deg(shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.mag_var.deg);
-        shipDataModel.navigation.course_over_ground_mag.age = millis();
-      }
-      if (fresh(shipDataModel.navigation.heading_mag.age)) {
-        shipDataModel.navigation.heading_true.deg = norm_deg(shipDataModel.navigation.heading_mag.deg + shipDataModel.navigation.mag_var.deg);
-        shipDataModel.navigation.heading_true.age = millis();
-      }
-      if (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_true.age)) {
-        shipDataModel.navigation.course_rhumbline.bearing_track_mag.deg = norm_deg(shipDataModel.navigation.course_rhumbline.bearing_track_true.deg - shipDataModel.navigation.mag_var.deg);
-        shipDataModel.navigation.course_rhumbline.bearing_track_mag.age = millis();
+      if (abs(mag_var_deg) > 0.00001) {  // do not trust 0
+        if (fresh(shipDataModel.navigation.course_over_ground_true.age)) {
+          shipDataModel.navigation.course_over_ground_mag.deg = norm_deg(shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.mag_var.deg);
+          shipDataModel.navigation.course_over_ground_mag.age = millis();
+        }
+        if (fresh(shipDataModel.navigation.heading_mag.age)) {
+          shipDataModel.navigation.heading_true.deg = norm_deg(shipDataModel.navigation.heading_mag.deg + shipDataModel.navigation.mag_var.deg);
+          shipDataModel.navigation.heading_true.age = millis();
+        }
+        if (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_true.age)) {
+          shipDataModel.navigation.course_rhumbline.bearing_track_mag.deg = norm_deg(shipDataModel.navigation.course_rhumbline.bearing_track_true.deg - shipDataModel.navigation.mag_var.deg);
+          shipDataModel.navigation.course_rhumbline.bearing_track_mag.age = millis();
+        }
       }
     }
 
@@ -135,8 +137,10 @@ extern "C" {
     }
 
     if (fresh(shipDataModel.environment.wind.ground_wind_dir_true.age) && fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO)) {
-      shipDataModel.environment.wind.ground_wind_dir_mag.deg = norm_deg(shipDataModel.environment.wind.ground_wind_dir_true.deg - shipDataModel.navigation.mag_var.deg);
-      shipDataModel.environment.wind.ground_wind_dir_mag.age = millis();
+      if (abs(mag_var_deg) > 0.00001) {  // do not trust 0
+        shipDataModel.environment.wind.ground_wind_dir_mag.deg = norm_deg(shipDataModel.environment.wind.ground_wind_dir_true.deg - shipDataModel.navigation.mag_var.deg);
+        shipDataModel.environment.wind.ground_wind_dir_mag.age = millis();
+      }
     }
 
     // derive leeway
@@ -153,8 +157,10 @@ extern "C" {
     // derive mag variation if unknown
     if (!fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) && abs(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg) > 0.00001) {
       if (fresh(shipDataModel.navigation.heading_true.age) && fresh(shipDataModel.navigation.heading_mag.age)) {
-        shipDataModel.navigation.mag_var.deg = norm_deg(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg);
-        shipDataModel.navigation.mag_var.age = millis();
+        if (abs(mag_var_deg) > 0.00001) {  // do not trust 0
+          shipDataModel.navigation.mag_var.deg = norm_deg(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg);
+          shipDataModel.navigation.mag_var.age = millis();
+        }
       }
     }
 
