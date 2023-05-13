@@ -168,7 +168,8 @@ extern "C" {
         shipDataModel.navigation.drift.age = millis();
         float head_current = spd - sog * cos(angle);
         float side_current = sog * sin(angle);
-        float set_rad = atan2(side_current, head_current);
+        float heading_rad = shipDataModel.navigation.heading_true.deg * PI / 180.0;
+        float set_rad = heading_rad - atan2(side_current, head_current);
         float set_true_deg = norm_deg(set_rad * 180.0 / PI);
         shipDataModel.navigation.set_true.deg = set_true_deg;
         shipDataModel.navigation.set_true.age = millis();
