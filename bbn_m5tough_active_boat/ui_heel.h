@@ -10,6 +10,7 @@ extern "C" {
   static lv_obj_t *heel_display;
   static lv_meter_indicator_t *indic_heel;
   static lv_obj_t *pitch_label;
+  static lv_obj_t *heel_leeway_label;
 
   static void set_heel_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(heel_display, (lv_meter_indicator_t *)indic, v);
@@ -43,6 +44,13 @@ extern "C" {
 #endif
     lv_label_set_text(pitch_label, "PITCH:   --");
 
+    heel_leeway_label = lv_label_create(parent);
+    lv_obj_align(heel_leeway_label, LV_ALIGN_TOP_LEFT, 5, 50);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(heel_leeway_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(heel_leeway_label, "Leeway\n(est):\n--");
+
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -60);
     lv_label_set_text(main_label, "HEEL");
@@ -52,6 +60,11 @@ extern "C" {
     lv_label_set_text(pitch_label,
                       (String("PITCH:   ")
                        + (fresh(shipDataModel.navigation.attitude.pitch.age) ? String(shipDataModel.navigation.attitude.pitch.deg) + String(LV_SYMBOL_DEGREES) : String("--")))
+                        .c_str());
+    lv_label_set_text(heel_leeway_label,
+                      (("Leeway\n(est):\n"
+                        + (fresh(shipDataModel.navigation.leeway.age) ? String(shipDataModel.navigation.leeway.deg, 1) : String("--")))
+                       + LV_SYMBOL_DEGREES)
                         .c_str());
 
     set_heel_value(indic_heel, fresh(shipDataModel.navigation.attitude.heel.age) ? shipDataModel.navigation.attitude.heel.deg : 0);
