@@ -77,9 +77,8 @@ extern "C" {
                        + (fresh(shipDataModel.navigation.speed_through_water.age) ? String(shipDataModel.navigation.speed_through_water.kn, 1) : String("--")))
                         .c_str());
     lv_label_set_text(leeway_label,
-                      (("Leeway (est):              "
-                        + (fresh(shipDataModel.navigation.leeway.age) ? String(shipDataModel.navigation.leeway.deg, 1) : String("--")))
-                       + LV_SYMBOL_DEGREES)
+                      ("Leeway (est):              "
+                        + (fresh(shipDataModel.navigation.leeway.age) ? String(shipDataModel.navigation.leeway.deg, 1) + String(LV_SYMBOL_DEGREES) : String("--")))
                         .c_str());
     lv_label_set_text(s_cogt_label,
                       (String("COGT:                            ")
