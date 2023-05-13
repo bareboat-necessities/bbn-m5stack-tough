@@ -154,6 +154,22 @@ extern "C" {
       }
     }
 
+    // derive drift and set
+    if (fresh(shipDataModel.navigation.speed_through_water.age)
+        && fresh(shipDataModel.navigation.speed_over_ground.age)
+        && fresh(shipDataModel.navigation.course_over_ground_true.age)
+        && fresh(shipDataModel.navigation.heading_true.age)) {
+      float spd = shipDataModel.navigation.speed_through_water.kn;
+      float sog = shipDataModel.navigation.speed_over_ground.kn;
+      if (abs(spd) > 0.01 && abs(sog) > 0.01) {
+        float angle = norm180_deg(shipDataModel.navigation.course_over_ground_true.deg - shipDataModel.navigation.heading_true.deg) * PI / 180.0;
+        float drift = sqrt(abs(sog * sog + spd * spd - 2.0 * sog * spd * cos(angle)));
+        shipDataModel.navigation.drift.kn = drift;
+        shipDataModel.navigation.drift.age = millis();
+        // TODO:
+      }
+    }
+
     // derive mag variation if unknown
     if (!fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) && abs(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg) > 0.00001) {
       if (fresh(shipDataModel.navigation.heading_true.age) && fresh(shipDataModel.navigation.heading_mag.age)) {
