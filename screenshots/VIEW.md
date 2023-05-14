@@ -1,6 +1,6 @@
 # bbn-m5stack-tough Screenshots
 
-|  |  |  |
+|  |  |  
 ![wind](wind.png "wind")
 ![gps](gps.png "gps")
 ![engine](engine.png "engine")
