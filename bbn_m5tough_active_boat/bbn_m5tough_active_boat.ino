@@ -1,6 +1,8 @@
 #define LV_HOR_RES_MAX 320
 #define LV_VER_RES_MAX 240
 
+//#define ENABLE_SCREEN_SERVER // This server sends screenshots via serial to processing.org sketch running on PC (not for production)
+
 #undef ENABLE_MPD
 //
 //
@@ -64,6 +66,12 @@ typedef struct _NetClient {
 #include "ui_screens.h"
 #include "ui_settings.h"
 #include "ui_clock.h"
+
+#ifdef ENABLE_SCREEN_SERVER // This server sends screenshots via serial to processing.org sketch running on PC
+// See https://github.com/Bodmer/TFT_eSPI/blob/master/examples/Generic/TFT_Screen_Capture/processing_sketch.ino
+// Set the baud rate in it to default M5Stack as int serial_baud_rate = 115200; 
+#include "screenServer.h"
+#endif
 
 #ifdef ENABLE_MPD // TODO:
 #include "ui_player_control.h"
@@ -274,5 +282,11 @@ void loop() {
       update_screen(*screens[page]);
       last_ui_upd = millis();
     }
+#ifdef ENABLE_SCREEN_SERVER 
+    // (not for production)
+    if (detected) {
+      screenServer0();
+    }
+#endif
   }
 }
