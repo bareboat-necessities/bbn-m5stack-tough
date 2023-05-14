@@ -5,6 +5,7 @@
 <img src="victron.png" width="330">
 <img src="gps.png" width="330">
 </p>
+<p>
 <img src="engine.png" width="330">
 <img src="rudder.png" width="330">
 <img src="sun.png" width="330">
