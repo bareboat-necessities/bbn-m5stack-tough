@@ -277,7 +277,7 @@ void loop() {
       victron_mqtt_client_loop(mqttClient);
     }
     bool detected = handle_swipe();
-    if (detected || (millis() - last_ui_upd > 250)) {  // throttle expensive UI updates, and calculations
+    if (detected || (millis() - last_ui_upd > 300)) {  // throttle expensive UI updates, and calculations
       derive_data();
       update_screen(*screens[page]);
       last_ui_upd = millis();
