@@ -1,20 +1,20 @@
 # bbn-m5stack-tough Screenshots
 
-![wind](wind.png | width=330px "wind")
-![victron](victron.png "victron")
-![gps](gps.png "gps")
-![engine](engine.png "engine")
-![rudder](rudder.png "rudder")
-![sun](sun.png "sun")
-![tanks](tanks.png "tanks")
-![autopilot](autopilot.png "autopilot")
-![clock](clock.png "clock")
-![compass](compass.png "compass")
-![bbn_logo](bbn_logo.png "bbn_logo")
-![depth](depth.png "depth")
-![heel](heel.png "heel")
-![network](network.png "network")
-![reboot](reboot.png "reboot")
-![speed](speed.png "speed")
-![trip_leg](trip_leg.png "trip_leg")
-![vessel](vessel.png "vessel")
+<img src="wind.png" width="330">
+<img src="victron.png" width="330">
+<img src="gps.png" width="330">
+<img src="engine.png" width="330">
+<img src="rudder.png" width="330">
+<img src="sun.png" width="330">
+<img src="tanks.png" width="330">
+<img src="autopilot.png" width="330">
+<img src="clock.png" width="330">
+<img src="compass.png" width="330">
+<img src="bbn_logo.png" width="330">
+<img src="depth.png" width="330">
+<img src="heel.png" width="330">
+<img src="network.png" width="330">
+<img src="reboot.png" width="330">
+<img src="speed.png" width="330">
+<img src="trip_leg.png" width="330">
+<img src="vessel.png" width="330">
