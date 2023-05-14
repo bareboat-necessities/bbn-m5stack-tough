@@ -5,11 +5,11 @@
 extern "C" {
 #endif
 
-  Gesture swipeDown("swipe down", 100, DIR_DOWN, 40);
-  Gesture swipeUp("swipe up", 100, DIR_UP, 40);
+  Gesture swipeDown("swipe down", 120, DIR_DOWN, 40);
+  Gesture swipeUp("swipe up", 120, DIR_UP, 40);
 
-  Gesture swipeLeft("swipe left", 120, DIR_LEFT, 40);
-  Gesture swipeRight("swipe right", 120, DIR_RIGHT, 40);
+  Gesture swipeLeft("swipe left", 50, DIR_LEFT, 40);
+  Gesture swipeRight("swipe right", 50, DIR_RIGHT, 40);
 
   bool swipe_vert_detected() {
     return swipeDown.wasDetected() || swipeUp.wasDetected();
