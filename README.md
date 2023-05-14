@@ -40,6 +40,10 @@ enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#de
 - MQTT (for Victron and others) (:heavy_check_mark:)
 - mDNS (:heavy_check_mark:)
 
+## Screenshots
+
+https://github.com/bareboat-necessities/bbn-m5stack-tough/blob/main/screenshots/VIEW.md
+
 ##  Implemented Displays and Instruments:
 
 - Autopilot / PyPilot Remote Control Screen :heavy_check_mark:
