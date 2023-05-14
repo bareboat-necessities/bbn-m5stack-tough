@@ -1,6 +1,6 @@
 # bbn-m5stack-tough Screenshots
 
-![wind](wind.png = 330x250 "wind")
+![wind](wind.png | 330x250 "wind")
 ![victron](victron.png "victron")
 ![gps](gps.png "gps")
 ![engine](engine.png "engine")
