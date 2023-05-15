@@ -104,32 +104,32 @@ extern "C" {
     lv_obj_align(pyp_status_label, LV_ALIGN_TOP_LEFT, 20, 30);
     lv_label_set_recolor(pyp_status_label, true);
     lv_label_set_text(pyp_status_label,
-                      (String("#ff0000 " LV_SYMBOL_OK "  #") + String("PyPilot:              ") + preferences.getString(PYP_TCP_HOST_PREF) + String(":") + String(preferences.getInt(PYP_TCP_PORT_PREF))).c_str());
+                      (String(F("#ff0000 " LV_SYMBOL_OK "  #PyPilot:              ")) + preferences.getString(PYP_TCP_HOST_PREF) + String(":") + String(preferences.getInt(PYP_TCP_PORT_PREF))).c_str());
 
     signalk_status_label = lv_label_create(parent);
     lv_obj_align(signalk_status_label, LV_ALIGN_TOP_LEFT, 20, 60);
     lv_label_set_recolor(signalk_status_label, true);
     lv_label_set_text(signalk_status_label,
-                      (String("#ff0000 " LV_SYMBOL_OK "  #") + String("SignalK:             ") + preferences.getString(SK_TCP_HOST_PREF) + String(":") + String(preferences.getInt(SK_TCP_PORT_PREF))).c_str());
+                      (String(F("#ff0000 " LV_SYMBOL_OK "  #SignalK:             ")) + preferences.getString(SK_TCP_HOST_PREF) + String(":") + String(preferences.getInt(SK_TCP_PORT_PREF))).c_str());
 
     nmea0183_status_label = lv_label_create(parent);
     lv_obj_align(nmea0183_status_label, LV_ALIGN_TOP_LEFT, 20, 90);
     lv_label_set_recolor(nmea0183_status_label, true);
     lv_label_set_text(nmea0183_status_label,
-                      (String("#ff0000 " LV_SYMBOL_OK "  #") + String("NMEA 0183:       ") + preferences.getString(NMEA0183_TCP_HOST_PREF) + String(":") + String(preferences.getInt(NMEA0183_TCP_PORT_PREF))).c_str());
+                      (String(F("#ff0000 " LV_SYMBOL_OK "  #NMEA 0183:       ")) + preferences.getString(NMEA0183_TCP_HOST_PREF) + String(":") + String(preferences.getInt(NMEA0183_TCP_PORT_PREF))).c_str());
 
     venus_mqtt_status_label = lv_label_create(parent);
     lv_obj_align(venus_mqtt_status_label, LV_ALIGN_TOP_LEFT, 20, 120);
     lv_label_set_recolor(venus_mqtt_status_label, true);
     lv_label_set_text(venus_mqtt_status_label,
-                      (String("#ff0000 " LV_SYMBOL_OK "  #") + String("Venus MQTT:    ") + preferences.getString(VENUS_MQTT_HOST_PREF) + String(":") + String(preferences.getInt(VENUS_MQTT_PORT_PREF))).c_str());
+                      (String(F("#ff0000 " LV_SYMBOL_OK "  #Venus MQTT:    ")) + preferences.getString(VENUS_MQTT_HOST_PREF) + String(":") + String(preferences.getInt(VENUS_MQTT_PORT_PREF))).c_str());
 
 #ifdef ENABLE_MPD // TODO:
     mpd_status_label = lv_label_create(parent);
     lv_obj_align(mpd_status_label, LV_ALIGN_TOP_LEFT, 20, 150);
     lv_label_set_recolor(mpd_status_label, true);
     lv_label_set_text(mpd_status_label,
-                      (String("#ff0000 " LV_SYMBOL_OK "  #") + String("MPD:                  ") + preferences.getString(MPD_TCP_HOST_PREF) + String(":") + String(preferences.getInt(MPD_TCP_PORT_PREF))).c_str());
+                      (String(F("#ff0000 " LV_SYMBOL_OK "  #MPD:                  ")) + preferences.getString(MPD_TCP_HOST_PREF) + String(":") + String(preferences.getInt(MPD_TCP_PORT_PREF))).c_str());
 #endif
 
     lv_obj_t *btn_erase = lv_btn_create(parent);
@@ -158,27 +158,27 @@ extern "C" {
 
   static void dev_status_update_cb() {
     lv_label_set_text(pyp_status_label,
-                      ((pypClient.c.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
-                                                : String("#ff0000 " LV_SYMBOL_OK "  #"))
-                       + String("PyPilot:              ") + preferences.getString(PYP_TCP_HOST_PREF)
+                      ((pypClient.c.connected() ? String(F("#00ff00 " LV_SYMBOL_OK "  #"))
+                                                : String(F("#ff0000 " LV_SYMBOL_OK "  #")))
+                       + String(F("PyPilot:              ")) + preferences.getString(PYP_TCP_HOST_PREF)
                        + String(":") + String(preferences.getInt(PYP_TCP_PORT_PREF)))
                         .c_str());
     lv_label_set_text(signalk_status_label,
-                      ((skClient.c.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
-                                               : String("#ff0000 " LV_SYMBOL_OK "  #"))
-                       + String("SignalK:             ") + preferences.getString(SK_TCP_HOST_PREF)
+                      ((skClient.c.connected() ? String(F("#00ff00 " LV_SYMBOL_OK "  #"))
+                                               : String(F("#ff0000 " LV_SYMBOL_OK "  #")))
+                       + String(F("SignalK:             ")) + preferences.getString(SK_TCP_HOST_PREF)
                        + String(":") + String(preferences.getInt(SK_TCP_PORT_PREF)))
                         .c_str());
     lv_label_set_text(nmea0183_status_label,
-                      ((nmea0183Client.c.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
-                                                     : String("#ff0000 " LV_SYMBOL_OK "  #"))
-                       + String("NMEA 0183:       ") + preferences.getString(NMEA0183_TCP_HOST_PREF)
+                      ((nmea0183Client.c.connected() ? String(F("#00ff00 " LV_SYMBOL_OK "  #"))
+                                                     : String(F("#ff0000 " LV_SYMBOL_OK "  #")))
+                       + String(F("NMEA 0183:       ")) + preferences.getString(NMEA0183_TCP_HOST_PREF)
                        + String(":") + String(preferences.getInt(NMEA0183_TCP_PORT_PREF)))
                         .c_str());
     lv_label_set_text(venus_mqtt_status_label,
-                      ((mqttNetClient.connected() && mqttClient.connected() ? String("#00ff00 " LV_SYMBOL_OK "  #")
-                                                                            : String("#ff0000 " LV_SYMBOL_OK "  #"))
-                       + String("Venus MQTT:    ") + preferences.getString(VENUS_MQTT_HOST_PREF)
+                      ((mqttNetClient.connected() && mqttClient.connected() ? String(F("#00ff00 " LV_SYMBOL_OK "  #"))
+                                                                            : String(F("#ff0000 " LV_SYMBOL_OK "  #")))
+                       + String(F("Venus MQTT:    ")) + preferences.getString(VENUS_MQTT_HOST_PREF)
                        + String(":") + String(preferences.getInt(VENUS_MQTT_PORT_PREF)))
                         .c_str());
   }
