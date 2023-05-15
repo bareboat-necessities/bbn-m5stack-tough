@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-  void set_vessel_nav_state(String val) {
+  void set_vessel_nav_state(String& val) {
     if (val == "moored") {
       shipDataModel.navigation.state.st = nav_state_e::NS_MOORED;
       shipDataModel.navigation.state.age = millis();
