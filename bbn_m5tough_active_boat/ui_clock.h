@@ -21,16 +21,24 @@ extern "C" {
    */
   static void lv_clock_display(lv_obj_t *parent) {
     clock_display = lv_meter_create(parent);
-    lv_obj_set_size(clock_display, 220, 220);
+    lv_obj_set_style_pad_all(clock_display, 5, LV_PART_MAIN);
+
+    lv_obj_set_size(clock_display, 200, 200);
     lv_obj_center(clock_display);
 
     labelDate = lv_label_create(parent);
     lv_obj_set_pos(labelDate, 10, 10);
-    lv_obj_align(labelDate, LV_ALIGN_TOP_LEFT, 6, 6);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(labelDate, &lv_font_montserrat_20, 0);
+#endif
+    lv_obj_align(labelDate, LV_ALIGN_TOP_LEFT, 2, 2);
 
     labelTime = lv_label_create(parent);
     lv_obj_set_pos(labelTime, 250, 10);
-    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 254, 6);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(labelTime, &lv_font_montserrat_20, 0);
+#endif
+    lv_obj_align(labelTime, LV_ALIGN_TOP_LEFT, 230, 2);
 
     /*Create a scale for the minutes*/
     /*61 ticks in a 360 degrees range (the last and the first line overlaps)*/
