@@ -117,9 +117,9 @@ https://github.com/bareboat-necessities/bbn-m5stack-tough/blob/main/screenshots/
 
 ## Using command line to upload firmware
 
-''''
+````
 python3 "/home/mikhail/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py" --chip esp32 --port "/dev/ttyACM0" --baud 921600  --before default_reset --after hard_reset write_flash  -z --flash_mode dio --flash_freq 80m --flash_size 16MB 0x1000 "/tmp/arduino/sketches/A66A0AC689D0AC38AD0D0C61A0F83B35/bbn_m5tough_active_boat.ino.bootloader.bin" 0x8000 "/tmp/arduino/sketches/A66A0AC689D0AC38AD0D0C61A0F83B35/bbn_m5tough_active_boat.ino.partitions.bin" 0xe000 "/home/mikhail/.arduino15/packages/esp32/hardware/esp32/2.0.9/tools/partitions/boot_app0.bin" 0x10000 "/tmp/arduino/sketches/A66A0AC689D0AC38AD0D0C61A0F83B35/bbn_m5tough_active_boat.ino.bin" 
-''''
+````
 
 
 ## Related projects:
