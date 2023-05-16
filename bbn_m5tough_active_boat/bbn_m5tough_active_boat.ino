@@ -202,6 +202,11 @@ void setup() {
   init_theme();
   rtc_begin();
 
+  page = restore_page();
+  if (page < 0 || page >= pages_count) {
+    page = 0;
+  }
+
   settingUpWiFi([]() {
     init_dateTime();
 
@@ -281,6 +286,7 @@ void loop() {
   if (!settingMode) {
     if (last_touched > 0 && millis() - last_touched > GO_SLEEP_TIMEOUT) {
       disconnect_clients();
+      save_page(page);
       deep_sleep_with_touch_wakeup();
     } else {
       if (victron_mqtt_began) {
