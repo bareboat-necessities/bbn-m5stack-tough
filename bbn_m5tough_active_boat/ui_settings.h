@@ -33,6 +33,20 @@ extern "C" {
     }
   }
 
+  static void save_page(int page) {
+    preferences.end();
+    preferences.begin("scr-cfg", false);
+    preferences.putInt("PAGE", page);
+    preferences.end();
+  }
+
+  static int restore_page() {
+    preferences.begin("scr-cfg", false);
+    int page = preferences.getInt("PAGE");
+    preferences.end();
+    return page;
+  }
+
   void lv_lcd_settings(lv_obj_t *parent) {
     lcd_conf_obj = lv_obj_create(parent);
     lv_obj_center(lcd_conf_obj);
