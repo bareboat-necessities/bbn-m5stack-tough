@@ -32,7 +32,7 @@ extern "C" {
   }
 
   static void btnReboot_event(lv_event_t *event) {
-    ESP.restart();
+    ESP_restart();
   }
 
   static void lv_reboot_display(lv_obj_t *parent) {
