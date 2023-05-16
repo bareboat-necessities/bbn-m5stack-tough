@@ -98,7 +98,7 @@ extern "C" {
 
   void lv_connect_wifi_win(int i) {
     lv_obj_t *win = lv_win_create(lv_scr_act(), 28);
-    lv_win_add_title(win, " Wi-Fi Password:");
+    lv_win_add_title(win, (String(" Wi-Fi Password: ") + String(WiFi.SSID(i)).substring(0, 9) + "...").c_str());
     lv_obj_t *btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE, 28);
     lv_obj_add_event_cb(btn, lv_win_close_event_cb, LV_EVENT_PRESSED, win);
     lv_obj_t *cont = lv_win_get_content(win); /*Content can be added here*/    
