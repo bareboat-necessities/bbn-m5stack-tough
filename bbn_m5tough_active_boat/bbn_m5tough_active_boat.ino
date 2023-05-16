@@ -44,6 +44,9 @@
 // config store.
 Preferences preferences;
 
+static String wifi_ssid;      // Store the name of the wireless network.
+static String wifi_password;  // Store the password of the wireless network.
+
 #include <ArduinoJson.h>
 #undef min(a, b)
 #include <ReactESP.h>  // https://github.com/mairas/ReactESP
@@ -52,6 +55,13 @@ typedef struct _NetClient {
   WiFiClient c = WiFiClient();
   unsigned long lastActivity = 0U;
 } NetClient;
+
+NetClient nmea0183Client;
+NetClient skClient;
+NetClient pypClient;
+WiFiClient mqttNetClient;
+MQTTClient mqttClient = MQTTClient(4096);  // Data loss if buffer is not enough
+static bool victron_mqtt_began = false;
 
 #include "keepalive.h"
 #include "hw_brightness.h"
@@ -82,6 +92,7 @@ typedef struct _NetClient {
 
 #include "ui_keyboard.h"
 #include "ui_settings_wifi.h"
+#include "ui_reboot.h"
 
 using namespace reactesp;
 ReactESP app;
@@ -108,14 +119,6 @@ WMM_Tinier myDeclination;
 #include "pypilot_parse.h"
 #include "net_pypilot.h"
 
-NetClient nmea0183Client;
-NetClient skClient;
-NetClient pypClient;
-WiFiClient mqttNetClient;
-MQTTClient mqttClient = MQTTClient(4096);  // Data loss if buffer is not enough
-static bool victron_mqtt_began = false;
-
-#include "ui_reboot.h"
 #include "ui_ip_add_editor.h"
 #include "ui_mem_cpu_net_stat.h"
 #include "ui_compass.h"
