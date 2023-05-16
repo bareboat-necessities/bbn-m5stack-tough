@@ -8,6 +8,7 @@ extern "C" {
   lv_updatable_screen_t rebootScreen;
 
   static void btnPowerOff_event(lv_event_t *event) {
+    disconnect_clients();
     M5.Axp.PowerOff();
   }
 
