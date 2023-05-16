@@ -13,6 +13,7 @@ extern "C" {
   static lv_disp_draw_buf_t draw_buf;
   static lv_disp_drv_t disp_drv;    // Descriptor of a display driver
   static lv_indev_drv_t indev_drv;  // Descriptor of a touch driver
+  static unsigned long last_touched;
 
   M5Display *tft;
 
@@ -71,6 +72,7 @@ extern "C" {
       data->state = LV_INDEV_STATE_PRESSED;
       data->point.x = pos.x;
       data->point.y = pos.y;
+      last_touched = millis();
     }
   }
 
@@ -80,6 +82,7 @@ extern "C" {
     indev_drv.type = LV_INDEV_TYPE_POINTER;
     indev_drv.read_cb = my_touchpad_read;
     lv_indev_drv_register(&indev_drv);  // register
+    last_touched = millis();
   }
 
 #ifdef __cplusplus
