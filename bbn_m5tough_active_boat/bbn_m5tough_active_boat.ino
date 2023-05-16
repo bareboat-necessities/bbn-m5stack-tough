@@ -224,8 +224,6 @@ void setup() {
     init_devStatusScreen();
     init_vesselScreen();
 
-    //WiFi.setSleep(WIFI_PS_NONE);
-
     init_screen(*screens[page]);
     lv_scr_load(screens[page]->screen);
 
