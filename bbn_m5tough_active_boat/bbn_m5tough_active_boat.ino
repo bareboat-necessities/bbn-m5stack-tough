@@ -10,7 +10,7 @@
 //
 //   /* clang-format off */
 //   #if 1 /*Set it to "1" to enable content*/
-// 
+//
 //   #define LV_COLOR_DEPTH 16
 //
 //   #define LV_COLOR_SCREEN_TRANSP 1
@@ -57,6 +57,7 @@ typedef struct _NetClient {
 #include "hw_brightness.h"
 #include "hw_rtc.h"
 #include "hw_sound.h"
+#include "hw_sleep.h"
 #include "net_ntp_time.h"
 #include "net_mdns.h"
 #include "net_http.h"
@@ -67,13 +68,13 @@ typedef struct _NetClient {
 #include "ui_settings.h"
 #include "ui_clock.h"
 
-#ifdef ENABLE_SCREEN_SERVER // This server sends screenshots via serial to processing.org sketch running on PC
+#ifdef ENABLE_SCREEN_SERVER  // This server sends screenshots via serial to processing.org sketch running on PC
 // See https://github.com/Bodmer/TFT_eSPI/blob/master/examples/Generic/TFT_Screen_Capture/processing_sketch.ino
-// Set the baud rate in it to default M5Stack as int serial_baud_rate = 115200; 
+// Set the baud rate in it to default M5Stack as int serial_baud_rate = 115200;
 #include "screenServer.h"
 #endif
 
-#ifdef ENABLE_MPD // TODO:
+#ifdef ENABLE_MPD  // TODO:
 #include "ui_player_control.h"
 #endif
 
@@ -112,7 +113,7 @@ NetClient nmea0183Client;
 NetClient skClient;
 NetClient pypClient;
 WiFiClient mqttNetClient;
-MQTTClient mqttClient = MQTTClient(4096); // Data loss if buffer is not enough
+MQTTClient mqttClient = MQTTClient(4096);  // Data loss if buffer is not enough
 static bool victron_mqtt_began = false;
 
 #include "ui_ip_add_editor.h"
@@ -133,13 +134,13 @@ static bool victron_mqtt_began = false;
 #include "ui_vessel_info.h"
 
 lv_updatable_screen_t* screens[] = {
-  
+
   &windScreen,
   &heelScreen,
   &rudderScreen,
   &engineScreen,
   &autopilotScreen,
-#ifdef ENABLE_MPD // TODO:
+#ifdef ENABLE_MPD  // TODO:
   &playerScreen,
 #endif
   &victronScreen,
@@ -178,7 +179,7 @@ void prev_page() {
 
 bool handle_swipe() {
   if (swipe_vert_detected()) {
-    toggle_ui_theme(); 
+    toggle_ui_theme();
     return true;
   } else if (swipe_right_detected()) {
     next_page();
@@ -200,7 +201,7 @@ void setup() {
 
   settingUpWiFi([]() {
     init_dateTime();
-    
+
     init_windScreen();
     init_weatherScreen();
     init_engineScreen();
@@ -208,7 +209,7 @@ void setup() {
     init_speedScreen();
     init_depthScreen();
     init_clockScreen();
-#ifdef ENABLE_MPD // TODO:
+#ifdef ENABLE_MPD  // TODO:
     init_playerScreen();
 #endif
     init_victronScreen();
@@ -222,7 +223,9 @@ void setup() {
     init_rebootScreen();
     init_devStatusScreen();
     init_vesselScreen();
-  
+
+    //WiFi.setSleep(WIFI_PS_NONE);
+
     init_screen(*screens[page]);
     lv_scr_load(screens[page]->screen);
 
@@ -264,6 +267,8 @@ void setup() {
 
 unsigned long last_ui_upd = 0;
 
+#define GO_SLEEP_TIMEOUT 1800000ul
+
 void loop() {
   M5.update();
   lv_task_handler();
@@ -273,20 +278,24 @@ void loop() {
 #endif
 
   if (!settingMode) {
-    if (victron_mqtt_began) {
-      victron_mqtt_client_loop(mqttClient);
-    }
-    bool detected = handle_swipe();
-    if (detected || (millis() - last_ui_upd > 300)) {  // throttle expensive UI updates, and calculations
-      derive_data();
-      update_screen(*screens[page]);
-      last_ui_upd = millis();
-    }
-#ifdef ENABLE_SCREEN_SERVER 
-    // (not for production)
-    if (detected) {
-      screenServer0();
-    }
+    if (last_touched > 0 && millis() - last_touched > GO_SLEEP_TIMEOUT) {
+      deep_sleep_with_touch_wakeup();
+    } else {
+      if (victron_mqtt_began) {
+        victron_mqtt_client_loop(mqttClient);
+      }
+      bool detected = handle_swipe();
+      if (detected || (millis() - last_ui_upd > 300)) {  // throttle expensive UI updates, and calculations
+        derive_data();
+        update_screen(*screens[page]);
+        last_ui_upd = millis();
+      }
+#ifdef ENABLE_SCREEN_SERVER
+      // (not for production)
+      if (detected) {
+        screenServer0();
+      }
 #endif
+    }
   }
 }
