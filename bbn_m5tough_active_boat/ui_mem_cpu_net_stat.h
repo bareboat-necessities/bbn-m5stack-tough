@@ -85,7 +85,7 @@ extern "C" {
     lv_event_code_t code = lv_event_get_code(e);
     if (code == LV_EVENT_LONG_PRESSED) {
       erase_mdns_lookups();
-      ESP.restart();
+      ESP_restart();
     }
   }
 
