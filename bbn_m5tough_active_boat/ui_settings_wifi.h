@@ -24,7 +24,7 @@ extern "C" {
   static void btnResetWiFiSettings_event(lv_event_t *event) {
     preferences.remove("WIFI_SSID");
     preferences.remove("WIFI_PASSWD");
-    ESP.restart();
+    ESP_restart();
   }
 
   void wifi_connected(void (*on_connected)()) {
