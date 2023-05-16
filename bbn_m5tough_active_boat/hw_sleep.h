@@ -11,7 +11,7 @@ extern "C" {
     gpio_deep_sleep_hold_en();
 
     M5.Lcd.writecommand(ILI9341_DISPOFF);
-    M5.Lcd.setBrightness(0);
+    set_lcd_backlight_voltage(0);
 
     esp_deep_sleep_start();
   }
