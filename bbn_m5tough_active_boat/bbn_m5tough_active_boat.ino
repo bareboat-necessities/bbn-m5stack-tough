@@ -277,6 +277,18 @@ void loop() {
 
   if (!settingMode) {
     if (last_touched > 0 && millis() - last_touched > GO_SLEEP_TIMEOUT) {
+      if (skClient.c.connected()) {
+        skClient.c.stop();
+      }
+      if (pypClient.c.connected()) {
+        pypClient.c.stop();
+      }
+      if (nmea0183Client.c.connected()) {
+        nmea0183Client.c.stop();
+      }
+      if (mqttNetClient.connected()) {
+        mqttNetClient.stop();
+      }
       deep_sleep_with_touch_wakeup();
     } else {
       if (victron_mqtt_began) {
