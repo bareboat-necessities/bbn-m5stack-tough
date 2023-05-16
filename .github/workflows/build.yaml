@@ -33,3 +33,7 @@ jobs:
         sketch-names-find-start: bbn_m5tough_active_boat/*
         extra-arduino-cli-args: "--warnings default"
         set-build-path: true
+
+    - name: Make zip
+      run: |
+        ls /home/runner/work/bbn-m5stack-tough/bbn-m5stack-tough/bbn_m5tough_active_boat/build/*.bin | zip bbn_m5tough_active_boat_bin-$(date +%Y-%m-%d).zip -@
