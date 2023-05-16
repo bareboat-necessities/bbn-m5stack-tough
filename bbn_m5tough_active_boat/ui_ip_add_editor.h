@@ -188,7 +188,7 @@ extern "C" {
         preferences.putInt(NMEA0183_TCP_PORT_PREF, editor_port);
       }
       lv_ip_addr_editor_hide();
-      ESP.restart();
+      ESP_restart();
     }
   }
 
