@@ -29,7 +29,7 @@ extern "C" {
         preferences.putBool("ROTATE", true);
       }
       preferences.end();
-      ESP.restart();
+      ESP_restart();
     }
   }
 
