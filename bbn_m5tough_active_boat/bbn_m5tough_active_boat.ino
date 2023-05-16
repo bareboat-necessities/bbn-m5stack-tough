@@ -82,7 +82,6 @@ typedef struct _NetClient {
 
 #include "ui_keyboard.h"
 #include "ui_settings_wifi.h"
-#include "ui_reboot.h"
 
 using namespace reactesp;
 ReactESP app;
@@ -116,6 +115,7 @@ WiFiClient mqttNetClient;
 MQTTClient mqttClient = MQTTClient(4096);  // Data loss if buffer is not enough
 static bool victron_mqtt_began = false;
 
+#include "ui_reboot.h"
 #include "ui_ip_add_editor.h"
 #include "ui_mem_cpu_net_stat.h"
 #include "ui_compass.h"
@@ -277,18 +277,7 @@ void loop() {
 
   if (!settingMode) {
     if (last_touched > 0 && millis() - last_touched > GO_SLEEP_TIMEOUT) {
-      if (skClient.c.connected()) {
-        skClient.c.stop();
-      }
-      if (pypClient.c.connected()) {
-        pypClient.c.stop();
-      }
-      if (nmea0183Client.c.connected()) {
-        nmea0183Client.c.stop();
-      }
-      if (mqttNetClient.connected()) {
-        mqttNetClient.stop();
-      }
+      disconnect_clients();
       deep_sleep_with_touch_wakeup();
     } else {
       if (victron_mqtt_began) {
