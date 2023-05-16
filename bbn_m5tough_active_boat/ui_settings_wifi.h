@@ -6,8 +6,6 @@ extern "C" {
 #endif
 
   boolean settingMode;
-  static String wifi_ssid;      // Store the name of the wireless network.
-  static String wifi_password;  // Store the password of the wireless network.
 
   static lv_obj_t *list_wifi;
 
