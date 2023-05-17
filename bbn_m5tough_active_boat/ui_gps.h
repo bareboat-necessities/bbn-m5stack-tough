@@ -60,11 +60,11 @@ extern "C" {
   }
 
   static String lat_print(float lat_deg) {
-    return String(lat_deg, 6) + String(LV_SYMBOL_DEGREES);
+    return String(lat_deg, 6) += LV_SYMBOL_DEGREES;
   }
 
   static String lon_print(float lon_deg) {
-    return String(lon_deg, 6) + String(LV_SYMBOL_DEGREES);
+    return String(lon_deg, 6) += LV_SYMBOL_DEGREES;
   }
 
   static String time_format(tm &t) {
@@ -76,23 +76,23 @@ extern "C" {
   static void gps_update_cb() {
     lv_label_set_text(gps_time_label,
                       (String("GPS Time:          ")
-                       + (fresh(shipDataModel.environment.time_gps.age) ? time_format(shipDataModel.environment.time_gps.t) : String("--")))
+                       += (fresh(shipDataModel.environment.time_gps.age) ? time_format(shipDataModel.environment.time_gps.t) : String("--")))
                         .c_str());
     lv_label_set_text(gps_lat_label,
                       (String("LAT:                      ")
-                       + (fresh(shipDataModel.navigation.position.lat.age) ? lat_print(shipDataModel.navigation.position.lat.deg) : String("--")))
+                       += (fresh(shipDataModel.navigation.position.lat.age) ? lat_print(shipDataModel.navigation.position.lat.deg) : String("--")))
                         .c_str());
     lv_label_set_text(gps_lon_label,
                       (String("LON:                    ")
-                       + (fresh(shipDataModel.navigation.position.lon.age) ? lon_print(shipDataModel.navigation.position.lon.deg) : String("--")))
+                       += (fresh(shipDataModel.navigation.position.lon.age) ? lon_print(shipDataModel.navigation.position.lon.deg) : String("--")))
                         .c_str());
     lv_label_set_text(gps_cogt_label,
                       (String("COGT:                  ")
-                       + (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 1) + String(LV_SYMBOL_DEGREES) : String("--")))
+                       += (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 1) += LV_SYMBOL_DEGREES : String("--")))
                         .c_str());
     lv_label_set_text(gps_cogm_label,
                       (String("COGM:                 ")
-                       + (fresh(shipDataModel.navigation.course_over_ground_mag.age) ? String(shipDataModel.navigation.course_over_ground_mag.deg, 1) + String(LV_SYMBOL_DEGREES) : String("--")))
+                       += (fresh(shipDataModel.navigation.course_over_ground_mag.age) ? String(shipDataModel.navigation.course_over_ground_mag.deg, 1) += LV_SYMBOL_DEGREES : String("--")))
                         .c_str());
   }
 
