@@ -85,25 +85,6 @@ extern "C" {
     lv_obj_set_style_text_font(vessel_nav_status_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(vessel_nav_status_label, "Nav State:");
-
-    lv_label_set_text(vessel_name_label,
-                      ((isSet(shipDataModel.vessel.name) ? String(shipDataModel.vessel.name) : String("--")))
-                        .c_str());
-    lv_label_set_text(vessel_mmsi_label,
-                      (String(F("MMSI:     ")) += (isSet(shipDataModel.vessel.mmsi) ? String(shipDataModel.vessel.mmsi) : String("--")))
-                        .c_str());
-    lv_label_set_text(vessel_length_label,
-                      (String(F("Length:            ")) += (shipDataModel.design.length.m > 0 ? String(shipDataModel.design.length.m * _GPS_FEET_PER_METER, 1) += "'" : String("--")))
-                        .c_str());
-    lv_label_set_text(vessel_draft_label,
-                      (String(F("Draft:                ")) += (shipDataModel.design.draft.m > 0 ? String(shipDataModel.design.draft.m * _GPS_FEET_PER_METER, 1) += "'" : String("--")))
-                        .c_str());
-    lv_label_set_text(vessel_beam_label,
-                      (String(F("Beam:               ")) += (shipDataModel.design.beam.m > 0 ? String(shipDataModel.design.beam.m * _GPS_FEET_PER_METER, 1) += "'" : String("--")))
-                        .c_str());
-    lv_label_set_text(vessel_air_height_label,
-                      (String(F("Air Height:      ")) += (shipDataModel.design.air_height.m > 0 ? String(shipDataModel.design.air_height.m * _GPS_FEET_PER_METER, 1) += "'" : String("--")))
-                        .c_str());
   }
 
   String navStateToStr(nav_state_e st) {
@@ -127,6 +108,24 @@ extern "C" {
                        += (fresh(shipDataModel.navigation.state.age, 600000)
                             ? (navStateToStr(shipDataModel.navigation.state.st))
                             : String("--")))
+                        .c_str());
+    lv_label_set_text(vessel_name_label,
+                      ((isSet(shipDataModel.vessel.name) ? String(shipDataModel.vessel.name) : String("--")))
+                        .c_str());
+    lv_label_set_text(vessel_mmsi_label,
+                      (String(F("MMSI:     ")) += (isSet(shipDataModel.vessel.mmsi) ? String(shipDataModel.vessel.mmsi) : String("--")))
+                        .c_str());
+    lv_label_set_text(vessel_length_label,
+                      (String(F("Length:            ")) += (shipDataModel.design.length.m > 0 ? String(shipDataModel.design.length.m * _GPS_FEET_PER_METER, 1) += "'" : String("--")))
+                        .c_str());
+    lv_label_set_text(vessel_draft_label,
+                      (String(F("Draft:                ")) += (shipDataModel.design.draft.m > 0 ? String(shipDataModel.design.draft.m * _GPS_FEET_PER_METER, 1) += "'" : String("--")))
+                        .c_str());
+    lv_label_set_text(vessel_beam_label,
+                      (String(F("Beam:               ")) += (shipDataModel.design.beam.m > 0 ? String(shipDataModel.design.beam.m * _GPS_FEET_PER_METER, 1) += "'" : String("--")))
+                        .c_str());
+    lv_label_set_text(vessel_air_height_label,
+                      (String(F("Air Height:      ")) += (shipDataModel.design.air_height.m > 0 ? String(shipDataModel.design.air_height.m * _GPS_FEET_PER_METER, 1) += "'" : String("--")))
                         .c_str());
   }
 
