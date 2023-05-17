@@ -105,7 +105,7 @@ extern "C" {
                       (String("GWS:\n") += (fresh(shipDataModel.environment.wind.ground_wind_speed.age) ? String(shipDataModel.environment.wind.ground_wind_speed.kn, 1) += " kt" : String("-- kt")))
                         .c_str());
     lv_label_set_text(gwdt_label,
-                      (String("GWD:\n") += (fresh(shipDataModel.environment.wind.ground_wind_dir_true.age) ? String(shipDataModel.environment.wind.ground_wind_dir_true.deg, 0) + LV_SYMBOL_DEGREES "t" : String("--" LV_SYMBOL_DEGREES "t")))
+                      (String("GWD:\n") += (fresh(shipDataModel.environment.wind.ground_wind_dir_true.age) ? String(shipDataModel.environment.wind.ground_wind_dir_true.deg, 0) += LV_SYMBOL_DEGREES "t" : String("--" LV_SYMBOL_DEGREES "t")))
                         .c_str());
     set_wind_value(indic_wind, fresh(shipDataModel.environment.wind.apparent_wind_angle.age) ? shipDataModel.environment.wind.apparent_wind_angle.deg : 0);
     set_wind_value(indic_gwa_wind, fresh(shipDataModel.environment.wind.ground_wind_angle.age) ? shipDataModel.environment.wind.ground_wind_angle.deg : 0);
