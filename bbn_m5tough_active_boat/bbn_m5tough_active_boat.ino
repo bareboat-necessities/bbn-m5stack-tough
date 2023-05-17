@@ -239,25 +239,25 @@ void setup() {
 
     static String signalk_tcp_host = preferences.getString(SK_TCP_HOST_PREF);
     static int signalk_tcp_port = preferences.getInt(SK_TCP_PORT_PREF);
-    if (signalk_tcp_host.length() > 0 && signalk_tcp_port > 0) {
+    if (signalk_tcp_host.length() > 0 && signalk_tcp_port > 0 && !signalk_tcp_host.equals(BLANK_IP)) {
       signalk_begin(skClient, signalk_tcp_host.c_str(), signalk_tcp_port);  // Connect to the SignalK TCP server
     }
 
     static String pypilot_tcp_host = preferences.getString(PYP_TCP_HOST_PREF);
     static int pypilot_tcp_port = preferences.getInt(PYP_TCP_PORT_PREF);
-    if (pypilot_tcp_host.length() > 0 && pypilot_tcp_port > 0) {
+    if (pypilot_tcp_host.length() > 0 && pypilot_tcp_port > 0 && !pypilot_tcp_host.equals(BLANK_IP)) {
       pypilot_begin(pypClient, pypilot_tcp_host.c_str(), pypilot_tcp_port);  // Connect to the PyPilot TCP server
     }
 
     static String nmea0183_tcp_host = preferences.getString(NMEA0183_TCP_HOST_PREF);
     static int nmea0183_tcp_port = preferences.getInt(NMEA0183_TCP_PORT_PREF);
-    if (nmea0183_tcp_host.length() > 0 && nmea0183_tcp_port > 0) {
+    if (nmea0183_tcp_host.length() > 0 && nmea0183_tcp_port > 0 && !nmea0183_tcp_host.equals(BLANK_IP)) {
       nmea0183_tcp_begin(nmea0183Client, nmea0183_tcp_host.c_str(), nmea0183_tcp_port);  // Connect to the NMEA 0183 TCP server
     }
 
     static String victron_mqtt_host = preferences.getString(VENUS_MQTT_HOST_PREF);
     static int victron_mqtt_port = preferences.getInt(VENUS_MQTT_PORT_PREF);
-    if (victron_mqtt_host.length() > 0 && victron_mqtt_port > 0) {
+    if (victron_mqtt_host.length() > 0 && victron_mqtt_port > 0 && !victron_mqtt_host.equals(BLANK_IP)) {
       victron_mqtt_client_begin(mqttClient, mqttNetClient, victron_mqtt_host.c_str(), victron_mqtt_port);
       victron_mqtt_began = true;
     }
