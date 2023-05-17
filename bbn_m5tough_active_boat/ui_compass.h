@@ -140,14 +140,14 @@ extern "C" {
         lv_obj_set_style_transform_angle(labelWcont, (270 + rot) * 10, 0);
 
         lv_label_set_text(compass_l,
-                          (fresh(shipDataModel.navigation.heading_mag.age) ? String(shipDataModel.navigation.heading_mag.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
+                          (fresh(shipDataModel.navigation.heading_mag.age) ? String(shipDataModel.navigation.heading_mag.deg, 0) += LV_SYMBOL_DEGREES : "--").c_str());
         lv_label_set_text(compass_mag_var_l,
-                          (fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) ? String("Var:\n") + String(shipDataModel.navigation.mag_var.deg, 1) + LV_SYMBOL_DEGREES : ("Var:\n--" LV_SYMBOL_DEGREES)).c_str());
+                          (fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) ? String("Var:\n") += String(shipDataModel.navigation.mag_var.deg, 1) += LV_SYMBOL_DEGREES : ("Var:\n--" LV_SYMBOL_DEGREES)).c_str());
         lv_label_set_text(compass_hdt_l,
-                          (fresh(shipDataModel.navigation.heading_true.age) ? String("HDT:  ") + String(shipDataModel.navigation.heading_true.deg, 0) + LV_SYMBOL_DEGREES : "--").c_str());
+                          (fresh(shipDataModel.navigation.heading_true.age) ? String("HDT:  ") += String(shipDataModel.navigation.heading_true.deg, 0) += LV_SYMBOL_DEGREES : "--").c_str());
         lv_label_set_text(compass_cogt_l,
                           (String("COGT:  ")
-                           + (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 0) + String(LV_SYMBOL_DEGREES) : String("--")))
+                           += (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 0) += String(LV_SYMBOL_DEGREES) : String("--")))
                             .c_str());
       }
       last_compass_upd = millis();
