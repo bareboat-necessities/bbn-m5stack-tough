@@ -7,6 +7,8 @@
 extern "C" {
 #endif
 
+  static const char *BLANK_IP = "0.0.0.0";
+
   void setKeepAlive(WiFiClient &wclient) {
     int flags = 1;
     wclient.setSocketOption(SOL_SOCKET, SO_KEEPALIVE, (const void *)&flags, sizeof(flags));
