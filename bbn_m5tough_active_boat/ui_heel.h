@@ -74,24 +74,28 @@ extern "C" {
 
   static void heel_update_cb() {
     lv_label_set_text(pitch_label,
-                      (String("PITCH:   ")
-                       + (fresh(shipDataModel.navigation.attitude.pitch.age) ? String(shipDataModel.navigation.attitude.pitch.deg) + String(LV_SYMBOL_DEGREES) : String("--")))
+                      (String("PITCH:   ") += (fresh(shipDataModel.navigation.attitude.pitch.age)
+                                                 ? String(shipDataModel.navigation.attitude.pitch.deg) += LV_SYMBOL_DEGREES
+                                                 : String("--")))
                         .c_str());
     lv_label_set_text(heel_leeway_label,
-                      (("Leeway\n(est):\n"
-                        + (fresh(shipDataModel.navigation.leeway.age) ? String(shipDataModel.navigation.leeway.deg, 1) : String("--")))
-                       + LV_SYMBOL_DEGREES)
+                      ((String("Leeway\n(est):\n") += (fresh(shipDataModel.navigation.leeway.age)
+                                                         ? String(shipDataModel.navigation.leeway.deg, 1)
+                                                         : String("--"))) += LV_SYMBOL_DEGREES)
                         .c_str());
     lv_label_set_text(heel_drift_label,
-                      ("DFT (kt):  "
-                       + (fresh(shipDataModel.navigation.drift.age) ? String(shipDataModel.navigation.drift.kn, 1) : String("--")))
+                      (String("DFT (kt):  ") += (fresh(shipDataModel.navigation.drift.age)
+                                                   ? String(shipDataModel.navigation.drift.kn, 1)
+                                                   : String("--")))
                         .c_str());
     lv_label_set_text(heel_set_label,
-                      (("Set:\n"
-                        + (fresh(shipDataModel.navigation.set_true.age) ? String(shipDataModel.navigation.set_true.deg, 0) : String("--")))
-                       + LV_SYMBOL_DEGREES "t")
+                      ((String("Set:\n") += (fresh(shipDataModel.navigation.set_true.age)
+                                               ? String(shipDataModel.navigation.set_true.deg, 0)
+                                               : String("--"))) += (LV_SYMBOL_DEGREES "t"))
                         .c_str());
-    set_heel_value(indic_heel, fresh(shipDataModel.navigation.attitude.heel.age) ? shipDataModel.navigation.attitude.heel.deg : 0);
+    set_heel_value(indic_heel, fresh(shipDataModel.navigation.attitude.heel.age)
+                                 ? shipDataModel.navigation.attitude.heel.deg
+                                 : 0);
   }
 
   void init_heelScreen() {
