@@ -33,5 +33,5 @@
 <p>
 <img src="wifi.png" width="330">
 <img src="wifi_passw.png" width="330">
-<img src="ip.png" width="330">
+<img src="ip_edit.png" width="330">
 </p>
