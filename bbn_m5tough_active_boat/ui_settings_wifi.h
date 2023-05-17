@@ -67,6 +67,10 @@ extern "C" {
     if (code == LV_EVENT_CLICKED || code == LV_EVENT_FOCUSED) {
       /*Focus on the clicked text area*/
       if (kb != NULL) lv_keyboard_set_textarea(kb, ta);
+#ifdef ENABLE_SCREEN_SERVER
+      // (not for production)
+      screenServer0();
+#endif
     } else if (code == LV_EVENT_READY) {
       preferences.remove("WIFI_SSID");
       preferences.remove("WIFI_PASSWD");
@@ -101,7 +105,7 @@ extern "C" {
     lv_win_add_title(win, (String(" Wi-Fi Password: ") += String(WiFi.SSID(i)).substring(0, 9) += "...").c_str());
     lv_obj_t *btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE, 28);
     lv_obj_add_event_cb(btn, lv_win_close_event_cb, LV_EVENT_PRESSED, win);
-    lv_obj_t *cont = lv_win_get_content(win); /*Content can be added here*/    
+    lv_obj_t *cont = lv_win_get_content(win); /*Content can be added here*/
     lv_password_textarea(i, cont);
   }
 
@@ -109,6 +113,10 @@ extern "C" {
     lv_event_code_t code = lv_event_get_code(e);
     if (code == LV_EVENT_LONG_PRESSED) {
       int n = (int)lv_event_get_user_data(e);
+#ifdef ENABLE_SCREEN_SERVER
+      // (not for production)
+      screenServer0();
+#endif
       lv_connect_wifi_win(n);
     }
   }
@@ -149,8 +157,9 @@ extern "C" {
       }
       delay(2000);
       //wifi_connected(on_connected);
-      ESP.restart(); // can just restart for clean attempt 
-    }, WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_CONNECTED);
+      ESP.restart();  // can just restart for clean attempt
+    },
+                 WiFiEvent_t::ARDUINO_EVENT_WIFI_STA_CONNECTED);
   }
 
   boolean checkConnection() {  // Check wifi connection.
