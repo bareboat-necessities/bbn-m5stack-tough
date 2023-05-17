@@ -28,6 +28,10 @@ extern "C" {
   static void event_handler_ap_mode(lv_event_t *e) {
     lv_event_code_t code = lv_event_get_code(e);
     if (code == LV_EVENT_CLICKED) {
+#ifdef ENABLE_SCREEN_SERVER
+      // (not for production)
+      screenServer0();
+#endif
       const char *mode = (const char *)lv_event_get_user_data(e);
       pypilot_send_mode(pypClient.c, mode);
       lv_obj_add_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
