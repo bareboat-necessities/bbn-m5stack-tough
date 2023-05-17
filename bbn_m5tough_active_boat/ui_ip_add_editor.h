@@ -88,6 +88,10 @@ extern "C" {
     lv_label_set_text(ip_editor_label, label);
 
     lv_obj_clear_flag(spinboxes_parent, LV_OBJ_FLAG_HIDDEN);
+#ifdef ENABLE_SCREEN_SERVER
+    // (not for production)
+    screenServer0();
+#endif
   }
 
   static String editor_ip_address;
@@ -188,6 +192,10 @@ extern "C" {
         preferences.putInt(NMEA0183_TCP_PORT_PREF, editor_port);
       }
       lv_ip_addr_editor_hide();
+#ifdef ENABLE_SCREEN_SERVER
+      // (not for production)
+      screenServer0();
+#endif
       ESP_restart();
     }
   }
