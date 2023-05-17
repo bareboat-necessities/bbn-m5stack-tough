@@ -74,8 +74,10 @@ extern "C" {
     lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)NMEA0183_TCP_HOST_PREF);
     btn = lv_list_add_btn(data_connections_list, NULL, "VE Venus MQTT");
     lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)VENUS_MQTT_HOST_PREF);
+#ifdef ENABLE_MPD 
     btn = lv_list_add_btn(data_connections_list, NULL, "MPD Player");
     lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)MPD_TCP_HOST_PREF);
+#endif
 
     lv_ip_addr_editor(parent);
     lv_ip_addr_editor_hide();
