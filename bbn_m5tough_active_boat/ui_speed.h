@@ -69,24 +69,19 @@ extern "C" {
 
   static void speed_update_cb() {
     lv_label_set_text(sog_label,
-                      ("SOG (kt):                       "
-                       + (fresh(shipDataModel.navigation.speed_over_ground.age) ? String(shipDataModel.navigation.speed_over_ground.kn, 1) : String("--")))
+                      (String("SOG (kt):                       ") += (fresh(shipDataModel.navigation.speed_over_ground.age) ? String(shipDataModel.navigation.speed_over_ground.kn, 1) : String("--")))
                         .c_str());
     lv_label_set_text(spd_label,
-                      ("SPD (kt):                       "
-                       + (fresh(shipDataModel.navigation.speed_through_water.age) ? String(shipDataModel.navigation.speed_through_water.kn, 1) : String("--")))
+                      (String("SPD (kt):                       ") += (fresh(shipDataModel.navigation.speed_through_water.age) ? String(shipDataModel.navigation.speed_through_water.kn, 1) : String("--")))
                         .c_str());
     lv_label_set_text(leeway_label,
-                      ("Leeway (est):              "
-                        + (fresh(shipDataModel.navigation.leeway.age) ? String(shipDataModel.navigation.leeway.deg, 1) + String(LV_SYMBOL_DEGREES) : String("--")))
+                      (String("Leeway (est):              ") += (fresh(shipDataModel.navigation.leeway.age) ? String(shipDataModel.navigation.leeway.deg, 1) += LV_SYMBOL_DEGREES : String("--")))
                         .c_str());
     lv_label_set_text(s_cogt_label,
-                      (String("COGT:                            ")
-                       + (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 1) + String(LV_SYMBOL_DEGREES) : String("--")))
+                      (String("COGT:                            ") += (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 1) += LV_SYMBOL_DEGREES : String("--")))
                         .c_str());
     lv_label_set_text(s_hdt_label,
-                      (String("HDT:                               ")
-                      + (fresh(shipDataModel.navigation.heading_true.age) ? String(shipDataModel.navigation.heading_true.deg, 1) + String(LV_SYMBOL_DEGREES) : String("--")))
+                      (String("HDT:                               ") += (fresh(shipDataModel.navigation.heading_true.age) ? String(shipDataModel.navigation.heading_true.deg, 1) += LV_SYMBOL_DEGREES : String("--")))
                         .c_str());
   }
 
