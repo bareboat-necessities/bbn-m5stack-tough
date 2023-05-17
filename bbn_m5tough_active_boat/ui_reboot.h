@@ -20,7 +20,7 @@ extern "C" {
     lv_obj_t *labelIP = lv_label_create(parent);
     lv_obj_set_pos(labelIP, 10, 10);
     lv_label_set_text(labelIP,
-                      (String(" Wi-Fi:  ") += wifi_ssid += String("\n Local IP:  ") += WiFi.localIP().toString()).c_str());
+                      (String(" Wi-Fi:  ") += String(wifi_ssid) += String("\n Local IP:  ") += WiFi.localIP().toString()).c_str());
 
     lv_obj_t *btn1 = lv_btn_create(parent);
     lv_obj_t *label1 = lv_label_create(btn1);
