@@ -35,3 +35,6 @@
 <img src="wifi_passw.png" width="330">
 <img src="ip_edit.png" width="330">
 </p>
+<p>
+<img src="autopilot_mode.png" width="330">
+</p>
