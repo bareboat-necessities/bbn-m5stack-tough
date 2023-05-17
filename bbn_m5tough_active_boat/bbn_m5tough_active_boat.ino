@@ -262,7 +262,7 @@ void setup() {
       victron_mqtt_began = true;
     }
 
-    app.onDelay(400, []() {
+    app.onDelay(750, []() {
       getVesselInfo();
     });
   });
