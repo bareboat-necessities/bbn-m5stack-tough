@@ -125,8 +125,8 @@ extern "C" {
                                         ? shipDataModel.propulsion.engines[0].temp_deg_C.deg_C
                                         : 0));
     lv_label_set_text(eng_sog_label,
-                      ("SOG (kt):\n"
-                       + (fresh(shipDataModel.navigation.speed_over_ground.age) ? String(shipDataModel.navigation.speed_over_ground.kn, 1) : String("--")))
+                      (String("SOG (kt):\n")
+                       += (fresh(shipDataModel.navigation.speed_over_ground.age) ? String(shipDataModel.navigation.speed_over_ground.kn, 1) : String("--")))
                         .c_str());
   }
 
