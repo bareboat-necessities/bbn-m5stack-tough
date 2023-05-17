@@ -77,44 +77,44 @@ extern "C" {
 
   static void trip_data_update_cb() {
     lv_label_set_text(xte_label,
-                      ("XTE (nm):                 "
-                       + (fresh(shipDataModel.navigation.course_rhumbline.cross_track_error.age, 30000)
+                      (String("XTE (nm):                 ")
+                       += (fresh(shipDataModel.navigation.course_rhumbline.cross_track_error.age, 30000)
                             ? String(shipDataModel.navigation.course_rhumbline.cross_track_error.m / NM_TO_METERS, 3)
                             : String("--")))
                         .c_str());
     lv_label_set_text(brgt_label,
-                      ("BRG (t deg):            "
-                       + (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_true.age)
-                            ? String(shipDataModel.navigation.course_rhumbline.bearing_track_true.deg, 0) + LV_SYMBOL_DEGREES
+                      (String("BRG (t deg):            ")
+                       += (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_true.age)
+                            ? String(shipDataModel.navigation.course_rhumbline.bearing_track_true.deg, 0) += LV_SYMBOL_DEGREES
                             : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
     lv_label_set_text(brgm_label,
-                      ("BRG (m deg):         "
-                       + (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_mag.age)
-                            ? String(shipDataModel.navigation.course_rhumbline.bearing_track_mag.deg, 0) + LV_SYMBOL_DEGREES
+                      (String("BRG (m deg):         ")
+                       += (fresh(shipDataModel.navigation.course_rhumbline.bearing_track_mag.age)
+                            ? String(shipDataModel.navigation.course_rhumbline.bearing_track_mag.deg, 0) += LV_SYMBOL_DEGREES
                             : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
     lv_label_set_text(hdm_leg_label,
-                      ("HDM (deg):             "
-                       + (fresh(shipDataModel.navigation.heading_mag.age)
-                            ? String(shipDataModel.navigation.heading_mag.deg, 0) + LV_SYMBOL_DEGREES
+                      (String("HDM (deg):             ")
+                       += (fresh(shipDataModel.navigation.heading_mag.age)
+                            ? String(shipDataModel.navigation.heading_mag.deg, 0) += LV_SYMBOL_DEGREES
                             : String("--" LV_SYMBOL_DEGREES)))
                         .c_str());
     lv_label_set_text(vmg_label,
-                      ("VMG (kn):                 "
-                       + (fresh(shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.age, 10000)
+                      (String("VMG (kn):                 ")
+                       += (fresh(shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.age, 10000)
                             ? String(shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.kn, 2)
                             : String("--")))
                         .c_str());
     lv_label_set_text(rng_label,
-                      ("RNG (nm):                "
-                       + (fresh(shipDataModel.navigation.course_rhumbline.next_point.distance.age, 10000)
+                      (String("RNG (nm):                ")
+                       += (fresh(shipDataModel.navigation.course_rhumbline.next_point.distance.age, 10000)
                             ? String(shipDataModel.navigation.course_rhumbline.next_point.distance.m / NM_TO_METERS, 1)
                             : String("--")))
                         .c_str());
     lv_label_set_text(ttg_at_vmg_label,
-                      ("TTG@VMG (hr):      "
-                       + (fresh(shipDataModel.navigation.course_rhumbline.next_point.distance.age, 10000)
+                      (String("TTG@VMG (hr):      ")
+                       += (fresh(shipDataModel.navigation.course_rhumbline.next_point.distance.age, 10000)
                               && fresh(shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.age, 10000)
                               && shipDataModel.navigation.course_rhumbline.next_point.velocity_made_good.kn > 0.001
                             ? String(shipDataModel.navigation.course_rhumbline.next_point.distance.m / NM_TO_METERS
