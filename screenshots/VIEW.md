@@ -30,3 +30,8 @@
 <img src="trip_leg.png" width="330">
 <img src="vessel.png" width="330">
 </p>
+<p>
+<img src="wifi.png" width="330">
+<img src="wifi_passw.png" width="330">
+<img src="ip.png" width="330">
+</p>
