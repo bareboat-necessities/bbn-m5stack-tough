@@ -140,9 +140,10 @@ extern "C" {
       lv_led_set_color(autopilot_led, lv_palette_main(LV_PALETTE_GREY));
     }
     lv_label_set_text(heading_l,
-                      ("AHDG:  " + (fresh(shipDataModel.steering.autopilot.heading.age) ? String(shipDataModel.steering.autopilot.heading.deg, 0) + LV_SYMBOL_DEGREES : "--")).c_str());
+                      (String("AHDG:  ") += (fresh(shipDataModel.steering.autopilot.heading.age) 
+                      ? String(shipDataModel.steering.autopilot.heading.deg, 0) += LV_SYMBOL_DEGREES : "--")).c_str());
     lv_label_set_text(command_l,
-                      ("CMD:  " + (fresh(shipDataModel.steering.autopilot.command.age, LONG_EXPIRE_TO) ? String(shipDataModel.steering.autopilot.command.deg, 0) + LV_SYMBOL_DEGREES : "--")).c_str());
+                      (String("CMD:  ") += (fresh(shipDataModel.steering.autopilot.command.age, LONG_EXPIRE_TO) ? String(shipDataModel.steering.autopilot.command.deg, 0) += LV_SYMBOL_DEGREES : "--")).c_str());
 
     if (fresh(shipDataModel.steering.autopilot.ap_mode.age, LONG_EXPIRE_TO)) {
       if (shipDataModel.steering.autopilot.ap_mode.mode == ap_mode_e::COG_TRUE) {
