@@ -139,23 +139,23 @@ extern "C" {
   static void victron_update_cb() {
     lv_label_set_text(dc_label,
                       fresh(shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.age, TWO_MINUTES)
-                        ? (String("Batteries\n") + String(shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.pct, 1) + "%").c_str()
+                        ? (String("Batteries\n") += String(shipDataModel.electrical.sys_dc.battery.state_of_charge_pct.pct, 1) += "%").c_str()
                         : "Batteries\n--%");
     lv_label_set_text(pv_label,
                       fresh(shipDataModel.electrical.sys_dc.pv.powerW.age, 15000)
-                        ? (String("PV\n") + String(shipDataModel.electrical.sys_dc.pv.powerW.watt, 1) + " W").c_str()
+                        ? (String("PV\n") += String(shipDataModel.electrical.sys_dc.pv.powerW.watt, 1) += " W").c_str()
                         : "PV\n-- W");
     lv_label_set_text(dc_ld_label,
                       fresh(shipDataModel.electrical.sys_dc.battery.powerW.age, 15000)
-                        ? (String("DC Load\n") + String(shipDataModel.electrical.sys_dc.battery.powerW.watt, 1) + " W").c_str()
+                        ? (String("DC Load\n") += String(shipDataModel.electrical.sys_dc.battery.powerW.watt, 1) += " W").c_str()
                         : "DC Load\n-- W");
     lv_label_set_text(shore_label,
                       fresh(shipDataModel.electrical.sys_ac.active_in[0].powerW.age, 15000)
-                        ? (String("Shore\n") + String(shipDataModel.electrical.sys_ac.active_in[0].powerW.watt, 1) + " W").c_str()
+                        ? (String("Shore\n") += String(shipDataModel.electrical.sys_ac.active_in[0].powerW.watt, 1) += " W").c_str()
                         : "Shore\n-- W");
     lv_label_set_text(ac_label,
                       fresh(shipDataModel.electrical.sys_ac.consumption[0].powerW.age, 15000)
-                        ? (String("AC Load\n") + String(shipDataModel.electrical.sys_ac.consumption[0].powerW.watt, 1) + " W").c_str()
+                        ? (String("AC Load\n") += String(shipDataModel.electrical.sys_ac.consumption[0].powerW.watt, 1) += " W").c_str()
                         : "AC Load\n-- W");
   }
 
