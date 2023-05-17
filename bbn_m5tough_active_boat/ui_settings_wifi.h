@@ -98,7 +98,7 @@ extern "C" {
 
   void lv_connect_wifi_win(int i) {
     lv_obj_t *win = lv_win_create(lv_scr_act(), 28);
-    lv_win_add_title(win, (String(" Wi-Fi Password: ") + String(WiFi.SSID(i)).substring(0, 9) + "...").c_str());
+    lv_win_add_title(win, (String(" Wi-Fi Password: ") += String(WiFi.SSID(i)).substring(0, 9) += "...").c_str());
     lv_obj_t *btn = lv_win_add_btn(win, LV_SYMBOL_CLOSE, 28);
     lv_obj_add_event_cb(btn, lv_win_close_event_cb, LV_EVENT_PRESSED, win);
     lv_obj_t *cont = lv_win_get_content(win); /*Content can be added here*/    
@@ -125,8 +125,8 @@ extern "C" {
     lv_list_add_text(list_wifi, "Wi-Fi Networks");
 
     for (int i = 0; i < num; ++i) {
-      btn = lv_list_add_btn(list_wifi, (String(LV_SYMBOL_WIFI) + "  " + String(dBm_to_percents(WiFi.RSSI(i))) + "%").c_str(),
-                            (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String(LV_SYMBOL_EYE_OPEN " ") : String("")) + WiFi.SSID(i)).c_str());
+      btn = lv_list_add_btn(list_wifi, (String(LV_SYMBOL_WIFI) += String("  ") += String(dBm_to_percents(WiFi.RSSI(i))) += "%").c_str(),
+                            (((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? String(LV_SYMBOL_EYE_OPEN " ") : String("")) += WiFi.SSID(i)).c_str());
 
       lv_obj_add_event_cb(btn, event_handler_wifi, LV_EVENT_LONG_PRESSED, (void *)i);
     }
