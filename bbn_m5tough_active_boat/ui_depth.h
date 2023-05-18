@@ -84,6 +84,12 @@ extern "C" {
                             ? String(shipDataModel.navigation.attitude.heel.deg, 1) += String(LV_SYMBOL_DEGREES)
                             : String("--")))
                            .c_str());
+    lv_label_set_text(depth_gradient_label,
+                      (String("Gradient:        ")
+                       += (fresh(shipDataModel.environment.depth_gradient.age)
+                            ? String(shipDataModel.environment.depth_gradient.deg, 1) += String(LV_SYMBOL_DEGREES)
+                            : String("--")))
+                           .c_str());
   }
 
   void init_depthScreen() {
