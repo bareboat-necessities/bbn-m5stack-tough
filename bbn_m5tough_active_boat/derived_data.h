@@ -104,7 +104,11 @@ extern "C" {
         float spd = 
           distance_m(shipDataModel.navigation.position, shipDataModel.navigation.position_before) 
           / period_msec * 1000.0 / _GPS_MPS_PER_KNOT;
-        shipDataModel.navigation.speed_over_ground_avg.kn = (shipDataModel.navigation.speed_over_ground_avg.kn + (3.0 * spd)) / 4.0;
+        if (shipDataModel.navigation.speed_over_ground_avg.age == 0) {
+          shipDataModel.navigation.speed_over_ground_avg.kn = spd;
+        } else {
+          shipDataModel.navigation.speed_over_ground_avg.kn = (shipDataModel.navigation.speed_over_ground_avg.kn + (3.0 * spd)) / 4.0;
+        }
         shipDataModel.navigation.speed_over_ground_avg.age = millis();
       }
     }
