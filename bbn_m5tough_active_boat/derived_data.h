@@ -74,17 +74,38 @@ extern "C" {
     }
   }
 
+  float distance_m(position_t & pos1, position_t& pos2) {
+    return gps.distanceBetween(pos1.lat.deg, pos1.lon.deg, pos2.lat.deg, pos2.lon.deg);
+  }
+
   static void derive_data() {
-    // derive magnetic variation
     if (fresh(shipDataModel.navigation.position.lat.age)
         && fresh(shipDataModel.navigation.position.lon.age)) {
       M5.Rtc.GetDate(&RTCdate);
       float longitude = shipDataModel.navigation.position.lon.deg;
       float latitude = shipDataModel.navigation.position.lat.deg;
+      // derive magnetic variation
       float mag_var_deg = myDeclination.magneticDeclination(latitude, longitude, RTCdate.Year % 100, 1 + RTCdate.Month, RTCdate.Date);
       if (abs(mag_var_deg) > 0.00001) {  // do not trust 0
         shipDataModel.navigation.mag_var.deg = mag_var_deg;
         shipDataModel.navigation.mag_var.age = millis();
+      }
+      if (shipDataModel.navigation.position.lat.age - shipDataModel.navigation.position_before.lat.age > 15000
+          && shipDataModel.navigation.position.lon.age - shipDataModel.navigation.position_before.lon.age > 15000) {
+        shipDataModel.navigation.position_before = shipDataModel.navigation.position;
+      }
+      if (shipDataModel.navigation.position.lat.age - shipDataModel.navigation.position_before.lat.age > 5000
+          && shipDataModel.navigation.position.lon.age - shipDataModel.navigation.position_before.lon.age > 5000
+          && shipDataModel.navigation.position_before.lat.age > 0
+          && shipDataModel.navigation.position_before.lon.age > 0) {
+        unsigned long period_msec = 
+          ((shipDataModel.navigation.position.lat.age - shipDataModel.navigation.position_before.lat.age)
+          + (shipDataModel.navigation.position.lon.age - shipDataModel.navigation.position_before.lon.age)) / 2;
+        float spd = 
+          distance_m(shipDataModel.navigation.position, shipDataModel.navigation.position_before) 
+          / period_msec * 1000.0 / _GPS_MPS_PER_KNOT;
+        shipDataModel.navigation.speed_over_ground_avg.kn = (shipDataModel.navigation.speed_over_ground_avg.kn + (3.0 * spd)) / 4.0;
+        shipDataModel.navigation.speed_over_ground_avg.age = millis();
       }
     }
 
