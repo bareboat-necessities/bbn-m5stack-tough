@@ -1,64 +1,73 @@
 /******************************************************************************
-WMM_Tinier.h
-WMM_Tinier Arduino Library Header File
+WMM_Tinier.cpp
+WMM_Tinier Arduino Library C++ source
 David Armstrong
-Version 1.0.0 - August 6, 2021
+Version 1.0.1 - October 15, 2022
 https://github.com/DavidArmstrong/WMM_Tinier
 
-This file prototypes the WMM_Tinier class, as implemented in WMM_Tinier.cpp
-
 Resources:
-Uses math.h for math functions
+Uses math.h for math function
 Refer to https://github.com/miniwinwm/WMM_Tiny
 
 Development environment specifics:
 Arduino IDE 1.8.15
 
-This code is released under the [MIT License](http://opensource.org/licenses/MIT)
+This code is released under the [MIT License](http://opensource.org/licenses/MIT).
 Please review the LICENSE.md file included with this example.
 Distributed as-is; no warranty is given.
-
 ******************************************************************************/
 
-// ensure this library description is only included once
-#ifndef __WMM_Tinier_h
-#define __WMM_Tinier_h
+// include this library's description file
+#include "WMM_Tinier.h"
+#include "wmm.c"
 
-//Uncomment the following line for debugging output
-//#define debug_WMM_Tinier
-
-#include <stdint.h>
-#include <math.h>
-#include "wmm.h"
-
-#if defined(ARDUINO) && ARDUINO >= 100
-  #include "Arduino.h"
-#else
-  #include "WProgram.h"
+// Need the following define for SAMD processors
+#if defined(ARDUINO_SAMD_ZERO) && defined(SERIAL_PORT_USBVIRTUAL)
+  #define Serial SERIAL_PORT_USBVIRTUAL
 #endif
 
-// Structure to hold data
-// We need to populate this when we calculate data
-struct WMM_TinierData {
-  public:
-    float longitude;
-    float latitude;
-    float date;
-	float declination;
-};
+// Public Methods //////////////////////////////////////////////////////////
+// Start by doing any setup, and verifying that floats are supported
+boolean WMM_Tinier::begin(void) {
+  wmm_init();
+  return true;
+}
 
-// Sidereal_Planets library description
-class WMM_Tinier {
-  // user-accessible "public" interface
-  public:
-    WMM_TinierData spData;
-    boolean begin(void);
-	float decimalDegrees(int degrees, int minutes, float seconds);
-	void printDegMinSecs(float n);
-	float magneticDeclination(float Latitude, float Longitude, uint8_t year, uint8_t month, uint8_t day);
+float WMM_Tinier::decimalDegrees(int degrees, int minutes, float seconds) {
+  int sign = 1;
+  if (degrees < 0) {
+	degrees = -degrees;
+	sign = -1;
+  }
+  if (minutes < 0) {
+	minutes = -minutes;
+	sign = -1;
+  }
+  if (seconds < 0) {
+	seconds = -seconds;
+	sign = -1;
+  }
+  float decDeg = degrees + (minutes / 60.0) + (seconds / 3600.);
+  return decDeg * sign;
+}
 
-  // library-accessible "private" interface
-  private:
+void WMM_Tinier::printDegMinSecs(float n) {
+  boolean sign = (n < 0.);
+  if (sign) n = -n;
+  long lsec = n * 360000.0;
+  long deg = lsec / 360000;
+  long min = (lsec - (deg * 360000)) / 6000;
+  float secs = (lsec - (deg * 360000) - (min * 6000)) / 100.;
+  if (sign) Serial.print("-");
+  Serial.print(deg); Serial.print(":");
+  Serial.print(min); Serial.print(":");
+  Serial.print(abs(secs)); Serial.print(" ");
+}
 
-};
-#endif
+float WMM_Tinier::magneticDeclination(float Latitude, float Longitude, uint8_t year, uint8_t month, uint8_t day) {
+  //wmm_init();
+  float wmm_date = wmm_get_date(year, month, day);
+  float variation;
+  E0000(Latitude, Longitude, wmm_date, &variation);
+  return variation;
+}
