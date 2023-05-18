@@ -71,6 +71,9 @@ extern "C" {
     lv_label_set_text(sog_label,
                       (String("SOG (kt):                       ") += (fresh(shipDataModel.navigation.speed_over_ground.age) ? String(shipDataModel.navigation.speed_over_ground.kn, 1) : String("--")))
                         .c_str());
+    lv_label_set_text(sog_avg_label,
+                      (String("SOG AVG (kt):             ") += (fresh(shipDataModel.navigation.speed_over_ground_avg.age, 20000) ? String(shipDataModel.navigation.speed_over_ground_avg.kn, 1) : String("--")))
+                        .c_str());
     lv_label_set_text(spd_label,
                       (String("SPD (kt):                       ") += (fresh(shipDataModel.navigation.speed_through_water.age) ? String(shipDataModel.navigation.speed_through_water.kn, 1) : String("--")))
                         .c_str());
