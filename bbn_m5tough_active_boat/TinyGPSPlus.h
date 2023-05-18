@@ -69,8 +69,8 @@ public:
     updated = false;
     return rawLngData;
   }
-  double lat();
-  double lng();
+  float lat();
+  float lng();
 
   TinyGPSLocation()
     : valid(false), updated(false) {}
@@ -206,43 +206,43 @@ private:
 };
 
 struct TinyGPSSpeed : TinyGPSDecimal {
-  double knots() {
+  float knots() {
     return value() / 100.0;
   }
-  double mph() {
+  float mph() {
     return _GPS_MPH_PER_KNOT * value() / 100.0;
   }
-  double mps() {
+  float mps() {
     return _GPS_MPS_PER_KNOT * value() / 100.0;
   }
-  double kmph() {
+  float kmph() {
     return _GPS_KMPH_PER_KNOT * value() / 100.0;
   }
 };
 
 struct TinyGPSCourse : public TinyGPSDecimal {
-  double deg() {
+  float deg() {
     return value() / 100.0;
   }
 };
 
 struct TinyGPSAltitude : TinyGPSDecimal {
-  double meters() {
+  float meters() {
     return value() / 100.0;
   }
-  double miles() {
+  float miles() {
     return _GPS_MILES_PER_METER * value() / 100.0;
   }
-  double kilometers() {
+  float kilometers() {
     return _GPS_KM_PER_METER * value() / 100.0;
   }
-  double feet() {
+  float feet() {
     return _GPS_FEET_PER_METER * value() / 100.0;
   }
 };
 
 struct TinyGPSHDOP : TinyGPSDecimal {
-  double hdop() {
+  float hdop() {
     return value() / 100.0;
   }
 };
@@ -304,9 +304,9 @@ public:
     return _GPS_VERSION;
   }
 
-  static double distanceBetween(double lat1, double long1, double lat2, double long2);
-  static double courseTo(double lat1, double long1, double lat2, double long2);
-  static const char *cardinal(double course);
+  static float distanceBetween(float lat1, float long1, float lat2, float long2);
+  static float courseTo(float lat1, float long1, float lat2, float long2);
+  static const char *cardinal(float course);
 
   static int32_t parseDecimal(const char *term);
   static void parseDegrees(const char *term, RawDegrees &deg);
