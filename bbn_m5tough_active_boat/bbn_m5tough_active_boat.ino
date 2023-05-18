@@ -63,6 +63,10 @@ WiFiClient mqttNetClient;
 MQTTClient mqttClient = MQTTClient(4096);  // Data loss if buffer is not enough
 static bool victron_mqtt_began = false;
 
+#include "TinyGPSPlus.h"
+
+TinyGPSPlus gps;
+
 #include "keepalive.h"
 #include "hw_brightness.h"
 #include "hw_rtc.h"
@@ -109,7 +113,6 @@ WMM_Tinier myDeclination;
 
 #include "sunriset.h"
 #include "derived_data.h"
-#include "TinyGPSPlus.h"
 #include "nmea0183_parse.h"
 #include "net_nmea0183_tcp.h"
 #include "net_mqtt.h"
