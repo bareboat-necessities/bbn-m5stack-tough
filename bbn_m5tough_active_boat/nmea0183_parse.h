@@ -5,8 +5,6 @@
 extern "C" {
 #endif
 
-  TinyGPSPlus gps;
-
   // Sample: $WIMWV,27,R,00,N,A*26
   const char* wind_prefix[] = { "WIMWV", "IIMWV" };
 
