@@ -23,7 +23,7 @@ Distributed as-is; no warranty is given.
 
 // Need the following define for SAMD processors
 #if defined(ARDUINO_SAMD_ZERO) && defined(SERIAL_PORT_USBVIRTUAL)
-  #define Serial SERIAL_PORT_USBVIRTUAL
+#define Serial SERIAL_PORT_USBVIRTUAL
 #endif
 
 // Public Methods //////////////////////////////////////////////////////////
@@ -36,16 +36,16 @@ boolean WMM_Tinier::begin(void) {
 float WMM_Tinier::decimalDegrees(int degrees, int minutes, float seconds) {
   int sign = 1;
   if (degrees < 0) {
-	degrees = -degrees;
-	sign = -1;
+    degrees = -degrees;
+    sign = -1;
   }
   if (minutes < 0) {
-	minutes = -minutes;
-	sign = -1;
+    minutes = -minutes;
+    sign = -1;
   }
   if (seconds < 0) {
-	seconds = -seconds;
-	sign = -1;
+    seconds = -seconds;
+    sign = -1;
   }
   float decDeg = degrees + (minutes / 60.0) + (seconds / 3600.);
   return decDeg * sign;
@@ -59,9 +59,12 @@ void WMM_Tinier::printDegMinSecs(float n) {
   long min = (lsec - (deg * 360000)) / 6000;
   float secs = (lsec - (deg * 360000) - (min * 6000)) / 100.;
   if (sign) Serial.print("-");
-  Serial.print(deg); Serial.print(":");
-  Serial.print(min); Serial.print(":");
-  Serial.print(abs(secs)); Serial.print(" ");
+  Serial.print(deg);
+  Serial.print(":");
+  Serial.print(min);
+  Serial.print(":");
+  Serial.print(abs(secs));
+  Serial.print(" ");
 }
 
 float WMM_Tinier::magneticDeclination(float Latitude, float Longitude, uint8_t year, uint8_t month, uint8_t day) {
