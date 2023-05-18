@@ -31,12 +31,12 @@ extern "C" {
         shipDataModel.design.length.age = millis();
       }
       resp = httpGETRequest((api + "vessels/self/name/").c_str());
-      if (resp.length() > 0) {
+      if (resp.length() > 0 && resp.indexOf("<") < 0) {
         resp.replace("\"", "");
         strncpy(shipDataModel.vessel.name, resp.c_str(), sizeof(shipDataModel.vessel.name) - 1);
       }
       resp = httpGETRequest((api + "vessels/self/mmsi/").c_str());
-      if (resp.length() > 0) {
+      if (resp.length() > 0 && resp.indexOf("<") < 0) {
         resp.replace("\"", "");
         strncpy(shipDataModel.vessel.mmsi, resp.c_str(), sizeof(shipDataModel.vessel.mmsi) - 1);
       }
