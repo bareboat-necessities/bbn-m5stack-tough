@@ -74,7 +74,7 @@ extern "C" {
     }
   }
 
-  float distance_m(position_t & pos1, position_t& pos2) {
+  float distance_m(position_t& pos1, position_t& pos2) {
     return gps.distanceBetween(pos1.lat.deg, pos1.lon.deg, pos2.lat.deg, pos2.lon.deg);
   }
 
@@ -90,19 +90,22 @@ extern "C" {
         shipDataModel.navigation.mag_var.deg = mag_var_deg;
         shipDataModel.navigation.mag_var.age = millis();
       }
-      if (shipDataModel.navigation.position.lat.age - shipDataModel.navigation.position_before.lat.age > 15000
-          && shipDataModel.navigation.position.lon.age - shipDataModel.navigation.position_before.lon.age > 15000) {
+      if ((shipDataModel.navigation.position.lat.age - shipDataModel.navigation.position_before.lat.age > 15000
+           && shipDataModel.navigation.position.lon.age - shipDataModel.navigation.position_before.lon.age > 15000)
+          || shipDataModel.navigation.position_before.lat.age == 0
+          || shipDataModel.navigation.position_before.lon.age == 0) {
         shipDataModel.navigation.position_before = shipDataModel.navigation.position;
       }
       if (shipDataModel.navigation.position.lat.age - shipDataModel.navigation.position_before.lat.age > 5000
           && shipDataModel.navigation.position.lon.age - shipDataModel.navigation.position_before.lon.age > 5000
           && shipDataModel.navigation.position_before.lat.age > 0
           && shipDataModel.navigation.position_before.lon.age > 0) {
-        unsigned long period_msec = 
+        unsigned long period_msec =
           ((shipDataModel.navigation.position.lat.age - shipDataModel.navigation.position_before.lat.age)
-          + (shipDataModel.navigation.position.lon.age - shipDataModel.navigation.position_before.lon.age)) / 2;
-        float spd = 
-          distance_m(shipDataModel.navigation.position, shipDataModel.navigation.position_before) 
+           + (shipDataModel.navigation.position.lon.age - shipDataModel.navigation.position_before.lon.age))
+          / 2;
+        float spd =
+          distance_m(shipDataModel.navigation.position, shipDataModel.navigation.position_before)
           / period_msec * 1000.0 / _GPS_MPS_PER_KNOT;
         if (shipDataModel.navigation.speed_over_ground_avg.age == 0) {
           shipDataModel.navigation.speed_over_ground_avg.kn = spd;
@@ -208,6 +211,31 @@ extern "C" {
           shipDataModel.navigation.mag_var.deg = norm_deg(shipDataModel.navigation.heading_true.deg - shipDataModel.navigation.heading_mag.deg);
           shipDataModel.navigation.mag_var.age = millis();
         }
+      }
+    }
+
+    if (fresh(shipDataModel.environment.depth.below_transducer.age)) {
+      if (shipDataModel.environment.depth.below_transducer.age - shipDataModel.environment.depth_before.below_transducer.age > 10000
+          || shipDataModel.environment.depth_before.below_transducer.age == 0) {
+        shipDataModel.environment.depth_before.below_transducer = shipDataModel.environment.depth.below_transducer;
+      }
+    }
+
+    if (fresh(shipDataModel.environment.depth.below_transducer.age)
+        && fresh(shipDataModel.navigation.position.lat.age)
+        && fresh(shipDataModel.navigation.position.lon.age)) {
+      if (shipDataModel.navigation.position.lat.age - shipDataModel.navigation.position_before.lat.age > 3000
+          && shipDataModel.navigation.position.lon.age - shipDataModel.navigation.position_before.lon.age > 3000
+          && shipDataModel.navigation.position_before.lat.age > 0
+          && shipDataModel.navigation.position_before.lon.age > 0
+          && shipDataModel.environment.depth.below_transducer.age > 0) {
+        float dist_m =
+          distance_m(shipDataModel.navigation.position, shipDataModel.navigation.position_before);
+        float elev_m = 
+          shipDataModel.environment.depth.below_transducer.m - shipDataModel.environment.depth_before.below_transducer.m;
+        float slope_rad = atan2(elev_m, dist_m);
+        shipDataModel.environment.depth_gradient.deg = slope_rad * 180.0 / PI;
+        shipDataModel.environment.depth_gradient.age = millis();
       }
     }
 
