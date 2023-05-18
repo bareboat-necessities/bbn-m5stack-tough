@@ -11,6 +11,7 @@ extern "C" {
   static const char *PROGMEM UI_AP_GPS = "GPS";
   static const char *PROGMEM UI_AP_WIND = "Wind";
   static const char *PROGMEM UI_AP_TRUE_WIND = "True Wind";
+  static const char *PROGMEM UI_AP_BLANK = " ";
 
   static lv_obj_t *autopilot_led;
   static lv_obj_t *heading_l;
@@ -33,7 +34,9 @@ extern "C" {
       screenServer0();
 #endif
       const char *mode = (const char *)lv_event_get_user_data(e);
-      pypilot_send_mode(pypClient.c, mode);
+      if (mode != UI_AP_BLANK) {
+        pypilot_send_mode(pypClient.c, mode);
+      }
       lv_obj_add_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
     }
   }
@@ -52,6 +55,8 @@ extern "C" {
     lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_WIND);
     btn = lv_list_add_btn(autopilot_list_modes, NULL, UI_AP_TRUE_WIND);
     lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_WIND_TRUE);
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, UI_AP_BLANK);
+    lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)UI_AP_BLANK);
   }
 
   static void autopilot_event_cb(lv_event_t *e) {
