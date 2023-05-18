@@ -48,36 +48,42 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_name_label, &lv_font_montserrat_20, 0);
 #endif
+    lv_label_set_text(vessel_name_label, "");
 
     vessel_mmsi_label = lv_label_create(parent);
     lv_obj_align(vessel_mmsi_label, LV_ALIGN_TOP_LEFT, 10, 60);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_mmsi_label, &lv_font_montserrat_20, 0);
 #endif
+    lv_label_set_text(vessel_mmsi_label, "MMSI:");
 
     vessel_length_label = lv_label_create(parent);
     lv_obj_align(vessel_length_label, LV_ALIGN_TOP_LEFT, 10, 90);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_length_label, &lv_font_montserrat_20, 0);
 #endif
+    lv_label_set_text(vessel_length_label, "Length:");
 
     vessel_draft_label = lv_label_create(parent);
     lv_obj_align(vessel_draft_label, LV_ALIGN_TOP_LEFT, 10, 120);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_draft_label, &lv_font_montserrat_20, 0);
 #endif
+    lv_label_set_text(vessel_draft_label, "Draft:");
 
     vessel_beam_label = lv_label_create(parent);
     lv_obj_align(vessel_beam_label, LV_ALIGN_TOP_LEFT, 10, 150);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_beam_label, &lv_font_montserrat_20, 0);
 #endif
+    lv_label_set_text(vessel_beam_label, "Beam:");
 
     vessel_air_height_label = lv_label_create(parent);
     lv_obj_align(vessel_air_height_label, LV_ALIGN_TOP_LEFT, 10, 180);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_air_height_label, &lv_font_montserrat_20, 0);
 #endif
+    lv_label_set_text(vessel_air_height_label, "Air Height:");
 
     vessel_nav_status_label = lv_label_create(parent);
     lv_obj_align(vessel_nav_status_label, LV_ALIGN_TOP_LEFT, 10, 210);
