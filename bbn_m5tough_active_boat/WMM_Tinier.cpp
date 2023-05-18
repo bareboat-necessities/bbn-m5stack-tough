@@ -27,7 +27,7 @@ Distributed as-is; no warranty is given.
 #endif
 
 // Public Methods //////////////////////////////////////////////////////////
-// Start by doing any setup, and verifying that doubles are supported
+// Start by doing any setup, and verifying that floats are supported
 boolean WMM_Tinier::begin(void) {
   wmm_init();
   return true;
@@ -47,7 +47,7 @@ float WMM_Tinier::decimalDegrees(int degrees, int minutes, float seconds) {
 	seconds = -seconds;
 	sign = -1;
   }
-  double decDeg = degrees + (minutes / 60.0) + (seconds / 3600.);
+  float decDeg = degrees + (minutes / 60.0) + (seconds / 3600.);
   return decDeg * sign;
 }
 
