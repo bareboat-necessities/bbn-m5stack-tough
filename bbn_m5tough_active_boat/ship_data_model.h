@@ -70,7 +70,7 @@ extern "C" {
   } ap_state_t;
 
   typedef struct _angle_deg_t {
-    float deg;
+    float deg = 0;
     age_t age = 0U;
   } angle_deg_t;
 
@@ -80,17 +80,17 @@ extern "C" {
   } hour_float_t;
 
   typedef struct _kn_t {
-    float kn;
+    float kn = 0;
     age_t age = 0U;
   } kn_t;
 
   typedef struct _length_m_t {
-    float m;
+    float m = 0;
     age_t age = 0U;
   } length_m_t;
 
   typedef struct _RPM_t {
-    float rpm;
+    float rpm = 0;
     age_t age = 0U;
   } RPM_t;
 
@@ -107,7 +107,7 @@ extern "C" {
   } nav_light;
 
   typedef struct _angular_velocity_t {
-    float deg_min;
+    float deg_min = 0;
     age_t age = 0U;
   } _angular_velocity_t;
 
@@ -158,6 +158,7 @@ extern "C" {
   typedef struct _navigation_t {
     struct _nav_state_t state;
     struct _position_t position;
+    struct _position_t position_before;
     struct _attitude_t attitude;
     struct _angle_deg_t course_over_ground_true;
     struct _angle_deg_t course_over_ground_mag;
@@ -169,6 +170,7 @@ extern "C" {
     //struct _angle_deg_t heading_compass;
     struct _angular_velocity_t rate_of_turn;
     struct _kn_t speed_over_ground;
+    struct _kn_t speed_over_ground_avg;
     struct _kn_t speed_through_water;
     struct _kn_t drift;
     struct _angle_deg_t set_true;
@@ -238,6 +240,8 @@ extern "C" {
     struct _env_time_t time_net;
     struct _wind_t wind;
     struct _depth_t depth;
+    struct _depth_t depth_before;
+    struct _angle_deg_t depth_gradient;
     struct _water_t water;
     struct _air_t air_outside;
     struct _air_t air_inside;
