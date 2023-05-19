@@ -102,7 +102,7 @@ Deep sleep with waking up by touch screen. Backlight is off during sleep
 - Retrievable Keel Status
 - Alarm Clock / Timer / Stopwatch
 - Solar Panel/Generator (Wind/Prop/Diesel) Power Monitoring
-- Cabin, Deck, Search, Underwater lights controls,Fans, Blower controls
+- Cabin, Deck, Search, Underwater lights controls, Fans, Blower controls, Solenoid status/control
 - Shrouds Load Forces Display from sensors
 - Hatches Status Display
 - Dinghy location (via LoRa and putting data into AIS stream)
