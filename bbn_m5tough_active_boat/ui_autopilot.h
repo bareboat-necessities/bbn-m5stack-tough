@@ -18,6 +18,7 @@ extern "C" {
   static lv_obj_t *command_l;
   static lv_obj_t *autopilot_btnm;
   static lv_obj_t *autopilot_list_modes;
+  static lv_obj_t *autopilot_list_stats;
 
   static const char *autopilot_btnm_map[] = {
     LV_SYMBOL_DOUBLE_LEFT, LV_SYMBOL_DOUBLE_RIGHT, "\n",
@@ -41,9 +42,28 @@ extern "C" {
     }
   }
 
+  static void event_handler_ap_stats(lv_event_t *e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    if (code == LV_EVENT_CLICKED) {
+      lv_obj_add_flag(autopilot_list_stats, LV_OBJ_FLAG_HIDDEN);
+    }
+  }
+
+  void lv_autopilot_list_stats(lv_obj_t *parent) {
+    autopilot_list_stats = lv_list_create(parent);
+    lv_obj_set_size(autopilot_list_stats, 220, 140);
+    lv_obj_align(autopilot_list_stats, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
+    lv_obj_t *btn;
+    btn = lv_list_add_btn(autopilot_list_stats, NULL, "Voltage:");
+    btn = lv_list_add_btn(autopilot_list_stats, NULL, "Amp Hours:");
+    btn = lv_list_add_btn(autopilot_list_stats, NULL, "Controller Temp " LV_SYMBOL_DEGREES "C:");
+    btn = lv_list_add_btn(autopilot_list_stats, NULL, UI_AP_BLANK);
+    lv_obj_add_event_cb(btn, event_handler_ap_stats, LV_EVENT_CLICKED, (void *)UI_AP_BLANK);
+  }
+
   void lv_autopilot_list_modes(lv_obj_t *parent) {
     autopilot_list_modes = lv_list_create(parent);
-    lv_obj_set_size(autopilot_list_modes, 220, 180);
+    lv_obj_set_size(autopilot_list_modes, 220, 175);
     lv_obj_align(autopilot_list_modes, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 
     lv_obj_t *btn;
@@ -91,6 +111,7 @@ extern "C" {
             pypilot_send_command(pypClient.c, shipDataModel.steering.autopilot.command.deg + 2.0);
           });
         } else if (strcmp(LV_SYMBOL_EYE_OPEN, txt) == 0) {
+          lv_obj_clear_flag(autopilot_list_stats, LV_OBJ_FLAG_HIDDEN);
         } else {
           lv_obj_clear_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
         }
@@ -135,6 +156,9 @@ extern "C" {
 
     lv_autopilot_list_modes(parent);
     lv_obj_add_flag(autopilot_list_modes, LV_OBJ_FLAG_HIDDEN);
+
+    lv_autopilot_list_stats(parent);
+    lv_obj_add_flag(autopilot_list_stats, LV_OBJ_FLAG_HIDDEN);
   }
 
   static void autopilot_update_cb() {
