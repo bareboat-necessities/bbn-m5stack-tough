@@ -32,14 +32,14 @@ extern "C" {
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
     lv_label_set_recolor(main_label, true);
-    lv_label_set_text(main_label, "VESSEL  #0080ff " LV_SYMBOL_LIST " #");
+    lv_label_set_text_static(main_label, "VESSEL  #0080ff " LV_SYMBOL_LIST " #");
 
     lv_obj_t *vessel_name_l = lv_label_create(parent);
     lv_obj_align(vessel_name_l, LV_ALIGN_TOP_LEFT, 10, 30);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_name_l, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vessel_name_l, "Name: ");
+    lv_label_set_text_static(vessel_name_l, "Name: ");
 
     vessel_name_label = lv_label_create(parent);
     lv_obj_align(vessel_name_label, LV_ALIGN_TOP_LEFT, 100, 30);
@@ -48,49 +48,49 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_name_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vessel_name_label, "");
+    lv_label_set_text_static(vessel_name_label, "");
 
     vessel_mmsi_label = lv_label_create(parent);
     lv_obj_align(vessel_mmsi_label, LV_ALIGN_TOP_LEFT, 10, 60);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_mmsi_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vessel_mmsi_label, "MMSI:");
+    lv_label_set_text_static(vessel_mmsi_label, "MMSI:");
 
     vessel_length_label = lv_label_create(parent);
     lv_obj_align(vessel_length_label, LV_ALIGN_TOP_LEFT, 10, 90);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_length_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vessel_length_label, "Length:");
+    lv_label_set_text_static(vessel_length_label, "Length:");
 
     vessel_draft_label = lv_label_create(parent);
     lv_obj_align(vessel_draft_label, LV_ALIGN_TOP_LEFT, 10, 120);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_draft_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vessel_draft_label, "Draft:");
+    lv_label_set_text_static(vessel_draft_label, "Draft:");
 
     vessel_beam_label = lv_label_create(parent);
     lv_obj_align(vessel_beam_label, LV_ALIGN_TOP_LEFT, 10, 150);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_beam_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vessel_beam_label, "Beam:");
+    lv_label_set_text_static(vessel_beam_label, "Beam:");
 
     vessel_air_height_label = lv_label_create(parent);
     lv_obj_align(vessel_air_height_label, LV_ALIGN_TOP_LEFT, 10, 180);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_air_height_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vessel_air_height_label, "Air Height:");
+    lv_label_set_text_static(vessel_air_height_label, "Air Height:");
 
     vessel_nav_status_label = lv_label_create(parent);
     lv_obj_align(vessel_nav_status_label, LV_ALIGN_TOP_LEFT, 10, 210);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vessel_nav_status_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vessel_nav_status_label, "Nav State:");
+    lv_label_set_text_static(vessel_nav_status_label, "Nav State:");
   }
 
   String navStateToStr(nav_state_e st) {
