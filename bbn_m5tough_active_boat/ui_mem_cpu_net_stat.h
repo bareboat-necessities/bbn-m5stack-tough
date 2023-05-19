@@ -142,7 +142,7 @@ extern "C" {
     lv_obj_add_event_cb(btn_erase, erase_net_conf_evt_handler, LV_EVENT_ALL, parent);
     lv_obj_align(btn_erase, LV_ALIGN_CENTER, 60, 90);
     lv_obj_t *btn_erase_l = lv_label_create(btn_erase);
-    lv_label_set_text(btn_erase_l, LV_SYMBOL_TRASH);
+    lv_label_set_text_static(btn_erase_l, LV_SYMBOL_TRASH);
     lv_obj_set_style_bg_color(btn_erase, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
 
     lv_obj_t *btn_edit = lv_btn_create(parent);
