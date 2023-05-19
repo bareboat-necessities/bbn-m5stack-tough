@@ -40,21 +40,21 @@ extern "C" {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -60);
-    lv_label_set_text(main_label, "RUDDER");
+    lv_label_set_text_static(main_label, "RUDDER");
 
     rate_of_turn_label = lv_label_create(parent);
     lv_obj_align(rate_of_turn_label, LV_ALIGN_TOP_LEFT, 5, 5);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(rate_of_turn_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(rate_of_turn_label, "ROT (" LV_SYMBOL_DEGREES "/min):   --");
+    lv_label_set_text_static(rate_of_turn_label, "ROT (" LV_SYMBOL_DEGREES "/min):   --");
 
     rudder_hdt_label = lv_label_create(parent);
     lv_obj_align(rudder_hdt_label, LV_ALIGN_TOP_LEFT, 5, 50);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(rudder_hdt_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(rudder_hdt_label, "HDT:\n--");
+    lv_label_set_text_static(rudder_hdt_label, "HDT:\n--");
   }
 
   static void rudder_update_cb() {
