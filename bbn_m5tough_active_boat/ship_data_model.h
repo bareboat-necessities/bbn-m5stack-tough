@@ -235,12 +235,13 @@ extern "C" {
     struct _lux_t illuminance;
   } air_t;
 
-  typedef struct _air_inside_t {
+  typedef struct _env_inside_t {
     struct _air_t fridge;
     struct _air_t freezer;
     struct _air_t engine_room;
     struct _air_t salon;
-  } air_inside_t;
+    struct _deg_C_t hot_water;
+  } env_inside_t;
 
   typedef struct _environment_t {
     struct _env_time_t time_gps;
@@ -251,7 +252,7 @@ extern "C" {
     struct _angle_deg_t depth_gradient;
     struct _water_t water;
     struct _air_t air_outside;
-    struct _air_inside_t air_inside;
+    struct _env_inside_t env_inside;
     struct _hour_float_t sunrise;
     struct _hour_float_t sunset;
     int no_sunset_flag = 0;
