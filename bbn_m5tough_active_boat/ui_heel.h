@@ -44,32 +44,32 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(pitch_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(pitch_label, "Pitch:   --");
+    lv_label_set_text_static(pitch_label, "Pitch:   --");
 
     heel_leeway_label = lv_label_create(parent);
     lv_obj_align(heel_leeway_label, LV_ALIGN_TOP_LEFT, 5, 50);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(heel_leeway_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(heel_leeway_label, "Leeway\n(est):\n--");
+    lv_label_set_text_static(heel_leeway_label, "Leeway\n(est):\n--");
 
     heel_drift_label = lv_label_create(parent);
     lv_obj_align(heel_drift_label, LV_ALIGN_TOP_LEFT, 175, 5);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(heel_drift_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(heel_drift_label, "Drift (kt):  --");
+    lv_label_set_text_static(heel_drift_label, "Drift (kt):  --");
 
     heel_set_label = lv_label_create(parent);
     lv_obj_align(heel_set_label, LV_ALIGN_TOP_LEFT, 245, 50);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(heel_set_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(heel_set_label, "Set:\n--");
+    lv_label_set_text_static(heel_set_label, "Set:\n--");
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -60);
-    lv_label_set_text(main_label, "HEEL");
+    lv_label_set_text_static(main_label, "HEEL");
   }
 
   static void heel_update_cb() {
