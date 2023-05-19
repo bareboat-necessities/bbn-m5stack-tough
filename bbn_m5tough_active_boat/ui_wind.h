@@ -70,28 +70,28 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(wind_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(wind_label, "AWS:  --\nkt");
+    lv_label_set_text_static(wind_label, "AWS:  --\nkt");
 
     spd_w_label = lv_label_create(parent);
     lv_obj_align(spd_w_label, LV_ALIGN_TOP_RIGHT, -5, 2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(spd_w_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(spd_w_label, "SPD:  --\n      kt");
+    lv_label_set_text_static(spd_w_label, "SPD:  --\n      kt");
 
     gws_label = lv_label_create(parent);
     lv_obj_align(gws_label, LV_ALIGN_BOTTOM_LEFT, 5, -2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(gws_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(gws_label, "GWS:\n-- kt");
+    lv_label_set_text_static(gws_label, "GWS:\n-- kt");
 
     gwdt_label = lv_label_create(parent);
     lv_obj_align(gwdt_label, LV_ALIGN_BOTTOM_RIGHT, -5, -2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(gwdt_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(gwdt_label, "GWD:\n--" LV_SYMBOL_DEGREES "t");
+    lv_label_set_text_static(gwdt_label, "GWD:\n--" LV_SYMBOL_DEGREES "t");
   }
 
   static void wind_update_cb() {
