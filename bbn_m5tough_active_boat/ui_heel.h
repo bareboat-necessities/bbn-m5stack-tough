@@ -44,7 +44,7 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(pitch_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(pitch_label, "PITCH:   --");
+    lv_label_set_text(pitch_label, "Pitch:   --");
 
     heel_leeway_label = lv_label_create(parent);
     lv_obj_align(heel_leeway_label, LV_ALIGN_TOP_LEFT, 5, 50);
@@ -58,7 +58,7 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(heel_drift_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(heel_drift_label, "DFT (kt):  --");
+    lv_label_set_text(heel_drift_label, "Drift (kt):  --");
 
     heel_set_label = lv_label_create(parent);
     lv_obj_align(heel_set_label, LV_ALIGN_TOP_LEFT, 245, 50);
@@ -74,7 +74,7 @@ extern "C" {
 
   static void heel_update_cb() {
     lv_label_set_text(pitch_label,
-                      (String("PITCH:   ") += (fresh(shipDataModel.navigation.attitude.pitch.age)
+                      (String("Pitch:   ") += (fresh(shipDataModel.navigation.attitude.pitch.age)
                                                  ? String(shipDataModel.navigation.attitude.pitch.deg) += LV_SYMBOL_DEGREES
                                                  : String("--")))
                         .c_str());
@@ -84,7 +84,7 @@ extern "C" {
                                                          : String("--"))) += LV_SYMBOL_DEGREES)
                         .c_str());
     lv_label_set_text(heel_drift_label,
-                      (String("DFT (kt):  ") += (fresh(shipDataModel.navigation.drift.age)
+                      (String("Drift (kt):  ") += (fresh(shipDataModel.navigation.drift.age)
                                                    ? String(shipDataModel.navigation.drift.kn, 1)
                                                    : String("--")))
                         .c_str());
