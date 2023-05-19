@@ -58,7 +58,7 @@ extern "C" {
     lcd_slider_label = lv_label_create(lcd_conf_obj);
     lv_slider_set_value(slider, 60, LV_ANIM_OFF);
     set_lcd_backlight_voltage((int)lv_slider_get_value(slider));
-    lv_label_set_text(lcd_slider_label, "60%");
+    lv_label_set_text_static(lcd_slider_label, "60%");
 
     lv_obj_align_to(lcd_slider_label, slider, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
     lv_obj_add_flag(lcd_conf_obj, LV_OBJ_FLAG_HIDDEN);
@@ -66,7 +66,7 @@ extern "C" {
     lv_obj_t *btn_rotate = lv_btn_create(lcd_conf_obj);
     lv_obj_t *label_rotate = lv_label_create(btn_rotate);
     lv_obj_align(btn_rotate, LV_ALIGN_CENTER, 0, 60);
-    lv_label_set_text(label_rotate, LV_SYMBOL_LOOP);
+    lv_label_set_text_static(label_rotate, LV_SYMBOL_LOOP);
     lv_obj_center(label_rotate);
     lv_obj_add_event_cb(btn_rotate, btnRotateScreen_event, LV_EVENT_CLICKED, NULL);
   }
