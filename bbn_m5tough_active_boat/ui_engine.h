@@ -138,8 +138,8 @@ extern "C" {
                                                    : String("--")))
                         .c_str());
     lv_label_set_text(eng_alternator_label,
-                      (String("ALT (V):\n") += (fresh(shipDataModel.propulsion.engines[0].alternator_voltage.age)
-                                                  ? String(shipDataModel.propulsion.engines[0].alternator_voltage.volt, 1)
+                      (String("ALT (V):\n    ") += (fresh(shipDataModel.propulsion.engines[0].alternator_voltage.age)
+                                                  ? String(shipDataModel.propulsion.engines[0].alternator_voltage.volt, 1) 
                                                   : String("--")))
                         .c_str());
   }
