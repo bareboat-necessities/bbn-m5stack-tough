@@ -45,7 +45,7 @@ extern "C" {
     lv_obj_align(labelNcont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelN = lv_label_create(labelNcont);
-    lv_label_set_text(labelN, "N");
+    lv_label_set_text_static(labelN, "N");
     lv_obj_align(labelN, LV_ALIGN_CENTER, 0, 0);
 
     lv_obj_set_style_transform_pivot_x(labelNcont, 50 / 2, 0);
@@ -57,7 +57,7 @@ extern "C" {
     lv_obj_align(labelScont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelS = lv_label_create(labelScont);
-    lv_label_set_text(labelS, "S");
+    lv_label_set_text_static(labelS, "S");
     lv_obj_align(labelS, LV_ALIGN_CENTER, 0, 0);
 
     lv_obj_set_style_transform_pivot_x(labelScont, 50 / 2, 0);
@@ -68,7 +68,7 @@ extern "C" {
     lv_obj_align(labelEcont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelE = lv_label_create(labelEcont);
-    lv_label_set_text(labelE, "E");
+    lv_label_set_text_static(labelE, "E");
     lv_obj_align(labelE, LV_ALIGN_CENTER, 0, 0);
 
     lv_obj_set_style_transform_pivot_x(labelEcont, 50 / 2, 0);
@@ -79,7 +79,7 @@ extern "C" {
     lv_obj_align(labelWcont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelW = lv_label_create(labelWcont);
-    lv_label_set_text(labelW, "W");
+    lv_label_set_text_static(labelW, "W");
     lv_obj_align(labelW, LV_ALIGN_CENTER, 0, 0);
 
     lv_obj_set_style_transform_pivot_x(labelWcont, 50 / 2, 0);
@@ -90,7 +90,7 @@ extern "C" {
     lv_obj_align(compass_mark_l, LV_ALIGN_CENTER, 0, -100);
 
     compass_l = lv_label_create(parent);
-    lv_label_set_text(compass_l, "--" LV_SYMBOL_DEGREES);
+    lv_label_set_text_static(compass_l, "--" LV_SYMBOL_DEGREES);
     lv_obj_align(compass_l, LV_ALIGN_CENTER, 0, 0);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(compass_l, &lv_font_montserrat_20, 0);
@@ -103,21 +103,21 @@ extern "C" {
     lv_obj_set_style_transform_angle(labelWcont, 270 * 10, 0);
 
     compass_hdt_l = lv_label_create(parent);
-    lv_label_set_text(compass_hdt_l, "HDT:  --" LV_SYMBOL_DEGREES);
+    lv_label_set_text_static(compass_hdt_l, "HDT:  --" LV_SYMBOL_DEGREES);
     lv_obj_align(compass_hdt_l, LV_ALIGN_TOP_LEFT, 2, 2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(compass_hdt_l, &lv_font_montserrat_20, 0);
 #endif
 
     compass_cogt_l = lv_label_create(parent);
-    lv_label_set_text(compass_cogt_l, "COGT:   --" LV_SYMBOL_DEGREES);
+    lv_label_set_text_static(compass_cogt_l, "COGT:   --" LV_SYMBOL_DEGREES);
     lv_obj_align(compass_cogt_l, LV_ALIGN_TOP_RIGHT, -2, 2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(compass_cogt_l, &lv_font_montserrat_20, 0);
 #endif
 
     compass_mag_var_l = lv_label_create(parent);
-    lv_label_set_text(compass_mag_var_l, "Var:\n--" LV_SYMBOL_DEGREES);
+    lv_label_set_text_static(compass_mag_var_l, "Var:\n--" LV_SYMBOL_DEGREES);
     lv_obj_align(compass_mag_var_l, LV_ALIGN_BOTTOM_LEFT, 2, -2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(compass_mag_var_l, &lv_font_montserrat_20, 0);
