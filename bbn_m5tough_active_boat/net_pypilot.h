@@ -16,6 +16,9 @@ extern "C" {
   ap.enabled=false
   watch={"ap.heading":0.5}
   watch={"ap.mode":true}
+  watch={"servo.amp_hours":1}
+  watch={"servo.controller_temp":1}
+  watch={"servo.voltage":1}
 
   */
 
@@ -30,6 +33,9 @@ extern "C" {
       client.println(F("watch={\"ap.heading_command\":true}"));
       client.println(F("watch={\"ap.enabled\":true}"));
       client.println(F("watch={\"ap.mode\":true}"));
+      client.println(F("watch={\"servo.amp_hours\":1}"));
+      client.println(F("watch={\"servo.controller_temp\":1}"));
+      client.println(F("watch={\"servo.voltage\":1}"));
       client.flush();
     }
   }
