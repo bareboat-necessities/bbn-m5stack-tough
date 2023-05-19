@@ -17,6 +17,7 @@ extern "C" {
   static lv_meter_indicator_t *eng_temp_indic;
 
   static lv_obj_t *eng_sog_label;
+  static lv_obj_t *eng_alternator_label;
 
   static void set_engine_rpm_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(engine_rpm_meter, (lv_meter_indicator_t *)indic, v);
@@ -104,11 +105,18 @@ extern "C" {
     lv_label_set_text(eng_temp_label, LV_SYMBOL_DEGREES "C");
 
     eng_sog_label = lv_label_create(parent);
-    lv_obj_align(eng_sog_label, LV_ALIGN_TOP_LEFT, 5, 5);
+    lv_obj_align(eng_sog_label, LV_ALIGN_TOP_LEFT, 2, 2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(eng_sog_label, &lv_font_montserrat_20, 0);
 #endif
     lv_label_set_text(eng_sog_label, "SOG (kt):\n--");
+
+    eng_alternator_label = lv_label_create(parent);
+    lv_obj_align(eng_alternator_label, LV_ALIGN_TOP_RIGHT, -2, 2);
+#if LV_FONT_MONTSERRAT_20
+    lv_obj_set_style_text_font(eng_alternator_label, &lv_font_montserrat_20, 0);
+#endif
+    lv_label_set_text(eng_alternator_label, "ALT (V):\n--");
   }
 
   static void engine_update_cb() {
@@ -125,8 +133,14 @@ extern "C" {
                                         ? shipDataModel.propulsion.engines[0].temp_deg_C.deg_C
                                         : 0));
     lv_label_set_text(eng_sog_label,
-                      (String("SOG (kt):\n")
-                       += (fresh(shipDataModel.navigation.speed_over_ground.age) ? String(shipDataModel.navigation.speed_over_ground.kn, 1) : String("--")))
+                      (String("SOG (kt):\n") += (fresh(shipDataModel.navigation.speed_over_ground.age)
+                                                   ? String(shipDataModel.navigation.speed_over_ground.kn, 1)
+                                                   : String("--")))
+                        .c_str());
+    lv_label_set_text(eng_alternator_label,
+                      (String("ALT (V):\n") += (fresh(shipDataModel.propulsion.engines[0].alternator_voltage.age)
+                                                  ? String(shipDataModel.propulsion.engines[0].alternator_voltage.volt, 1)
+                                                  : String("--")))
                         .c_str());
   }
 
