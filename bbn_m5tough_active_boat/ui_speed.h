@@ -22,49 +22,49 @@ extern "C" {
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
     lv_label_set_recolor(main_label, true);
-    lv_label_set_text(main_label, "SPEED  #0080ff " LV_SYMBOL_UPLOAD " #");
+    lv_label_set_text_static(main_label, "SPEED  #0080ff " LV_SYMBOL_UPLOAD " #");
 
     sog_label = lv_label_create(parent);
     lv_obj_align(sog_label, LV_ALIGN_TOP_LEFT, 10, 35);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(sog_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(sog_label, "SOG (kt):                       --");
+    lv_label_set_text_static(sog_label, "SOG (kt):                       --");
 
     sog_avg_label = lv_label_create(parent);
     lv_obj_align(sog_avg_label, LV_ALIGN_TOP_LEFT, 10, 70);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(sog_avg_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(sog_avg_label, "SOG AVG (kt):             --");
+    lv_label_set_text_static(sog_avg_label, "SOG AVG (kt):             --");
 
     spd_label = lv_label_create(parent);
     lv_obj_align(spd_label, LV_ALIGN_TOP_LEFT, 10, 105);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(spd_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(spd_label, "SPD (kt):                       --");
+    lv_label_set_text_static(spd_label, "SPD (kt):                       --");
 
     leeway_label = lv_label_create(parent);
     lv_obj_align(leeway_label, LV_ALIGN_TOP_LEFT, 10, 140);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(leeway_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(leeway_label, "Leeway (est):              --" LV_SYMBOL_DEGREES);
+    lv_label_set_text_static(leeway_label, "Leeway (est):              --" LV_SYMBOL_DEGREES);
 
     s_cogt_label = lv_label_create(parent);
     lv_obj_align(s_cogt_label, LV_ALIGN_TOP_LEFT, 10, 175);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(s_cogt_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(s_cogt_label, "COGT:                            --");
+    lv_label_set_text_static(s_cogt_label, "COGT:                            --");
 
     s_hdt_label = lv_label_create(parent);
     lv_obj_align(s_hdt_label, LV_ALIGN_TOP_LEFT, 10, 210);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(s_hdt_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(s_hdt_label, "HDT:                               --");
+    lv_label_set_text_static(s_hdt_label, "HDT:                               --");
   }
 
   static void speed_update_cb() {
