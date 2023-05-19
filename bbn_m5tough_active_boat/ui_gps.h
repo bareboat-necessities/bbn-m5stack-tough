@@ -21,42 +21,42 @@ extern "C" {
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
     lv_label_set_recolor(main_label, true);
-    lv_label_set_text(main_label, "GPS  #0080ff " LV_SYMBOL_GPS " #");
+    lv_label_set_text_static(main_label, "GPS  #0080ff " LV_SYMBOL_GPS " #");
 
     gps_time_label = lv_label_create(parent);
     lv_obj_align(gps_time_label, LV_ALIGN_TOP_LEFT, 10, 40);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(gps_time_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(gps_time_label, "GPS Time:         --");
+    lv_label_set_text_static(gps_time_label, "GPS Time:         --");
 
     gps_lat_label = lv_label_create(parent);
     lv_obj_align(gps_lat_label, LV_ALIGN_TOP_LEFT, 10, 80);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(gps_lat_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(gps_lat_label, "LAT:                    --");
+    lv_label_set_text_static(gps_lat_label, "LAT:                    --");
 
     gps_lon_label = lv_label_create(parent);
     lv_obj_align(gps_lon_label, LV_ALIGN_TOP_LEFT, 10, 120);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(gps_lon_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(gps_lon_label, "LON:                   --");
+    lv_label_set_text_static(gps_lon_label, "LON:                   --");
 
     gps_cogt_label = lv_label_create(parent);
     lv_obj_align(gps_cogt_label, LV_ALIGN_TOP_LEFT, 10, 160);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(gps_cogt_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(gps_cogt_label, "COGT:                 --");
+    lv_label_set_text_static(gps_cogt_label, "COGT:                 --");
 
     gps_cogm_label = lv_label_create(parent);
     lv_obj_align(gps_cogm_label, LV_ALIGN_TOP_LEFT, 10, 200);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(gps_cogm_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(gps_cogm_label, "COGM:                 --");
+    lv_label_set_text_static(gps_cogm_label, "COGM:                 --");
   }
 
   static String lat_print(float lat_deg) {
