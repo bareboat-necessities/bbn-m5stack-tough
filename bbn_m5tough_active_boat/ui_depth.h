@@ -21,42 +21,42 @@ extern "C" {
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
     lv_label_set_recolor(main_label, true);
-    lv_label_set_text(main_label, "DEPTH  #0080ff " LV_SYMBOL_DOWNLOAD " #");
+    lv_label_set_text_static(main_label, "DEPTH  #0080ff " LV_SYMBOL_DOWNLOAD " #");
 
     dbt_label = lv_label_create(parent);
     lv_obj_align(dbt_label, LV_ALIGN_TOP_LEFT, 10, 40);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(dbt_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(dbt_label, "DBT (ft):          --");
+    lv_label_set_text_static(dbt_label, "DBT (ft):          --");
 
     dbk_label = lv_label_create(parent);
     lv_obj_align(dbk_label, LV_ALIGN_TOP_LEFT, 10, 80);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(dbk_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(dbk_label, "DBK (ft):          --");
+    lv_label_set_text_static(dbk_label, "DBK (ft):          --");
 
     dbs_label = lv_label_create(parent);
     lv_obj_align(dbs_label, LV_ALIGN_TOP_LEFT, 10, 120);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(dbs_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(dbs_label, "DBS (ft):          --");
+    lv_label_set_text_static(dbs_label, "DBS (ft):          --");
 
     depth_gradient_label = lv_label_create(parent);
     lv_obj_align(depth_gradient_label, LV_ALIGN_TOP_LEFT, 10, 160);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(depth_gradient_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(depth_gradient_label, "Gradient:        --");
+    lv_label_set_text_static(depth_gradient_label, "Gradient:        --");
 
     d_heel_label = lv_label_create(parent);
     lv_obj_align(d_heel_label, LV_ALIGN_TOP_LEFT, 10, 200);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(d_heel_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(d_heel_label, "Heel:                 --");
+    lv_label_set_text_static(d_heel_label, "Heel:                 --");
   }
 
   static void depth_update_cb() {
