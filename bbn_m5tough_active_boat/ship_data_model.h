@@ -431,7 +431,7 @@ extern "C" {
 
   typedef struct _ap_servo_t {
     struct _voltage_V_t voltage;
-    struct _deg_C_t temp;
+    struct _deg_C_t controller_temp;
     struct _amp_hr_t amp_hr;
   } ap_servo_t;
 
