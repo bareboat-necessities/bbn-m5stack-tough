@@ -81,7 +81,12 @@ extern "C" {
   bool nmea0183_parse(WiFiClient& client) {
     bool found = false;
     String dataLine = client.readStringUntil('\n');
-    found = nmea_parse(dataLine);
+    if (dataLine.length() > 0 && dataLine.charAt(0) == '!') {
+      // TODO: AIS
+      return true;
+    } else {
+      found = nmea_parse(dataLine);
+    }
 
     if (customData_Value.isUpdated() && customData_Type.isValid()) {
       if (strcmp("PTCH", customData_Type.value()) == 0 || strcmp("PITCH", customData_Type.value()) == 0) {
