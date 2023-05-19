@@ -217,11 +217,11 @@ extern "C" {
     lv_obj_add_event_cb(btn_save, save_ip_evt_handler, LV_EVENT_ALL, spinboxes_parent);
     lv_obj_align(btn_save, LV_ALIGN_BOTTOM_RIGHT, -4, -2);
     lv_obj_t *btn_save_l = lv_label_create(btn_save);
-    lv_label_set_text(btn_save_l, LV_SYMBOL_OK);
+    lv_label_set_text_static(btn_save_l, LV_SYMBOL_OK);
     lv_obj_set_style_bg_color(btn_save, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
 
     lv_obj_align(ip_editor_label, LV_ALIGN_BOTTOM_LEFT, 4, -8);
-    lv_label_set_text(ip_editor_label, "");
+    lv_label_set_text_static(ip_editor_label, "");
   }
 
 #ifdef __cplusplus
