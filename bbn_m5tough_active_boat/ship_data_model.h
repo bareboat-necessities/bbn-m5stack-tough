@@ -269,6 +269,11 @@ extern "C" {
     age_t age = 0U;
   } current_amp_t;
 
+  typedef struct _amp_hr_t {
+    float amp_hr;
+    age_t age = 0U;
+  } amp_hr_t;
+
   typedef struct _voltage_V_t {
     float volt;
     age_t age = 0U;
@@ -424,12 +429,19 @@ extern "C" {
     //    struct _chargers_t chargers;
   } electrical_t;
 
+  typedef struct _ap_servo_t {
+    struct _voltage_V_t voltage;
+    struct _deg_C_t temp;
+    struct _amp_hr_t amp_hr;
+  } ap_servo_t;
+
   typedef struct _autopilot_t {
     struct _ap_state_t ap_state;
     struct _angle_deg_t heading;
     struct _angle_deg_t command;
     struct _ap_cmd_type_t command_type;
     struct _ap_mode_t ap_mode;
+    struct _ap_servo_t ap_servo;
   } autopilot_t;
 
   typedef struct _steering_t {
