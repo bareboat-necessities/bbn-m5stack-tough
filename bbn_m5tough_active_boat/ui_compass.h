@@ -86,7 +86,7 @@ extern "C" {
     lv_obj_set_style_transform_pivot_y(labelWcont, 50 / 2 + 48, 0);
 
     lv_obj_t *compass_mark_l = lv_label_create(parent);
-    lv_label_set_text(compass_mark_l, LV_SYMBOL_DOWN);
+    lv_label_set_text_static(compass_mark_l, LV_SYMBOL_DOWN);
     lv_obj_align(compass_mark_l, LV_ALIGN_CENTER, 0, -100);
 
     compass_l = lv_label_create(parent);
