@@ -33,7 +33,7 @@ extern "C" {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, 50);
-    lv_label_set_text(main_label, "RPM\nx100");
+    lv_label_set_text_static(main_label, "RPM\nx100");
 
     /*Add a scale first*/
     lv_meter_scale_t *scale = lv_meter_add_scale(engine_rpm_meter);
@@ -83,7 +83,7 @@ extern "C" {
 
     lv_obj_t *oil_press_label = lv_label_create(parent);
     lv_obj_align(oil_press_label, LV_ALIGN_BOTTOM_LEFT, 80, -2);
-    lv_label_set_text(oil_press_label, "psi");
+    lv_label_set_text_static(oil_press_label, "psi");
 
     eng_temp_meter = lv_meter_create(parent);
     lv_obj_align(eng_temp_meter, LV_ALIGN_CENTER, 119, 79);
@@ -102,21 +102,21 @@ extern "C" {
 
     lv_obj_t *eng_temp_label = lv_label_create(parent);
     lv_obj_align(eng_temp_label, LV_ALIGN_BOTTOM_RIGHT, -80, -2);
-    lv_label_set_text(eng_temp_label, LV_SYMBOL_DEGREES "C");
+    lv_label_set_text_static(eng_temp_label, LV_SYMBOL_DEGREES "C");
 
     eng_sog_label = lv_label_create(parent);
     lv_obj_align(eng_sog_label, LV_ALIGN_TOP_LEFT, 2, 2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(eng_sog_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(eng_sog_label, "SOG (kt):\n--");
+    lv_label_set_text_static(eng_sog_label, "SOG (kt):\n--");
 
     eng_alternator_label = lv_label_create(parent);
     lv_obj_align(eng_alternator_label, LV_ALIGN_TOP_RIGHT, -2, 2);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(eng_alternator_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(eng_alternator_label, "ALT (V):\n--");
+    lv_label_set_text_static(eng_alternator_label, "ALT (V):\n--");
   }
 
   static void engine_update_cb() {
