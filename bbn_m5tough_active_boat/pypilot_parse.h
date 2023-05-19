@@ -41,6 +41,18 @@ extern "C" {
         } else if (mode == "true wind") {
           shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::TRUE_WIND;
         }
+      } else if (dataFeed.startsWith("servo.voltage=")) {
+        shipDataModel.steering.autopilot.ap_servo.voltage.volt =
+          strtof(dataFeed.substring(strlen("servo.voltage="), dataFeed.length()).c_str(), NULL);
+        shipDataModel.steering.autopilot.ap_servo.voltage.age = millis();
+      } else if (dataFeed.startsWith("servo.amp_hours=")) {
+        shipDataModel.steering.autopilot.ap_servo.amp_hr.amp_hr =
+          strtof(dataFeed.substring(strlen("servo.amp_hours="), dataFeed.length()).c_str(), NULL);
+        shipDataModel.steering.autopilot.ap_servo.amp_hr.age = millis();
+      } else if (dataFeed.startsWith("servo.controller_temp=")) {
+        shipDataModel.steering.autopilot.ap_servo.controller_temp.deg_C =
+          strtof(dataFeed.substring(strlen("servo.controller_temp="), dataFeed.length()).c_str(), NULL);
+        shipDataModel.steering.autopilot.ap_servo.controller_temp.age = millis();
       } else {
         found = false;
       }      
