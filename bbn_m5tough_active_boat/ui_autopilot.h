@@ -20,6 +20,10 @@ extern "C" {
   static lv_obj_t *autopilot_list_modes;
   static lv_obj_t *autopilot_list_stats;
 
+  static lv_obj_t *ap_voltage_l;
+  static lv_obj_t *ap_amp_hr_l;
+  static lv_obj_t *ap_temp_l;
+
   static const char *autopilot_btnm_map[] = {
     LV_SYMBOL_DOUBLE_LEFT, LV_SYMBOL_DOUBLE_RIGHT, "\n",
     LV_SYMBOL_LEFT, LV_SYMBOL_RIGHT, "\n",
@@ -50,15 +54,24 @@ extern "C" {
   }
 
   void lv_autopilot_list_stats(lv_obj_t *parent) {
-    autopilot_list_stats = lv_list_create(parent);
-    lv_obj_set_size(autopilot_list_stats, 220, 140);
+    autopilot_list_stats = lv_obj_create(parent);
+    lv_obj_set_size(autopilot_list_stats, 220, 130);
     lv_obj_align(autopilot_list_stats, LV_ALIGN_BOTTOM_RIGHT, -8, -8);
-    lv_obj_t *btn;
-    btn = lv_list_add_btn(autopilot_list_stats, NULL, "Voltage:");
-    btn = lv_list_add_btn(autopilot_list_stats, NULL, "Amp Hours:");
-    btn = lv_list_add_btn(autopilot_list_stats, NULL, "Controller " LV_SYMBOL_DEGREES "C:");
-    btn = lv_list_add_btn(autopilot_list_stats, NULL, UI_AP_BLANK);
-    lv_obj_add_event_cb(btn, event_handler_ap_stats, LV_EVENT_CLICKED, (void *)UI_AP_BLANK);
+
+    ap_voltage_l = lv_label_create(autopilot_list_stats);
+    lv_obj_align(ap_voltage_l, LV_ALIGN_TOP_LEFT, 5, 5);
+    lv_label_set_text(ap_voltage_l, "Voltage:");
+
+    ap_amp_hr_l = lv_label_create(autopilot_list_stats);
+    lv_obj_align(ap_amp_hr_l, LV_ALIGN_TOP_LEFT, 5, 35);
+    lv_label_set_text(ap_amp_hr_l, "Amp Hours:");
+
+    ap_temp_l = lv_label_create(autopilot_list_stats);
+    lv_obj_align(ap_temp_l, LV_ALIGN_TOP_LEFT, 5, 65);
+    lv_label_set_text(ap_temp_l, "Controller " LV_SYMBOL_DEGREES "C:");
+
+    lv_obj_add_flag(autopilot_list_stats, LV_OBJ_FLAG_CLICKABLE);    
+    lv_obj_add_event_cb(autopilot_list_stats, event_handler_ap_stats, LV_EVENT_CLICKED, NULL);
   }
 
   void lv_autopilot_list_modes(lv_obj_t *parent) {
@@ -173,8 +186,10 @@ extern "C" {
       lv_led_set_color(autopilot_led, lv_palette_main(LV_PALETTE_GREY));
     }
     lv_label_set_text(heading_l,
-                      (String("AHDG:  ") += (fresh(shipDataModel.steering.autopilot.heading.age) 
-                      ? String(shipDataModel.steering.autopilot.heading.deg, 0) += LV_SYMBOL_DEGREES : "--")).c_str());
+                      (String("AHDG:  ") += (fresh(shipDataModel.steering.autopilot.heading.age)
+                                               ? String(shipDataModel.steering.autopilot.heading.deg, 0) += LV_SYMBOL_DEGREES
+                                               : "--"))
+                        .c_str());
     lv_label_set_text(command_l,
                       (String("CMD:  ") += (fresh(shipDataModel.steering.autopilot.command.age, LONG_EXPIRE_TO) ? String(shipDataModel.steering.autopilot.command.deg, 0) += LV_SYMBOL_DEGREES : "--")).c_str());
 
@@ -190,6 +205,24 @@ extern "C" {
       }
       lv_btnmatrix_set_map(autopilot_btnm, autopilot_btnm_map);
       lv_event_send(autopilot_btnm, LV_EVENT_REFRESH, NULL);
+    }
+
+    if (!lv_obj_has_flag_any(ap_voltage_l, LV_OBJ_FLAG_HIDDEN)) {
+      lv_label_set_text(ap_voltage_l,
+                        (String("Voltage:                  ") += (fresh(shipDataModel.steering.autopilot.ap_servo.voltage.age)
+                                                  ? String(shipDataModel.steering.autopilot.ap_servo.voltage.volt, 1) += "V"
+                                                  : "--"))
+                          .c_str());
+      lv_label_set_text(ap_amp_hr_l,
+                        (String("Amp Hours:           ") += (fresh(shipDataModel.steering.autopilot.ap_servo.amp_hr.age)
+                                                  ? String(shipDataModel.steering.autopilot.ap_servo.amp_hr.amp_hr, 1)
+                                                  : "--"))
+                          .c_str());
+      lv_label_set_text(ap_temp_l,
+                        (String("Controller " LV_SYMBOL_DEGREES "C:        ") += (fresh(shipDataModel.steering.autopilot.ap_servo.controller_temp.age)
+                                                  ? String(shipDataModel.steering.autopilot.ap_servo.controller_temp.deg_C, 1)
+                                                  : "--"))
+                          .c_str());                          
     }
   }
 
