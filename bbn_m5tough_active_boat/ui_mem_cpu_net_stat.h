@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+  static const char *PROGMEM UI_BLANK_STR = " ";
+
   lv_updatable_screen_t devStatusScreen;
 
   static lv_obj_t *pyp_status_label;
@@ -78,6 +80,8 @@ extern "C" {
     btn = lv_list_add_btn(data_connections_list, NULL, "MPD Player");
     lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)MPD_TCP_HOST_PREF);
 #endif
+    btn = lv_list_add_btn(data_connections_list, NULL, UI_BLANK_STR);
+    lv_obj_add_event_cb(btn, event_handler_data_conn, LV_EVENT_CLICKED, (void *)UI_BLANK_STR);
 
     lv_ip_addr_editor(parent);
     lv_ip_addr_editor_hide();
