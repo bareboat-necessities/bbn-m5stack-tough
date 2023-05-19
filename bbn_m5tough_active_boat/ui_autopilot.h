@@ -56,14 +56,14 @@ extern "C" {
     lv_obj_t *btn;
     btn = lv_list_add_btn(autopilot_list_stats, NULL, "Voltage:");
     btn = lv_list_add_btn(autopilot_list_stats, NULL, "Amp Hours:");
-    btn = lv_list_add_btn(autopilot_list_stats, NULL, "Controller Temp " LV_SYMBOL_DEGREES "C:");
+    btn = lv_list_add_btn(autopilot_list_stats, NULL, "Controller " LV_SYMBOL_DEGREES "C:");
     btn = lv_list_add_btn(autopilot_list_stats, NULL, UI_AP_BLANK);
     lv_obj_add_event_cb(btn, event_handler_ap_stats, LV_EVENT_CLICKED, (void *)UI_AP_BLANK);
   }
 
   void lv_autopilot_list_modes(lv_obj_t *parent) {
     autopilot_list_modes = lv_list_create(parent);
-    lv_obj_set_size(autopilot_list_modes, 220, 175);
+    lv_obj_set_size(autopilot_list_modes, 220, 174);
     lv_obj_align(autopilot_list_modes, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 
     lv_obj_t *btn;
