@@ -76,8 +76,6 @@ extern "C" {
 
     lv_label_set_text(labelDate, bufferDate);
     lv_label_set_text(labelTime, bufferTime);
-
-    delay(10);
   }
 
   void init_clockScreen() {
