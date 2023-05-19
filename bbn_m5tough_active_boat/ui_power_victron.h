@@ -63,7 +63,7 @@ extern "C" {
     lv_obj_set_style_bg_color(ac, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
 
     ac_label = lv_label_create(ac);
-    lv_label_set_text(ac_label, "AC Load\n-- W");
+    lv_label_set_text_static(ac_label, "AC Load\n-- W");
     lv_obj_align(ac_label, LV_ALIGN_TOP_LEFT, 0, 0);
 
     lv_obj_t *dc;
