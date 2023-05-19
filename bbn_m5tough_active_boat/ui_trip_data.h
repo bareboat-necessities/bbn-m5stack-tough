@@ -23,56 +23,56 @@ extern "C" {
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
     lv_label_set_recolor(main_label, true);
-    lv_label_set_text(main_label, "TRIP LEG  #0080ff " LV_SYMBOL_GPS " #");
+    lv_label_set_text_static(main_label, "TRIP LEG  #0080ff " LV_SYMBOL_GPS " #");
 
     xte_label = lv_label_create(parent);
     lv_obj_align(xte_label, LV_ALIGN_TOP_LEFT, 10, 30);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(xte_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(xte_label, "XTE (nm):                 --");
+    lv_label_set_text_static(xte_label, "XTE (nm):                 --");
 
     brgt_label = lv_label_create(parent);
     lv_obj_align(brgt_label, LV_ALIGN_TOP_LEFT, 10, 60);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(brgt_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(brgt_label, "BRG (t deg):            --");
+    lv_label_set_text_static(brgt_label, "BRG (t deg):            --");
 
     brgm_label = lv_label_create(parent);
     lv_obj_align(brgm_label, LV_ALIGN_TOP_LEFT, 10, 90);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(brgm_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(brgm_label, "BRG (m deg):         --");
+    lv_label_set_text_static(brgm_label, "BRG (m deg):         --");
 
     hdm_leg_label = lv_label_create(parent);
     lv_obj_align(hdm_leg_label, LV_ALIGN_TOP_LEFT, 10, 120);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(hdm_leg_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(hdm_leg_label, "HDM (deg):             --");
+    lv_label_set_text_static(hdm_leg_label, "HDM (deg):             --");
 
     vmg_label = lv_label_create(parent);
     lv_obj_align(vmg_label, LV_ALIGN_TOP_LEFT, 10, 150);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(vmg_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(vmg_label, "VMG (kn):                 --");
+    lv_label_set_text_static(vmg_label, "VMG (kn):                 --");
 
     rng_label = lv_label_create(parent);
     lv_obj_align(rng_label, LV_ALIGN_TOP_LEFT, 10, 180);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(rng_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(rng_label, "RNG (nm):                --");
+    lv_label_set_text_static(rng_label, "RNG (nm):                --");
 
     ttg_at_vmg_label = lv_label_create(parent);
     lv_obj_align(ttg_at_vmg_label, LV_ALIGN_TOP_LEFT, 10, 210);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(ttg_at_vmg_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text(ttg_at_vmg_label, "TTG@VMG (hr):      --");
+    lv_label_set_text_static(ttg_at_vmg_label, "TTG@VMG (hr):      --");
   }
 
   static void trip_data_update_cb() {
