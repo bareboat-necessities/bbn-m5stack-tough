@@ -297,7 +297,7 @@ void loop() {
       }
       bool detected = handle_swipe();
       if (detected || (millis() - last_ui_upd > 300)
-        || (screens[page] == &clockScreen && millis() - last_ui_upd > 100)) {  // throttle expensive UI updates, and calculations
+        || (screens[page] == &clockScreen && millis() - last_ui_upd > 200)) {  // throttle expensive UI updates, and calculations
         derive_data();
         update_screen(*screens[page]);
         last_ui_upd = millis();
