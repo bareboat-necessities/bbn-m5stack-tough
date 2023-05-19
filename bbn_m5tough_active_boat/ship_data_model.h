@@ -226,6 +226,7 @@ extern "C" {
 
   typedef struct _water_t {
     struct _deg_C_t temp_deg_C;
+    struct _percent_t salinity_pct;
   } water_t;
 
   typedef struct _air_t {
