@@ -176,7 +176,6 @@ extern "C" {
 
   void settingUpWiFi(void (*on_connected)()) {
     preferences.begin("wifi-config", false);
-    delay(10);
     if (restoreConfig()) {      // Check if wifi configuration information has been stored.
       if (checkConnection()) {  // Check wifi connection.
         wifi_connected(on_connected);
