@@ -52,7 +52,7 @@ Deep sleep with waking up by touch screen. Backlight is off during sleep
 
 - Autopilot / PyPilot Remote Control Screen :heavy_check_mark:
 - IMU (compass and attitude) :heavy_check_mark:
-- Engine RPM, oil temp display :heavy_check_mark:
+- Engine RPM, alternator voltage, oil temp display :heavy_check_mark:
 - Batteries Status, etc Display :heavy_check_mark:
 - Wind Display (Ground/(True?)/Apparent) :heavy_check_mark:
 - Drift and set, speed through water (knot meter) :heavy_check_mark:
@@ -77,7 +77,7 @@ Deep sleep with waking up by touch screen. Backlight is off during sleep
 ##  Possible future ehnancements:
 
 - Lightning Detector with Screen (AS3935 sensor or better)
-- Engine alternator voltage, fuel burn per nautical mile, etc display
+- Engine fuel burn per nautical mile, etc display
 - Wind Rose from climatology data for current location and time Display
 - Barometer (+Temp Humidity) with History
 - Dangerous gases alarms
