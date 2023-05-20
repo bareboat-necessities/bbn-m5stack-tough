@@ -40,7 +40,8 @@ extern "C" {
     lv_meter_set_scale_ticks(compass_display, scale_compass_maj, 12, 2, 15, lv_palette_main(LV_PALETTE_GREY)); /*12 ticks*/
 
     labelNcont = lv_obj_create(parent);
-    lv_obj_set_size(labelNcont, 50, 50);
+    lv_obj_set_size(labelNcont, 42, 42);
+    lv_obj_set_style_pad_all(labelNcont, 2, LV_PART_MAIN);
     lv_obj_set_style_bg_color(labelNcont, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
     lv_obj_align(labelNcont, LV_ALIGN_CENTER, 0, -48);
 
@@ -48,11 +49,12 @@ extern "C" {
     lv_label_set_text_static(labelN, "N");
     lv_obj_align(labelN, LV_ALIGN_CENTER, 0, 0);
 
-    lv_obj_set_style_transform_pivot_x(labelNcont, 50 / 2, 0);
-    lv_obj_set_style_transform_pivot_y(labelNcont, 50 / 2 + 48, 0);
+    lv_obj_set_style_transform_pivot_x(labelNcont, 42 / 2, 0);
+    lv_obj_set_style_transform_pivot_y(labelNcont, 42 / 2 + 48, 0);
 
     labelScont = lv_obj_create(parent);
-    lv_obj_set_size(labelScont, 50, 50);
+    lv_obj_set_size(labelScont, 42, 42);
+    lv_obj_set_style_pad_all(labelScont, 2, LV_PART_MAIN);
     lv_obj_set_style_bg_color(labelScont, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
     lv_obj_align(labelScont, LV_ALIGN_CENTER, 0, -48);
 
@@ -60,30 +62,32 @@ extern "C" {
     lv_label_set_text_static(labelS, "S");
     lv_obj_align(labelS, LV_ALIGN_CENTER, 0, 0);
 
-    lv_obj_set_style_transform_pivot_x(labelScont, 50 / 2, 0);
-    lv_obj_set_style_transform_pivot_y(labelScont, 50 / 2 + 48, 0);
+    lv_obj_set_style_transform_pivot_x(labelScont, 42 / 2, 0);
+    lv_obj_set_style_transform_pivot_y(labelScont, 42 / 2 + 48, 0);
 
     labelEcont = lv_obj_create(parent);
-    lv_obj_set_size(labelEcont, 50, 50);
+    lv_obj_set_size(labelEcont, 42, 42);
+    lv_obj_set_style_pad_all(labelEcont, 2, LV_PART_MAIN);
     lv_obj_align(labelEcont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelE = lv_label_create(labelEcont);
     lv_label_set_text_static(labelE, "E");
     lv_obj_align(labelE, LV_ALIGN_CENTER, 0, 0);
 
-    lv_obj_set_style_transform_pivot_x(labelEcont, 50 / 2, 0);
-    lv_obj_set_style_transform_pivot_y(labelEcont, 50 / 2 + 48, 0);
+    lv_obj_set_style_transform_pivot_x(labelEcont, 42 / 2, 0);
+    lv_obj_set_style_transform_pivot_y(labelEcont, 42 / 2 + 48, 0);
 
     labelWcont = lv_obj_create(parent);
-    lv_obj_set_size(labelWcont, 50, 50);
+    lv_obj_set_size(labelWcont, 42, 42);
+    lv_obj_set_style_pad_all(labelWcont, 2, LV_PART_MAIN);
     lv_obj_align(labelWcont, LV_ALIGN_CENTER, 0, -48);
 
     lv_obj_t *labelW = lv_label_create(labelWcont);
     lv_label_set_text_static(labelW, "W");
     lv_obj_align(labelW, LV_ALIGN_CENTER, 0, 0);
 
-    lv_obj_set_style_transform_pivot_x(labelWcont, 50 / 2, 0);
-    lv_obj_set_style_transform_pivot_y(labelWcont, 50 / 2 + 48, 0);
+    lv_obj_set_style_transform_pivot_x(labelWcont, 42 / 2, 0);
+    lv_obj_set_style_transform_pivot_y(labelWcont, 42 / 2 + 48, 0);
 
     lv_obj_t *compass_mark_l = lv_label_create(parent);
     lv_label_set_text_static(compass_mark_l, LV_SYMBOL_DOWN);
