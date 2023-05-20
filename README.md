@@ -4,7 +4,8 @@ M5Stack Tough (ESP-32) Sailing Instruments Display and Autopilot Control Arduino
 
 With LVGL UI
 
-Mostly oriented for boating projects (can be interesting to RV and off-grid living users)
+Mostly oriented for boating projects (can be interesting to RV and off-grid living users,
+or Arduino and esp32 or other microcontroller enthusiasts and hobbyists)
 
 ## Screenshots
 
