@@ -1,10 +1,10 @@
-# M5Stack Tough (ESP-32) Arduino sketches
+# M5Stack Tough (ESP-32) Sailing Instruments Display and Autopilot Control
 
-M5Stack Tough (ESP-32) Arduino sketches
+M5Stack Tough (ESP-32) Sailing Instruments Display and Autopilot Control Arduino sketches
 
 With LVGL UI
 
-Mostly oriented for boating projects
+Mostly oriented for boating projects (can be interesting to RV and off-grid living users)
 
 ## Screenshots
 
