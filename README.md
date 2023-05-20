@@ -135,7 +135,7 @@ Deep sleep with waking up by touch screen. Backlight is off during sleep
 - Dangerous gases alarms
 - LoRa Tracker receiver and display
 - SignalK Alarms Display
-- Weather Display, Air/Water temp, pressure, humidity, air quality
+- Weather Display, Air/Water temp, pressure, humidity, air quality, illuminance, UV index, water salinity
 - Tides and Currents Display
 - AIS Display
 - Sailboat Polar Diagram Display
