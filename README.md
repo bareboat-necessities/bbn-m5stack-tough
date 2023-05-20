@@ -9,42 +9,42 @@ Mostly oriented for boating projects
 ## Screenshots
 
 <p>
-<img src="wind.png" width="330">
-<img src="victron.png" width="330">
-<img src="gps.png" width="330">
+<img src="screenshots/wind.png" width="330">
+<img src="screenshots/victron.png" width="330">
+<img src="screenshots/gps.png" width="330">
 </p>
 <p>
-<img src="engine.png" width="330">
-<img src="rudder.png" width="330">
-<img src="sun.png" width="330">
+<img src="screenshots/engine.png" width="330">
+<img src="screenshots/rudder.png" width="330">
+<img src="screenshots/sun.png" width="330">
 </p>
 <p>
-<img src="tanks.png" width="330">
-<img src="autopilot.png" width="330">
-<img src="clock.png" width="330">
+<img src="screenshots/tanks.png" width="330">
+<img src="screenshots/autopilot.png" width="330">
+<img src="screenshots/clock.png" width="330">
 </p>
 <p>
-<img src="compass.png" width="330">
-<img src="bbn_logo.png" width="330">
-<img src="depth.png" width="330">
+<img src="screenshots/compass.png" width="330">
+<img src="screenshots/bbn_logo.png" width="330">
+<img src="screenshots/depth.png" width="330">
 </p>
 <p>
-<img src="heel.png" width="330">
-<img src="network.png" width="330">
-<img src="reboot.png" width="330">
+<img src="screenshots/heel.png" width="330">
+<img src="screenshots/network.png" width="330">
+<img src="screenshots/reboot.png" width="330">
 </p>
 <p>
-<img src="speed.png" width="330">
-<img src="trip_leg.png" width="330">
-<img src="vessel.png" width="330">
+<img src="screenshots/speed.png" width="330">
+<img src="screenshots/trip_leg.png" width="330">
+<img src="screenshots/vessel.png" width="330">
 </p>
 <p>
-<img src="wifi.png" width="330">
-<img src="wifi_passw.png" width="330">
-<img src="ip_edit.png" width="330">
+<img src="screenshots/wifi.png" width="330">
+<img src="screenshots/wifi_passw.png" width="330">
+<img src="screenshots/ip_edit.png" width="330">
 </p>
 <p>
-<img src="autopilot_mode.png" width="330">
+<img src="screenshots/autopilot_mode.png" width="330">
 </p>
 
 https://github.com/bareboat-necessities/bbn-m5stack-tough/blob/main/screenshots/VIEW.md
