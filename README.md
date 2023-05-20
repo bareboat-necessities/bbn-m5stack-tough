@@ -7,6 +7,18 @@ With LVGL UI
 Mostly oriented for boating projects (can be interesting to RV and off-grid living users,
 or Arduino and esp32 or other microcontroller enthusiasts and hobbyists)
 
+## Set up on a boat
+
+* Turn on your boat instruments
+* Boot your boat computer with SignalK. Make sure it is accessible on your local boat Wi-Fi.
+* Optionally: Turn on your Victron Cerbo GX or pi running Victron Venus OS if you have any of those. Make sure it is accessible on your local boat Wi-Fi.
+* Plugin m5stack tough into USB power and see it's booting into Wi-Fi settings screen.
+* Pick your local boat Wi-Fi in m5stack menu and enter password to connect your m5stack to your boat Wi-Fi (not to your marina's Wi-Fi)
+* Reboot m5stack
+* Optionally: For Vitron Cerbo you might need to edit ip address and port of your Victron MQTT server in m5stack connection settings. Make sure you set up MQTT broker on Cerbo side (passwordless and with no encryption)
+
+
+
 ## Screenshots
 
 <p>
