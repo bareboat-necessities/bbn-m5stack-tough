@@ -60,15 +60,15 @@ extern "C" {
 
     ap_voltage_l = lv_label_create(autopilot_list_stats);
     lv_obj_align(ap_voltage_l, LV_ALIGN_TOP_LEFT, 5, 5);
-    lv_label_set_text(ap_voltage_l, "Voltage:");
+    lv_label_set_text_static(ap_voltage_l, "Voltage:");
 
     ap_amp_hr_l = lv_label_create(autopilot_list_stats);
     lv_obj_align(ap_amp_hr_l, LV_ALIGN_TOP_LEFT, 5, 35);
-    lv_label_set_text(ap_amp_hr_l, "Amp Hours:");
+    lv_label_set_text_static(ap_amp_hr_l, "Amp Hours:");
 
     ap_temp_l = lv_label_create(autopilot_list_stats);
     lv_obj_align(ap_temp_l, LV_ALIGN_TOP_LEFT, 5, 65);
-    lv_label_set_text(ap_temp_l, "Controller " LV_SYMBOL_DEGREES "C:");
+    lv_label_set_text_static(ap_temp_l, "Controller " LV_SYMBOL_DEGREES "C:");
 
     lv_obj_add_flag(autopilot_list_stats, LV_OBJ_FLAG_CLICKABLE);    
     lv_obj_add_event_cb(autopilot_list_stats, event_handler_ap_stats, LV_EVENT_CLICKED, NULL);
