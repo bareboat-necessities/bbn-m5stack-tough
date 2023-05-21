@@ -148,10 +148,10 @@ extern "C" {
         lv_label_set_text(compass_mag_var_l,
                           (fresh(shipDataModel.navigation.mag_var.age, LONG_EXPIRE_TO) ? String("Var:\n") += String(shipDataModel.navigation.mag_var.deg, 1) += LV_SYMBOL_DEGREES : ("Var:\n--" LV_SYMBOL_DEGREES)).c_str());
         lv_label_set_text(compass_hdt_l,
-                          (fresh(shipDataModel.navigation.heading_true.age) ? String("HDT:  ") += String(shipDataModel.navigation.heading_true.deg, 0) += LV_SYMBOL_DEGREES : "--").c_str());
+                          (String("HDT:  ") += (fresh(shipDataModel.navigation.heading_true.age) ? String(shipDataModel.navigation.heading_true.deg, 0) += LV_SYMBOL_DEGREES : "--"))
+                            .c_str());
         lv_label_set_text(compass_cogt_l,
-                          (String("COGT:  ")
-                           += (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 0) += String(LV_SYMBOL_DEGREES) : String("--")))
+                          (String("COGT:  ") += (fresh(shipDataModel.navigation.course_over_ground_true.age) ? String(shipDataModel.navigation.course_over_ground_true.deg, 0) += String(LV_SYMBOL_DEGREES) : "--"))
                             .c_str());
       }
       last_compass_upd = millis();
