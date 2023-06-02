@@ -24,39 +24,45 @@ or Arduino and esp32 or other microcontroller enthusiasts and hobbyists)
 <p>
 <img src="screenshots/wind.png" width="330">
 <img src="screenshots/victron.png" width="330">
-<img src="screenshots/gps.png" width="330">
 </p>
 <p>
+<img src="screenshots/gps.png" width="330">
 <img src="screenshots/engine.png" width="330">
+</p>
+<p>
 <img src="screenshots/rudder.png" width="330">
 <img src="screenshots/sun.png" width="330">
 </p>
 <p>
 <img src="screenshots/tanks.png" width="330">
 <img src="screenshots/autopilot.png" width="330">
-<img src="screenshots/clock.png" width="330">
 </p>
 <p>
+<img src="screenshots/clock.png" width="330">
 <img src="screenshots/compass.png" width="330">
+</p>
+<p>
 <img src="screenshots/bbn_logo.png" width="330">
 <img src="screenshots/depth.png" width="330">
 </p>
 <p>
 <img src="screenshots/heel.png" width="330">
 <img src="screenshots/network.png" width="330">
-<img src="screenshots/reboot.png" width="330">
 </p>
 <p>
+<img src="screenshots/reboot.png" width="330">
 <img src="screenshots/speed.png" width="330">
+</p>
+<p>
 <img src="screenshots/trip_leg.png" width="330">
 <img src="screenshots/vessel.png" width="330">
 </p>
 <p>
 <img src="screenshots/wifi.png" width="330">
 <img src="screenshots/wifi_passw.png" width="330">
-<img src="screenshots/ip_edit.png" width="330">
 </p>
 <p>
+<img src="screenshots/ip_edit.png" width="330">
 <img src="screenshots/autopilot_mode.png" width="330">
 </p>
 
