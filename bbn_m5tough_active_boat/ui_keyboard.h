@@ -20,7 +20,7 @@ extern "C" {
       "g", "h", "i", "\n",
       LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_LEFT, LV_SYMBOL_RIGHT, "" },
     { "j", "k", "l", "\n",
-      "n", "m", "o", "\n",
+      "m", "n", "o", "\n",
       "p", "q", "r", "\n",
       LV_SYMBOL_OK, LV_SYMBOL_BACKSPACE, LV_SYMBOL_LEFT, LV_SYMBOL_RIGHT, "" },
     { "s", "t", "u", "\n",
