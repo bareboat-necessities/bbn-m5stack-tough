@@ -15,6 +15,7 @@ or Arduino and esp32 or other microcontroller enthusiasts and hobbyists)
 * Plugin m5stack tough into USB power and see it's booting into Wi-Fi settings screen.
 * Pick your local boat Wi-Fi in m5stack menu and enter password to connect your m5stack to your boat Wi-Fi (not to your marina's Wi-Fi). Use 2.4GHz WiFi bands, do not use 5GHz (it's not designed for IoT)
 * Reboot m5stack
+* Make sure that the devices m5stack is connecting to are set up with STATIC IP addresses
 * Optionally: For Vitron Cerbo you might need to edit ip address and port of your Victron MQTT server in m5stack connection settings. Make sure you set up MQTT broker on Cerbo side (passwordless and with no encryption)
 
 
