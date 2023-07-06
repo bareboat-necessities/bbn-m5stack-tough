@@ -248,6 +248,8 @@ https://github.com/wholybee/esp32-smartBMSdisplay
 
 https://github.com/ChrisLizon/VictronSOCLCD
 
+https://github.com/jukolein/W132
+
 https://github.com/RalfJL/VE.Direct2MQTT
 
 https://github.com/humppafreak/SensESP-PeetBrosWind
