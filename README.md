@@ -260,7 +260,10 @@ https://github.com/spascual90/Fenix
 
 https://github.com/KimBP/AIS/blob/master/Examples/AISDecode/AISDecode.ino
 
+https://github.com/skpang/Teensy40_800x400_LCD50_LVGL_NMEA2000_mfd
+
 https://github.com/bareboat-necessities/bbn-nmea200-m5atom
+
 
 TackTick Micronet to NMEA DIY
 https://github.com/Rodemfr/MicronetToNMEA
