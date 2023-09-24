@@ -271,3 +271,5 @@ https://github.com/Rodemfr/MicronetToNMEA
 Seatalk (arduino mega). esp32 doesn't support 9-bit UART required for Seatalk1
 https://github.com/yOyOeK1/seatalk4
 
+LoRa anchor alarm
+https://github.com/factoidforrest/anchor-alarm-lora
