@@ -268,5 +268,6 @@ https://github.com/bareboat-necessities/bbn-nmea200-m5atom
 TackTick Micronet to NMEA DIY
 https://github.com/Rodemfr/MicronetToNMEA
 
-
+Seatalk (arduino mega). esp32 doesn't support 9-bit UART required for Seatalk1
+https://github.com/yOyOeK1/seatalk4
 
