@@ -273,3 +273,6 @@ https://github.com/yOyOeK1/seatalk4
 
 LoRa anchor alarm
 https://github.com/factoidforrest/anchor-alarm-lora
+
+SeaTalk Autopilot Control
+https://github.com/nauti-control/STWirelessRemote
