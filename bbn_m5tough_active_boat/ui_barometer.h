@@ -12,28 +12,28 @@ extern "C" {
   static lv_meter_indicator_t *indic_barometer;
   static lv_obj_t *pressure_label;
   static lv_obj_t *temperature_label;
-  static lv_obj_t *bar;
+  static lv_obj_t *temperature_bar;
 
   static void set_pressure_value(void *indic, int32_t v) {
     lv_meter_set_indicator_value(barometer_display, (lv_meter_indicator_t *)indic, v);
   }
 
   static void set_temperature_value(int32_t v) {
-    lv_bar_set_value(bar, v, LV_ANIM_OFF);
+    lv_bar_set_value(temperature_bar, v, LV_ANIM_OFF);
   }
 
   /**
- * A pressure display meter
- */
+   * A pressure display meter
+   */
   static void lv_barometer_display(lv_obj_t *parent) {
 
     lv_obj_t *main_label = lv_label_create(parent);
     lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
     lv_label_set_recolor(main_label, true);
-    lv_label_set_text_static(main_label, "  AIR  #0080ff " LV_SYMBOL_IMAGE " #");
+    lv_label_set_text_static(main_label, "AIR  #0080ff " LV_SYMBOL_IMAGE " #");
     
     barometer_display = lv_meter_create(parent);
-    lv_obj_align(barometer_display, LV_ALIGN_CENTER, -40, 0);
+    lv_obj_align(barometer_display, LV_ALIGN_CENTER, 0, 10);
     lv_obj_set_size(barometer_display, 193, 193);
 
     lv_meter_scale_t *scale = lv_meter_add_scale(barometer_display);
@@ -72,40 +72,42 @@ extern "C" {
     lv_label_set_text_static(pressure_label, "\n  hPa");
 
     /*Thermometer*/
-
     static lv_style_t style_indic;
 
     lv_style_init(&style_indic);
-    lv_style_set_bg_opa(&style_indic, LV_OPA_COVER);
-    lv_style_set_bg_color(&style_indic, lv_palette_main(LV_PALETTE_RED));
-    lv_style_set_bg_grad_color(&style_indic, lv_palette_main(LV_PALETTE_BLUE));
-    lv_style_set_bg_grad_dir(&style_indic, LV_GRAD_DIR_VER);
+    //lv_style_set_bg_opa(&style_indic, LV_OPA_COVER);
+    lv_style_set_bg_color(&style_indic, lv_palette_lighten(LV_PALETTE_ORANGE, 2));
+    //lv_style_set_bg_grad_color(&style_indic, lv_palette_main(LV_PALETTE_BLUE));
+    //lv_style_set_bg_grad_dir(&style_indic, LV_GRAD_DIR_VER);
 
-    bar = lv_bar_create(parent);
-    lv_obj_add_style(bar, &style_indic, LV_PART_INDICATOR);
-    lv_obj_set_size(bar, 30, 145);
-    lv_obj_align(bar, LV_ALIGN_CENTER, 107, -25);
-    lv_bar_set_range(bar, 0, 40);
+    temperature_bar = lv_bar_create(parent);
+    lv_obj_add_style(temperature_bar, &style_indic, LV_PART_INDICATOR);
+    lv_obj_set_style_bg_color(temperature_bar, lv_palette_lighten(LV_PALETTE_GREY, 3), LV_PART_MAIN);
+    lv_obj_set_size(temperature_bar, 20, 145);
+    lv_obj_align(temperature_bar, LV_ALIGN_CENTER, 125, -10);
+    lv_bar_set_range(temperature_bar, -20, 50);
 
     temperature_label = lv_label_create(parent);
-    lv_obj_align(temperature_label, LV_ALIGN_CENTER, 107, 70);
+    lv_obj_align(temperature_label, LV_ALIGN_CENTER, 125, 85);
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(temperature_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text_static(temperature_label, "  C");
+    lv_label_set_text_static(temperature_label, ((String("-- ") += LV_SYMBOL_DEGREES) += "C").c_str());
   }
 
   static void pressure_update_cb() {
     lv_label_set_text(pressure_label,
-                      ((fresh(shipDataModel.environment.air_outside.pressure.age) ? String(shipDataModel.environment.air_outside.pressure.hPa, 1) += "\n  hPa" : String("    --\n  hPa")))
+                      ((fresh(shipDataModel.environment.air_outside.pressure.age) ? 
+                        String(shipDataModel.environment.air_outside.pressure.hPa, 0) += "\n  hPa" : String("    --\n  hPa")))
                         .c_str());
 
     set_pressure_value(indic_barometer, fresh(shipDataModel.environment.air_outside.pressure.age) ? shipDataModel.environment.air_outside.pressure.hPa : 0);
 
     set_temperature_value(fresh(shipDataModel.environment.air_outside.temp_deg_C.age) ? shipDataModel.environment.air_outside.temp_deg_C.deg_C : 0);
 
-     lv_label_set_text(temperature_label,
-                      ((fresh(shipDataModel.environment.air_outside.temp_deg_C.age) ? ((String(shipDataModel.environment.air_outside.temp_deg_C.deg_C, 1) += " ") += LV_SYMBOL_DEGREES) += "C": (String("-- ") += LV_SYMBOL_DEGREES) += "C"))
+    lv_label_set_text(temperature_label,
+                      ((fresh(shipDataModel.environment.air_outside.temp_deg_C.age) ? 
+                        ((String(shipDataModel.environment.air_outside.temp_deg_C.deg_C, 0) += " ") += LV_SYMBOL_DEGREES) += "C" : (String("-- ") += LV_SYMBOL_DEGREES) += "C"))
                         .c_str());
   }
 
