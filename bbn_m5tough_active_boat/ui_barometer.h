@@ -91,7 +91,7 @@ extern "C" {
 
   static void pressure_update_cb() {
     lv_label_set_text(pressure_label,
-                      ((fresh(shipDataModel.environment.air_outside.pressure.age) ? String(shipDataModel.environment.air_outside.pressure.hPa, 1) += "\n  hPa" : String("--\n  hPa")))
+                      ((fresh(shipDataModel.environment.air_outside.pressure.age) ? String(shipDataModel.environment.air_outside.pressure.hPa, 1) += "\n  hPa" : String("    --\n  hPa")))
                         .c_str());
 
     set_pressure_value(indic_barometer, fresh(shipDataModel.environment.air_outside.pressure.age) ? shipDataModel.environment.air_outside.pressure.hPa : 0);
@@ -99,7 +99,7 @@ extern "C" {
     set_temperature_value(fresh(shipDataModel.environment.air_outside.temp_deg_C.age) ? shipDataModel.environment.air_outside.temp_deg_C.deg_C : 0);
 
      lv_label_set_text(temperature_label,
-                      ((fresh(shipDataModel.environment.air_outside.temp_deg_C.age) ? String(shipDataModel.environment.air_outside.temp_deg_C.deg_C, 1) += "  C" : String("--  C")))
+                      ((fresh(shipDataModel.environment.air_outside.temp_deg_C.age) ? ((String(shipDataModel.environment.air_outside.temp_deg_C.deg_C, 1) += " ") += LV_SYMBOL_DEGREES) += "C": (String("-- ") += LV_SYMBOL_DEGREES) += "C"))
                         .c_str());
   }
 
@@ -114,4 +114,3 @@ extern "C" {
 #endif
 
 #endif
-
