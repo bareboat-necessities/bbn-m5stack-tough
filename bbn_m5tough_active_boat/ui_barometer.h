@@ -26,6 +26,12 @@ extern "C" {
  * A pressure display meter
  */
   static void lv_barometer_display(lv_obj_t *parent) {
+
+    lv_obj_t *main_label = lv_label_create(parent);
+    lv_obj_align(main_label, LV_ALIGN_CENTER, 0, -105);
+    lv_label_set_recolor(main_label, true);
+    lv_label_set_text_static(main_label, "  AIR  #0080ff " LV_SYMBOL_IMAGE " #");
+    
     barometer_display = lv_meter_create(parent);
     lv_obj_align(barometer_display, LV_ALIGN_CENTER, -40, 0);
     lv_obj_set_size(barometer_display, 193, 193);
