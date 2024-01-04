@@ -93,6 +93,8 @@ enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#de
 - ArduinoJson (install 6.x version via Arduino IDE libraries manager) https://arduinojson.org/
 - MQTT (2.5.x via Arduino IDE libraries manager) https://github.com/256dpi/arduino-mqtt
 
+You can look at .github/workflows/build.yaml for specific versions this project was tested with
+
 ##  Implemented Interfaces:
 
 - SignalK (partially :heavy_check_mark:)
