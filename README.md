@@ -91,6 +91,7 @@ In Arduino IDE you need to install few libraries:
 enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#define LV_COLOR_SCREEN_TRANSP 1````) https://github.com/lvgl/lvgl Also use ````#define LV_TICK_CUSTOM 1```` in lv_conf.h
 - ReactESP (install 2.x version via Arduino IDE libraries manager) https://github.com/mairas/ReactESP
 - ArduinoJson (install 6.x version via Arduino IDE libraries manager) https://arduinojson.org/
+- MQTT (2.5.x via Arduino IDE libraries manager)
 
 ##  Implemented Interfaces:
 
