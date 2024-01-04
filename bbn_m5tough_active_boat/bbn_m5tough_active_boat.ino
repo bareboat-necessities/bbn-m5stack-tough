@@ -138,6 +138,7 @@ WMM_Tinier myDeclination;
 #include "ui_weather.h"
 #include "ui_power_victron.h"
 #include "ui_vessel_info.h"
+#include "ui_barometer.h"
 
 lv_updatable_screen_t* screens[] = {
 
@@ -162,6 +163,7 @@ lv_updatable_screen_t* screens[] = {
   &gpsScreen,
   &speedScreen,
   &depthScreen,
+  &barometerScreen,
 };
 
 int page = 0;
@@ -234,6 +236,7 @@ void setup() {
     init_rebootScreen();
     init_devStatusScreen();
     init_vesselScreen();
+    init_barometerScreen();
 
     init_screen(*screens[page]);
     lv_scr_load(screens[page]->screen);
