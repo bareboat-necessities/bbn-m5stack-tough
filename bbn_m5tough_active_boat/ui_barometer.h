@@ -2,6 +2,8 @@
 #ifndef UI_BAROMETER_H
 #define UI_BAROMETER_H
 
+// Thanks to commits by purpleriboflavin https://github.com/purpleriboflavin/bbn-m5stack-tough
+
 #ifdef __cplusplus
 extern "C" {
 #endif
