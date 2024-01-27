@@ -55,6 +55,9 @@ extern "C" {
     indic_sec = lv_meter_add_needle_line(clock_display, scale, 2, lv_palette_main(LV_PALETTE_GREY), -10);
     indic_min = lv_meter_add_needle_line(clock_display, scale, 4, lv_palette_main(LV_PALETTE_GREEN), -20);
     indic_hour = lv_meter_add_needle_line(clock_display, scale, 7, lv_palette_main(LV_PALETTE_RED), -42);
+
+    lv_label_set_text(labelDate, " ");
+    lv_label_set_text(labelTime, " ");
   }
 
   static void set_clock_value(void *indic, int32_t v) {
