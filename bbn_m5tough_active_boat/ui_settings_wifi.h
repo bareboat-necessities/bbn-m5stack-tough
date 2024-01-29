@@ -1,6 +1,10 @@
 #ifndef UI_SETTINGS_WIFI_H
 #define UI_SETTINGS_WIFI_H
 
+#ifndef CONFIG_ESP32_WIFI_ENABLE_WPA3_SAE
+#warning "No WPA3 support."
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
