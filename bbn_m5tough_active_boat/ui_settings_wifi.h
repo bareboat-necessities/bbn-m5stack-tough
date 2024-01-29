@@ -12,10 +12,10 @@ extern "C" {
   boolean restoreConfig() {  // Check whether there is wifi configuration information storage, if there is return 1, if no return 0.
     wifi_ssid = preferences.getString("WIFI_SSID");
     wifi_password = preferences.getString("WIFI_PASSWD");
+    WiFi.setMinSecurity(WIFI_AUTH_WEP);
     WiFi.setAutoConnect(true);
     WiFi.setAutoReconnect(true);
     WiFi.mode(WIFI_STA);
-    //WiFi.setMinSecurity(WIFI_AUTH_WPA_PSK);
     WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
     return wifi_ssid.length() > 0;
   }
