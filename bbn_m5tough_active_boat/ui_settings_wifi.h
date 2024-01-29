@@ -14,8 +14,8 @@ extern "C" {
     wifi_password = preferences.getString("WIFI_PASSWD");
     WiFi.setAutoConnect(true);
     WiFi.setAutoReconnect(true);
-    WiFi.setMinSecurity(WIFI_AUTH_WPA_PSK);
     WiFi.mode(WIFI_STA);
+    //WiFi.setMinSecurity(WIFI_AUTH_WPA_PSK);
     WiFi.begin(wifi_ssid.c_str(), wifi_password.c_str());
     return wifi_ssid.length() > 0;
   }
