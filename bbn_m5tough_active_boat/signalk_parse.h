@@ -219,20 +219,20 @@ extern "C" {
       };
 
       JsonArray updates = obj["updates"];
-      if (updates != NULL) {
+      if (!updates.isNull()) {
         for (size_t i_u = 0; i_u < updates.size(); i_u++) {
           JsonObject update = updates[i_u];
-          if (update != NULL) {
+          if (!update.isNull()) {
             JsonArray values = update["values"];
-            if (values != NULL) {
+            if (!values.isNull()) {
               for (size_t i_v = 0; i_v < values.size(); i_v++) {
                 JsonObject valueObj = values[i_v];
-                if (valueObj != NULL) {
+                if (!valueObj.isNull()) {
                   if (valueObj.containsKey("path")) {
                     String path = valueObj["path"].as<const char*>();
                     if (path != NULL) {
                       JsonVariant value = valueObj["value"];
-                      if (value != NULL) {
+                      if (!value.isNull()) {
                         update_value(path, i_u, i_v, value);
                         found = true;
                       }
