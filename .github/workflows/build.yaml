@@ -11,12 +11,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Checkout M5Tough library
+    - name: Checkout M5Core2 library
       uses: actions/checkout@v3
       with:
-          repository: m5stack/M5Tough
+          repository: m5stack/M5Core2
           ref: master
-          path: CustomLibrary_M5Tough # must contain string "Custom"
+          path: CustomLibrary_M5Core2 # must contain string "Custom"
 
     - name: Copy lv_conf.h
       run: |
