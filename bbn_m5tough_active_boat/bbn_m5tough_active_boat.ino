@@ -27,7 +27,7 @@
 //
 
 
-#include <M5Tough.h>  // https://github.com/m5stack/M5Tough
+#include <M5Core2.h>  // https://github.com/m5stack/M5Core2
 #include <lvgl.h>
 #include <Arduino.h>
 #include <time.h>
