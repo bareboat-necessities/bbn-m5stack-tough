@@ -95,6 +95,17 @@ enable Enable LV_COLOR_SCREEN_TRANSP in lv_conf.h for rotations to work: ````#de
 
 You can look at .github/workflows/build.yaml for specific versions this project was tested with
 
+## Checking out code
+
+````
+git clone https://github.com/bareboat-necessities/bbn-m5stack-tough/
+````
+
+## Compiling and uploading code to the device
+
+- In Arduino open the bbn-m5stack-tough/bbn_m5tough_active_boat/bbn-m5stack-tough.ino file
+- Click 'Upload' icon (Looks like an arrow pointing right)
+
 ##  Implemented Interfaces:
 
 - SignalK (partially :heavy_check_mark:)
