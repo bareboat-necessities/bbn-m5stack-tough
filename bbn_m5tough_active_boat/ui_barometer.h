@@ -77,7 +77,7 @@ extern "C" {
 #if LV_FONT_MONTSERRAT_20
     lv_obj_set_style_text_font(pressure_label, &lv_font_montserrat_20, 0);
 #endif
-    lv_label_set_text_static(pressure_label, "\n  hPa");
+    lv_label_set_text_static(pressure_label, "\n hPa");
 
     /*Thermometer*/
     static lv_style_t style_indic;
@@ -124,7 +124,7 @@ extern "C" {
   static void pressure_update_cb() {
     lv_label_set_text(pressure_label,
                       ((fresh(shipDataModel.environment.air_outside.pressure.age, 1800000) ? 
-                        String(shipDataModel.environment.air_outside.pressure.hPa, 0) += "\n  hPa" : String("    --\n  hPa")))
+                        String(" ") += String(shipDataModel.environment.air_outside.pressure.hPa, 0) += "\n hPa" : String("    --\n  hPa")))
                         .c_str());
 
     set_pressure_value(indic_barometer, fresh(shipDataModel.environment.air_outside.pressure.age, 1800000) ? shipDataModel.environment.air_outside.pressure.hPa : 0);
