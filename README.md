@@ -105,8 +105,8 @@ git clone https://github.com/bareboat-necessities/bbn-m5stack-tough/
 
 - In Arduino open the bbn-m5stack-tough/bbn_m5tough_active_boat/bbn-m5stack-tough.ino file
 - Click 'Upload' icon (Looks like an arrow pointing right)
-- It will take a while to compile and upload the sketch. Copilation might give some warning which can be ignored.
-- ESP32 device will reboot and ask you to choose Wi-Fi network to connect to. Choose the one which has access to your boat LAN.
+- It will take a while to compile and upload the sketch. Compilation might give some warnings which can be ignored.
+- ESP32 device will reboot and ask you to choose a Wi-Fi network to connect to. Choose the one which has access to your boat LAN.
   
 ##  Implemented Interfaces:
 
