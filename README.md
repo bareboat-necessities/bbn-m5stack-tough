@@ -288,6 +288,9 @@ https://github.com/Rodemfr/MicronetToNMEA
 Seatalk (arduino mega). esp32 doesn't support 9-bit UART required for Seatalk1
 https://github.com/yOyOeK1/seatalk4
 
+Script that reads 9-bits seatalk 1 messages from any GPIO port using bitbanging, and converts it into NMEA0183 messages
+https://github.com/marcobergman/seatalk_convert
+
 LoRa anchor alarm
 https://github.com/factoidforrest/anchor-alarm-lora
 
