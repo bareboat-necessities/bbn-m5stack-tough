@@ -40,6 +40,8 @@ extern "C" {
           shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::HEADING_MAG;
         } else if (mode == "true wind") {
           shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::TRUE_WIND;
+        } else if (mode == "nav") {
+          shipDataModel.steering.autopilot.ap_mode.mode = ap_mode_e::NAV;
         }
       } else if (dataFeed.startsWith("servo.voltage=")) {
         shipDataModel.steering.autopilot.ap_servo.voltage.volt =
