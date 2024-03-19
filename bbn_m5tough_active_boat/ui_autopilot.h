@@ -77,7 +77,7 @@ extern "C" {
 
   void lv_autopilot_list_modes(lv_obj_t *parent) {
     autopilot_list_modes = lv_list_create(parent);
-    lv_obj_set_size(autopilot_list_modes, 220, 174);
+    lv_obj_set_size(autopilot_list_modes, 220, 208);
     lv_obj_align(autopilot_list_modes, LV_ALIGN_BOTTOM_LEFT, 8, -8);
 
     lv_obj_t *btn;
