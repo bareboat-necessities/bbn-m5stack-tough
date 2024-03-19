@@ -33,6 +33,7 @@ extern "C" {
     GROUND_WIND_TRUE = 9,
     COG_MAG = 10,
     COG_TRUE = 11,
+    NAV = 12,
   } ap_mode_e;
 
   typedef enum {
