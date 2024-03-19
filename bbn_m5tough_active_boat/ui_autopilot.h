@@ -11,6 +11,7 @@ extern "C" {
   static const char *PROGMEM UI_AP_GPS = "GPS";
   static const char *PROGMEM UI_AP_WIND = "Wind";
   static const char *PROGMEM UI_AP_TRUE_WIND = "True Wind";
+  static const char *PROGMEM UI_AP_NAV = "Nav";
   static const char *PROGMEM UI_AP_BLANK = " ";
 
   static lv_obj_t *autopilot_led;
@@ -88,6 +89,8 @@ extern "C" {
     lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_WIND);
     btn = lv_list_add_btn(autopilot_list_modes, NULL, UI_AP_TRUE_WIND);
     lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_WIND_TRUE);
+    btn = lv_list_add_btn(autopilot_list_modes, NULL, UI_AP_NAV);
+    lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)AP_MODE_NAV);
     btn = lv_list_add_btn(autopilot_list_modes, NULL, UI_AP_BLANK);
     lv_obj_add_event_cb(btn, event_handler_ap_mode, LV_EVENT_CLICKED, (void *)UI_AP_BLANK);
   }
@@ -202,6 +205,8 @@ extern "C" {
         autopilot_btnm_map[9] = AP_MODE_COMPASS;
       } else if (shipDataModel.steering.autopilot.ap_mode.mode == ap_mode_e::TRUE_WIND) {
         autopilot_btnm_map[9] = AP_MODE_WIND_TRUE;
+      } else if (shipDataModel.steering.autopilot.ap_mode.mode == ap_mode_e::NAV) {
+        autopilot_btnm_map[9] = AP_MODE_NAV;
       }
       lv_btnmatrix_set_map(autopilot_btnm, autopilot_btnm_map);
       lv_event_send(autopilot_btnm, LV_EVENT_REFRESH, NULL);
