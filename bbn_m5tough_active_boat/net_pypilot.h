@@ -26,6 +26,7 @@ extern "C" {
   static const char* PROGMEM AP_MODE_GPS = "MODE (GPS)";
   static const char* PROGMEM AP_MODE_WIND = "MODE (Wind)";
   static const char* PROGMEM AP_MODE_WIND_TRUE = "MODE (True Wind)";
+  static const char* PROGMEM AP_MODE_NAV = "MODE (Nav)";
 
   void pypilot_greet(WiFiClient& client) {
     if (client.connected()) {
@@ -70,6 +71,8 @@ extern "C" {
         client.println(F("ap.mode=\"wind\""));
       } else if (strcmp(AP_MODE_WIND_TRUE, mode) == 0) {
         client.println(F("ap.mode=\"true wind\""));
+      } else if (strcmp(AP_MODE_NAV, mode) == 0) {
+        client.println(F("ap.mode=\"nav\""));
       } else {
         client.println(F("ap.mode=\"compass\""));
       }
