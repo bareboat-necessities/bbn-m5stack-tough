@@ -71,6 +71,8 @@ https://github.com/bareboat-necessities/bbn-m5stack-tough/blob/main/screenshots/
 
 ## Register M5Stack Board in Arduino IDE
 
+Use (tested) Arduino IDE 1.8.x
+
 1. Add this URL
 https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 as additional in Arduino IDE board manager settings
@@ -79,7 +81,7 @@ as additional in Arduino IDE board manager settings
 
 3. Pick 'M5Stack-Core2' as your board in IDE
 
-4. Set port (Something line /dev/ttyACM1 or so, you will find out by ````ls -ltr /dev/tty*```` after connecting your M5Tough device to USB)
+4. Set port (Something like /dev/ttyACM1 or so, you will find out by ````ls -ltr /dev/tty*```` after connecting your M5Tough device to USB)
 
 
 ## Required Libraries
