@@ -112,14 +112,14 @@ git clone https://github.com/bareboat-necessities/bbn-m5stack-tough/
   
 ##  Implemented Interfaces:
 
-- SignalK (partially :heavy_check_mark:)
-- NMEA 0183 (partially :heavy_check_mark:)
+- SignalK (partially :heavy_check_mark: )
+- NMEA 0183 (partially :heavy_check_mark: )
 - NMEA 2000
-- PyPilot (:heavy_check_mark:)
+- PyPilot ( :heavy_check_mark: )
 - MPD
-- NTP (:heavy_check_mark:)
-- MQTT (for Victron and others) (:heavy_check_mark:)
-- mDNS (:heavy_check_mark:)
+- NTP ( :heavy_check_mark: )
+- MQTT (for Victron and others)  ( :heavy_check_mark: )
+- mDNS ( :heavy_check_mark: )
 
 ## Sleep
 
@@ -140,7 +140,7 @@ Deep sleep with waking up by touch screen. Backlight is off during sleep
 - GPS Location, speed, heading (true/mag) :heavy_check_mark:
 - Compass Display (True/Magnetic), Magnetic Variation for the location :heavy_check_mark:
 - Clock Display :heavy_check_mark:
-- Trip data display, VMG  (:heavy_check_mark:)
+- Trip data display, VMG  ( :heavy_check_mark: )
 - Local Sunset/Sunrise :heavy_check_mark:
 - Tanks levels display :heavy_check_mark:
 - Boat Design parameters :heavy_check_mark:
