@@ -18,6 +18,11 @@ or Arduino and esp32 or other microcontroller enthusiasts and hobbyists)
 * Make sure that the devices m5stack is connecting to are set up with STATIC IP addresses
 * Optionally: For Vitron Cerbo you might need to edit ip address and port of your Victron MQTT server in m5stack connection settings. Make sure you set up MQTT broker on Cerbo side (passwordless and with no encryption)
 
+## M5Tough mount kit
+
+Panel Frame for M5Core (SKU: A125)
+
+https://shop.m5stack.com/products/panel-frame-for-m5core
 
 
 ## Screenshots
