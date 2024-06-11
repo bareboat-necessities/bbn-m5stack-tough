@@ -16,7 +16,7 @@ jobs:
       with:
           repository: mgrouch/M5Tough
           ref: master
-          path: CustomLibrary_M5Tough # must contain string "Custom"
+          path: CustomLibrary_M5Tough  # must contain string "Custom"
 
     - name: Copy lv_conf.h
       run: |
