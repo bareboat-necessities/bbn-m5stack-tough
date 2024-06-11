@@ -26,7 +26,7 @@ jobs:
     - name: Compile sketch
       uses: ArminJo/arduino-test-compile@v3
       with:
-        arduino-board-fqbn: esp32:esp32:m5stack-core2
+        arduino-board-fqbn: esp32:esp32:m5stack_core2
         platform-url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
         required-libraries: MQTT@2.5.2,LVGL@8.3.11,ArduinoJson@6.21.5,ReactESP@2.1.0
         sketch-names: "*.ino"
