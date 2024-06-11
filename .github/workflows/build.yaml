@@ -28,7 +28,7 @@ jobs:
       with:
         arduino-board-fqbn: esp32:esp32:m5stack_core2
         platform-url: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-        required-libraries: MQTT@2.5.2,LVGL@8.3.11,ArduinoJson@6.21.5,ReactESP@2.1.0
+        required-libraries: MQTT@2.5.2,LVGL@8.3.11,ArduinoJson@6.21.5,ReactESP@2.1.0,Wire@2.0.0,SPI@2.0.0,FS@2.0.0,SD@2.0.0,WiFi@2.0.0,ESPmDNS@2.0.0,HTTPClient@2.0.0,SPIFFS@2.0.0
         sketch-names: "*.ino"
         sketch-names-find-start: bbn_m5tough_active_boat/*
         extra-arduino-cli-args: "--warnings default"
