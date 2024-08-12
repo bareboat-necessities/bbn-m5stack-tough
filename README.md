@@ -328,3 +328,15 @@ https://github.com/factoidforrest/anchor-alarm-lora
 
 SeaTalk Autopilot Control
 https://github.com/nauti-control/STWirelessRemote
+
+https://github.com/Glinnes/NMEAParser
+
+https://github.com/norbert-walter/esp32-nmea2000-obp60
+
+https://github.com/rob42/FreeboardMega/tree/signal_k_dev
+
+https://github.com/pypilot/pypilot_mfd
+
+
+
+
