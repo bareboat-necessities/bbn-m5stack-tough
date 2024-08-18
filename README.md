@@ -337,6 +337,6 @@ https://github.com/rob42/FreeboardMega/tree/signal_k_dev
 
 https://github.com/pypilot/pypilot_mfd
 
-
+https://github.com/htool/ESP32_Precision-9_compass_CMPS14
 
 
