@@ -347,4 +347,8 @@ https://github.com/gerryvel/NMEA2000-AIS-Gateway
 
 https://github.com/gerryvel/N2k-Distribution
 
+https://github.com/gerryvel/Bootsdaten
+
+https://github.com/gerryvel/NMEA2000_TPW
+
 
