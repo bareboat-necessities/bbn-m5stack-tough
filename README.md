@@ -343,4 +343,8 @@ https://github.com/pypilot/pypilot_mfd
 
 https://github.com/htool/ESP32_Precision-9_compass_CMPS14
 
+https://github.com/gerryvel/NMEA2000-AIS-Gateway
+
+https://github.com/gerryvel/N2k-Distribution
+
 
