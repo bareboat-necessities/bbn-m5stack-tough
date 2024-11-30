@@ -82,7 +82,7 @@ Use (tested) Arduino IDE 1.8.x
 https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 as additional in Arduino IDE board manager settings
 
-2. Install esp32 (by Espressif) board via Board Manager
+2. Install esp32 (by Espressif) version 2.0.15 board via Board Manager
 
 3. Pick 'M5Stack-Core2' as your board in IDE
 
