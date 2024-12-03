@@ -233,6 +233,10 @@ BBN OS Linux:
 Easy:
 
 ````
+wget https://github.com/bareboat-necessities/bbn-m5stack-tough/releases/download/main/bbn_m5tough_active_boat_bin-2024-12-03.zip
+
+unzip bbn_m5tough_active_boat_bin-2024-12-03.zip
+
 /srv/esphome/bin/esptool.py \
  --chip esp32 --port "/dev/ttyACM1" --baud 921600 \
  --before default_reset --after hard_reset write_flash \
