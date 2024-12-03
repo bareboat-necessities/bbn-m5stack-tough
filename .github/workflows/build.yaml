@@ -46,4 +46,11 @@ jobs:
         tag: ${{ github.ref }}
         overwrite: true
         file_glob: true
+
+    - name: Look for tools
+      run: |
+        pwd
+        find /home/runner/ -name esptool.py
+        find /home/runner/ -name boot_app0.bin
+  
     
