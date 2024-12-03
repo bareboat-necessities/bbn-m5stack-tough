@@ -33,14 +33,14 @@ jobs:
         set-build-path: true
 
     - name: Merge BINs
-      run: |
-        pwd
-        $HOME/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py \
-        --chip esp32 merge_bin -o /home/runner/work/bbn-m5stack-tough/bbn-m5stack-tough/bbn_m5tough_active_boat/build/bbn_m5tough_active_boat_firmware.bin \
-        --flash_mode dio --flash_size 16MB \
-        0x1000 "$HOME/work/bbn-m5stack-tough/bbn-m5stack-tough/bbn_m5tough_active_boat/build/bbn_m5tough_active_boat.ino.bootloader.bin" \
-        0x8000 "$HOME/work/bbn-m5stack-tough/bbn-m5stack-tough/bbn_m5tough_active_boat/build/bbn_m5tough_active_boat.ino.partitions.bin" \
-        0xe000 "$HOME/.arduino15/packages/esp32/hardware/esp32/2.0.15/tools/partitions/boot_app0.bin" \
+      run: >
+        pwd;
+        $HOME/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py 
+        --chip esp32 merge_bin -o /home/runner/work/bbn-m5stack-tough/bbn-m5stack-tough/bbn_m5tough_active_boat/build/bbn_m5tough_active_boat_firmware.bin 
+        --flash_mode dio --flash_size 16MB 
+        0x1000 "$HOME/work/bbn-m5stack-tough/bbn-m5stack-tough/bbn_m5tough_active_boat/build/bbn_m5tough_active_boat.ino.bootloader.bin" 
+        0x8000 "$HOME/work/bbn-m5stack-tough/bbn-m5stack-tough/bbn_m5tough_active_boat/build/bbn_m5tough_active_boat.ino.partitions.bin" 
+        0xe000 "$HOME/.arduino15/packages/esp32/hardware/esp32/2.0.15/tools/partitions/boot_app0.bin" 
         0x10000 "bbn_m5tough_active_boat.ino.bin" 
 
     - name: Make zip
