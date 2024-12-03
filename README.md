@@ -230,6 +230,18 @@ python3 "~/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py" \
 
 BBN OS Linux:
 
+Easy:
+
+````
+/srv/esphome/bin/esptool.py \
+ --chip esp32 --port "/dev/ttyACM1" --baud 921600 \
+ --before default_reset --after hard_reset write_flash \
+ 0x0 bbn_m5tough_active_boat_firmware.bin
+````
+
+
+Or:
+
 ````
 /srv/esphome/bin/esptool.py \
  --chip esp32 --port "/dev/ttyACM1" --baud 921600  \
