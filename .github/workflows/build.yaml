@@ -53,4 +53,13 @@ jobs:
         find /home/runner/ -name esptool.py
         find /home/runner/ -name boot_app0.bin
   
-    
+    - name: Merge BINs
+      run: |
+        pwd
+        $HOME/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py |
+        --chip esp32 merge_bin -o bbn_m5tough_active_boat_firmware.bin |
+        --flash_mode dio --flash_size 16MB |
+        0x1000 "bbn_m5tough_active_boat.ino.bootloader.bin" |
+        0x8000 "bbn_m5tough_active_boat.ino.partitions.bin" |
+        0xe000 "$HOME/.arduino15/packages/esp32/hardware/esp32/2.0.15/tools/partitions/boot_app0.bin" |
+        0x10000 "bbn_m5tough_active_boat.ino.bin"
