@@ -385,3 +385,5 @@ https://github.com/gerryvel/NMEA2000_TPW
 
 https://github.com/gerryvel/Motordaten
 
+NKE Topline protocol
+https://github.com/KristianJerpetjon/NkeToplineCpp
