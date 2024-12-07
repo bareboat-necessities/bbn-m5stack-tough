@@ -213,7 +213,7 @@ Unzip downloaded archives
 
 Examples:
 
-Linux:
+### Linux:
 
 ````
 
@@ -228,7 +228,7 @@ python3 "~/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py" \
 
 ````
 
-BBN OS Linux:
+### BBN OS Linux:
 
 Find out tty device for your connected m5stack device. Use it in commands below. Make sure with lsof command that nothing else 
 holds the device file open.
@@ -268,7 +268,7 @@ Or:
 ````
 
 
-Windows:
+### Windows:
 
 ````
 
