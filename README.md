@@ -230,6 +230,9 @@ python3 "~/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py" \
 
 BBN OS Linux:
 
+Find out tty device for your connected m5stack device. Use it in commands below. Make sure with lsof command that nothing else 
+holds the device file open.
+
 Easy:
 
 ````
@@ -243,6 +246,13 @@ unzip bbn_m5tough_active_boat_bin-2024-12-03.zip
  0x0 bbn_m5tough_active_boat_firmware.bin
 ````
 
+Or:
+
+````
+wget https://raw.githubusercontent.com/bareboat-necessities/my-bareboat/refs/heads/master/m5stack-tools/bbn-flash-m5-disp.sh
+chmod +x bbn-flash-m5-disp.sh 
+./bbn-flash-m5-disp.sh -p /dev/ttyACM3
+````
 
 Or:
 
