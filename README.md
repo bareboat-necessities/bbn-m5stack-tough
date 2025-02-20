@@ -2,6 +2,14 @@
 
 M5Stack Tough (ESP-32) Sailing Instruments Display and Autopilot Control Arduino sketches
 
+<p align="center">
+<img src="./images/BBN_m5tough.jpg?raw=true" alt="BBN esp32 Marine Display" style="width: 50%; height: auto;" />
+</p>
+
+<p align="center">
+<img src="./images/BBN_esp32_marine_display.jpg?raw=true" alt="BBN Display on m5tough with LVGL" style="width: 30%; height: auto;" />
+</p>
+
 With LVGL UI
 
 Mostly oriented for boating projects (can be interesting to RV and off-grid living users,
