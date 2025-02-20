@@ -244,6 +244,18 @@ holds the device file open.
 Easy:
 
 ````
+# shutdown signalk
+sudo systemctl stop signalk
+
+if [ -f bbn-flash-m5-disp.sh ]; then rm bbn-flash-m5-disp.sh; fi
+wget https://raw.githubusercontent.com/bareboat-necessities/my-bareboat/refs/heads/master/m5stack-tools/bbn-flash-m5-disp.sh
+chmod +x bbn-flash-m5-disp.sh 
+./bbn-flash-m5-disp.sh -p /dev/ttyACM3
+````
+
+Or:
+
+````
 wget https://github.com/bareboat-necessities/bbn-m5stack-tough/releases/download/main/bbn_m5tough_active_boat_bin-2024-12-03.zip
 
 unzip bbn_m5tough_active_boat_bin-2024-12-03.zip
@@ -256,13 +268,6 @@ unzip bbn_m5tough_active_boat_bin-2024-12-03.zip
 
 Or:
 
-````
-wget https://raw.githubusercontent.com/bareboat-necessities/my-bareboat/refs/heads/master/m5stack-tools/bbn-flash-m5-disp.sh
-chmod +x bbn-flash-m5-disp.sh 
-./bbn-flash-m5-disp.sh -p /dev/ttyACM3
-````
-
-Or:
 
 ````
 /srv/esphome/bin/esptool.py \
